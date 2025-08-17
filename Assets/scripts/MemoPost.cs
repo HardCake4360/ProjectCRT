@@ -1,7 +1,5 @@
 using UnityEngine;
 
-using UnityEngine;
-
 public class MemoPost : MonoBehaviour
 {
     [SerializeField] private Camera cam;
@@ -17,19 +15,23 @@ public class MemoPost : MonoBehaviour
         SetPreviewMode(previewPostIt, true);
     }
 
-    void Update()
+    public void PostMode()
     {
         UpdatePreviewPosition();
 
         if (Input.GetMouseButtonDown(0))
         {
             PlacePostIt();
+            //MainLoop.Instance.posting = false;
         }
     }
 
     void UpdatePreviewPosition()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+        
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Vector3 spawnPos = hit.point + hit.normal * offset;
@@ -37,6 +39,8 @@ public class MemoPost : MonoBehaviour
 
             previewPostIt.transform.position = spawnPos;
             previewPostIt.transform.rotation = spawnRot;
+            
+            Debug.DrawRay(hit.point, Vector3.up * 0.5f, Color.blue);
         }
     }
 
