@@ -14,6 +14,8 @@ public class MonitorUIRaycaster : MonoBehaviour
     public GraphicRaycaster uiRaycaster; // UI GraphicRaycaster
 
     private GameObject currentHovering;
+    private GameObject currentDragging;
+
 
     void Update()
     {
@@ -58,11 +60,30 @@ public class MonitorUIRaycaster : MonoBehaviour
                     if (newHovering != null)
                     {
                         ExecuteEvents.Execute<IPointerEnterHandler>(
-                            currentHovering, eventData, ExecuteEvents.pointerEnterHandler);
+                            newHovering, eventData, ExecuteEvents.pointerEnterHandler);
                     }
 
                     currentHovering = newHovering;
+                }
 
+                // 마우스 버튼 눌렀을 때 (드래그 시작)
+                if (Input.GetMouseButtonDown(0) && currentHovering != null)
+                {
+                    currentDragging = currentHovering;
+                    ExecuteEvents.Execute<IPointerDownHandler>(currentDragging, eventData, ExecuteEvents.pointerDownHandler);
+                }
+
+                // 마우스 이동 중 드래그
+                if (Input.GetMouseButton(0) && currentDragging != null)
+                {
+                    ExecuteEvents.Execute<IDragHandler>(currentDragging, eventData, ExecuteEvents.dragHandler);
+                }
+
+                // 마우스 버튼 뗐을 때 (드래그 종료)
+                if (Input.GetMouseButtonUp(0) && currentDragging != null)
+                {
+                    ExecuteEvents.Execute<IPointerUpHandler>(currentDragging, eventData, ExecuteEvents.pointerUpHandler);
+                    currentDragging = null;
                 }
             }
         }
