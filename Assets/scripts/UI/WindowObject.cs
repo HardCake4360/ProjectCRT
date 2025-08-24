@@ -23,14 +23,13 @@ public class WindowObject : MeshRayReciver
     public override void OnDrag(PointerEventData eventData)
     {
         Debug.Log("Window Object draging: " + gameObject.name);
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rt.parent as RectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out Vector2 localMousePos
+        
+        Vector2 pivotLocalPos = new Vector2(
+            (rt.pivot.x - 0.5f) * rt.rect.width,
+            (rt.pivot.y - 0.5f) * rt.rect.height
         );
 
-        rt.localPosition = localMousePos;
+        rt.anchoredPosition = eventData.position;
+        Debug.Log("local mouse pos: " + eventData.position);
     }
 }

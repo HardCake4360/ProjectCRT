@@ -66,7 +66,7 @@ public class MonitorUIRaycaster : MonoBehaviour
                     currentHovering = newHovering;
                 }
 
-                // 마우스 버튼 눌렀을 때 (드래그 시작)
+                // 마우스 버튼 눌렀을 때
                 if (Input.GetMouseButtonDown(0) && currentHovering != null)
                 {
                     currentDragging = currentHovering;
@@ -79,7 +79,7 @@ public class MonitorUIRaycaster : MonoBehaviour
                     ExecuteEvents.Execute<IDragHandler>(currentDragging, eventData, ExecuteEvents.dragHandler);
                 }
 
-                // 마우스 버튼 뗐을 때 (드래그 종료)
+                // 마우스 버튼 뗐을 때
                 if (Input.GetMouseButtonUp(0) && currentDragging != null)
                 {
                     ExecuteEvents.Execute<IPointerUpHandler>(currentDragging, eventData, ExecuteEvents.pointerUpHandler);
