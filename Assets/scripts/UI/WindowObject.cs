@@ -7,7 +7,7 @@ public class WindowObject : MeshRayReciver
     private Vector2 maxSize;
     private Vector2 minSize;
 
-    private RectTransform rt;
+    [SerializeField] private RectTransform rt;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,8 +15,6 @@ public class WindowObject : MeshRayReciver
         isMaximized = false;
         maxSize = new Vector2(120, 80);
         minSize = new Vector2(256, 160);
-
-        rt = GetComponent<RectTransform>();
         //rect.SetSizeWithCurrentAnchors
     }
 
