@@ -19,10 +19,13 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
     public float minWidth = 120f;
     public float minHeight = 80f;
     public Vector2 StartPos;
+    public Vector2 lastPos;
+    public Vector2 lastSize;
     public Vector2 DragDelta;
 
     private Vector2 originalPos;
     private Vector2 originalSize;
+
 
     [SerializeField] private bool resizeLeft, resizeRight, resizeTop, resizeBottom;
 
@@ -72,6 +75,12 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
     {
         originalSize = targetPanel.sizeDelta;
         originalPos = targetPanel.anchoredPosition;
+    }
+
+    public void RecordLastTransform()
+    {
+        lastPos = targetPanel.anchoredPosition;
+        lastSize = targetPanel.sizeDelta;
     }
 
     public void ResetHandleTrigger()
