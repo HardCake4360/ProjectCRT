@@ -23,7 +23,7 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
     private Vector2 originalPos;
     private Vector2 originalSize;
 
-    private bool resizeLeft, resizeRight, resizeTop, resizeBottom;
+    [SerializeField] private bool resizeLeft, resizeRight, resizeTop, resizeBottom;
 
     public void SetHandleTrigger(ResizableHandleState handle)
     {

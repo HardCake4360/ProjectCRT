@@ -6,6 +6,7 @@ public class WindowObject : MeshRayReciver
     private bool isMaximized;
     private Vector2 maxSize;
     private Vector2 minSize;
+    private Vector2 clickToAnchorVector;
 
     [SerializeField] private RectTransform rt;
 
@@ -17,17 +18,17 @@ public class WindowObject : MeshRayReciver
         minSize = new Vector2(256, 160);
         //rect.SetSizeWithCurrentAnchors
     }
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        base.OnPointerDown(eventData);
+        clickToAnchorVector = rt.anchoredPosition - eventData.position;
+    }
 
     public override void OnDrag(PointerEventData eventData)
     {
         Debug.Log("Window Object draging: " + gameObject.name);
-        
-        Vector2 pivotLocalPos = new Vector2(
-            (rt.pivot.x - 0.5f) * rt.rect.width,
-            (rt.pivot.y - 0.5f) * rt.rect.height
-        );
 
-        rt.anchoredPosition = eventData.position;
+        rt.anchoredPosition = eventData.position + clickToAnchorVector;
         Debug.Log("local mouse pos: " + eventData.position);
     }
 }
