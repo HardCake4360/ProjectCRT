@@ -11,12 +11,13 @@ public class ResizableHandle : MeshRayReciver
         base.OnPointerDown(eventData);
         targetPanel.SetHandleTrigger(handleSetting);
         targetPanel.SetOriginalTransform();
+        targetPanel.StartPos = eventData.position;
     }
 
     public override void OnDrag(PointerEventData eventData)
     {
         base.OnDrag(eventData);
-        targetPanel.EventData = eventData;
+        targetPanel.DragDelta = eventData.position - targetPanel.StartPos;
         Debug.Log("pointer pos: " + eventData.position);
     }
 

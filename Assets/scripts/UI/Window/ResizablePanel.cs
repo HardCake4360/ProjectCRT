@@ -18,7 +18,8 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
     public RectTransform targetPanel;
     public float minWidth = 120f;
     public float minHeight = 80f;
-    public PointerEventData EventData;
+    public Vector2 StartPos;
+    public Vector2 DragDelta;
 
     private Vector2 originalPos;
     private Vector2 originalSize;
@@ -114,30 +115,36 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
     {
         if (!(resizeLeft || resizeRight || resizeTop || resizeBottom)) return;
 
-        Vector2 delta = EventData.position;
+        Vector2 delta = DragDelta;
         Vector2 newSize = originalSize;
         Vector2 newPos = originalPos;
 
         if (resizeLeft)
         {
             newSize.x = Mathf.Max(minWidth, originalSize.x - delta.x);
-            newPos.x = originalPos.x + delta.x * 0.5f;
+            if (newSize.x != minWidth)
+                newPos.x = originalPos.x + delta.x * 0.5f;
         }
         if (resizeRight)
         {
             newSize.x = Mathf.Max(minWidth, originalSize.x + delta.x);
-            newPos.x = originalPos.x + delta.x * 0.5f;
-        }
-        if (resizeBottom)
-        {
-            newSize.y = Mathf.Max(minHeight, originalSize.y - delta.y);
-            newPos.y = originalPos.y + delta.y * 0.5f;
+            if (newSize.x != minWidth)
+                newPos.x = originalPos.x + delta.x * 0.5f;
         }
         if (resizeTop)
         {
             newSize.y = Mathf.Max(minHeight, originalSize.y + delta.y);
-            newPos.y = originalPos.y + delta.y * 0.5f;
+            if (newSize.y != minHeight)
+                newPos.y = originalPos.y + delta.y * 0.5f;
         }
+        if (resizeBottom)
+        {
+            newSize.y = Mathf.Max(minHeight, originalSize.y - delta.y);
+            if (newSize.y != minHeight)
+                newPos.y = originalPos.y + delta.y * 0.5f;
+        }
+
+        Debug.Log("Drag delta: " + DragDelta);
 
         targetPanel.sizeDelta = newSize;
         targetPanel.anchoredPosition = newPos;
