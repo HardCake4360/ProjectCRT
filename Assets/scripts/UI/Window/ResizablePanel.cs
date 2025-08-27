@@ -21,11 +21,12 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
     public Vector2 StartPos;
     public Vector2 lastPos;
     public Vector2 lastSize;
+
+    public Vector2 originalPos;
+    public Vector2 originalSize;
+    public Vector2 originalScale;
+
     public Vector2 DragDelta;
-
-    private Vector2 originalPos;
-    private Vector2 originalSize;
-
 
     [SerializeField] private bool resizeLeft, resizeRight, resizeTop, resizeBottom;
 

@@ -1,18 +1,24 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.EventSystems;
 
 public class WindowObject : MeshRayReciver
 {
-    public bool isMaximized;
+    [SerializeField] private GameObject Body;
 
     private Vector2 maxSize;
     private Vector2 minSize;
     private Vector2 clickToAnchorVector;
 
-    [SerializeField] private RectTransform rt;
-    [SerializeField] private RectTransform fullScreen;
+    [SerializeField] private float duration;
+    [SerializeField] private RectTransform rt; //whool window rect transform
+    [SerializeField] private RectTransform fullScreen; //maximum rect size
+    [SerializeField] private Vector2 fullScreenPos;
     [SerializeField] private ResizablePanel rp;
 
+    public bool isMaximized;
+    public Vector2 HiddenPos;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,13 +41,54 @@ public class WindowObject : MeshRayReciver
         Debug.Log("local mouse pos: " + eventData.position);
     }
 
+    public void SetHiddenPos(Vector2 pos)
+    {
+        HiddenPos = pos;
+    }
+
+    public void Minimize()
+    {
+        rp.originalScale = rt.localScale;
+        StopAllCoroutines();
+        StartCoroutine(AnimateWindow(rp.originalPos, HiddenPos, rp.originalScale, Vector3.zero));
+    }
+
+    public void Restore()
+    {
+        StopAllCoroutines();
+        StartCoroutine(AnimateWindow(HiddenPos, rp.originalPos, Vector3.zero, rp.originalScale));
+    }
+
+    private IEnumerator AnimateWindow(Vector3 startPos, Vector3 endPos, Vector3 startScale, Vector3 endScale)
+    {
+        float t = 0;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float normalized = Mathf.Clamp01(t / duration);
+
+            rt.anchoredPosition3D = Vector3.Lerp(startPos, endPos, normalized);
+            rt.localScale = Vector3.Lerp(startScale, endScale, normalized);
+
+            yield return null;
+        }
+
+        // 최종 위치/스케일 보정
+        rt.anchoredPosition3D = endPos;
+        rt.localScale = endScale;
+    }
+
     public void ToggleMaximize()
     {
         if (!isMaximized)
         {
+            rp.lastSize = rt.sizeDelta;
+            rp.lastPos = rt.anchoredPosition;
+
             rt.sizeDelta = fullScreen.sizeDelta;
-            rt.anchoredPosition = fullScreen.anchoredPosition;
+            rt.anchoredPosition = fullScreenPos;
             isMaximized = true;
+            
             Debug.Log("Window maximized");
         }
         else
@@ -49,7 +96,13 @@ public class WindowObject : MeshRayReciver
             rt.sizeDelta = rp.lastSize;
             rt.anchoredPosition = rp.lastPos;
             isMaximized = false;
+            
             Debug.Log("Window unmaximized");
         }
+    }
+
+    public void Close()
+    {
+        Destroy(Body);
     }
 }
