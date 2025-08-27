@@ -830,12 +830,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Body: {fileID: 6137088249834242448}
-  duration: 0.3
+  duration: 0.1
   rt: {fileID: 8860513925601086448}
   fullScreen: {fileID: 0}
   fullScreenPos: {x: 0, y: 0}
   rp: {fileID: 7635796807363970194}
   isMaximized: 0
+  isMinimized: 0
   HiddenPos: {x: 0, y: 0}
 --- !u!1 &4321136585779017483
 GameObject:

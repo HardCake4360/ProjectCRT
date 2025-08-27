@@ -17,6 +17,7 @@ public class WindowObject : MeshRayReciver
     [SerializeField] private ResizablePanel rp;
 
     public bool isMaximized;
+    public bool isMinimized;
     public Vector2 HiddenPos;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -48,15 +49,20 @@ public class WindowObject : MeshRayReciver
 
     public void Minimize()
     {
-        rp.originalScale = rt.localScale;
-        StopAllCoroutines();
-        StartCoroutine(AnimateWindow(rp.originalPos, HiddenPos, rp.originalScale, Vector3.zero));
-    }
-
-    public void Restore()
-    {
-        StopAllCoroutines();
-        StartCoroutine(AnimateWindow(HiddenPos, rp.originalPos, Vector3.zero, rp.originalScale));
+        if (!isMinimized)
+        {
+            isMinimized = true;
+            rp.originalScale = rt.localScale;
+            rp.originalPos = rt.localPosition;
+            StopAllCoroutines();
+            StartCoroutine(AnimateWindow(rp.originalPos, HiddenPos, rp.originalScale, Vector3.zero));
+        }
+        else
+        {
+            isMinimized = false;
+            StopAllCoroutines();
+            StartCoroutine(AnimateWindow(HiddenPos, rp.originalPos, Vector3.zero, rp.originalScale));
+        }
     }
 
     private IEnumerator AnimateWindow(Vector3 startPos, Vector3 endPos, Vector3 startScale, Vector3 endScale)
