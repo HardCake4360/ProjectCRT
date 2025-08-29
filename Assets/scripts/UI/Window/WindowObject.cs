@@ -12,9 +12,9 @@ public class WindowObject : MeshRayReciver
 
     [SerializeField] private float duration;
     [SerializeField] private RectTransform rt; //whool window rect transform
-    [SerializeField] private RectTransform fullScreen; //maximum rect size
     [SerializeField] private Vector2 fullScreenPos;
     [SerializeField] private ResizablePanel rp;
+    public RectTransform fullScreen; //maximum rect size
 
     public bool isMaximized;
     public bool isMinimized;

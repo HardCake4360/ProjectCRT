@@ -152,6 +152,10 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
             newSize.y = Mathf.Max(minHeight, originalSize.y - delta.y);
             if (newSize.y != minHeight)
                 newPos.y = originalPos.y + delta.y * 0.5f;
+            else
+            {
+                newPos.y = (originalPos.y-minHeight)/2;
+            }
         }
 
         Debug.Log("Drag delta: " + DragDelta);
