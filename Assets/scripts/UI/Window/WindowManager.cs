@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class WindowManager : MonoBehaviour
 {
@@ -51,18 +53,22 @@ public class WindowManager : MonoBehaviour
         return newTab;
     }
 
-    public void InstantiateWhoolWindow(GameObject win, GameObject tab)
+    public WhoolWindow InstantiateWhoolWindow(WhoolWindow whool)
     {
-        GameObject newWin = InstantiateWindow(win);
-        GameObject newTab = InstantiateWindowTab(tab);
+        GameObject newWin = InstantiateWindow(whool.window);
+        GameObject newTab = InstantiateWindowTab(whool.tab);
 
         
         WindowObject wo = newWin.GetComponentInChildren<WindowObject>();
         RectTransform rt = newTab.GetComponent<RectTransform>();
 
+        Canvas.ForceUpdateCanvases(); // 레이아웃 즉시 반영
+
         wo.fullScreen = fullScreenRect;
         newTab.GetComponent<WindowTabObject>().win = wo; //windowTabObject와 연결된 Window 초기화
-        wo.SetHiddenPos(rt.anchoredPosition); //windowHiddenPos 설정
+        wo.SetHiddenPos(wo.GetComponent<RectTransform>().InverseTransformPoint(rt.position)); //windowHiddenPos 설정
+        newTab.GetComponent<ButtonComponent>().OnClick.AddListener(wo.Minimize);
+        return new WhoolWindow(newWin, newTab);
     }
 
     

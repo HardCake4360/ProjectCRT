@@ -8,6 +8,8 @@ public class WindowTabObject : MonoBehaviour
     private void Start()
     {
         rt = GetComponent<RectTransform>();
+        //if (win != null)
+          //  win.SetHiddenPos(rt.anchoredPosition);
     }
 
     private void Update()
