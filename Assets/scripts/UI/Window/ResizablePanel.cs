@@ -91,35 +91,10 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
         resizeTop = false;
         resizeBottom = false;
     }
-
-    /*
     public override void OnPointerDown(PointerEventData eventData)
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            targetPanel,
-            eventData.position,
-            eventData.pressEventCamera,
-            out originalMousePos
-        );
-
-        originalSize = targetPanel.sizeDelta;
-        originalPos = targetPanel.anchoredPosition;
-
-        // 현재 클릭한 위치 Rect 기준
-        Rect rect = targetPanel.rect;
-
-        resizeLeft = Mathf.Abs(originalMousePos.x - rect.xMin) <= borderThickness;
-        resizeRight = Mathf.Abs(originalMousePos.x - rect.xMax) <= borderThickness;
-        resizeBottom = Mathf.Abs(originalMousePos.y - rect.yMin) <= borderThickness;
-        resizeTop = Mathf.Abs(originalMousePos.y - rect.yMax) <= borderThickness;
-        Debug.Log(
-            "resizeLeft: " + resizeLeft + "\n" +
-            "resizeRight: " + resizeRight + "\n" +
-            "resizeBottom: " + resizeBottom + "\n" +
-            "resizeTop: " + resizeTop + "\n"
-            );
+        StartPos = eventData.position;
     }
-    */
 
     private void Update()
     {
@@ -152,10 +127,6 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
             newSize.y = Mathf.Max(minHeight, originalSize.y - delta.y);
             if (newSize.y != minHeight)
                 newPos.y = originalPos.y + delta.y * 0.5f;
-            else
-            {
-                newPos.y = (originalPos.y-minHeight)/2;
-            }
         }
 
         Debug.Log("Drag delta: " + DragDelta);
@@ -163,45 +134,4 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
         targetPanel.sizeDelta = newSize;
         targetPanel.anchoredPosition = newPos;
     }
-    /*
-    public override void OnDrag(PointerEventData eventData)
-    {
-        if (!(resizeLeft || resizeRight || resizeTop || resizeBottom)) return;
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            targetPanel.parent as RectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out Vector2 currentMousePos
-        );
-
-        Vector2 delta = currentMousePos - originalMousePos;
-        Vector2 newSize = originalSize;
-        Vector2 newPos = originalPos;
-
-        if (resizeLeft)
-        {
-            newSize.x = Mathf.Max(minWidth, originalSize.x - delta.x);
-            newPos.x = originalPos.x + delta.x * 0.5f;
-        }
-        if (resizeRight)
-        {
-            newSize.x = Mathf.Max(minWidth, originalSize.x + delta.x);
-            newPos.x = originalPos.x + delta.x * 0.5f;
-        }
-        if (resizeBottom)
-        {
-            newSize.y = Mathf.Max(minHeight, originalSize.y - delta.y);
-            newPos.y = originalPos.y + delta.y * 0.5f;
-        }
-        if (resizeTop)
-        {
-            newSize.y = Mathf.Max(minHeight, originalSize.y + delta.y);
-            newPos.y = originalPos.y + delta.y * 0.5f;
-        }
-
-        targetPanel.sizeDelta = newSize;
-        targetPanel.anchoredPosition = newPos;
-    }
-    */
 }

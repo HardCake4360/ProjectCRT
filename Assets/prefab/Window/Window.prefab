@@ -888,9 +888,9 @@ MonoBehaviour:
   Body: {fileID: 6137088249834242448}
   duration: 0.1
   rt: {fileID: 8860513925601086448}
-  fullScreen: {fileID: 0}
   fullScreenPos: {x: 0, y: 0}
   rp: {fileID: 7635796807363970194}
+  fullScreen: {fileID: 0}
   isMaximized: 0
   isMinimized: 0
   HiddenPos: {x: 0, y: 0}
@@ -1643,8 +1643,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPanel: {fileID: 8860513925601086448}
-  minWidth: 120
-  minHeight: 80
+  minWidth: 240
+  minHeight: 160
   StartPos: {x: 0, y: 0}
   lastPos: {x: 0, y: 0}
   lastSize: {x: 0, y: 0}

@@ -14,7 +14,7 @@ public class WindowManager : MonoBehaviour
     [SerializeField] int MaxAlignCount;
 
     [SerializeField] private GameObject taskCollection;
-    [SerializeField] private RectTransform fullScreenRect;
+    public RectTransform FullScreenRect;
 
     private void Awake()
     {
@@ -64,7 +64,7 @@ public class WindowManager : MonoBehaviour
 
         Canvas.ForceUpdateCanvases(); // 레이아웃 즉시 반영
 
-        wo.fullScreen = fullScreenRect;
+        wo.fullScreen = FullScreenRect;
         newTab.GetComponent<WindowTabObject>().win = wo; //windowTabObject와 연결된 Window 초기화
         wo.SetHiddenPos(wo.GetComponent<RectTransform>().InverseTransformPoint(rt.position)); //windowHiddenPos 설정
         newTab.GetComponent<ButtonComponent>().OnClick.AddListener(wo.Minimize);
