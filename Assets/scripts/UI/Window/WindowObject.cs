@@ -14,7 +14,6 @@ public class WindowObject : MeshRayReciver
     [SerializeField] private RectTransform rt; //whool window rect transform
     [SerializeField] private Vector2 fullScreenPos;
     [SerializeField] private ResizablePanel rp;
-    public RectTransform fullScreen; //maximum rect size
 
     public bool isMaximized;
     public bool isMinimized;
@@ -91,7 +90,7 @@ public class WindowObject : MeshRayReciver
             rp.lastSize = rt.sizeDelta;
             rp.lastPos = rt.anchoredPosition;
 
-            rt.sizeDelta = fullScreen.sizeDelta;
+            rt.sizeDelta = WindowManager.Instance.FullScreenRect.sizeDelta;
             rt.anchoredPosition = fullScreenPos;
             isMaximized = true;
             
