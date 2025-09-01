@@ -1,12 +1,17 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class WindowObject : MeshRayReciver
 {
+    //signature variable
+    public TextMeshProUGUI WindowName;
+    private Transform ContentTransform;
+    //
+
     [SerializeField] private GameObject Body;
 
-    private Vector2 maxSize;
     private Vector2 minSize;
     private Vector2 clickToAnchorVector;
 
@@ -23,7 +28,7 @@ public class WindowObject : MeshRayReciver
     void Start()
     {
         isMaximized = false;
-        maxSize = new Vector2(120, 80);
+
         minSize = new Vector2(256, 160);
         //rect.SetSizeWithCurrentAnchors
     }
@@ -110,4 +115,10 @@ public class WindowObject : MeshRayReciver
     {
         Destroy(Body);
     }
+
+    public void InstantiateContent(GameObject content)
+    {
+        Instantiate(content, ContentTransform);
+    }
+
 }

@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832010ce96e97cd448b93b1dd8d1ddd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tabName: {fileID: 3839683720423999463}
   win: {fileID: 0}
 --- !u!114 &4805417425795778899
 MonoBehaviour:

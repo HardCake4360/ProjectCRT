@@ -1,15 +1,15 @@
 using UnityEngine;
+using TMPro;
 
 public class WindowTabObject : MonoBehaviour
 {
+    public TextMeshProUGUI TabName;
     public WindowObject win;
-    private RectTransform rt;
+    //private RectTransform rt;
 
     private void Start()
     {
-        rt = GetComponent<RectTransform>();
-        //if (win != null)
-          //  win.SetHiddenPos(rt.anchoredPosition);
+        //rt = GetComponent<RectTransform>();
     }
 
     private void Update()

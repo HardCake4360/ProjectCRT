@@ -890,7 +890,7 @@ MonoBehaviour:
   rt: {fileID: 8860513925601086448}
   fullScreenPos: {x: 0, y: 0}
   rp: {fileID: 7635796807363970194}
-  fullScreen: {fileID: 0}
+  windowName: {fileID: 3841318356815744553}
   isMaximized: 0
   isMinimized: 0
   HiddenPos: {x: 0, y: 0}
