@@ -3,6 +3,7 @@ using UnityEngine;
 public class IContent : MonoBehaviour
 {
     RectTransform parentRect;
+    WindowObject window;
 
     private void Start()
     {

@@ -7,7 +7,7 @@ public class WindowObject : MeshRayReciver
 {
     //signature variable
     public TextMeshProUGUI WindowName;
-    private Transform ContentTransform;
+    [SerializeField] private Transform contentTransform;
     //
 
     [SerializeField] private GameObject Body;
@@ -118,7 +118,7 @@ public class WindowObject : MeshRayReciver
 
     public void InstantiateContent(GameObject content)
     {
-        Instantiate(content, ContentTransform);
+        Instantiate(content, contentTransform);
     }
 
 }
