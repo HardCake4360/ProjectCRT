@@ -5,13 +5,25 @@ using System.Collections;
 
 public class SpriteAnimator : MonoBehaviour
 {
+    [SerializeField] private bool onlyLoopDefault;
+
     public Image targetImage;
     public Sprite[] sprites0;
     public Sprite[] sprites1;
     private bool isAnimEnd;
 
+    private void Start()
+    {
+        if (onlyLoopDefault)
+        {
+            StartCoroutine(PlaySpriteAnimation(sprites0));
+        }
+    }
+
     private void Update()
     {
+        
+
         if (isAnimEnd)
         {
             //StartCoroutine(DelayAction(UnityEngine.Random.RandomRange(5f, 8f), { PlaySpriteAnimation(sprites1)}));

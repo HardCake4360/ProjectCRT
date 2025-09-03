@@ -16,8 +16,8 @@ public enum ResizableHandleState
 public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
 {
     public RectTransform targetPanel;
-    public float minWidth = 120f;
-    public float minHeight = 80f;
+    public float minWidth = 240f;
+    public float minHeight = 160f;
     public Vector2 StartPos;
     public Vector2 lastPos;
     public Vector2 lastSize;
