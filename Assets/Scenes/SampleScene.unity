@@ -3968,7 +3968,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ab38ff7b912d073499cdded239613494, type: 3}
+  m_Sprite: {fileID: -217734982, guid: 11ed2be5e22976b4f96e8fde77e77313, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3999,7 +3999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onlyLoopDefault: 1
-  fps: 24
+  fps: 16
   targetImage: {fileID: 2008111763}
   sprites0:
   - {fileID: -241487486, guid: 8b619ce2c927b2d42ae77413d1b2e0de, type: 3}
