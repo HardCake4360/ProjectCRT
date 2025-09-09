@@ -3,28 +3,20 @@ using System;
 using UnityEngine.UI;
 using System.Collections;
 
-public struct SpriteNode
-{
-    public string name;
-    public Sprite[] sprites;
-}
-
 public class SpriteAnimator : MonoBehaviour
 {
     [SerializeField] private bool onlyLoopDefault;
     [SerializeField] private float fps;
 
     public Image targetImage;
-    public SpriteNode[] nodes;
-    public Sprite[] sprites0;
-    public Sprite[] sprites1;
+    public SpriteSheetObject[] Anims;
     private bool isAnimEnd;
 
     private void Start()
     {
         if (onlyLoopDefault)
         {
-            StartCoroutine(PlaySpriteAnimation(sprites1));
+            StartCoroutine(PlaySpriteAnimation(Anims[0].Sprites));
         }
     }
 
