@@ -1,7 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MeshRayReciver : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class MeshRayReciver : MonoBehaviour, 
+    IPointerEnterHandler, 
+    IPointerExitHandler, 
+    IPointerClickHandler, 
+    IPointerDownHandler, 
+    IDragHandler, 
+    IPointerUpHandler,
+    IScrollHandler
 {
     public virtual void OnPointerClick(PointerEventData eventData)
     {
@@ -31,5 +38,10 @@ public class MeshRayReciver : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public virtual void OnPointerUp(PointerEventData eventData)
     {
         Debug.Log("UI object PointerUp: " + gameObject.name);
+    }
+
+    public void OnScroll(PointerEventData eventData)
+    {
+        Debug.Log(gameObject.name + "Scroll: " + eventData.scrollDelta);
     }
 }
