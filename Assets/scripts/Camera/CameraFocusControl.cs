@@ -5,6 +5,7 @@ public class CameraFocusControl : MonoBehaviour
 {
     public static CameraFocusControl Instance { get; private set; }
 
+    public int CurrentCamNum;
     [SerializeField] private CustomCinemachineCamera[] cameras;
 
     private void Awake()
@@ -17,6 +18,11 @@ public class CameraFocusControl : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        
     }
 
     public void FocusTo(int idx)

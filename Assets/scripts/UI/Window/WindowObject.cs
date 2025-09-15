@@ -35,7 +35,15 @@ public class WindowObject : MeshRayReciver
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
+        rt.SetAsLastSibling();
+        WindowManager.Instance.DragingRect = gameObject.GetComponent<RectTransform>();
         clickToAnchorVector = rt.anchoredPosition - eventData.position;
+    }
+
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        base.OnPointerUp(eventData);
+        WindowManager.Instance.DragingRect = null;
     }
 
     public override void OnDrag(PointerEventData eventData)

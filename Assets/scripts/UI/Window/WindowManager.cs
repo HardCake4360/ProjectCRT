@@ -5,11 +5,13 @@ using UnityEngine.Events;
 public class WindowManager : MonoBehaviour
 {
     public static WindowManager Instance { get; private set; }
-    
+
+    public RectTransform DragingRect;
+
+    //window alignment
     [SerializeField] float alignDamp;
     GameObject[] alignedWindow;
-    
-    private Vector2 anchoredPos;
+    private Vector2 anchoredPos; //for instantiating new window position
     private int cnt;
     [SerializeField] int MaxAlignCount;
 
