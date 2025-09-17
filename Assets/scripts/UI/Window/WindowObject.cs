@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
 using TMPro;
@@ -10,10 +11,15 @@ public class WindowObject : MeshRayReciver
     [SerializeField] private Transform contentTransform;
     //
 
+    //debug setting
+    public bool LogMousePos;
+    //debug setting
+
     [SerializeField] private GameObject Body;
 
     private Vector2 minSize;
     private Vector2 clickToAnchorVector;
+    private Image selfImage;
 
     [SerializeField] private float duration;
     [SerializeField] private RectTransform rt; //whool window rect transform
@@ -28,6 +34,7 @@ public class WindowObject : MeshRayReciver
     void Start()
     {
         isMaximized = false;
+        selfImage = GetComponent<Image>();
 
         minSize = new Vector2(256, 160);
         //rect.SetSizeWithCurrentAnchors
@@ -35,6 +42,7 @@ public class WindowObject : MeshRayReciver
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
+        selfImage.raycastTarget = false;
         rt.SetAsLastSibling();
         WindowManager.Instance.DragingRect = gameObject.GetComponent<RectTransform>();
         clickToAnchorVector = rt.anchoredPosition - eventData.position;
@@ -44,6 +52,7 @@ public class WindowObject : MeshRayReciver
     {
         base.OnPointerUp(eventData);
         WindowManager.Instance.DragingRect = null;
+        selfImage.raycastTarget = true;
     }
 
     public override void OnDrag(PointerEventData eventData)
@@ -51,7 +60,7 @@ public class WindowObject : MeshRayReciver
         Debug.Log("Window Object draging: " + gameObject.name);
 
         rt.anchoredPosition = eventData.position + clickToAnchorVector;
-        Debug.Log("local mouse pos: " + eventData.position);
+        if(LogMousePos) Debug.Log("local mouse pos: " + eventData.position);
     }
 
     public void SetHiddenPos(Vector2 pos)

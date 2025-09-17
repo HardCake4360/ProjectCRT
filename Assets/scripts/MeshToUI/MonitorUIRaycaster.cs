@@ -12,6 +12,7 @@ public class MonitorUIRaycaster : MonoBehaviour
     public Camera mainCamera;          // 플레이어 카메라
     public RectTransform uiCanvasRect; // UI Canvas RectTransform
     public GraphicRaycaster uiRaycaster; // UI GraphicRaycaster
+    public LayerMask TargetLayer;
 
     private GameObject currentHovering;
     private GameObject currentDragging;
@@ -45,6 +46,8 @@ public class MonitorUIRaycaster : MonoBehaviour
                 // UI 레이캐스트
                 List<RaycastResult> results = new List<RaycastResult>();
                 uiRaycaster.Raycast(eventData, results);
+
+                WindowManager.Instance.RaycastResults = results;
 
                 GameObject newHovering = results.Count > 0 ? results[0].gameObject : null;
 

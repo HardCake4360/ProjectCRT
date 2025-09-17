@@ -5967,6 +5967,9 @@ MonoBehaviour:
   mainCamera: {fileID: 330585545}
   uiCanvasRect: {fileID: 770331641}
   uiRaycaster: {fileID: 770331642}
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2008111761
 GameObject:
   m_ObjectHideFlags: 0

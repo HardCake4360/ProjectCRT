@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 
 public class WindowManager : MonoBehaviour
@@ -17,6 +19,8 @@ public class WindowManager : MonoBehaviour
 
     [SerializeField] private GameObject taskCollection;
     public RectTransform FullScreenRect;
+
+    public List<RaycastResult> RaycastResults;
 
     private void Awake()
     {

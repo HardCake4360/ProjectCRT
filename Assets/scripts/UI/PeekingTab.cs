@@ -60,6 +60,7 @@ public class PeekingTab : MeshRayReciver
     public override void OnPointerUp(PointerEventData eventData)
     {
         RectTransform dragingRt = WindowManager.Instance.DragingRect;
+        Debug.Log("attempt parenting");
         if (!dragingRt) return;
         Debug.Log("Parented: " + dragingRt.name);
         dragingRt.SetParent(gameObject.transform);
