@@ -402,6 +402,7 @@ MonoBehaviour:
   MaxAlignCount: 5
   taskCollection: {fileID: 1741311404}
   FullScreenRect: {fileID: 132986968}
+  peekingTab: {fileID: 793603538}
 --- !u!1 &137716006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2514,6 +2515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rect: {fileID: 793603537}
+  IsHovering: 0
   duration: 0.1
   hiddenPos: {x: -376, y: 11}
   activePos: {x: -131.46, y: 11}

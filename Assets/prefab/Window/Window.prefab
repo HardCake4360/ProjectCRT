@@ -751,9 +751,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WindowName: {fileID: 3841318356815744553}
   contentTransform: {fileID: 3443869108053085319}
+  LogMousePos: 0
   Body: {fileID: 6137088249834242448}
   duration: 0.1
-  rt: {fileID: 8860513925601086448}
+  motherRT: {fileID: 8860513925601086448}
   fullScreenPos: {x: 0, y: 0}
   rp: {fileID: 7635796807363970194}
   isMaximized: 0

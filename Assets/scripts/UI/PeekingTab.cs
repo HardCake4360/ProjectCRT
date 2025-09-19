@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 public class PeekingTab : MeshRayReciver
 {
     public RectTransform Rect;
+    public bool IsHovering;
+
     [SerializeField] private float duration;
     [SerializeField] private Vector2 hiddenPos;
     [SerializeField] private Vector2 activePos;
@@ -57,14 +59,16 @@ public class PeekingTab : MeshRayReciver
         Rect.anchoredPosition3D = endPos;
     }
 
-    public override void OnPointerUp(PointerEventData eventData)
+    public override void OnPointerEnter(PointerEventData eventData)
     {
-        RectTransform dragingRt = WindowManager.Instance.DragingRect;
-        Debug.Log("attempt parenting");
-        if (!dragingRt) return;
-        Debug.Log("Parented: " + dragingRt.name);
-        dragingRt.SetParent(gameObject.transform);
+        base.OnPointerEnter(eventData);
+        if (WindowManager.Instance.DragingRect) IsHovering = true;
+    }
 
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        base.OnPointerExit(eventData);
+        IsHovering = false;
     }
 
 }

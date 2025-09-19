@@ -13,6 +13,7 @@ public class WindowObject : MeshRayReciver
 
     //debug setting
     public bool LogMousePos;
+    public bool LogDragging;
     //debug setting
 
     [SerializeField] private GameObject Body;
@@ -22,7 +23,7 @@ public class WindowObject : MeshRayReciver
     private Image selfImage;
 
     [SerializeField] private float duration;
-    [SerializeField] private RectTransform rt; //whool window rect transform
+    [SerializeField] private RectTransform motherRT; //whool window rect transform
     [SerializeField] private Vector2 fullScreenPos;
     [SerializeField] private ResizablePanel rp;
 
@@ -43,23 +44,24 @@ public class WindowObject : MeshRayReciver
     {
         base.OnPointerDown(eventData);
         selfImage.raycastTarget = false;
-        rt.SetAsLastSibling();
-        WindowManager.Instance.DragingRect = gameObject.GetComponent<RectTransform>();
-        clickToAnchorVector = rt.anchoredPosition - eventData.position;
+        motherRT.SetAsLastSibling();
+        WindowManager.Instance.DragingRect = motherRT;
+        clickToAnchorVector = motherRT.anchoredPosition - eventData.position;
     }
 
     public override void OnPointerUp(PointerEventData eventData)
     {
         base.OnPointerUp(eventData);
+        WindowManager.Instance.ParentToPeekingTab();
         WindowManager.Instance.DragingRect = null;
         selfImage.raycastTarget = true;
     }
 
     public override void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("Window Object draging: " + gameObject.name);
+        if(LogDragging) Debug.Log("Window Object draging: " + gameObject.name);
 
-        rt.anchoredPosition = eventData.position + clickToAnchorVector;
+        motherRT.anchoredPosition = eventData.position + clickToAnchorVector;
         if(LogMousePos) Debug.Log("local mouse pos: " + eventData.position);
     }
 
@@ -73,8 +75,8 @@ public class WindowObject : MeshRayReciver
         if (!isMinimized)
         {
             isMinimized = true;
-            rp.originalScale = rt.localScale;
-            rp.originalPos = rt.localPosition;
+            rp.originalScale = motherRT.localScale;
+            rp.originalPos = motherRT.localPosition;
             StopAllCoroutines();
             StartCoroutine(AnimateWindow(rp.originalPos, HiddenPos, rp.originalScale, Vector3.zero));
         }
@@ -94,34 +96,34 @@ public class WindowObject : MeshRayReciver
             t += Time.deltaTime;
             float normalized = Mathf.Clamp01(t / duration);
 
-            rt.anchoredPosition3D = Vector3.Lerp(startPos, endPos, normalized);
-            rt.localScale = Vector3.Lerp(startScale, endScale, normalized);
+            motherRT.anchoredPosition3D = Vector3.Lerp(startPos, endPos, normalized);
+            motherRT.localScale = Vector3.Lerp(startScale, endScale, normalized);
 
             yield return null;
         }
 
         // 최종 위치/스케일 보정
-        rt.anchoredPosition3D = endPos;
-        rt.localScale = endScale;
+        motherRT.anchoredPosition3D = endPos;
+        motherRT.localScale = endScale;
     }
 
     public void ToggleMaximize()
     {
         if (!isMaximized)
         {
-            rp.lastSize = rt.sizeDelta;
-            rp.lastPos = rt.anchoredPosition;
+            rp.lastSize = motherRT.sizeDelta;
+            rp.lastPos = motherRT.anchoredPosition;
 
-            rt.sizeDelta = WindowManager.Instance.FullScreenRect.sizeDelta;
-            rt.anchoredPosition = fullScreenPos;
+            motherRT.sizeDelta = WindowManager.Instance.FullScreenRect.sizeDelta;
+            motherRT.anchoredPosition = fullScreenPos;
             isMaximized = true;
             
             Debug.Log("Window maximized");
         }
         else
         {
-            rt.sizeDelta = rp.lastSize;
-            rt.anchoredPosition = rp.lastPos;
+            motherRT.sizeDelta = rp.lastSize;
+            motherRT.anchoredPosition = rp.lastPos;
             isMaximized = false;
             
             Debug.Log("Window unmaximized");

@@ -21,6 +21,7 @@ public class WindowManager : MonoBehaviour
     public RectTransform FullScreenRect;
 
     public List<RaycastResult> RaycastResults;
+    [SerializeField] private PeekingTab peekingTab;
 
     private void Awake()
     {
@@ -84,6 +85,15 @@ public class WindowManager : MonoBehaviour
         return new WhoolWindow(newWin, newTab);
     }
 
-    
+    public void ParentToPeekingTab()
+    {
+        if (!peekingTab.IsHovering) {
+            Instance.DragingRect.SetParent(gameObject.GetComponent<RectTransform>());
+            Debug.Log("Window detached");
+            return;
+        }
+        Instance.DragingRect.SetParent(peekingTab.Rect);
+        Debug.Log("Window attached");
+    }
 
 }
