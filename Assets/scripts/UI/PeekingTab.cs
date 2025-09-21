@@ -32,6 +32,7 @@ public class PeekingTab : MeshRayReciver
 
     void OnActive(InputAction.CallbackContext cbt)
     {
+        Rect.SetAsLastSibling();
         StartCoroutine(MoveTo(Rect.anchoredPosition, activePos));
         Debug.Log("active: " + gameObject.name);
     }

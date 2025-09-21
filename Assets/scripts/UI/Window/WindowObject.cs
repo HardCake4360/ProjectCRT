@@ -46,6 +46,8 @@ public class WindowObject : MeshRayReciver
         selfImage.raycastTarget = false;
         motherRT.SetAsLastSibling();
         WindowManager.Instance.DragingRect = motherRT;
+        WindowManager.Instance.DetachWhileDraging();
+
         clickToAnchorVector = motherRT.anchoredPosition - eventData.position;
     }
 

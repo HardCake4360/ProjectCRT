@@ -16,8 +16,8 @@ public enum ResizableHandleState
 public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
 {
     public RectTransform targetPanel;
-    public float minWidth = 240f;
-    public float minHeight = 160f;
+
+    public Vector2 MinSize;
     public Vector2 StartPos;
     public Vector2 lastPos;
     public Vector2 lastSize;
@@ -106,26 +106,26 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
 
         if (resizeLeft)
         {
-            newSize.x = Mathf.Max(minWidth, originalSize.x - delta.x);
-            if (newSize.x != minWidth)
+            newSize.x = Mathf.Max(MinSize.x, originalSize.x - delta.x);
+            if (newSize.x != MinSize.x)
                 newPos.x = originalPos.x + delta.x * 0.5f;
         }
         if (resizeRight)
         {
-            newSize.x = Mathf.Max(minWidth, originalSize.x + delta.x);
-            if (newSize.x != minWidth)
+            newSize.x = Mathf.Max(MinSize.x, originalSize.x + delta.x);
+            if (newSize.x != MinSize.x)
                 newPos.x = originalPos.x + delta.x * 0.5f;
         }
         if (resizeTop)
         {
-            newSize.y = Mathf.Max(minHeight, originalSize.y + delta.y);
-            if (newSize.y != minHeight)
+            newSize.y = Mathf.Max(MinSize.y, originalSize.y + delta.y);
+            if (newSize.y != MinSize.y)
                 newPos.y = originalPos.y + delta.y * 0.5f;
         }
         if (resizeBottom)
         {
-            newSize.y = Mathf.Max(minHeight, originalSize.y - delta.y);
-            if (newSize.y != minHeight)
+            newSize.y = Mathf.Max(MinSize.y, originalSize.y - delta.y);
+            if (newSize.y != MinSize.y)
                 newPos.y = originalPos.y + delta.y * 0.5f;
         }
 

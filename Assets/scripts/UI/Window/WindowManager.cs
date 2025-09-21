@@ -96,4 +96,9 @@ public class WindowManager : MonoBehaviour
         Debug.Log("Window attached");
     }
 
+    public void DetachWhileDraging()
+    {
+        Instance.DragingRect.SetParent(gameObject.GetComponent<RectTransform>());
+    }
+
 }
