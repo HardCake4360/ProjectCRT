@@ -13,6 +13,7 @@ public class PeekingTab : MeshRayReciver
     [SerializeField] private Vector2 activePos;
 
     [SerializeField] InputAction peekKey;
+    private RectAnimation rectAnim = new RectAnimation();
 
     private void OnEnable()
     {
@@ -33,31 +34,14 @@ public class PeekingTab : MeshRayReciver
     void OnActive(InputAction.CallbackContext cbt)
     {
         Rect.SetAsLastSibling();
-        StartCoroutine(MoveTo(Rect.anchoredPosition, activePos));
+        StartCoroutine(rectAnim.MoveTo(Rect.anchoredPosition, activePos, Rect, duration));
         Debug.Log("active: " + gameObject.name);
     }
 
     void OnHide(InputAction.CallbackContext cbt)
     {
-        StartCoroutine(MoveTo(Rect.anchoredPosition, hiddenPos));
+        StartCoroutine(rectAnim.MoveTo(Rect.anchoredPosition, hiddenPos, Rect, duration));
         Debug.Log("hidden: " + gameObject.name);
-    }
-
-    IEnumerator MoveTo(Vector2 startPos, Vector2 endPos)
-    {
-        float t = 0;
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            float normalized = Mathf.Clamp01(t / duration);
-
-            Rect.anchoredPosition3D = Vector3.Lerp(startPos, endPos, normalized);
-
-            yield return null;
-        }
-
-        // 최종 위치 보정
-        Rect.anchoredPosition3D = endPos;
     }
 
     public override void OnPointerEnter(PointerEventData eventData)

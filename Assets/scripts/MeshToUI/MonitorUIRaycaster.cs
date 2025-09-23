@@ -11,12 +11,18 @@ public class MonitorUIRaycaster : MonoBehaviour
     */
     public Camera mainCamera;          // 플레이어 카메라
     public RectTransform uiCanvasRect; // UI Canvas RectTransform
+    Vector3 adjustPos;
     public GraphicRaycaster uiRaycaster; // UI GraphicRaycaster
     public LayerMask TargetLayer;
 
     private GameObject currentHovering;
     private GameObject currentDragging;
+    private Vector2? prevLocalPoint = null;
 
+    private void Start()
+    {
+        adjustPos = new Vector3(uiCanvasRect.sizeDelta.x / 2, uiCanvasRect.sizeDelta.y / 2, 0);
+    }
 
     void Update()
     {
@@ -38,6 +44,16 @@ public class MonitorUIRaycaster : MonoBehaviour
                     uv.x * uiCanvasRect.sizeDelta.x,
                     uv.y * uiCanvasRect.sizeDelta.y
                 );
+
+                // 디버그용 선 그리기
+                if (prevLocalPoint.HasValue)
+                {
+                    Vector3 worldPrev = uiCanvasRect.TransformPoint(prevLocalPoint.Value);
+                    Vector3 worldCurr = uiCanvasRect.TransformPoint(localPoint);
+
+                    Debug.DrawLine(worldPrev, worldCurr, Color.green, 0.1f);
+                }
+                prevLocalPoint = localPoint;
 
                 // 이벤트 데이터 만들기
                 PointerEventData eventData = new PointerEventData(EventSystem.current);
