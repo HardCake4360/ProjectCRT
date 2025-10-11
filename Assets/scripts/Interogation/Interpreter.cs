@@ -38,7 +38,6 @@ public class Interpreter : MonoBehaviour
             outputTarget.text = ""; // 초기화
 
             response.Add("모르는 것이 있으면 터미널에게 물어보세요.");
-            response.Add("커맨드를 사용하려면 \'/\'뒤에 명령어를 입력하세요");
             yield return StartCoroutine(PrintSequentialy(outputTarget));
             onComplete?.Invoke();
             yield break;

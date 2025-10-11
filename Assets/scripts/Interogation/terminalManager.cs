@@ -32,7 +32,7 @@ public class terminalManager : MonoBehaviour
             ClearInputField();
 
             //디렉토리 라인 인스턴스화
-            AddDirectoryLine(userInput);
+            AddUserLine(userInput);
 
             // 프리팹 미리 생성
             GameObject response = Instantiate(responseLine, msgList.transform);
@@ -70,7 +70,7 @@ public class terminalManager : MonoBehaviour
         terminalInput.text = "";
     }
 
-    void AddDirectoryLine(string userInput)
+    void AddUserLine(string userInput)
     {
         //커맨드 라인 컨테이너 리사이즈
         Vector2 msgListSize = msgList.GetComponent<RectTransform>().sizeDelta;
