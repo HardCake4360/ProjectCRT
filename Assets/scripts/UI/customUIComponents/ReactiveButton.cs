@@ -17,6 +17,7 @@ public class ReactiveButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public UnityEvent OnClick;
     public UnityEvent OnDeselect;
+    public UnityEvent OnHover;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class ReactiveButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         StartCoroutine(ScaleCoroutine(targetScale, time));
+        OnHover?.Invoke();
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -16,7 +16,7 @@ public class MainLoop : MonoBehaviour
     }
 
     public MemoPost memo;
-    public menuManager UI;
+    public UIManager UI;
     public bool posting;
     public Camera cam;
 
