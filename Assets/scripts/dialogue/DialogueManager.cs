@@ -21,17 +21,22 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueStartFlag) return;
         if (index == 0 || InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.dialogueAdvanceKeys))
         {
+            // 타이핑 중이면 스킵
+            if (uiManager.IsTyping())
+            {
+                uiManager.StopAllCoroutines();
+                uiManager.SkipText(dialogueData.lines[index-1].text);
+                return;
+            }
+            
             if (dialogueData.lines[index].characterName == "end")
             { 
                 uiManager.SetCanvasActive(false);
                 dialogueStartFlag = false;
                 return;
             }
-            
-            // 타이핑 중이면 스킵
-            if (uiManager.IsTyping()) return;
 
-            // 다음 대사로
+            // 대사 타이핑 시작
             if (index < dialogueData.lines.Length)
             {
                 uiManager.DisplayDialogue(dialogueData.lines[index]);

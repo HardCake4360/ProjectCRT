@@ -58,20 +58,8 @@ public class DialogueUIManager : MonoBehaviour
         dialogueText.text = "";
         int i = 0;
 
-        // 인풋 지연용 1프레임 스킵
-        bool allowSkip = false;
-        yield return null; 
-        allowSkip = true;
-
         while (i < text.Length)
         {
-            if (allowSkip && InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.dialogueAdvanceKeys))
-            {
-                Debug.Log("대사 스킵");
-                dialogueText.text = ParseFullText(text);
-                break;
-            }
-
             // 특수기호 처리 (“<”로 시작하면 “>”까지 한 번에 출력)
             if (text[i] == '<')
             {
@@ -94,26 +82,9 @@ public class DialogueUIManager : MonoBehaviour
     }
 
     // 전체 텍스트를 즉시 표시할 때, < > 처리 적용
-    private string ParseFullText(string text)
+    public void SkipText(string text)
     {
-        string result = "";
-        int i = 0;
-        while (i < text.Length)
-        {
-            if (text[i] == '<')
-            {
-                int end = text.IndexOf('>', i);
-                if (end != -1)
-                {
-                    string specialWord = text.Substring(i + 1, end - i - 1);
-                    result += specialWord;
-                    i = end + 1;
-                    continue;
-                }
-            }
-            result += text[i];
-            i++;
-        }
-        return result;
+        dialogueText.text = text;
+        isTyping = false;
     }
 }
