@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
 
 public class DialogueManager : MonoBehaviour
 {
@@ -7,6 +10,8 @@ public class DialogueManager : MonoBehaviour
 
     private int index = 0;
     private bool dialogueStartFlag = false;
+
+    public UnityEvent OnDialogueEnd;
 
     public void DialogueEventTrigger(DialogueObject data)
     {
@@ -33,6 +38,12 @@ public class DialogueManager : MonoBehaviour
             { 
                 uiManager.SetCanvasActive(false);
                 dialogueStartFlag = false;
+                OnDialogueEnd?.Invoke();
+
+                //모든 상호작용 오브젝트에 딜레이 생성
+                foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
+                    interactObj.SetInteractableWithDelay(0.2f);
+
                 return;
             }
 

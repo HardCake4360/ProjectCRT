@@ -30,7 +30,11 @@ public class PortraitManager : MonoBehaviour
     {
         if (portraitDict.TryGetValue((name, idx), out var spriteSheet))
             return spriteSheet;
-        Debug.Log("접근한 인덱스가 유효하지 않음(인덱스: " + name + ", " + idx + ")");
+        else
+        {
+            Debug.Log("접근한 인덱스가 유효하지 않을 수 있음(인덱스: " + name + ", " + idx + ")");
+        }
+        
         return null;
     }
 }

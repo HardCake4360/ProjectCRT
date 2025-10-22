@@ -5,7 +5,9 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
 
     [Header("대사 진행 키 설정")]
-    public KeyCode[] dialogueAdvanceKeys = new KeyCode[] { KeyCode.Space, KeyCode.Return,KeyCode.Mouse0 };
+    public KeyCode[] dialogueAdvanceKeys = new KeyCode[] { KeyCode.Space, KeyCode.Return, KeyCode.Mouse0 };
+    [Header("상호작용 키 설정")]
+    public KeyCode[] interactionKeys = new KeyCode[] { KeyCode.E, KeyCode.Mouse0 };
 
     void Awake()
     {
