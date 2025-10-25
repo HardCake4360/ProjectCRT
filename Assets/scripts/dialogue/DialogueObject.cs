@@ -20,6 +20,8 @@ public class DialogueObject : ScriptableObject
 
         public float charInterval;
 
+        public ChoicesObj choices;
+
         [TextArea(3, 5)]
         public string text;
     }

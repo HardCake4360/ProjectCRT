@@ -8,6 +8,7 @@ public class NPC_script : Interactable
 
     override public void Interact()
     {
+        if (!canInteract) return;
         OnInteract?.Invoke();
     }
 

@@ -26,7 +26,11 @@ public class PlayerControler : MonoBehaviour
     [Header("플레이어 속성")]
     [SerializeField] private bool isInteracting;
     public bool IsInteracting() { return isInteracting; }
-    public void SetInteract(bool val) { isInteracting = val; }
+    public void SetInteract(bool val) 
+    { 
+        isInteracting = val;
+        Debug.Log("플레이어 상호작용: " + val);
+    }
 
     void Awake()
     {
@@ -82,7 +86,7 @@ public class PlayerControler : MonoBehaviour
                 //Interactable 인터페이스 검색
                 Interactable interactableObject = hitInfo.collider.GetComponent<Interactable>();
 
-                if (interactableObject != null)
+                if (interactableObject != null && interactableObject.canInteract)
                 {
                     isInteracting = true;
                     interactableObject.Interact();

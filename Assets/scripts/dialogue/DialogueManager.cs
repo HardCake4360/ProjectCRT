@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
 
     private int index = 0;
     private bool dialogueStartFlag = false;
+    private bool selecting = false;
 
     public UnityEvent OnDialogueEnd;
 
@@ -24,7 +25,10 @@ public class DialogueManager : MonoBehaviour
     void Update()
     {
         if (!dialogueStartFlag) return;
-        if (index == 0 || InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.dialogueAdvanceKeys))
+
+        if ((index == 0 ||  InputManager.Instance.IsAnyKeyPressedIn(
+                            InputManager.Instance.dialogueAdvanceKeys))
+             && !selecting)
         {
             // 타이핑 중이면 스킵
             if (uiManager.IsTyping())
@@ -43,7 +47,7 @@ public class DialogueManager : MonoBehaviour
                 //모든 상호작용 오브젝트에 딜레이 생성
                 foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
                     interactObj.SetInteractableWithDelay(0.2f);
-
+                
                 return;
             }
 
@@ -53,6 +57,13 @@ public class DialogueManager : MonoBehaviour
                 uiManager.DisplayDialogue(dialogueData.lines[index]);
                 index++;
             }
+        }
+
+        //선택지 표시, 선택 상태 진입
+        if (dialogueData.lines[index].choices && !uiManager.IsTyping())
+        {
+            selecting = true;
+            uiManager.SetChoicesUIActive(true);
         }
     }
 }

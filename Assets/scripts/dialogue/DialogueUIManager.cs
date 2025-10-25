@@ -10,6 +10,7 @@ public class DialogueUIManager : MonoBehaviour
     public PortraitAnimator portraitAnim;
     public TMP_Text nameText;
     public TMP_Text dialogueText;
+    public GameObject ChoicesUI;
 
     private PortraitManager portraitManager;
     public Action OnTypingComplete;
@@ -86,5 +87,10 @@ public class DialogueUIManager : MonoBehaviour
     {
         dialogueText.text = text;
         isTyping = false;
+    }
+
+    public void SetChoicesUIActive(bool val)
+    {
+        ChoicesUI.SetActive(val);
     }
 }

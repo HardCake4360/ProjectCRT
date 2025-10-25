@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DoorObj : Interactable
+public class Door : Interactable
 {
     public bool IsOpened;
     [SerializeField] private float openTime;
