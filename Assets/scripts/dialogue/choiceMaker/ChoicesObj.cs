@@ -1,13 +1,13 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "ChoicesObj", menuName = "Scriptable Objects/ChoicesObj")]
 public class ChoicesObj : ScriptableObject
 {
+    [System.Serializable]
     public class ChoiceData
     {
         public string name;
-        public UnityEvent OnSelect;
+        public DialogueObject OnSelectDialogue;
     }
     public ChoiceData[] lines;
 }

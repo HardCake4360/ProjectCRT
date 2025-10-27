@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6ba673411d42784186398b00495ebf8, type: 3}
-  m_Name: deskChoices
+  m_Name: C_desk1
   m_EditorClassIdentifier: 
-  ChoiceName:
-  - "\uC54C\uACA0\uB2E4"
-  - "\uB531\uD788 \uADF8\uB7F4 \uAE30\uBD84 \uC544\uB2CC\uB370"
+  lines:
+  - name: "\uADF8\uB807\uAC8C \uD558\uC9C0"
+    OnSelectDialogue: {fileID: 11400000, guid: 41c40acc5dca45f43989872b3de1a1ca, type: 2}
+  - name: "\uADF8\uB7F4\uAE30\uBD84 \uC544\uB2C8\uB124"
+    OnSelectDialogue: {fileID: 11400000, guid: f14cf79e219cac7419c0a38392a2f8e0, type: 2}

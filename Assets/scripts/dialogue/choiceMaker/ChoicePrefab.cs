@@ -20,8 +20,12 @@ public class ChoicePrefab : MonoBehaviour
         OnSelect = evt;
     }
 
-    public void InitMembers()
+    public void InitMembers(string txt, DialogueObject dia)
     {
-
+        textMesh.text = txt;
+        OnSelect.AddListener(() =>
+        {
+            DialogueManager.Instance.DialogueEventTrigger(dia);
+        });
     }
 }

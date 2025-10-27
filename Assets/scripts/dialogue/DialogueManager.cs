@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager Instance { get; private set; }
     public DialogueObject dialogueData;
     public DialogueUIManager uiManager;
 
@@ -14,6 +15,15 @@ public class DialogueManager : MonoBehaviour
 
     public UnityEvent OnDialogueEnd;
 
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     public void DialogueEventTrigger(DialogueObject data)
     {
         index = 0;
