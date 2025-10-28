@@ -4,31 +4,39 @@ using System.Collections.Generic;
 
 public class ChoiceIndicator : MonoBehaviour
 {
-    public Vector3 Damp;
-    [SerializeField] private RectTransform indicatingRect;
-    private RectTransform rt;
-    private RectTransform parentRt;
-    private List<RectTransform> Targets;
+    public Vector2 Damp;
+    //[SerializeField] private RectTransform indicatingRect;
+    public RectTransform rt;
+    public RectTransform parentRt;
+    private List<RectTransform> Targets = new List<RectTransform>();
 
-    private void Start()
+    private void Awake()
     {
         rt = GetComponent<RectTransform>();
-        parentRt = gameObject.GetComponentInParent<RectTransform>();
     }
 
     public void SetTargets(List<GameObject> objs)
     {
-        foreach(var obj in objs)
+        Targets.Clear();
+        foreach (var obj in objs)
         {
-            Targets.Add(obj.GetComponent<RectTransform>());
+            if (!obj)
+            {
+                Debug.Log("obj list is NULL");
+                return;
+            }
+            var target = obj.GetComponent<RectTransform>();
+            if (!target) Debug.Log("Can't get RectTransform from " + obj.name);
+            Targets.Add(target);
         }
     }
 
     public void IndicateByIdx(int idx)
     {
-        Vector3 worldPos = Targets[idx].TransformPoint(Targets[idx].localPosition);
+        Debug.Log("indicating: " + Targets[idx].gameObject.name);
+        Vector3 worldPos = Targets[idx].position;
         Vector3 localPos = parentRt.InverseTransformPoint(worldPos);
-        rt.anchoredPosition = localPos + Damp;
+        rt.anchoredPosition = (Vector2)localPos + Damp;
     }
 
 }

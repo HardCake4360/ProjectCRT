@@ -6,25 +6,30 @@ public class ChoicesUIControler : MonoBehaviour
 {
     private ChoicesObj choices;
     public GameObject choicePrefab;
-    private List<GameObject> choiceObjs;
+    public Transform ChoiceParent;
+    public ChoiceIndicator Indicator;
+    private List<GameObject> choiceObjs = new List<GameObject>();
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void SetChoices(ChoicesObj c)
     {
-        
+        choices = c;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void ClearChildren(Transform target)
     {
-        
+        foreach (Transform child in target)
+        {
+            if (child.gameObject.GetComponent<ChoiceIndicator>()) continue;
+            Destroy(child.gameObject);
+        }
     }
 
     public void InstantiateChoices()
     {
+        ClearChildren(ChoiceParent);
+        choiceObjs.Clear();
         foreach (var line in choices.lines)
         {
-            GameObject choice = Instantiate(choicePrefab);
+            GameObject choice = Instantiate(choicePrefab, ChoiceParent);
             var setList = choice.GetComponent<ChoicePrefab>();
 
             //choice 멤버변수 초기화
@@ -32,5 +37,7 @@ public class ChoicesUIControler : MonoBehaviour
 
             choiceObjs.Add(choice);
         }
+        Indicator.SetTargets(choiceObjs);
+        Indicator.IndicateByIdx(0);
     }
 }

@@ -27,5 +27,5 @@ MonoBehaviour:
   - characterName: end
     portrait: 0
     charInterval: 0.1
-    choices: {fileID: 11400000, guid: 17464415b9fffb44aba6d4e77f76a438, type: 2}
+    choices: {fileID: 11400000, guid: 4b1f5f31207862949ad00b7986ea9709, type: 2}
     text: 

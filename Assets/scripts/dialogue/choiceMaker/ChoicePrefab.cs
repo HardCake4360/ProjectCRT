@@ -1,23 +1,17 @@
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+
 public class ChoicePrefab : MonoBehaviour
 {
-    TextMeshPro textMesh;
-    UnityEvent OnSelect;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        textMesh = GetComponent<TextMeshPro>();
-    }
+    [SerializeField] private TextMeshProUGUI textMesh;
+    public UnityEvent OnSelect = new UnityEvent();
 
-    public void SetText(string txt)
+    void Awake()
     {
-        textMesh.text = txt;
-    }
-    public void SetEvent(UnityEvent evt)
-    {
-        OnSelect = evt;
+        textMesh = GetComponentInChildren<TextMeshProUGUI>();
+        if (textMesh == null)
+            Debug.LogError("TextMeshProUGUI not found in children!");
     }
 
     public void InitMembers(string txt, DialogueObject dia)
@@ -27,5 +21,10 @@ public class ChoicePrefab : MonoBehaviour
         {
             DialogueManager.Instance.DialogueEventTrigger(dia);
         });
+    }
+
+    public void TriggerChoice()
+    {
+        OnSelect?.Invoke();
     }
 }

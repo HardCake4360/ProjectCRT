@@ -82,11 +82,17 @@ public class DialogueUIManager : MonoBehaviour
         OnTypingComplete?.Invoke();
     }
 
-    // 전체 텍스트를 즉시 표시할 때, < > 처리 적용
     public void SkipText(string text)
     {
         dialogueText.text = text;
         isTyping = false;
+    }
+
+    public void InitChoiceUI(ChoicesObj choices)
+    {
+        var CUI = ChoicesUI.GetComponent<ChoicesUIControler>();
+        CUI.SetChoices(choices);
+        CUI.InstantiateChoices();
     }
 
     public void SetChoicesUIActive(bool val)

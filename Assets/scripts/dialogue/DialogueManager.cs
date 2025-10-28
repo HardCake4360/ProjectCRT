@@ -73,6 +73,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogueData.lines[index].choices && !uiManager.IsTyping())
         {
             selecting = true;
+            uiManager.InitChoiceUI(dialogueData.lines[index].choices);
             uiManager.SetChoicesUIActive(true);
         }
     }
