@@ -35,7 +35,11 @@ public class ChoiceIndicator : MonoBehaviour
     {
         Debug.Log("indicating: " + Targets[idx].gameObject.name);
         Vector3 worldPos = Targets[idx].position;
+        Debug.Log("calculated world pos: " + worldPos);
+        
         Vector3 localPos = parentRt.InverseTransformPoint(worldPos);
+        Debug.Log("calculated local pos: " + localPos);
+
         rt.anchoredPosition = (Vector2)localPos + Damp;
     }
 

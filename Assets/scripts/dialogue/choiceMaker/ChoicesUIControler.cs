@@ -7,7 +7,6 @@ public class ChoicesUIControler : MonoBehaviour
     private ChoicesObj choices;
     public GameObject choicePrefab;
     public Transform ChoiceParent;
-    public ChoiceIndicator Indicator;
     private List<GameObject> choiceObjs = new List<GameObject>();
 
     public void SetChoices(ChoicesObj c)
@@ -37,7 +36,23 @@ public class ChoicesUIControler : MonoBehaviour
 
             choiceObjs.Add(choice);
         }
-        Indicator.SetTargets(choiceObjs);
-        Indicator.IndicateByIdx(0);
     }
+    public void IndicateByIdx(int i)
+    {
+        int idx = 0;
+        foreach(var c in choiceObjs)
+        {
+            if(idx == i)
+            {
+                c.GetComponent<ChoicePrefab>().SetSelected(true);
+            }
+            else
+            {
+                c.GetComponent<ChoicePrefab>().SetSelected(false);
+            }
+            idx++;
+        }
+    }
+
 }
+

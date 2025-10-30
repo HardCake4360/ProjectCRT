@@ -24,6 +24,13 @@ public class DialogueManager : MonoBehaviour
         }
         Instance = this;
     }
+
+    private void Start()
+    {
+        uiManager.SetCanvasActive(false);
+        uiManager.SetChoicesUIActive(false);
+    }
+
     public void DialogueEventTrigger(DialogueObject data)
     {
         index = 0;
@@ -72,9 +79,20 @@ public class DialogueManager : MonoBehaviour
         //선택지 표시, 선택 상태 진입
         if (dialogueData.lines[index].choices && !uiManager.IsTyping())
         {
-            selecting = true;
-            uiManager.InitChoiceUI(dialogueData.lines[index].choices);
-            uiManager.SetChoicesUIActive(true);
+            
         }
+    }
+
+    public void ChoiceEvent()
+    {
+        if (!dialogueData.lines[index].choices) return;
+        selecting = true;
+        uiManager.InitChoiceUI(dialogueData.lines[index].choices);
+        uiManager.SetChoicesUIActive(true);
+    }
+
+    public void Log(string txt)
+    {
+        Debug.Log(txt);
     }
 }

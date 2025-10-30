@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
@@ -13,7 +14,7 @@ public class DialogueUIManager : MonoBehaviour
     public GameObject ChoicesUI;
 
     private PortraitManager portraitManager;
-    public Action OnTypingComplete;
+    public UnityEvent OnTypingComplete;
 
     private Coroutine typingCorutine;
     private bool isTyping;
@@ -29,6 +30,10 @@ public class DialogueUIManager : MonoBehaviour
         portraitManager = FindFirstObjectByType<PortraitManager>();
         isTyping = false;
         fullText = "";
+        OnTypingComplete.AddListener(() =>
+        {
+            DialogueManager.Instance.ChoiceEvent();
+        });
     }
 
     public void DisplayDialogue(DialogueObject.DialogueLine line)
@@ -86,6 +91,7 @@ public class DialogueUIManager : MonoBehaviour
     {
         dialogueText.text = text;
         isTyping = false;
+        OnTypingComplete?.Invoke();
     }
 
     public void InitChoiceUI(ChoicesObj choices)
@@ -93,6 +99,7 @@ public class DialogueUIManager : MonoBehaviour
         var CUI = ChoicesUI.GetComponent<ChoicesUIControler>();
         CUI.SetChoices(choices);
         CUI.InstantiateChoices();
+        CUI.IndicateByIdx(0);
     }
 
     public void SetChoicesUIActive(bool val)

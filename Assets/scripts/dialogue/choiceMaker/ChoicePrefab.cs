@@ -1,11 +1,21 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
 public class ChoicePrefab : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textMesh;
+    [SerializeField] Image indicator;
     public UnityEvent OnSelect = new UnityEvent();
+    private bool isSelected;
+    public void SetSelected(bool val) { isSelected = val; indicator.enabled = isSelected; }
+
+    private void Start()
+    {
+        isSelected = false;
+        indicator.enabled = isSelected;
+    }
 
     void Awake()
     {
