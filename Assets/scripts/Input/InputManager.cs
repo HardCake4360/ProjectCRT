@@ -11,6 +11,9 @@ public class InputManager : MonoBehaviour
     [Header("선택지 상하 이동 키 설정")]
     public KeyCode[] SelectUp               = new KeyCode[] { KeyCode.UpArrow, KeyCode.W };
     public KeyCode[] SelectDown             = new KeyCode[] { KeyCode.DownArrow, KeyCode.S };
+    [Header("선택지 결정 키 설정")]
+    public KeyCode[] SelectConfirm          = new KeyCode[] { KeyCode.Space, KeyCode.Return };
+
 
     void Awake()
     {

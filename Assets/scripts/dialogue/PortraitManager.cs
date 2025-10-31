@@ -11,7 +11,7 @@ public class PortraitManager : MonoBehaviour
     }
 
     public PortraitSet[] portraits;
-
+    public SpriteSheetObject nullSheet;
     private Dictionary<(string, PortraitType), SpriteSheetObject> portraitDict;
 
     void Awake()
@@ -33,8 +33,7 @@ public class PortraitManager : MonoBehaviour
         else
         {
             Debug.Log("접근한 인덱스가 유효하지 않을 수 있음(인덱스: " + name + ", " + idx + ")");
+            return nullSheet;
         }
-        
-        return null;
     }
 }

@@ -7,7 +7,8 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
     public DialogueObject dialogueData;
-    public DialogueUIManager uiManager;
+    public DialogueUIManager DUIManager;
+    public ChoicesUIControler CUI;
 
     private int index = 0;
     private bool dialogueStartFlag = false;
@@ -27,15 +28,15 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        uiManager.SetCanvasActive(false);
-        uiManager.SetChoicesUIActive(false);
+        DUIManager.SetCanvasActive(false);
+        DUIManager.SetChoicesUIActive(false);
     }
 
     public void DialogueEventTrigger(DialogueObject data)
     {
         index = 0;
         dialogueData = data;
-        uiManager.SetCanvasActive(true);//이벤트 실행했을때 UI 보이도록
+        DUIManager.SetCanvasActive(true);//이벤트 실행했을때 UI 보이도록
         dialogueStartFlag = true;
     }
 
@@ -48,16 +49,16 @@ public class DialogueManager : MonoBehaviour
              && !selecting)
         {
             // 타이핑 중이면 스킵
-            if (uiManager.IsTyping())
+            if (DUIManager.IsTyping())
             {
-                uiManager.StopAllCoroutines();
-                uiManager.SkipText(dialogueData.lines[index-1].text);
+                DUIManager.StopAllCoroutines();
+                DUIManager.SkipText(dialogueData.lines[index-1].text);
                 return;
             }
             
             if (dialogueData.lines[index].characterName == "end")
-            { 
-                uiManager.SetCanvasActive(false);
+            {
+                DUIManager.SetCanvasActive(false);
                 dialogueStartFlag = false;
                 OnDialogueEnd?.Invoke();
 
@@ -71,13 +72,13 @@ public class DialogueManager : MonoBehaviour
             // 대사 타이핑 시작
             if (index < dialogueData.lines.Length)
             {
-                uiManager.DisplayDialogue(dialogueData.lines[index]);
+                DUIManager.DisplayDialogue(dialogueData.lines[index]);
                 index++;
             }
         }
 
         //선택지 표시, 선택 상태 진입
-        if (dialogueData.lines[index].choices && !uiManager.IsTyping())
+        if (dialogueData.lines[index].choices && !DUIManager.IsTyping())
         {
             
         }
@@ -87,8 +88,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (!dialogueData.lines[index].choices) return;
         selecting = true;
-        uiManager.InitChoiceUI(dialogueData.lines[index].choices);
-        uiManager.SetChoicesUIActive(true);
+        DUIManager.InitChoiceUI(dialogueData.lines[index].choices);
+        DUIManager.SetChoicesUIActive(true);
+        CUI.IndicateByIdx(0);
     }
 
     public void Log(string txt)

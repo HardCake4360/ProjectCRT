@@ -8,12 +8,12 @@ public class ChoicePrefab : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textMesh;
     [SerializeField] Image indicator;
     public UnityEvent OnSelect = new UnityEvent();
+    //[SerializeField, ContextMenuItem("SetSelected",nameof(ContextSetSelect))]
     private bool isSelected;
-    public void SetSelected(bool val) { isSelected = val; indicator.enabled = isSelected; }
+    public void ContextSetSelect() { indicator.enabled = isSelected; }
 
     private void Start()
     {
-        isSelected = false;
         indicator.enabled = isSelected;
     }
 
@@ -23,7 +23,11 @@ public class ChoicePrefab : MonoBehaviour
         if (textMesh == null)
             Debug.LogError("TextMeshProUGUI not found in children!");
     }
-
+    public void SetSelected(bool val) 
+    { 
+        isSelected = val;
+        indicator.enabled = val; 
+    }
     public void InitMembers(string txt, DialogueObject dia)
     {
         textMesh.text = txt;

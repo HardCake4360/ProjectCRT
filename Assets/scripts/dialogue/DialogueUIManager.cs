@@ -99,7 +99,7 @@ public class DialogueUIManager : MonoBehaviour
         var CUI = ChoicesUI.GetComponent<ChoicesUIControler>();
         CUI.SetChoices(choices);
         CUI.InstantiateChoices();
-        CUI.IndicateByIdx(0);
+        Debug.Log("Choice UI Initiate Complete");
     }
 
     public void SetChoicesUIActive(bool val)

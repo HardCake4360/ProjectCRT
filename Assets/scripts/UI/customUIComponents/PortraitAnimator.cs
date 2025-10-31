@@ -11,7 +11,11 @@ public class PortraitAnimator : MonoBehaviour
     public void SetPortrait(SpriteSheetObject sheet)
     {
         if(sheet == null) return;
-
+        if(sheet.name == "null")
+        {
+            TargetImage.sprite = sheet.Sprites[0];
+            return;
+        }
         StopAllCoroutines();
         StartCoroutine(PlaySpriteAnimation(sheet.Sprites));
     }

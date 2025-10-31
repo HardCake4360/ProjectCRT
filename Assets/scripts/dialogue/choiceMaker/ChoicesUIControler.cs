@@ -39,19 +39,12 @@ public class ChoicesUIControler : MonoBehaviour
     }
     public void IndicateByIdx(int i)
     {
-        int idx = 0;
+        Debug.Log("indicating by idx: " + i);
         foreach(var c in choiceObjs)
         {
-            if(idx == i)
-            {
-                c.GetComponent<ChoicePrefab>().SetSelected(true);
-            }
-            else
-            {
-                c.GetComponent<ChoicePrefab>().SetSelected(false);
-            }
-            idx++;
+            c.GetComponent<ChoicePrefab>().SetSelected(false);
         }
+        choiceObjs[i].GetComponent<ChoicePrefab>().SetSelected(true);
     }
 
 }
