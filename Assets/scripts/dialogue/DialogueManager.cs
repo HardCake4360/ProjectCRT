@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviour
     private int index = 0;
     private bool dialogueStartFlag = false;
     private bool selecting = false;
+    public void SetSelecting(bool val) { selecting = val; }
 
     public UnityEvent OnDialogueEnd;
 
@@ -80,7 +81,7 @@ public class DialogueManager : MonoBehaviour
         //선택지 표시, 선택 상태 진입
         if (dialogueData.lines[index].choices && !DUIManager.IsTyping())
         {
-            
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 

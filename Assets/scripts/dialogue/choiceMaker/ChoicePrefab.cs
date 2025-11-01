@@ -6,9 +6,10 @@ using TMPro;
 public class ChoicePrefab : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textMesh;
-    [SerializeField] Image indicator;
-    public UnityEvent OnSelect = new UnityEvent();
-    //[SerializeField, ContextMenuItem("SetSelected",nameof(ContextSetSelect))]
+    [SerializeField] private Image indicator;
+    [SerializeField] private int selfIdx;
+    [SerializeField] private ReactiveButton button;
+
     private bool isSelected;
     public void ContextSetSelect() { indicator.enabled = isSelected; }
 
@@ -28,17 +29,21 @@ public class ChoicePrefab : MonoBehaviour
         isSelected = val;
         indicator.enabled = val; 
     }
-    public void InitMembers(string txt, DialogueObject dia)
+    public void InitMembers(string txt,int idx, DialogueObject dia)
     {
         textMesh.text = txt;
-        OnSelect.AddListener(() =>
+        selfIdx = idx;
+        button.OnClick.AddListener(() =>
         {
+            DialogueManager.Instance.SetSelecting(false);
+            DialogueManager.Instance.DUIManager.SetChoicesUIActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
             DialogueManager.Instance.DialogueEventTrigger(dia);
         });
     }
 
-    public void TriggerChoice()
+    public void OnHover()
     {
-        OnSelect?.Invoke();
+        DialogueManager.Instance.CUI.IndicateByIdx(selfIdx);
     }
 }

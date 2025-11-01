@@ -26,15 +26,18 @@ public class ChoicesUIControler : MonoBehaviour
     {
         ClearChildren(ChoiceParent);
         choiceObjs.Clear();
+        int idx = 0;
         foreach (var line in choices.lines)
         {
             GameObject choice = Instantiate(choicePrefab, ChoiceParent);
             var setList = choice.GetComponent<ChoicePrefab>();
 
             //choice 멤버변수 초기화
-            setList.InitMembers(line.name, line.OnSelectDialogue);
+            setList.InitMembers(line.name, idx, line.OnSelectDialogue);
 
             choiceObjs.Add(choice);
+
+            idx++;
         }
     }
     public void IndicateByIdx(int i)

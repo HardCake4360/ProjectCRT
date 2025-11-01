@@ -58,7 +58,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -80,9 +80,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMesh: {fileID: 2404830757603858322}
   indicator: {fileID: 4750636884683997074}
-  OnSelect:
-    m_PersistentCalls:
-      m_Calls: []
+  selfIdx: 0
+  button: {fileID: 5173664290603834148}
 --- !u!114 &4837039133120108730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +355,7 @@ GameObject:
   - component: {fileID: 9190811569651570000}
   - component: {fileID: 2041158900033564741}
   - component: {fileID: 7143442136763062439}
+  - component: {fileID: 5173664290603834148}
   m_Layer: 5
   m_Name: choiceName
   m_TagString: Untagged
@@ -435,3 +435,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delta: {x: 20, y: 20}
   targetRect: {fileID: 1648402282835946431}
+--- !u!114 &5173664290603834148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8644415382758866160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b218a49d4145b04598a877bbce94d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mindSelected: 0
+  targetScale: {x: 1.1, y: 1.1, z: 0}
+  time: 0.1
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeselect:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8723483005182257896}
+        m_TargetAssemblyTypeName: ChoicePrefab, Assembly-CSharp
+        m_MethodName: OnHover
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
