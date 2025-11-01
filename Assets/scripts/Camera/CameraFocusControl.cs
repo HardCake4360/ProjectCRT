@@ -19,7 +19,6 @@ public class CameraFocusControl : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

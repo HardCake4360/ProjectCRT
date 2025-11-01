@@ -46,7 +46,7 @@ public class terminalManager : MonoBehaviour
             userInputLine.transform.SetAsLastSibling();
             userInputLine.SetActive(false);
 
-            Text uiText = response.GetComponentInChildren<Text>();
+            TextMeshProUGUI uiText = response.GetComponentInChildren<TextMeshProUGUI>();
 
             StartCoroutine(interpreter.Interpret(userInput,uiText, () =>
             {
@@ -83,7 +83,7 @@ public class terminalManager : MonoBehaviour
         msg.transform.SetSiblingIndex(msgList.transform.childCount - 1);
 
         //생성한 객체 텍스트 설정
-        msg.GetComponentsInChildren<Text>()[1].text = userInput;
+        msg.GetComponentsInChildren<TextMeshProUGUI>()[1].text = userInput;
     }
 
     int AddInterpreterLines(List<string> interpretation)
@@ -100,7 +100,7 @@ public class terminalManager : MonoBehaviour
             Vector2 listSize = msgList.GetComponent<RectTransform>().sizeDelta;
             msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(listSize.x, listSize.y + 35f);
 
-            response.GetComponentInChildren<Text>().text = interpretation[i];
+            response.GetComponentInChildren<TextMeshProUGUI>().text = interpretation[i];
 
         }
 

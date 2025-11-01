@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using TMPro;
 
 public class Interpreter : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class Interpreter : MonoBehaviour
 
     List<string> response = new List<string>();
 
-    public IEnumerator Interpret(string userInput, Text outputTarget, System.Action onComplete)
+    public IEnumerator Interpret(string userInput, TextMeshProUGUI outputTarget, System.Action onComplete)
     {
         response.Clear();
 
@@ -83,7 +84,7 @@ public class Interpreter : MonoBehaviour
         }
     }
 
-    IEnumerator PrintSequentialy(Text outputTarget)
+    IEnumerator PrintSequentialy(TextMeshProUGUI outputTarget)
     {
         int cnt = 0;
         foreach(string line in response)
@@ -98,7 +99,7 @@ public class Interpreter : MonoBehaviour
             cnt++;
         }
     }
-    IEnumerator PrintSequentialyLine(Text outputTarget,float t)
+    IEnumerator PrintSequentialyLine(TextMeshProUGUI outputTarget,float t)
     {
         int cnt = 0;
         foreach (string line in response)
