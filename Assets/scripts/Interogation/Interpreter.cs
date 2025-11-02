@@ -11,9 +11,20 @@ public class Interpreter : MonoBehaviour
     string answer;
     public float printDelay;
     public float printDelayLine;
+
+    [SerializeField] private GameObject windowPrefab;
+    [SerializeField] private GameObject tabPrefab;
+    [SerializeField] private GameObject content;
+    [SerializeField] private Vector2 InitialMinSize;
+    [SerializeField] private Vector2 InitialPos;
+
     private void Start()
     {
         ragHandler = GetComponent<RAGHandler>();
+        if(InitialMinSize.x == 0||InitialMinSize.y == 0)
+        {
+            InitialMinSize = content.GetComponent<RectTransform>().sizeDelta;
+        }
     }
 
     Dictionary<string, string> colors = new Dictionary<string, string>()
@@ -33,6 +44,22 @@ public class Interpreter : MonoBehaviour
         response.Clear();
 
         string[] args = userInput.Split();
+
+        if (args[0] == "/showVisual")
+        {
+            outputTarget.text = ""; // 초기화
+
+            var whool = WindowManager.Instance.InstantiateWhoolWindow(new WhoolWindow(windowPrefab, tabPrefab), "Simula Visual", content);
+            ResizablePanel rp = whool.window.GetComponent<ResizablePanel>();
+            rp.targetPanel.sizeDelta = InitialMinSize;
+            rp.targetPanel.anchoredPosition = InitialPos;
+            rp.MinSize = InitialMinSize;
+
+            response.Add("자아 인식도를 시각화하였습니다.");
+            yield return StartCoroutine(PrintSequentialy(outputTarget));
+            onComplete?.Invoke();
+            yield break;
+        }
 
         if (args[0] == "/help")
         {

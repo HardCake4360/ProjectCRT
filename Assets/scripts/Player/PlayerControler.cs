@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerControler : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerControler : MonoBehaviour
     [Header("Raycast 설정")]
     [SerializeField] private Transform rayOrigin;
     [SerializeField] private float rayDistance = 3.0f;
+    [SerializeField] TextMeshProUGUI hintText;
 
     private float horizontalInput;
     private float verticalInput;
@@ -80,12 +82,17 @@ public class PlayerControler : MonoBehaviour
         {
             // 디버깅 용으로 레이를 시각화
             Debug.DrawRay(rayOrigin.position, rayOrigin.forward * rayDistance, Color.green);
+            
+            //Interactable 인터페이스 검색
+            Interactable interactableObject = hitInfo.collider.GetComponent<Interactable>();
+            if (interactableObject)
+            {
+                hintText.enabled = true;
+                hintText.text = interactableObject.HintName;
+            }
 
             if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.interactionKeys))
             {
-                //Interactable 인터페이스 검색
-                Interactable interactableObject = hitInfo.collider.GetComponent<Interactable>();
-
                 if (interactableObject != null && interactableObject.canInteract)
                 {
                     isInteracting = true;
@@ -103,6 +110,7 @@ public class PlayerControler : MonoBehaviour
         {
             // 레이가 아무것도 충돌하지 않았을 때
             Debug.DrawRay(rayOrigin.position, rayOrigin.forward * rayDistance, Color.red);
+            hintText.enabled = false;
         }
 
     }

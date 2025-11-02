@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
-  m_Name: D_desk1-1 2
+  m_Name: startDiaEvent
   m_EditorClassIdentifier: 
   lines:
   - characterName: "\uC0B0"
     portrait: 0
-    charInterval: 0.1
+    charInterval: 0.05
     choices: {fileID: 0}
-    text: "\uB9C8\uC74C\uAC19\uC544\uC11C\uB294 \uB2F9\uC7A5 \uB098\uAC00\uACE0\uC2F6\uB124\uB9CC..."
-  - characterName: "\uC811\uC218\uC6D0"
+    text: "\uC804\uD654\uAC00 \uC6B8\uB9B0\uB2E4..."
+  - characterName: "\uC0B0"
     portrait: 0
-    charInterval: 0
+    charInterval: 0.05
     choices: {fileID: 0}
-    text: "\uADF8\uB7AC\uB2E4\uAC04 \uAC10\uBD09\uC774\uB2C8\uAE4C \uC5BC\uB978 \uB4E4\uC5B4\uAC00\uC694"
+    text: "\uBC1B\uC544\uC57C\uACA0\uC9C0"
   - characterName: end
     portrait: 0
-    charInterval: 0
+    charInterval: 0.05
     choices: {fileID: 0}
-    text: 
+    text: "\uBC1B\uC544\uC57C\uACA0\uC9C0"

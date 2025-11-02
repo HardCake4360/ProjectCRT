@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Interactable: MonoBehaviour
 {
+    public string HintName;
     public bool canInteract = true;
 
     public virtual void Interact() { }

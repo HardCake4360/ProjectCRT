@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
+  m_Name: Shelf_desc
+  m_EditorClassIdentifier: 
+  lines:
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uC0AC\uAC74\uC774 \uC9C4\uD589 \uB418\uBA74 \uC5EC\uAE30\uC5D0 \uC99D\uAC70\uBB3C\uB4E4\uC744
+      \uC9C4\uC5F4\uD574\uB480\uC5C8\uC9C0."
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "(\uC0AC\uAC74 \uD574\uACB0\uC5D0 \uD544\uC694\uD55C \uB2E8\uC11C\uB294
+      \uC774\uACF3\uC5D0 \uBD84\uB958\uB418\uB294 \uAC83 \uAC19\uB2E4)"
+  - characterName: end
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: 

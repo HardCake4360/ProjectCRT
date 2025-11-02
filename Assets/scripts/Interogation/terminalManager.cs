@@ -9,7 +9,7 @@ public class terminalManager : MonoBehaviour
     public GameObject dirLine;
     public GameObject responseLine;
 
-    public TMP_InputField terminalInput;
+    public MeshTMPInputField terminalInput;
     public GameObject userInputLine;
     public ScrollRect scrollRect;
     public GameObject msgList;
@@ -23,10 +23,10 @@ public class terminalManager : MonoBehaviour
 
     private void OnGUI()
     {
-        if(terminalInput.isFocused && terminalInput.text != "" && Input.GetKeyDown(KeyCode.Return))
+        if(terminalInput.isFocused && terminalInput.inputField.text != "" && Input.GetKeyDown(KeyCode.Return))
         {
             //유저의 입력을 저장
-            string userInput = terminalInput.text;
+            string userInput = terminalInput.inputField.text;
 
             //인풋 필드 클리어
             ClearInputField();
@@ -59,15 +59,15 @@ public class terminalManager : MonoBehaviour
                 scrollRect.verticalNormalizedPosition = 0;
 
                 //입력 필드 리포커싱
-                terminalInput.ActivateInputField();
-                terminalInput.Select();
+                terminalInput.inputField.ActivateInputField();
+                terminalInput.inputField.Select();
             }));
         }
     }
 
     void ClearInputField()
     {
-        terminalInput.text = "";
+        terminalInput.inputField.text = "";
     }
 
     void AddUserLine(string userInput)

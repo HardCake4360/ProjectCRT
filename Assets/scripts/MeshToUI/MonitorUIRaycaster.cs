@@ -12,6 +12,7 @@ public class MonitorUIRaycaster : MonoBehaviour
     public Camera mainCamera;          // 플레이어 카메라
     public RectTransform uiCanvasRect; // UI Canvas RectTransform
     Vector3 adjustPos;
+    public float RaycastLength;
     public GraphicRaycaster uiRaycaster; // UI GraphicRaycaster
     public LayerMask TargetLayer;
 
@@ -19,20 +20,37 @@ public class MonitorUIRaycaster : MonoBehaviour
     private GameObject currentDragging;
     private Vector2? prevLocalPoint = null;
 
+    private bool interacting;
+    public void SetInteracting(bool val) { interacting = val; }
+
     private void Start()
     {
+        RaycastLength = 10f;
         adjustPos = new Vector3(uiCanvasRect.sizeDelta.x / 2, uiCanvasRect.sizeDelta.y / 2, 0);
+        interacting = false;
     }
 
     void Update()
     {
         // 메인 카메라에서 마우스 → 월드 Ray 쏘기
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red);
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);//레이캐스트 길이 조정 아직 안함
+        Debug.DrawRay(ray.origin, ray.direction * RaycastLength, Color.red);
+
+        if (interacting) return;
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Debug.DrawRay(ray.origin, Vector3.up * 100f, Color.blue);
+
+            //임시 상호작용 코드
+            var obj = hit.collider.gameObject.GetComponent<Interactable>();
+            if (obj && InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.interactionKeys))
+            {
+                obj.Interact();
+                interacting = true;
+            }
+
+
             // 이 오브젝트에 닿았는지 확인
             if (hit.collider.gameObject == gameObject)
             {

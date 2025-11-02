@@ -32,7 +32,6 @@ public class WindowManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     private void adjustAnchorAlignment()

@@ -1,8 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 public class MainLoop : MonoBehaviour
 {
     public static MainLoop Instance { get; private set; }
+
+    public DialogueObject startDiaEvent;
 
     private void Awake()
     {
@@ -13,6 +16,16 @@ public class MainLoop : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+    private void Start()
+    {
+        StartCoroutine(startEvnet());
+    }
+
+    IEnumerator startEvnet()
+    {
+        yield return new WaitForSeconds(2f);
+        DialogueManager.Instance.DialogueEventTrigger(startDiaEvent);
     }
 
     public MemoPost memo;
