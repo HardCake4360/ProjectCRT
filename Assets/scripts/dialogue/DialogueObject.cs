@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum PortraitType
 {
@@ -27,4 +28,7 @@ public class DialogueObject : ScriptableObject
     }
     [Tooltip("마지막 노드 이름: end, 선택지도 마지막 노드에 넣을 것")]
     public DialogueLine[] lines;
+
+    public UnityEvent OnStart;
+    public UnityEvent OnEnd;
 }

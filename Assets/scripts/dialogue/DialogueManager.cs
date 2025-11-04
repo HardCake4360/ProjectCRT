@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     private bool selecting = false;
     public void SetSelecting(bool val) { selecting = val; }
 
+    public UnityEvent OnDialogueStart;
     public UnityEvent OnDialogueEnd;
 
     void Awake()
@@ -37,8 +38,13 @@ public class DialogueManager : MonoBehaviour
     {
         index = 0;
         dialogueData = data;
+        
+        OnDialogueStart = data.OnStart;
+        OnDialogueEnd = data.OnEnd;
+        
         DUIManager.SetCanvasActive(true);//이벤트 실행했을때 UI 보이도록
         dialogueStartFlag = true;
+        OnDialogueStart?.Invoke();
     }
 
     void Update()
@@ -46,7 +52,7 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueStartFlag) return;
 
         if ((index == 0 ||  InputManager.Instance.IsAnyKeyPressedIn(
-                            InputManager.Instance.dialogueAdvanceKeys))
+                            InputManager.Instance.DialogueAdvanceKeys))
              && !selecting)
         {
             // 타이핑 중이면 스킵
