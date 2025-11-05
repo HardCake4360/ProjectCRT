@@ -1,11 +1,28 @@
 using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
+public enum MainState
+{
+    Main,
+    Interacting
+}
+
 public class MainLoop : MonoBehaviour
 {
     public static MainLoop Instance { get; private set; }
 
     public DialogueObject startDiaEvent;
+    public MemoPost memo;
+    public UIManager UI;
+    public bool posting;
+    public Camera cam;
+
+    [Header("Managers")]
+    public MonitorUIRaycaster Raycaster;
+    public CameraFocusControl CamControler;
+
+    public MainState MainLoopState;
 
     private void Awake()
     {
@@ -28,14 +45,44 @@ public class MainLoop : MonoBehaviour
         DialogueManager.Instance.DialogueEventTrigger(startDiaEvent);
     }
 
-    public MemoPost memo;
-    public UIManager UI;
-    public bool posting;
-    public Camera cam;
+    public void SetMainLoopState(MainState state)
+    {
+        MainLoopState = state;
+    }
+
+    //인스펙터 연결용 함수
+    public void SetMainLoopState_Main()
+    {
+        MainLoopState = MainState.Main;
+    }
+    public void SetMainLoopState_Interacting()
+    {
+        MainLoopState = MainState.Interacting;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(posting) memo.PostMode();
+        switch (MainLoopState)
+        {
+            case MainState.Main:
+                Raycaster.RaycastAndInteract();
+
+                //camControler 없는 씬에서는 작동하지 않도록
+                if (!CamControler) break;
+                if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.ToLeft))
+                {
+                    CamControler.AddToCurrentCamNum(-1);
+                }
+                else if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.ToRight))
+                {
+                    CamControler.AddToCurrentCamNum(1);
+                }
+                break;
+            case MainState.Interacting:
+                break;
+
+        }
+
     }
 }

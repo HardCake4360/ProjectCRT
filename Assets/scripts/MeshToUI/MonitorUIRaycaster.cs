@@ -27,16 +27,16 @@ public class MonitorUIRaycaster : MonoBehaviour
     {
         RaycastLength = 10f;
         adjustPos = new Vector3(uiCanvasRect.sizeDelta.x / 2, uiCanvasRect.sizeDelta.y / 2, 0);
-        interacting = false;
+        interacting = false; MainLoop.Instance.SetMainLoopState(MainState.Main);
     }
 
-    void Update()
+    public void RaycastAndInteract()
     {
         // 메인 카메라에서 마우스 → 월드 Ray 쏘기
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);//레이캐스트 길이 조정 아직 안함
         Debug.DrawRay(ray.origin, ray.direction * RaycastLength, Color.red);
 
-        if (interacting) return;
+        //if (interacting) return;
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
@@ -47,7 +47,7 @@ public class MonitorUIRaycaster : MonoBehaviour
             if (obj && InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.interactionKeys))
             {
                 obj.Interact();
-                interacting = true;
+                interacting = true; MainLoop.Instance.SetMainLoopState(MainState.Interacting);
             }
 
 
