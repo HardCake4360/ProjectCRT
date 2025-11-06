@@ -3,8 +3,6 @@ using TMPro;
 
 public class PlayerControler : MonoBehaviour
 {
-    public static PlayerControler Instance { get; private set; }
-
     [Header("기본 물리설정")]
     CharacterController charCon;
     [SerializeField] GameObject cam;
@@ -26,23 +24,7 @@ public class PlayerControler : MonoBehaviour
     private RaycastHit hitInfo;//레이캐스트 힛 오브젝트 정보
 
     [Header("플레이어 속성")]
-    [SerializeField] private bool isInteracting;
-    public bool IsInteracting() { return isInteracting; }
-    public void SetInteract(bool val) 
-    { 
-        isInteracting = val;
-        Debug.Log("플레이어 상호작용: " + val);
-    }
-
-    void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+    private bool nothing;//필요없는 속성 지웠는데 헤더는 남겨놓고 싶어서 아무거나 써놓음
 
     private void Start()
     {
@@ -52,10 +34,8 @@ public class PlayerControler : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void Update()
+    public void UpdatePlayer()
     {
-        if (isInteracting) return;//상호작용중에는 모든 행동 정지
-
         //- - - - - - - - 이동 로직 - - - - - - - - 
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
@@ -95,7 +75,7 @@ public class PlayerControler : MonoBehaviour
             {
                 if (interactableObject != null && interactableObject.canInteract)
                 {
-                    isInteracting = true;
+                    MainLoop.Instance.SetMainLoopState(MainState.Interacting);
                     interactableObject.Interact();
                     Debug.Log($"상호작용: {hitInfo.collider.gameObject.name}");
                 }

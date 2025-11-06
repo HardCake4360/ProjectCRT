@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
+  m_Name: D_chief_tutorial
+  m_EditorClassIdentifier: 
+  lines:
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uC654\uAD70\uADF8\uB798, \uC774\uBC88 \uC758\uB8B0\uB97C \uC804\uB2EC\uD574\uC8FC\uACA0\uB124"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uC778\uADFC \uACF5\uC6D0\uC5D0\uC11C \uC758\uB8B0\uC790\uC758 \uACE0\uC591\uC774..."
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uACE0\uC591\uC774\uB77C\uB3C4 \uC2E4\uC885\uB410\uB2E4\uB294 \uAC81\uB2C8\uAE4C?"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "...\uADF8\uB807\uB124"
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uCC38 \uD560\uC77C\uB3C4 \uC5C6\uB098\uBCF4\uAD70\uC694"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uC758\uB8B0\uAC00 \uB4E4\uC5B4\uC654\uC73C\uBA74 \uC218\uD589\uD560 \uBFD0\uC774\uC57C.
+      \uADF8\uB9AC\uACE0 \uB9C8\uCE68 \uC778\uC6D0\uC774 \uC790\uB124\uBC16\uC5D0
+      \uC5C6\uAE30\uB3C4 \uD588\uACE0"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uC544\uBB34\uD2BC, \uC774\uAC70\uB098 \uBC1B\uAC8C"
+  - characterName: null
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "USB\uB97C \uBC1B\uC558\uB2E4"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uADF8 \uC548\uC5D0 \uC218\uC0AC \uC5B4\uC2DC\uC2A4\uD134\uD2B8 \uC811\uADFC
+      \uD0A4\uAC00 \uB4E4\uC5B4\uC788\uB124. \uC5B4\uC81C \uBC1C\uAE09\uB41C\uAC78
+      \uC804\uD574\uC8FC\uB294\uAC78 \uAE5C\uBE61\uD588\uAD70"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uB370\uC774\uD130\uBCA0\uC774\uC2A4 \uC811\uADFC \uAD8C\uD55C\uB3C4 \uAC31\uC2E0\uD574\uB480\uC73C\uB2C8
+      \uB4E4\uC5B4\uAC00\uC11C \uD655\uC778\uD574\uBCF4\uAC8C"
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uACA8\uC6B0 \uC0AC\uB77C\uC9C4 \uACE0\uC591\uC774 \uCC3E\uB294 \uC77C\uC5D0
+      \uC774\uB807\uAC8C \uAE4C\uC9C0 \uD574\uC57C\uD569\uB2C8\uAE4C...?"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uC790\uB124 \uC5C5\uB370\uC774\uD2B8\uB41C \uC2DC\uC2A4\uD15C\uC740 \uC544\uC9C1
+      \uC368\uBCF8\uC801\uC774 \uC5C6\uC9C0\uC54A\uB098... \uC5F0\uC2B5\uD558\uAE30\uC5D4
+      \uB098\uC058\uC9C0 \uC54A\uC740 \uAE30\uD68C\uC9C0"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uC0AC\uAC74\uBC88\uD638 \"V-1024\"\uB85C \uBB3C\uC5B4\uBCF4\uBA74 \uC544\uB9C8
+      \uC54C\uB824\uC904\uAC78\uC138"
+  - characterName: "\uC11C\uC7A5"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uAE30\uC5B5\uD558\uAE30 \uD798\uB4E4\uBA74 \uADF8\uB0E5 \uACE0\uC591\uC774
+      \uC2E4\uC885\uC0AC\uAC74\uC5D0 \uB300\uD574 \uBB3C\uC5B4\uBD10\uB3C4 \uC54C\uC544\uB4E4\uC744
+      \uAC83 \uAC19\uAE34 \uD558\uAD70..."
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: "\uBB50...\uC54C\uACA0\uC2B5\uB2C8\uB2E4"
+  - characterName: end
+    portrait: 0
+    charInterval: 0.05
+    choices: {fileID: 0}
+    text: 
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

@@ -14,13 +14,16 @@ public class MainLoop : MonoBehaviour
 
     public DialogueObject startDiaEvent;
     public MemoPost memo;
-    public UIManager UI;
     public bool posting;
     public Camera cam;
 
     [Header("Managers")]
+    public UIManager UI;
     public MonitorUIRaycaster Raycaster;
     public CameraFocusControl CamControler;
+
+    [Header("Local properties")]
+    public PlayerControler PC;
 
     public MainState MainLoopState;
 
@@ -66,7 +69,13 @@ public class MainLoop : MonoBehaviour
         switch (MainLoopState)
         {
             case MainState.Main:
-                Raycaster.RaycastAndInteract();
+                if(Raycaster) Raycaster.RaycastAndInteract();
+
+                if (PC)
+                {
+                    Debug.Log("Player IS");
+                    PC.UpdatePlayer();
+                }
 
                 //camControler 없는 씬에서는 작동하지 않도록
                 if (!CamControler) break;
@@ -78,6 +87,7 @@ public class MainLoop : MonoBehaviour
                 {
                     CamControler.AddToCurrentCamNum(1);
                 }
+                
                 break;
             case MainState.Interacting:
                 break;

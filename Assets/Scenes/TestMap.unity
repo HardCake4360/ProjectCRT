@@ -270,7 +270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &155043095
 Transform:
   m_ObjectHideFlags: 0
@@ -286,7 +286,6 @@ Transform:
   m_Children:
   - {fileID: 614739485}
   - {fileID: 1448106291}
-  - {fileID: 472734836}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &311824948
@@ -479,7 +478,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 468, y: -165.00009}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 460.01, y: 140.01001}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &325028491
 MonoBehaviour:
@@ -725,7 +724,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2028180364}
-  m_Father: {fileID: 155043095}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1148,11 +1147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458c501d15e9a6f4ba459bcee06a4fc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueAdvanceKeys: 200000000d00000043010000
+  DialogueAdvanceKeys: 200000000d00000043010000
   interactionKeys: 6500000043010000
   SelectUp: 1101000077000000
   SelectDown: 1201000073000000
   SelectConfirm: 200000000d000000
+  ToLeft: 71000000
+  ToRight: 65000000
 --- !u!1001 &703623710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1888,33 +1889,12 @@ MonoBehaviour:
   dialogueData: {fileID: 0}
   DUIManager: {fileID: 1448106286}
   CUI: {fileID: 490583870}
-  OnDialogueEnd:
+  StaticOnDialogueStart:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1858047632}
-        m_TargetAssemblyTypeName: PlayerControler, Assembly-CSharp
-        m_MethodName: SetInteract
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1448106287}
-        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: Log
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: timing
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  StaticOnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1448106288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2271,9 +2251,9 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1448106287}
-        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: DialogueEventTrigger
+      - m_Target: {fileID: 1690682100}
+        m_TargetAssemblyTypeName: NPC_script, Assembly-CSharp
+        m_MethodName: StaticDiaEventTrigger
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 3cd0ec722de83a24e9992ca14983ce4c, type: 2}
@@ -2389,12 +2369,12 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1448106287}
-        m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: DialogueEventTrigger
+      - m_Target: {fileID: 1706034787}
+        m_TargetAssemblyTypeName: NPC_script, Assembly-CSharp
+        m_MethodName: StaticDiaEventTrigger
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 1999d9b4abddeb3499444210d6fd206d, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 15e98d05920eaba48b33e61329ad5f37, type: 2}
           m_ObjectArgumentAssemblyTypeName: DialogueObject, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -2778,7 +2758,6 @@ MonoBehaviour:
   rayOrigin: {fileID: 591892749}
   rayDistance: 1
   hintText: {fileID: 2028180366}
-  isInteracting: 0
 --- !u!1 &1880281745
 GameObject:
   m_ObjectHideFlags: 0
@@ -3024,6 +3003,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b88a3aeb4acf41439aa45c3192e820e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2079495729
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2079495731}
+  - component: {fileID: 2079495730}
+  m_Layer: 0
+  m_Name: --SceneInitializer--
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2079495730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079495729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f277e35191a42b944a38f1558b7d7ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2079495730}
+        m_TargetAssemblyTypeName: SceneInitializer, Assembly-CSharp
+        m_MethodName: OuterSceneInitPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnInitial:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: a693d6aa3c0f3f2469ee72b6ddb1a599, type: 2}
+        m_TargetAssemblyTypeName: TipObj, Assembly-CSharp
+        m_MethodName: DetonateEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Delay: 2
+  PC: {fileID: 1858047632}
+--- !u!4 &2079495731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079495729}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.5892205, y: -1.0490077, z: -0.6950989}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2465611230647351084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3042,11 +3097,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1648402282835946431, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 290.01
       objectReference: {fileID: 0}
     - target: {fileID: 1648402282835946431, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 80.01
       objectReference: {fileID: 0}
     - target: {fileID: 2404830757603858322, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_text
@@ -3054,19 +3109,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2770544561312973141, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2770544561312973141, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2770544561312973141, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2770544561312973141, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50.005005
       objectReference: {fileID: 0}
     - target: {fileID: 3015933488811632135, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_Pivot.x
@@ -3150,11 +3205,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4087654742333486462, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4087654742333486462, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4087654742333486462, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_SizeDelta.x
@@ -3166,11 +3221,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4087654742333486462, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 265.005
       objectReference: {fileID: 0}
     - target: {fileID: 4087654742333486462, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50.005005
       objectReference: {fileID: 0}
     - target: {fileID: 5173664290603834148, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: OnHover.m_PersistentCalls.m_Calls.Array.size
@@ -3217,10 +3272,12 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2079495731}
   - {fileID: 512464039}
   - {fileID: 1858047630}
   - {fileID: 1748447135}
   - {fileID: 155043095}
+  - {fileID: 472734836}
   - {fileID: 1690682099}
   - {fileID: 1706034791}
   - {fileID: 352458406}

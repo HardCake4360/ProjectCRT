@@ -15,8 +15,10 @@ public class DialogueManager : MonoBehaviour
     private bool selecting = false;
     public void SetSelecting(bool val) { selecting = val; }
 
-    public UnityEvent OnDialogueStart;
-    public UnityEvent OnDialogueEnd;
+    public UnityEvent StaticOnDialogueStart;
+    public UnityEvent StaticOnDialogueEnd;
+    private UnityEvent OnDialogueStart;
+    private UnityEvent OnDialogueEnd;
 
     void Awake()
     {
@@ -26,6 +28,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -44,6 +47,7 @@ public class DialogueManager : MonoBehaviour
         
         DUIManager.SetCanvasActive(true);//이벤트 실행했을때 UI 보이도록
         dialogueStartFlag = true;
+        StaticOnDialogueStart?.Invoke();
         OnDialogueStart?.Invoke();
     }
 
@@ -67,6 +71,7 @@ public class DialogueManager : MonoBehaviour
             {
                 DUIManager.SetCanvasActive(false);
                 dialogueStartFlag = false;
+                StaticOnDialogueEnd?.Invoke();
                 OnDialogueEnd?.Invoke();
 
                 //모든 상호작용 오브젝트에 딜레이 생성

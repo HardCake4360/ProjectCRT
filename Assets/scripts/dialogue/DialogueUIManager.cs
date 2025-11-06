@@ -13,6 +13,9 @@ public class DialogueUIManager : MonoBehaviour
     public TMP_Text dialogueText;
     public GameObject ChoicesUI;
 
+    public GameObject Portrait;
+    public GameObject Name;
+
     private PortraitManager portraitManager;
     public UnityEvent OnTypingComplete;
 
@@ -42,15 +45,27 @@ public class DialogueUIManager : MonoBehaviour
         if (typingCorutine != null)
             StopCoroutine(typingCorutine);
 
-        nameText.text = line.characterName.ToString();
-        currentSheet = portraitManager.GetPortrait(line.characterName, line.portrait);
-        
-        //이전 라인과 초상화 같으면 업데이트 하지 않음 (둘이 달라야 업데이트)
-        if(prevSheet != currentSheet)
+        if(line.characterName == "null")
         {
-            portraitAnim.SetPortrait(currentSheet);
-            prevSheet = currentSheet;
+            Portrait.SetActive(false);
+            Name.SetActive(false);
         }
+        else
+        {
+            Portrait.SetActive(true);
+            Name.SetActive(true);
+            
+            nameText.text = line.characterName.ToString();
+            currentSheet = portraitManager.GetPortrait(line.characterName, line.portrait);
+        
+            //이전 라인과 초상화 같으면 업데이트 하지 않음 (둘이 달라야 업데이트)
+            if(prevSheet != currentSheet)
+            {
+                portraitAnim.SetPortrait(currentSheet);
+                prevSheet = currentSheet;
+            }
+        }
+
 
         //새 대사 시작
         typingCorutine = StartCoroutine(TypeText(line));

@@ -34,8 +34,8 @@ MonoBehaviour:
   OnEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 7f30a627435b9ee4aa9084b6ce81334d, type: 2}
-        m_TargetAssemblyTypeName: TipEventContainer, Assembly-CSharp
+      - m_Target: {fileID: 11400000, guid: bf7ec28ce9e078347b73bc5f94113d66, type: 2}
+        m_TargetAssemblyTypeName: TipObj, Assembly-CSharp
         m_MethodName: DetonateEvent
         m_Mode: 1
         m_Arguments:

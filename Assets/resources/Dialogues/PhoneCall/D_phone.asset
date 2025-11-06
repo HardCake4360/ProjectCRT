@@ -22,14 +22,13 @@ MonoBehaviour:
     portrait: 0
     charInterval: 0.05
     choices: {fileID: 0}
-    text: "\uC0B0, \uB2A6\uC740\uC2DC\uAC04\uAE4C\uC9C0 \uAE68\uC5B4\uC788\uC5C8\uAD70.
-      \uC11C\uC7A5\uC77C\uC138"
+    text: "\uC11C\uC7A5\uC774\uB124. \uC0C8\uB85C\uC6B4 \uC758\uB8B0\uAC00 \uB4E4\uC5B4\uC640\uC11C
+      \uB9D0\uC774\uC9C0"
   - characterName: "\uC11C\uC7A5"
     portrait: 0
     charInterval: 0.05
     choices: {fileID: 0}
-    text: "\uC9C0\uAE08 \uAE09\uD788 \uC804\uD560 \uB9D0\uC774 \uC788\uC5B4\uC11C
-      \uB9D0\uC774\uB124...\uC11C\uAE4C\uC9C0 \uC640\uC904 \uC218 \uC788\uACA0\uB098?"
+    text: "\uC9C0\uAE08 \uC11C\uB85C \uC624\uB3C4\uB85D \uD558\uAC8C."
   - characterName: "\uC0B0"
     portrait: 0
     charInterval: 0.05
@@ -39,7 +38,8 @@ MonoBehaviour:
     portrait: 0
     charInterval: 0.05
     choices: {fileID: 0}
-    text: "...\uC804\uD654\uB85C \uD560\uB9CC\uD55C \uC774\uC57C\uAE30\uAC00 \uC544\uB2C8\uB124"
+    text: "\uB530\uB85C \uC804\uB2EC\uD560 \uBB3C\uAC74\uC774 \uC788\uC5B4\uC11C
+      \uB9D0\uC774\uC9C0. \uC5EC\uAE30\uAE4C\uC9C0 \uC640\uC11C \uBC1B\uC544\uAC00\uAC8C"
   - characterName: "\uC0B0"
     portrait: 0
     charInterval: 0.05
@@ -55,3 +55,21 @@ MonoBehaviour:
     charInterval: 0.05
     choices: {fileID: 0}
     text: 
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 910e99b839647fb42a55b33755971af4, type: 2}
+        m_TargetAssemblyTypeName: TipObj, Assembly-CSharp
+        m_MethodName: DetonateEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

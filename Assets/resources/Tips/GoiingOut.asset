@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42492e0f17ac7b4d8340686e40c8f33, type: 3}
+  m_Name: GoiingOut
+  m_EditorClassIdentifier: 
+  TipName: "\uC678\uCD9C"
+  lines:
+  - TipImage: {fileID: 0}
+    TipText: "\uBC29 \uBC16\uC73C\uB85C \uB098\uC624\uAC8C \uB418\uBA74 WASD\uC640
+      \uB9C8\uC6B0\uC2A4\uB85C \uC6C0\uC9C1\uC774\uAC8C \uB429\uB2C8\uB2E4"
+  - TipImage: {fileID: 0}
+    TipText: "\uC0C1\uD638\uC791\uC6A9 \uAC00\uB2A5\uD55C \uC624\uBE0C\uC81D\uD2B8\uAC00
+      \uC788\uC73C\uBA74 \uD654\uBA74 \uAC00\uC6B4\uB370 \uC774\uB984\uC774 \uB098\uC624\uAC8C
+      \uB429\uB2C8\uB2E4"
+  - TipImage: {fileID: 0}
+    TipText: "\uB9C8\uC6B0\uC2A4 \uC88C\uD074\uB9AD, \uB610\uB294 E\uD0A4\uB97C \uC774\uC6A9\uD574
+      \uC0C1\uD638\uC791\uC6A9\uD569\uC2DC\uB2E4"
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

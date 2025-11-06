@@ -108,6 +108,6 @@ public class Door : Interactable
             Open();
             Debug.Log("상호작용 대상: " + gameObject.name + " 열림");
         }
-        PlayerControler.Instance.SetInteract(false);
+        MainLoop.Instance.SetMainLoopState(MainState.Main);
     }
 }

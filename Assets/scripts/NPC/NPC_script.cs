@@ -12,6 +12,9 @@ public class NPC_script : Interactable
         OnInteract?.Invoke();
     }
 
-    
+    public void StaticDiaEventTrigger(DialogueObject data)
+    {
+        DialogueManager.Instance.DialogueEventTrigger(data);
+    }
 
 }

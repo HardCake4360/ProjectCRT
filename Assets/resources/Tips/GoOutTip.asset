@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42492e0f17ac7b4d8340686e40c8f33, type: 3}
+  m_Name: GoOutTip
+  m_EditorClassIdentifier: 
+  TipName: "\uC678\uCD9C\uD558\uAE30"
+  lines:
+  - TipImage: {fileID: 0}
+    TipText: "\uC624\uB978\uCABD \uC544\uB798\uC758 \"Go Out\"\uBC84\uD2BC\uC744
+      \uD074\uB9AD\uD558\uBA74 \uB098\uAC08 \uC7A5\uC18C\uB97C \uC120\uD0DD\uD560
+      \uC218 \uC788\uC2B5\uB2C8\uB2E4"
+  - TipImage: {fileID: 0}
+    TipText: "\uC0C1\uD669\uC5D0 \uB530\uB77C \uC801\uC808\uD55C \uC7A5\uC18C\uB85C
+      \uC774\uB3D9\uD569\uC2DC\uB2E4"
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
