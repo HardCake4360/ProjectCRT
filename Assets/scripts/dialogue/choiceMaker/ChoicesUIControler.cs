@@ -33,7 +33,7 @@ public class ChoicesUIControler : MonoBehaviour
             var setList = choice.GetComponent<ChoicePrefab>();
 
             //choice 멤버변수 초기화
-            setList.InitMembers(line.name, idx, line.OnSelectDialogue);
+            setList.InitMembers(idx, line);
 
             choiceObjs.Add(choice);
 

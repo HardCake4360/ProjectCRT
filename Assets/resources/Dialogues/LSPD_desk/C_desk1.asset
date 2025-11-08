@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: C_desk1
   m_EditorClassIdentifier: 
   lines:
-  - name: "\uADF8\uB807\uAC8C \uD558\uC9C0"
-    OnSelectDialogue: {fileID: 11400000, guid: 41c40acc5dca45f43989872b3de1a1ca, type: 2}
   - name: "\uADF8\uB7F4\uAE30\uBD84 \uC544\uB2C8\uB124"
     OnSelectDialogue: {fileID: 11400000, guid: f14cf79e219cac7419c0a38392a2f8e0, type: 2}
+  - name: "\uADF8\uB7F4\uAE30\uBD84 \uC544\uB2C8\uB124"
+    OnSelectDialogue: {fileID: 0}

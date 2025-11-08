@@ -29,16 +29,17 @@ public class ChoicePrefab : MonoBehaviour
         isSelected = val;
         indicator.enabled = val; 
     }
-    public void InitMembers(string txt,int idx, DialogueObject dia)
+    public void InitMembers(int idx, ChoiceData cho)
     {
-        textMesh.text = txt;
+        textMesh.text = cho.name;
         selfIdx = idx;
         button.OnClick.AddListener(() =>
         {
             DialogueManager.Instance.SetSelecting(false);
             DialogueManager.Instance.DUIManager.SetChoicesUIActive(false);
             Cursor.lockState = CursorLockMode.Locked;
-            DialogueManager.Instance.DialogueEventTrigger(dia);
+            if(cho.OnSelectDialogue != null) DialogueManager.Instance.DialogueEventTrigger(cho.OnSelectDialogue);
+            cho.OnSelect?.Invoke();
         });
     }
 
