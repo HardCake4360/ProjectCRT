@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
+  m_Name: DC_cat
+  m_EditorClassIdentifier: 
+  lines:
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uACE0\uC591\uC774\uC758 \uD2B9\uC9D5\uC5D0 \uB300\uD574 \uC880 \uC124\uBA85\uD574\uC8FC\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  - characterName: "\uD560\uBA38\uB2C8"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uC6B0\uB9AC \uC57C\uC639\uC774\uB294 \uD56D\uC0C1 \uC774\uB984\uC744
+      \uBD80\uB974\uBA74 \uB3CC\uC544\uC654\uC5C8\uB294\uB370...\uC624\uB298\uB530\uB77C
+      \uB098\uD0C0\uB098\uC9C8 \uC54A\uB294\uAD6C\uB9CC..."
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uACE0\uC591\uC774 \uC774\uB984\uC774 \uC57C\uC639\uC774\uC778\uAC81\uB2C8\uAE4C?"
+  - characterName: "\uD560\uBA38\uB2C8"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uADF8\uB807\uB2E4\uB124. \uC57C\uC639\uC57C\uC639\uAC70\uB9B4\uB54C\uB294
+      \uC5BC\uB9C8\uB098 \uADC0\uC5EC\uC6B4\uC9C0..."
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "...\uD639\uC2DC \uB2E4\uB978 \uD2B9\uC9D5\uC740 \uC5C6\uC2B5\uB2C8\uAE4C?"
+  - characterName: "\uD560\uBA38\uB2C8"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uC544 \uADF8\uB798! \uC57C\uC639\uC774\uB294 \uBE68\uAC04\uC0C9 \uBAA9\uC904\uC744
+      \uD558\uACE0 \uC788\uC5C8\uB2E4\uB124 \uADF8\uAC70\uB77C\uBA74 \uC54C\uC544\uBCF4\uAE30
+      \uC26C\uC6B8\uD14C\uC9C0"
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uB124, \uACE0\uC591\uC5D0 \uAD00\uD55C\uAC74 \uADF8\uC815\uB3C4\uBA74
+      \uB420 \uAC83 \uAC19\uC2B5\uB2C8\uB2E4"
+  - characterName: end
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: 
+  TailDia: {fileID: 11400000, guid: ee92f8a0987eb60479e959a1dcbb77be, type: 2}
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ba673411d42784186398b00495ebf8, type: 3}
+  m_Name: C_grandma
+  m_EditorClassIdentifier: 
+  lines:
+  - name: "\uD560\uBA38\uB2C8"
+    OnSelectDialogue: {fileID: 11400000, guid: 78e6211b3acc3a4459b769aa8411ae57, type: 2}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls: []
+  - name: "\uACE0\uC591\uC774"
+    OnSelectDialogue: {fileID: 11400000, guid: 4bd7aeffbcdf6a44d9efbb4f81d39689, type: 2}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls: []
+  - name: "\uACF5\uC6D0"
+    OnSelectDialogue: {fileID: 11400000, guid: 977cc86831d3c684f84ecfad15cb2d41, type: 2}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls: []
+  - name: "\uC218\uC0C1\uD55C \uB0A8\uC790"
+    OnSelectDialogue: {fileID: 11400000, guid: 200322a1801616548a99ae0d2140842b, type: 2}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls: []
+  - name: "\uADF8\uB9CC\uB454\uB2E4"
+    OnSelectDialogue: {fileID: 11400000, guid: a3a47e141cd26f64685b0814305950ee, type: 2}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls: []

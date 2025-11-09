@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
+  m_Name: D_cat
+  m_EditorClassIdentifier: 
+  lines:
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uC0AC\uB77C\uC9C4 \uACE0\uC591\uC774\uB098 \uCC3E\uC544\uB2E4\uB2C8\uB294
+      \uC2E0\uC138\uB77C\uB2C8..."
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uBB50, \uC0B4\uC778\uC0AC\uAC74 \uAC19\uC740 \uAC83 \uBCF4\uB2E8 \uD6E8\uC52C
+      \uB098\uC744\uB824\uB098"
+  - characterName: null
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uD074\uB8E8 \"\uACE0\uC591\uC774\" \uB97C \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4"
+  - characterName: end
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: 
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

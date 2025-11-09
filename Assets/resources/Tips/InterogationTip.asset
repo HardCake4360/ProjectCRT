@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42492e0f17ac7b4d8340686e40c8f33, type: 3}
+  m_Name: InterogationTip
+  m_EditorClassIdentifier: 
+  TipName: "\uC2EC\uBB38\uD558\uAE30"
+  lines:
+  - TipImage: {fileID: 0}
+    TipText: "\uC6A9\uC758\uC790\uB97C \uBC1C\uACAC\uD558\uBA74 \uC2EC\uBB38\uC744
+      \uC9C4\uD589\uD558\uB294 \uAC83\uC774 \uAC00\uB2A5\uD569\uB2C8\uB2E4"
+  - TipImage: {fileID: 0}
+    TipText: "\uD604\uC7AC \uAC16\uCD94\uACE0 \uC788\uB294 \uD074\uB8E8\uAC00 \uCDA9\uBD84\uD558\uC9C0
+      \uC54A\uC73C\uBA74 \uC2EC\uBB38\uC5D0 \uC2E4\uD328\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
+  - TipImage: {fileID: 0}
+    TipText: "\uC2EC\uBB38\uD558\uAE30 \uC804\uC5D0 \uC900\uBE44\uB97C \uB9C8\uCCD0\uB461\uC2DC\uB2E4!"
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

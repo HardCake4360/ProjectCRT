@@ -65,6 +65,7 @@ public class TipUIControler : MonoBehaviour
     }
     public void EndEvent()
     {
+        MainLoop.Instance.SetMainLoopState_Main();
         StaticOnEnd?.Invoke();
         OnEnd?.Invoke();
     }

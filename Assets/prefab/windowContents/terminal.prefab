@@ -391,6 +391,10 @@ MonoBehaviour:
   userInputLine: {fileID: 5437806098577599110}
   scrollRect: {fileID: 6464762695458957166}
   msgList: {fileID: 6913145837732302148}
+  Clues:
+  - {fileID: 11400000, guid: 7f99b7f230da4c441b0e92b5ad0a3bfc, type: 2}
+  - {fileID: 11400000, guid: 4d40a8ebc4d21c24a800050a5aceca9d, type: 2}
+  - {fileID: 11400000, guid: 3a093815254979e41b9fdb961e1e8d40, type: 2}
 --- !u!114 &6167320070590816759
 MonoBehaviour:
   m_ObjectHideFlags: 0

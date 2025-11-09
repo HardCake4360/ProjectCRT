@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
+  m_Name: DQ_grandma
+  m_EditorClassIdentifier: 
+  lines:
+  - characterName: "\uB450\uB9AC\uBC88\uAC70\uB9AC\uB294 \uD560\uBA38\uB2C8"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uBD80\uB514 \uC6B0\uB9AC \uC57C\uC639\uC774\uB97C \uCC3E\uC544\uC8FC\uAC8C...\uB0B4
+      \uC774\uB807\uAC8C \uBD80\uD0C1\uD558\uB124"
+  - characterName: "\uC0B0"
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: "\uADF8\uB7EC\uC2DC\uC9C0 \uC54A\uC73C\uC154\uB3C4 \uAE08\uBC29 \uCC3E\uC744
+      \uB4EF \uD569\uB2C8\uB2E4"
+  - characterName: end
+    portrait: 0
+    charInterval: 0
+    choices: {fileID: 0}
+    text: 
+  TailDia: {fileID: 0}
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

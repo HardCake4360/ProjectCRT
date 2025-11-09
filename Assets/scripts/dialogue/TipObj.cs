@@ -20,6 +20,7 @@ public class TipObj : ScriptableObject
     public void DetonateEvent()
     {
         if (isActive) return;
+        MainLoop.Instance.SetMainLoopState_Interacting();
         TipUIControler.Instance.TipEventTrigger(this);
         //이벤트 실행시 널이면 아무것도 실행 안되기 때문에 널체크 안함
         TipUIControler.Instance.SetOnStartEvent(OnStart);

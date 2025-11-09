@@ -17,8 +17,8 @@ public class DialogueManager : MonoBehaviour
 
     public UnityEvent StaticOnDialogueStart;
     public UnityEvent StaticOnDialogueEnd;
-    private UnityEvent OnDialogueStart;
-    private UnityEvent OnDialogueEnd;
+    public UnityEvent OnDialogueStart;
+    public UnityEvent OnDialogueEnd;
 
     void Awake()
     {
@@ -69,6 +69,11 @@ public class DialogueManager : MonoBehaviour
             
             if (dialogueData.lines[index].characterName == "end")
             {
+                if (dialogueData.TailDia)
+                {
+                    dialogueData.TailDia.DetonateEvent();
+                    return;
+                }
                 DUIManager.SetCanvasActive(false);
                 dialogueStartFlag = false;
                 StaticOnDialogueEnd?.Invoke();

@@ -63,7 +63,8 @@ public class SceneLoader : MonoBehaviour
 
         // 로딩 완료
         ProgressBar.fillAmount = 1f;
-        MainLoop.Instance.OnLoadSceneEnd();
+        if(MainLoop.Instance)
+            MainLoop.Instance.OnLoadSceneEnd();
 
         // "Press Any Key" 텍스트 표시
         if (PressAnyKeyText != null)

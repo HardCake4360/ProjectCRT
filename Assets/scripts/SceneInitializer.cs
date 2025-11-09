@@ -50,4 +50,9 @@ public class SceneInitializer : MonoBehaviour
         MainLoop.Instance.CamControler = CamCon;
         MainLoop.Instance.Cam = MainCam;
     }
+
+    public void InitMainLoop_OuterScene()
+    {
+        MainLoop.Instance.PC = PC;
+    }
 }

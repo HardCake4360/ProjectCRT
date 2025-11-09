@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
@@ -14,11 +15,18 @@ public class terminalManager : MonoBehaviour
     public ScrollRect scrollRect;
     public GameObject msgList;
 
+    public List<ClueObj> Clues;
+
     Interpreter interpreter;
+
 
     private void Start()
     {
         interpreter = GetComponent<Interpreter>();
+        foreach(var clue in Clues)
+        {
+            clue.isCleared = false;
+        }
     }
 
     private void OnGUI()
@@ -50,6 +58,7 @@ public class terminalManager : MonoBehaviour
 
             StartCoroutine(interpreter.Interpret(userInput,uiText, () =>
             {
+                //출력 끝난 뒤(OnComplete) 구문
                 userInputLine.SetActive(true);
 
                 //입력 라인을 마지막줄로 옮기기
@@ -57,6 +66,10 @@ public class terminalManager : MonoBehaviour
 
                 //바닥쪽으로 스크롤
                 scrollRect.verticalNormalizedPosition = 0;
+
+                //일반적으로 답변 완성시 특정 문자열의 포함을 확인
+                StartCoroutine(CheckCluesSequentially(uiText.text));
+
 
                 //입력 필드 리포커싱
                 terminalInput.inputField.ActivateInputField();
@@ -117,6 +130,31 @@ public class terminalManager : MonoBehaviour
         {
             scrollRect.verticalNormalizedPosition = 0;
         }
+    }
+
+    private IEnumerator CheckCluesSequentially(string text)
+    {
+        foreach (var clue in Clues)
+        {
+            if (clue.isCleared) continue;
+            Debug.Log("----------------checking " + clue.Keyword);
+            bool dialogueFinished = false;
+
+            // 종료 이벤트 감시
+            UnityAction onEnd = () => dialogueFinished = true;
+            DialogueManager.Instance.StaticOnDialogueEnd.AddListener(onEnd);
+
+            // 키워드 있으면 Dialogue 시작
+            clue.FindKeywordFrom(text);
+
+            // Dialogue 발생했으면 종료될 때까지 기다리기
+            while (DialogueManager.Instance.dialogueData != null && !dialogueFinished)
+                yield return null;
+
+            // 리스너 제거 (중복 방지)
+            DialogueManager.Instance.StaticOnDialogueEnd.RemoveListener(onEnd);
+        }
+        Debug.Log("checking end");
     }
 
 }

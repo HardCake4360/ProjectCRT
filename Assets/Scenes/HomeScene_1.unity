@@ -5264,7 +5264,19 @@ MonoBehaviour:
   time: 0.2
   OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 895150056}
+        m_TargetAssemblyTypeName: SingletonObjLinker, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Park
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeselect:
     m_PersistentCalls:
       m_Calls: []
@@ -8491,6 +8503,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimulationExe
       objectReference: {fileID: 0}
+    - target: {fileID: 5506530566411689646, guid: 1d41ac7ced3f6294e93806bfaf4a9b33, type: 3}
+      propertyPath: m_text
+      value: terminal.exe
+      objectReference: {fileID: 0}
     - target: {fileID: 5911174881286189424, guid: 1d41ac7ced3f6294e93806bfaf4a9b33, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -9385,7 +9401,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.27
   m_Center: {x: 0, y: 0, z: 0}
@@ -9397,7 +9413,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136848235}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4c094b93635d80541a3d0396d4632664, type: 2}
   m_CullingMode: 0
