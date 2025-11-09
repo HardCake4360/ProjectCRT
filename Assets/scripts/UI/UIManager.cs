@@ -18,10 +18,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        sceneLoader = SceneLoader.Instance;
-        b1.OnClick.AddListener(() => sceneLoader.LoadScene("testMap"));
-        b2.OnClick.AddListener(() => sceneLoader.LoadScene("testMap"));
-        b3.OnClick.AddListener(() => sceneLoader.LoadScene("testMap"));
     }
 
     public void ToggleByIdx(int i,bool show)

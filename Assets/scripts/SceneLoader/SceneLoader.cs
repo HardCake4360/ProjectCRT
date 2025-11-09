@@ -9,6 +9,7 @@ public class SceneLoader : MonoBehaviour
 
     [Header("UI References")]
     public CanvasGroup FadeCanvas;     // 페이드용 CanvasGroup (검정 Image 포함)
+    public Canvas canvas;
     public GameObject LoadingObjs;
     public Image ProgressBar;         // 로딩 진행바
     public GameObject PressAnyKeyText; // "Press any key" 텍스트
@@ -37,6 +38,7 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        canvas.enabled = true;
         if (!isLoading)
             StartCoroutine(LoadSceneProcess(sceneName));
     }
@@ -59,8 +61,9 @@ public class SceneLoader : MonoBehaviour
             yield return null;
         }
 
-        // 로딩 완료!
+        // 로딩 완료
         ProgressBar.fillAmount = 1f;
+        MainLoop.Instance.OnLoadSceneEnd();
 
         // "Press Any Key" 텍스트 표시
         if (PressAnyKeyText != null)
@@ -96,6 +99,7 @@ public class SceneLoader : MonoBehaviour
             FadeCanvas.alpha = 1 - (t / fadeDuration);
             yield return null;
         }
+        canvas.enabled = false;
         FadeCanvas.alpha = 0;
     }
 

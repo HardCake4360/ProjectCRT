@@ -12,10 +12,9 @@ public class MainLoop : MonoBehaviour
 {
     public static MainLoop Instance { get; private set; }
 
-    public DialogueObject startDiaEvent;
     public MemoPost memo;
     public bool posting;
-    public Camera cam;
+    public Camera Cam;
 
     [Header("Managers")]
     public UIManager UI;
@@ -37,16 +36,6 @@ public class MainLoop : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    private void Start()
-    {
-        StartCoroutine(startEvnet());
-    }
-
-    IEnumerator startEvnet()
-    {
-        yield return new WaitForSeconds(2f);
-        DialogueManager.Instance.DialogueEventTrigger(startDiaEvent);
-    }
 
     public void SetMainLoopState(MainState state)
     {
@@ -63,6 +52,18 @@ public class MainLoop : MonoBehaviour
         MainLoopState = MainState.Interacting;
     }
 
+    public void OnLoadSceneEnd()
+    {
+        //씬 이동하면서 파괴되는 오브젝트라 비교연산 이용
+        if (PC == null) 
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Debug.Log("Cursor Lock disabled");
+        }
+
+        Debug.Log("SceneLoaded and MainLoop initialized");
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -73,7 +74,6 @@ public class MainLoop : MonoBehaviour
 
                 if (PC)
                 {
-                    Debug.Log("Player IS");
                     PC.UpdatePlayer();
                 }
 

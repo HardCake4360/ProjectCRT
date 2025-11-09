@@ -31,4 +31,9 @@ public class DialogueObject : ScriptableObject
 
     public UnityEvent OnStart;
     public UnityEvent OnEnd;
+
+    public void DetonateEvent()
+    {
+        DialogueManager.Instance.DialogueEventTrigger(this);
+    }
 }
