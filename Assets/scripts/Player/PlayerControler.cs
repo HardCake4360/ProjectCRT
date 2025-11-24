@@ -75,7 +75,7 @@ public class PlayerControler : MonoBehaviour
             {
                 if (interactableObject != null && interactableObject.canInteract)
                 {
-                    MainLoop.Instance.SetMainLoopState(MainState.Interacting);
+                    MainLoop.Instance.SetMainLoopState(MainState.Interact);
                     interactableObject.Interact();
                     Debug.Log($"상호작용: {hitInfo.collider.gameObject.name}");
                 }

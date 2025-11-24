@@ -487,6 +487,7 @@ GameObject:
   - component: {fileID: 572297530}
   - component: {fileID: 572297529}
   - component: {fileID: 572297528}
+  - component: {fileID: 572297532}
   m_Layer: 0
   m_Name: cat
   m_TagString: Untagged
@@ -577,12 +578,41 @@ Transform:
   m_GameObject: {fileID: 572297527}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.212, y: 0.31, z: -8.859}
+  m_LocalPosition: {x: -4.212, y: 0.269, z: -8.859}
   m_LocalScale: {x: 0.66412, y: 0.66412, z: 0.66412}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &572297532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572297527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ef26aad45a23f4baa2ac9f1e2698c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HintName: "\uACE0\uC591\uC774"
+  canInteract: 1
+  OnInteract:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: bad2af1021ea0cf409b3eb13250f6819, type: 2}
+        m_TargetAssemblyTypeName: DialogueObject, Assembly-CSharp
+        m_MethodName: DetonateEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &659346858
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,6 +996,14 @@ PrefabInstance:
       propertyPath: hintText
       value: 
       objectReference: {fileID: 659346861}
+    - target: {fileID: 5890622386474117769, guid: 89666558d8c486141bdfa53c3b448615, type: 3}
+      propertyPath: m_Height
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890622386474117769, guid: 89666558d8c486141bdfa53c3b448615, type: 3}
+      propertyPath: m_Center.y
+      value: -0.85
+      objectReference: {fileID: 0}
     - target: {fileID: 7234594278395049035, guid: 89666558d8c486141bdfa53c3b448615, type: 3}
       propertyPath: m_Name
       value: Player

@@ -29,7 +29,7 @@ public class SingletonObjLinker : MonoBehaviour
 
     //MainLoop
     public void SetMainLoopState_Main() { mainLoop.SetMainLoopState(MainState.Main); }
-    public void SetMainLoopState_Interacting() { mainLoop.SetMainLoopState(MainState.Interacting); }
+    public void SetMainLoopState_Interacting() { mainLoop.SetMainLoopState(MainState.Interact); }
 
 
 

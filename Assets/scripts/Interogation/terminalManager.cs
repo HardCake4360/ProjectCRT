@@ -145,10 +145,10 @@ public class terminalManager : MonoBehaviour
             DialogueManager.Instance.StaticOnDialogueEnd.AddListener(onEnd);
 
             // 키워드 있으면 Dialogue 시작
-            clue.FindKeywordFrom(text);
+            bool isContaining = clue.FindKeywordFrom(text);
 
             // Dialogue 발생했으면 종료될 때까지 기다리기
-            while (DialogueManager.Instance.dialogueData != null && !dialogueFinished)
+            while (isContaining && !dialogueFinished)
                 yield return null;
 
             // 리스너 제거 (중복 방지)

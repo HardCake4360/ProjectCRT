@@ -485,6 +485,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnDialogueStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2980341832655779246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,6 +545,9 @@ MonoBehaviour:
   - character: "\uC0B0"
     expressions:
     - {fileID: 11400000, guid: a254578c5c230f04eb4bb2761195f420, type: 2}
+  - character: "\uACE0\uC591\uC774"
+    expressions:
+    - {fileID: 11400000, guid: 2a44a3eea89f3c8418a2307c9e897d52, type: 2}
   nullSheet: {fileID: 11400000, guid: a3a274604faefe44b884bba736c93380, type: 2}
 --- !u!1 &3542260086010884793
 GameObject:
@@ -1247,7 +1256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3015933488811632135, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 85
+      value: 415.005
       objectReference: {fileID: 0}
     - target: {fileID: 3015933488811632135, guid: fdbfb870310b39e4b8b563f3e0a71714, type: 3}
       propertyPath: m_AnchoredPosition.y

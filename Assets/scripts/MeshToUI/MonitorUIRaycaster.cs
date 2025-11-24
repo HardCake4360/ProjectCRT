@@ -47,7 +47,7 @@ public class MonitorUIRaycaster : MonoBehaviour
             if (obj && InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.interactionKeys))
             {
                 obj.Interact();
-                interacting = true; MainLoop.Instance.SetMainLoopState(MainState.Interacting);
+                interacting = true; MainLoop.Instance.SetMainLoopState(MainState.Interact);
             }
 
 

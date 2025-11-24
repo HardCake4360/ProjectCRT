@@ -5,7 +5,8 @@ using System.Collections;
 public enum MainState
 {
     Main,
-    Interacting
+    Interact,
+    Interogate
 }
 
 public class MainLoop : MonoBehaviour
@@ -49,7 +50,7 @@ public class MainLoop : MonoBehaviour
     }
     public void SetMainLoopState_Interacting()
     {
-        MainLoopState = MainState.Interacting;
+        MainLoopState = MainState.Interact;
     }
 
     public void OnLoadSceneEnd()
@@ -89,7 +90,13 @@ public class MainLoop : MonoBehaviour
                 }
                 
                 break;
-            case MainState.Interacting:
+            case MainState.Interact:
+                //대사 출력 등 상호작용
+
+                break;
+            case MainState.Interogate:
+                //심문 모드
+
                 break;
 
         }
