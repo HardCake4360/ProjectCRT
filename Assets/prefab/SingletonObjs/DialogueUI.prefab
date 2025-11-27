@@ -503,6 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0895e7f8717212b44bc85d240ff32bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showPortrait: 1
   canvas: {fileID: 5782901321656574082}
   portraitAnim: {fileID: 383895759092992864}
   nameText: {fileID: 5480066165803701506}
