@@ -5,7 +5,7 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
 
     [Header("대사 진행 키 설정")]
-    public KeyCode[] DialogueAdvanceKeys    = new KeyCode[] { KeyCode.Space, KeyCode.Return, KeyCode.Mouse0 };
+    public KeyCode[] DialogueAdvanceKeys    = new KeyCode[] { KeyCode.Return, KeyCode.Mouse0 };
     [Header("상호작용 키 설정")]
     public KeyCode[] interactionKeys        = new KeyCode[] { KeyCode.E, KeyCode.Mouse0 };
     [Header("선택지 상하 이동 키 설정")]
@@ -16,7 +16,8 @@ public class InputManager : MonoBehaviour
     [Header("시점 이동 키 설정")]
     public KeyCode[] ToLeft                 = new KeyCode[] { KeyCode.Q };
     public KeyCode[] ToRight                = new KeyCode[] { KeyCode.E };
-
+    [Header("오브젝션 키 설정")]
+    public KeyCode[] Objection              = new KeyCode[] { KeyCode.Space };
 
     void Awake()
     {

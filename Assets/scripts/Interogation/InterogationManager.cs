@@ -8,6 +8,7 @@ public enum InterogationState
 {
     Idle,
     Testify,
+    Question,
     Clue,
     Paradox
 }
@@ -16,28 +17,16 @@ public class InterogationManager : MonoBehaviour
 {
     public static InterogationManager Instance { get; private set; }
 
-
-    private InterogationState interogationState;
+    public InterogationState InterogationState;
     private bool isInterogationEnd;
     private Animator UIAnimator;
 
-    [SerializeField] private DialogueObject currentDia;
     private int idx;
     private DialogueObject[] clues; // 다이어로그 오브젝트로 했지만 클루에 따른 패러독스 획득을 위해 변경할 수 있음
 
     // 하위 매니저들
     [Header("ManagerSetting")]
-    [SerializeField] private DialogueUIManager DUIManager;
-    [SerializeField] private CameraFocusControl camCon;
-    [SerializeField] private DTB_transformSetter dtbSetter;
-    [SerializeField] private ChoicesUIControler CUI;
-
-    // static이벤트는 모든 dia이벤트에 대해 수행되어야 하는 이벤트
-    [Header("Events")]
-    [SerializeField] UnityEvent staticOnDialogueStart;
-    [SerializeField] UnityEvent staticOnDialogueEnd;
-    UnityEvent onDialogueStart;
-    UnityEvent onDialogueEnd;
+    public DTB_transformSetter DTB_Setter;
 
     void Awake()
     {
@@ -53,13 +42,12 @@ public class InterogationManager : MonoBehaviour
     void Start()
     {
         isInterogationEnd = false;
-        interogationState = InterogationState.Idle;
+        InterogationState = InterogationState.Idle;
     }
 
-    public void SetInterogation(DialogueObject tes, DialogueObject[] clues)
+    private void Update()
     {
-        testamony = tes;
-        this.clues = clues;
+        if (Input.anyKeyDown) OnSelect();
     }
 
     [Tooltip("상태 이름 Idle, Testify, Clue, Paradox")]
@@ -70,17 +58,9 @@ public class InterogationManager : MonoBehaviour
         {
             if(item.ToString() == state)
             {
-                interogationState = item;
+                InterogationState = item;
             }
         }
-    }
-
-    public void ChoiceEvent()
-    {
-        if (!dia.lines[idx].Choices) return;
-        DUIManager.InitChoiceUI(dia.lines[idx].Choices);
-        DUIManager.SetChoicesUIActive(true);
-        CUI.IndicateByIdx(0);
     }
 
     // 선택 이벤트 발생할 때 마다 호출
@@ -92,7 +72,7 @@ public class InterogationManager : MonoBehaviour
             return;
         }
 
-        switch (interogationState)
+        switch (InterogationState)
         {
             case InterogationState.Idle:
                 // 플레이어 액션 대기
@@ -101,7 +81,20 @@ public class InterogationManager : MonoBehaviour
             case InterogationState.Testify:
                 // 진술 다이어로그 진행
                 Debug.Log("진술 상태");
-                StartCoroutine(processDialogue(currentDia));
+
+                // 키 입력 && 타이핑 상태 아닐때 && 선택지 나오는 중 아닐때
+                if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.Objection)
+                    && !LocalDiaManager.Instance.DUIManager.IsTyping()
+                    && !LocalDiaManager.Instance.IsSelecting())
+                {
+                    LocalDiaManager.Instance.QuestionEvent();
+                    InterogationState = InterogationState.Question;
+                }
+                break;
+
+            case InterogationState.Question:
+                // 진술 도중 오브젝션
+                
                 break;
 
             case InterogationState.Clue:
@@ -116,63 +109,4 @@ public class InterogationManager : MonoBehaviour
 
         }
     }
-
-    private IEnumerator processDialogue(DialogueObject dia)
-    {
-        idx = 0;
-
-        //대사 출력 루프(DUIManager 유사)
-        while (true)
-        {
-            if ((idx == 0 || 
-                InputManager.Instance.IsAnyKeyPressedIn(
-                InputManager.Instance.DialogueAdvanceKeys)))
-            {
-                // 타이핑 중이면 스킵
-                if (DUIManager.IsTyping())
-                {
-                    DUIManager.StopAllCoroutines();
-                    DUIManager.SkipText(dia.lines[idx - 1].text);
-                    continue;
-                }
-
-                if (dia.lines[idx].characterName == "end")
-                {
-                    if (dia.TailDia)
-                    {
-                        dia.TailDia.DetonateEvent();
-                        continue;
-                    }
-                    DUIManager.SetCanvasActive(false);
-
-                    staticOnDialogueEnd?.Invoke();
-                    onDialogueEnd?.Invoke();
-
-                    //모든 상호작용 오브젝트에 딜레이 생성
-                    foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
-                        interactObj.SetInteractableWithDelay(0.2f);
-
-                    continue;
-                }
-
-                // 대사 타이핑 시작
-                if (idx < dia.lines.Length)
-                {
-                    int camNum = dia.lines[idx].CamNumber;
-                    DUIManager.DisplayDialogue(dia.lines[idx]);
-                    dtbSetter.SetPosition(camNum);
-                    camCon.FocusTo(camNum);
-                    idx++;
-                }
-            }
-
-            //선택지 표시, 선택 상태 진입
-            if (dia.lines[idx].Choices && !DUIManager.IsTyping())
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-
-            yield return null;
-        }
-    } 
 }

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Keyword: "\uB178\uB144"
   DiaObj: {fileID: 11400000, guid: 7178c89894a32a240afd0b7b7c8bcd02, type: 2}
-  isCleared: 1
+  isCleared: 0

@@ -14,22 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - characterName: "\uC0B0"
-    portrait: 0
-    charInterval: 0
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
     text: "\uC2E4\uB840\uD569\uB2C8\uB2E4. LSPD \uACBD\uAD00 \uC0B0\uC774\uB77C\uACE0
       \uD569\uB2C8\uB2E4. \uC218\uC0AC\uC5D0 \uD611\uC870\uD574\uC8FC\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   - characterName: "\uB450\uB9AC\uBC88\uAC70\uB9AC\uB294 \uD560\uBA38\uB2C8"
-    portrait: 0
-    charInterval: 0
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
     text: "...\uC544...! \uC80A\uC740\uC774\uAC00 \uADF8 \uC0AC\uB78C\uC774\uAD6C\uBA3C...!"
   - characterName: end
-    portrait: 0
-    charInterval: 0
-    choices: {fileID: 11400000, guid: 8ad1e893c15b8a14ba4cbfbccfabaf55, type: 2}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
     text: 
   TailDia: {fileID: 0}
+  Choices: {fileID: 11400000, guid: 8ad1e893c15b8a14ba4cbfbccfabaf55, type: 2}
   OnStart:
     m_PersistentCalls:
       m_Calls: []

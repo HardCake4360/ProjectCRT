@@ -35,16 +35,35 @@ public class ChoicePrefab : MonoBehaviour
         selfIdx = idx;
         button.OnClick.AddListener(() =>
         {
-            DialogueManager.Instance.SetSelecting(false);
-            DialogueManager.Instance.DUIManager.SetChoicesUIActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            if(cho.OnSelectDialogue != null) DialogueManager.Instance.DialogueEventTrigger(cho.OnSelectDialogue);
+            if (cho.OnSelectDialogue != null)
+            {
+                if (LocalDiaManager.Instance)
+                {
+                    LocalDiaManager.Instance.SetSelecting(false);
+                    LocalDiaManager.Instance.DUIManager.SetChoicesUIActive(false);
+                    LocalDiaManager.Instance.DialogueEventTrigger(cho.OnSelectDialogue);
+                }
+                else
+                {
+                    DialogueManager.Instance.SetSelecting(false);
+                    DialogueManager.Instance.DUIManager.SetChoicesUIActive(false);
+                    DialogueManager.Instance.DialogueEventTrigger(cho.OnSelectDialogue);
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+            }
             cho.OnSelect?.Invoke();
         });
     }
 
     public void OnHover()
     {
-        DialogueManager.Instance.CUI.IndicateByIdx(selfIdx);
+        if (LocalDiaManager.Instance)
+        {
+            LocalDiaManager.Instance.CUI.IndicateByIdx(selfIdx);
+        }
+        else
+        {
+            DialogueManager.Instance.CUI.IndicateByIdx(selfIdx);
+        }
     }
 }

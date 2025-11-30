@@ -9,7 +9,6 @@ public class DialogueUIManager : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private bool showPortrait;
-    [SerializeField] private bool useInterogationManager;
 
     [Header("Properties")]
     public Canvas canvas;
@@ -39,18 +38,20 @@ public class DialogueUIManager : MonoBehaviour
         isTyping = false;
         fullText = "";
         //다이어로그 종료 시 선택지 있으면 이벤트 발생
-        if (!useInterogationManager)
+        if (LocalDiaManager.Instance)
+        {
+            OnTypingComplete.AddListener(() =>
+            {
+                LocalDiaManager.Instance.ChoiceEvent();
+            });
+        }
+        else
         {
             OnTypingComplete.AddListener(() =>
             {
                 DialogueManager.Instance.ChoiceEvent();
             });
         }
-        else
-        {
-
-        }
-        
     }
 
     public void DisplayDialogue(DialogueObject.DialogueLine line)
@@ -115,14 +116,33 @@ public class DialogueUIManager : MonoBehaviour
             yield return new WaitForSeconds(line.CharInterval);
         }
         isTyping = false;
-        OnTypingComplete?.Invoke();
+
+        handleEndEvent();
     }
 
     public void SkipText(string text)
     {
         dialogueText.text = text;
         isTyping = false;
-        OnTypingComplete?.Invoke();
+        handleEndEvent();
+    }
+    
+    private void handleEndEvent()
+    {
+        if (LocalDiaManager.Instance)
+        {
+            if (LocalDiaManager.Instance.IsDiaEnd())
+            {
+                OnTypingComplete?.Invoke();
+            }
+        }
+        else
+        {
+            if (DialogueManager.Instance.IsDiaEnd())
+            {
+                OnTypingComplete?.Invoke();
+            }
+        }
     }
 
     public void InitChoiceUI(ChoicesObj choices)

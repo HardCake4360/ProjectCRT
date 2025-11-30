@@ -14,18 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - characterName: "\uC811\uC218\uC6D0"
-    portrait: 0
-    charInterval: 0.1
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
     text: "\uC544, \uC624\uC168\uAD70\uC694. \uAE30\uB2E4\uB9AC\uACE0 \uC788\uC5C8\uC5B4\uC694."
   - characterName: "\uC811\uC218\uC6D0"
-    portrait: 0
-    charInterval: 0.1
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
     text: "\uC11C\uC7A5\uB2D8\uC740 \uC548\uCABD\uC5D0\uC11C \uAE30\uB2E4\uB9AC\uACE0
       \uACC4\uC154\uC694. \uC5BC\uB978 \uB4E4\uC5B4\uAC00\uBD10\uC694"
   - characterName: end
-    portrait: 0
-    charInterval: 0.1
-    choices: {fileID: 11400000, guid: 4b1f5f31207862949ad00b7986ea9709, type: 2}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
     text: 
+  TailDia: {fileID: 0}
+  Choices: {fileID: 11400000, guid: 4b1f5f31207862949ad00b7986ea9709, type: 2}
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

@@ -21,7 +21,7 @@ public class DialogueObject : ScriptableObject
         public int CamNumber;
         public float CharInterval;
 
-        public ChoicesObj Choices;
+        public DialogueObject QuestionDia;
 
         [TextArea(3, 5)]
         public string text;
@@ -30,19 +30,17 @@ public class DialogueObject : ScriptableObject
     public DialogueLine[] lines;
 
     public DialogueObject TailDia;
+    public ChoicesObj Choices;
 
     public UnityEvent OnStart;
     public UnityEvent OnEnd;
 
-    public void DetonateEvent()
+    virtual public void DetonateEvent(int i = -1)
     {
         DialogueManager.Instance.DialogueEventTrigger(this);
+        if(i != -1)
+        {
+            DialogueManager.Instance.index = i;
+        }
     }
-}
-
-[CreateAssetMenu(fileName = "InterogationDiaObject", menuName = "Scriptable Objects/InterogationDiaObject")]
-public class InterogationDiaObject : DialogueObject
-{
-    
-
 }

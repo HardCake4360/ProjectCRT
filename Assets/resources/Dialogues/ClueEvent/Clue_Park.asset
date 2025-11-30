@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Clue_Park
   m_EditorClassIdentifier: 
   Keyword: "\uACF5\uC6D0"
-  DiaObj: {fileID: 0}
+  DiaObj: {fileID: 11400000, guid: 19e6a0cd931cf834ebb1b2cde7317857, type: 2}
   isCleared: 0
