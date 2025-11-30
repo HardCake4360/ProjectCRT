@@ -95,7 +95,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         //선택지 표시, 선택 상태 진입
-        if (dialogueData.lines[index].choices && !DUIManager.IsTyping())
+        if (dialogueData.lines[index].Choices && !DUIManager.IsTyping())
         {
             Cursor.lockState = CursorLockMode.None;
         }
@@ -103,9 +103,9 @@ public class DialogueManager : MonoBehaviour
 
     public void ChoiceEvent()
     {
-        if (!dialogueData.lines[index].choices) return;
+        if (!dialogueData.lines[index].Choices) return;
         selecting = true;
-        DUIManager.InitChoiceUI(dialogueData.lines[index].choices);
+        DUIManager.InitChoiceUI(dialogueData.lines[index].Choices);
         DUIManager.SetChoicesUIActive(true);
         CUI.IndicateByIdx(0);
     }

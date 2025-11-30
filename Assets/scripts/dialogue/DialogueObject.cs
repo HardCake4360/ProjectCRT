@@ -17,11 +17,11 @@ public class DialogueObject : ScriptableObject
     {
         public string characterName;
 
-        public PortraitType portrait;
+        public PortraitType Portrait;
+        public int CamNumber;
+        public float CharInterval;
 
-        public float charInterval;
-
-        public ChoicesObj choices;
+        public ChoicesObj Choices;
 
         [TextArea(3, 5)]
         public string text;
@@ -38,4 +38,11 @@ public class DialogueObject : ScriptableObject
     {
         DialogueManager.Instance.DialogueEventTrigger(this);
     }
+}
+
+[CreateAssetMenu(fileName = "InterogationDiaObject", menuName = "Scriptable Objects/InterogationDiaObject")]
+public class InterogationDiaObject : DialogueObject
+{
+    
+
 }

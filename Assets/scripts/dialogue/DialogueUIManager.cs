@@ -9,6 +9,7 @@ public class DialogueUIManager : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private bool showPortrait;
+    [SerializeField] private bool useInterogationManager;
 
     [Header("Properties")]
     public Canvas canvas;
@@ -37,10 +38,19 @@ public class DialogueUIManager : MonoBehaviour
         portraitManager = FindFirstObjectByType<PortraitManager>();
         isTyping = false;
         fullText = "";
-        OnTypingComplete.AddListener(() =>
+        //다이어로그 종료 시 선택지 있으면 이벤트 발생
+        if (!useInterogationManager)
         {
-            DialogueManager.Instance.ChoiceEvent();
-        });
+            OnTypingComplete.AddListener(() =>
+            {
+                DialogueManager.Instance.ChoiceEvent();
+            });
+        }
+        else
+        {
+
+        }
+        
     }
 
     public void DisplayDialogue(DialogueObject.DialogueLine line)
@@ -62,7 +72,7 @@ public class DialogueUIManager : MonoBehaviour
                 Name.SetActive(true);
 
                 nameText.text = line.characterName.ToString();
-                currentSheet = portraitManager.GetPortrait(line.characterName, line.portrait);
+                currentSheet = portraitManager.GetPortrait(line.characterName, line.Portrait);
 
                 //이전 라인과 초상화 같으면 업데이트 하지 않음 (둘이 달라야 업데이트)
                 if (prevSheet != currentSheet)
@@ -102,7 +112,7 @@ public class DialogueUIManager : MonoBehaviour
 
             dialogueText.text += text[i];
             i++;
-            yield return new WaitForSeconds(line.charInterval);
+            yield return new WaitForSeconds(line.CharInterval);
         }
         isTyping = false;
         OnTypingComplete?.Invoke();

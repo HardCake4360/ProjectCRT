@@ -4,7 +4,7 @@ using UnityEngine;
 public class CustomCinemachineCamera : MonoBehaviour
 {
     protected CinemachineCamera cam;
-    private void Start()
+    private void Awake()
     {
         cam = GetComponent<CinemachineCamera>();
     }
