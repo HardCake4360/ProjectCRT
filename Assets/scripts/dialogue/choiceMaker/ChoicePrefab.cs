@@ -11,11 +11,11 @@ public class ChoicePrefab : MonoBehaviour
     [SerializeField] private ReactiveButton button;
 
     private bool isSelected;
-    public void ContextSetSelect() { indicator.enabled = isSelected; }
+    public void ContextSetSelect() { if (indicator) indicator.enabled = isSelected; }
 
     private void Start()
     {
-        indicator.enabled = isSelected;
+        if(indicator) indicator.enabled = isSelected;
     }
 
     void Awake()
@@ -27,7 +27,7 @@ public class ChoicePrefab : MonoBehaviour
     public void SetSelected(bool val) 
     { 
         isSelected = val;
-        indicator.enabled = val; 
+        if (indicator) indicator.enabled = val; 
     }
     public void InitMembers(int idx, ChoiceData cho)
     {

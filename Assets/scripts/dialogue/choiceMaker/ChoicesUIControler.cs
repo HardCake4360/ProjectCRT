@@ -50,5 +50,10 @@ public class ChoicesUIControler : MonoBehaviour
         choiceObjs[i].GetComponent<ChoicePrefab>().SetSelected(true);
     }
 
+    public void SetSelfActive(bool active)
+    {
+        gameObject.SetActive(active);
+    }
+
 }
 

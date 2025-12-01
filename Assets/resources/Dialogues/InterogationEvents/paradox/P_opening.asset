@@ -9,25 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
-  m_Name: DM_grandma
+  m_Script: {fileID: 11500000, guid: 75db258a7ba0e4741a3f49b1bdb051ec, type: 3}
+  m_Name: P_opening
   m_EditorClassIdentifier: 
   IsStart: 0
   lines:
-  - characterName: "\uB450\uB9AC\uBC88\uAC70\uB9AC\uB294 \uD560\uBA38\uB2C8"
+  - characterName: 
     Portrait: 0
-    CamNumber: 0
+    CamNumber: 2
     CharInterval: 0
     QuestionDia: {fileID: 0}
-    text: "\uB354 \uBB3C\uC5B4\uBCFC\uAC8C \uC788\uC218?"
-  - characterName: end
-    Portrait: 0
-    CamNumber: 0
-    CharInterval: 0
-    QuestionDia: {fileID: 0}
-    text: 
+    text: "\uC9C0\uAE08\uAE4C\uC9C0 \uC2EC\uBB38\uD55C \uB0B4\uC6A9\uC744 \uC815\uB9AC\uD574\uBCF4\uB3C4\uB85D
+      \uD558\uC8E0"
   TailDia: {fileID: 0}
-  Choices: {fileID: 11400000, guid: 8ad1e893c15b8a14ba4cbfbccfabaf55, type: 2}
+  Choices: {fileID: 0}
   continueIdx: 0
   OnStart:
     m_PersistentCalls:

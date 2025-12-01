@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ba673411d42784186398b00495ebf8, type: 3}
+  m_Name: C_neck
+  m_EditorClassIdentifier: 
+  lines:
+  - name: "\uB9D0\uB3C4 \uC548\uB418\uB294 \uC18C\uB9AC"
+    OnSelectDialogue: {fileID: 11400000, guid: e424979020e240840947192917b374f9, type: 2}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls: []
+  - name: "\uADF8\uB7F4 \uC218\uB3C4 \uC788\uC8E0"
+    OnSelectDialogue: {fileID: 11400000, guid: dce5569fee4f83049b2144aa7086f681, type: 2}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls: []

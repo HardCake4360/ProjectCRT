@@ -28,6 +28,11 @@ public class InterogationManager : MonoBehaviour
     [Header("ManagerSetting")]
     public DTB_transformSetter DTB_Setter;
 
+    public void ActivateInterogation()
+    {
+        gameObject.SetActive(true);
+    }
+
     void Awake()
     {
         if (Instance != null && Instance != this)

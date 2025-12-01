@@ -67,8 +67,10 @@ public class DialogueManager : MonoBehaviour
 
         if ((index == 0 ||  InputManager.Instance.IsAnyKeyPressedIn(
                             InputManager.Instance.DialogueAdvanceKeys))
+             || dialogueData.IsStart
              && !selecting)
         {
+            dialogueData.IsStart = false;
             // 타이핑 중이면 스킵
             if (DUIManager.IsTyping())
             {
@@ -105,7 +107,9 @@ public class DialogueManager : MonoBehaviour
         }
 
         //선택지 표시, 선택 상태 진입
-        if (dialogueData.Choices && !DUIManager.IsTyping())
+        if (dialogueData.Choices
+            && !DUIManager.IsTyping()
+            && IsDiaEnd())
         {
             Cursor.lockState = CursorLockMode.None;
         }

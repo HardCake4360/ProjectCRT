@@ -27,10 +27,12 @@ public class DialogueObject : ScriptableObject
         public string text;
     }
     [Tooltip("마지막 노드 이름: end, 선택지도 마지막 노드에 넣을 것")]
+    public bool IsStart;
     public DialogueLine[] lines;
 
     public DialogueObject TailDia;
     public ChoicesObj Choices;
+    public int continueIdx;
 
     public UnityEvent OnStart;
     public UnityEvent OnEnd;
@@ -42,5 +44,12 @@ public class DialogueObject : ScriptableObject
         {
             DialogueManager.Instance.index = i;
         }
+        IsStart = true;
+    }
+
+    public void StartInterogation()
+    {
+        InterogationManager.Instance.ActivateInterogation();
+        MainLoop.Instance.MainLoopState = MainState.Interogate;
     }
 }

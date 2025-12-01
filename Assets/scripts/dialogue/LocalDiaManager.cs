@@ -69,8 +69,10 @@ public class LocalDiaManager : MonoBehaviour
 
         if ((index == 0 || InputManager.Instance.IsAnyKeyPressedIn(
                             InputManager.Instance.DialogueAdvanceKeys))
+             || dialogueData.IsStart
              && !selecting)
         {
+            dialogueData.IsStart = false;
             // 타이핑 중이면 스킵
             if (DUIManager.IsTyping())
             {
@@ -87,7 +89,7 @@ public class LocalDiaManager : MonoBehaviour
                 {
                     isDiaEnd = true;
                     dialogueData.OnEnd?.Invoke();
-                    dialogueData.TailDia.DetonateEvent();
+                    dialogueData.TailDia.DetonateEvent(dialogueData.continueIdx);
                     return;
                 }
                 isDiaEnd = true;
@@ -143,7 +145,7 @@ public class LocalDiaManager : MonoBehaviour
             return;
         }
         question.TailDia = currentDia;
-        question.continueIdx = index;
+        question.continueIdx = index-1;
         question.OnEnd.AddListener(() =>
         {
             InterogationManager.Instance.InterogationState = InterogationState.Testify;
@@ -155,8 +157,9 @@ public class LocalDiaManager : MonoBehaviour
     {
         //질의가 null일때 출력하는 대사
         Debug.Log("Question Event is null");
-        NullDia.TailDia = dialogueData;
-        int currentIdx = index;
+        var currentDia = dialogueData;
+        NullDia.TailDia = currentDia;
+        NullDia.TailDia.continueIdx = index-1;
         NullDia.OnEnd.AddListener(() =>
         {
             InterogationManager.Instance.InterogationState = InterogationState.Testify;

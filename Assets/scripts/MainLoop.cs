@@ -71,6 +71,7 @@ public class MainLoop : MonoBehaviour
         switch (MainLoopState)
         {
             case MainState.Main:
+                if (Cursor.lockState == CursorLockMode.None) Cursor.lockState = CursorLockMode.Locked;
                 if(Raycaster) Raycaster.RaycastAndInteract();
 
                 if (PC)

@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
-  m_Name: DM_grandma
+  m_Name: DC_interogation 1
   m_EditorClassIdentifier: 
   IsStart: 0
   lines:
-  - characterName: "\uB450\uB9AC\uBC88\uAC70\uB9AC\uB294 \uD560\uBA38\uB2C8"
+  - characterName: "\uC0B0"
     Portrait: 0
     CamNumber: 0
     CharInterval: 0
     QuestionDia: {fileID: 0}
-    text: "\uB354 \uBB3C\uC5B4\uBCFC\uAC8C \uC788\uC218?"
-  - characterName: end
+    text: "\uADF8...\uC544\uB2D9\uB2C8\uB2E4. \uD558\uB358\uC77C \uD558\uC2DC\uC8E0"
+  - characterName: "\uC0B0"
     Portrait: 0
     CamNumber: 0
     CharInterval: 0
     QuestionDia: {fileID: 0}
-    text: 
+    text: "(\uC870\uAE08\uB9CC \uB354 \uB458\uB7EC\uBCF4\uACE0 \uC640\uC57C\uACA0\uC5B4...)"
   TailDia: {fileID: 0}
-  Choices: {fileID: 11400000, guid: 8ad1e893c15b8a14ba4cbfbccfabaf55, type: 2}
+  Choices: {fileID: 0}
   continueIdx: 0
   OnStart:
     m_PersistentCalls:
