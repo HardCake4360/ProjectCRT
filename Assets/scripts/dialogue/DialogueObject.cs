@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 public enum PortraitType
@@ -45,11 +46,5 @@ public class DialogueObject : ScriptableObject
             DialogueManager.Instance.index = i;
         }
         IsStart = true;
-    }
-
-    public void StartInterogation()
-    {
-        InterogationManager.Instance.ActivateInterogation();
-        MainLoop.Instance.MainLoopState = MainState.Interogate;
     }
 }

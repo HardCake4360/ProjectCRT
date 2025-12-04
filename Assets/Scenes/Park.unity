@@ -376,7 +376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5637324657869798425, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -12.56
       objectReference: {fileID: 0}
     - target: {fileID: 5637324657869798425, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -412,31 +412,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8569498713177244410, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.495
+      value: -0.32079998
       objectReference: {fileID: 0}
     - target: {fileID: 8569498713177244410, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.774
+      value: 0.67819977
       objectReference: {fileID: 0}
     - target: {fileID: 8569498713177244410, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.0370021
+      value: 1.9402082
       objectReference: {fileID: 0}
     - target: {fileID: 8569498713177244410, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9790361
+      value: 0.46438286
       objectReference: {fileID: 0}
     - target: {fileID: 8569498713177244410, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0020782005
+      value: -0.08545268
       objectReference: {fileID: 0}
     - target: {fileID: 8569498713177244410, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.20366938
+      value: 0.877627
       objectReference: {fileID: 0}
     - target: {fileID: 8569498713177244410, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0016964771
+      value: 0.08256674
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

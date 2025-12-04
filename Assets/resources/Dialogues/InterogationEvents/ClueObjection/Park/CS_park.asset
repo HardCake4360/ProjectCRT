@@ -19,12 +19,12 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - name: "\uACE0\uC591\uC774\uC758 \uC0AC\uC9C4"
-    OnSelectDialogue: {fileID: 11400000, guid: 68d6d159ab74715488ce8af8a6cd5258, type: 2}
+    OnSelectDialogue: {fileID: 11400000, guid: 6d2ee810944ecde4397b8547e65c652a, type: 2}
     OnSelect:
       m_PersistentCalls:
         m_Calls: []
   - name: "\uBAA9\uACA9\uC790"
-    OnSelectDialogue: {fileID: 11400000, guid: 68d6d159ab74715488ce8af8a6cd5258, type: 2}
+    OnSelectDialogue: {fileID: 11400000, guid: 91ab34d207c75494a9ad4b4d3341ea6e, type: 2}
     OnSelect:
       m_PersistentCalls:
         m_Calls: []

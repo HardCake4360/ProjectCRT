@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - name: "\uC9C4\uD589\uD55C\uB2E4"
-    OnSelectDialogue: {fileID: 0}
+    OnSelectDialogue: {fileID: 11400000, guid: 08547273176597a4dad1159dcd70696d, type: 2}
     OnSelect:
       m_PersistentCalls:
         m_Calls: []

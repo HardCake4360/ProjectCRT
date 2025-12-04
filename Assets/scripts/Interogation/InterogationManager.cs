@@ -18,6 +18,10 @@ public class InterogationManager : MonoBehaviour
     public static InterogationManager Instance { get; private set; }
 
     public InterogationState InterogationState;
+
+    [Header("Setting")]
+    [SerializeField] private float questionDelay; // 추궁 애니메이션 후 이벤트 진행까지 걸리는 시간
+
     private bool isInterogationEnd;
     private Animator UIAnimator;
 
@@ -88,17 +92,17 @@ public class InterogationManager : MonoBehaviour
                 Debug.Log("진술 상태");
 
                 // 키 입력 && 타이핑 상태 아닐때 && 선택지 나오는 중 아닐때
+                // 추궁 시작
                 if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.Objection)
                     && !LocalDiaManager.Instance.DUIManager.IsTyping()
                     && !LocalDiaManager.Instance.IsSelecting())
                 {
-                    LocalDiaManager.Instance.QuestionEvent();
-                    InterogationState = InterogationState.Question;
+                    StartCoroutine(questionAni());
                 }
                 break;
 
             case InterogationState.Question:
-                // 진술 도중 오브젝션
+                // 진술 도중 추궁
                 
                 break;
 
@@ -113,5 +117,13 @@ public class InterogationManager : MonoBehaviour
                 break;
 
         }
+    }
+    private IEnumerator questionAni()
+    {
+        // 애니메이션 재생+딜레이
+
+        //이벤트 실행
+        LocalDiaManager.Instance.QuestionEvent();
+        InterogationState = InterogationState.Question;
     }
 }

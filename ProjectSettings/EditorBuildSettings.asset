@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Park.unity
     guid: 82fb01c3ccd24104b97d2b59d9093f0f
+  - enabled: 1
+    path: Assets/Scenes/InterogationScene.unity
+    guid: 7886df1b06b854844bca01e6933eb151
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

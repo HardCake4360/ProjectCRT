@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75db258a7ba0e4741a3f49b1bdb051ec, type: 3}
   m_Name: TestName
   m_EditorClassIdentifier: 
+  IsStart: 0
   lines:
   - characterName: 
     Portrait: 0
     CamNumber: 0
     CharInterval: 0
     QuestionDia: {fileID: 0}
-    text: "\uC7A0\uAE50, \uB108 \uBC94\uC778\uC774\uB77C\uACE0?"
+    text: "\uC7A0\uAE50, \uB2F9\uC2E0 \uBC94\uC778\uC774\uB77C\uACE0?"
   - characterName: 
     Portrait: 0
     CamNumber: 1
@@ -33,10 +34,10 @@ MonoBehaviour:
     text: 
   TailDia: {fileID: 11400000, guid: 39e3779ce6e14084db393af0f643f143, type: 2}
   Choices: {fileID: 0}
+  continueIdx: 1
   OnStart:
     m_PersistentCalls:
       m_Calls: []
   OnEnd:
     m_PersistentCalls:
       m_Calls: []
-  continueIdx: 1

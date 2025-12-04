@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75db258a7ba0e4741a3f49b1bdb051ec, type: 3}
   m_Name: I_Test
   m_EditorClassIdentifier: 
+  IsStart: 0
   lines:
   - characterName: 
     Portrait: 0
     CamNumber: 0
-    CharInterval: 0
+    CharInterval: 0.05
     QuestionDia: {fileID: 0}
-    text: "\uB0B4 \uC774\uB984\uC740 \uC0B0 \uC785\uB2C8\uB2E4"
+    text: "\uC9C4\uC220 \uC2DC\uC791\uD574\uC8FC\uC2DC\uC8E0"
   - characterName: 
     Portrait: 0
     CamNumber: 1
-    CharInterval: 0
+    CharInterval: 0.05
     QuestionDia: {fileID: 11400000, guid: 033c1d87f24053048bb3d41f8ea1048f, type: 2}
     text: "\uC800\uB294 \uBC94\uC778\uC785\uB2C8\uB2E4"
   - characterName: 
@@ -39,10 +40,10 @@ MonoBehaviour:
     text: 
   TailDia: {fileID: 0}
   Choices: {fileID: 11400000, guid: eab8c68ed51d4594da92b7c44de1c1c9, type: 2}
+  continueIdx: 0
   OnStart:
     m_PersistentCalls:
       m_Calls: []
   OnEnd:
     m_PersistentCalls:
       m_Calls: []
-  continueIdx: 0

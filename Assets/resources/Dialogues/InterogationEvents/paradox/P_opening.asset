@@ -17,11 +17,17 @@ MonoBehaviour:
   - characterName: 
     Portrait: 0
     CamNumber: 2
-    CharInterval: 0
+    CharInterval: 0.05
     QuestionDia: {fileID: 0}
     text: "\uC9C0\uAE08\uAE4C\uC9C0 \uC2EC\uBB38\uD55C \uB0B4\uC6A9\uC744 \uC815\uB9AC\uD574\uBCF4\uB3C4\uB85D
       \uD558\uC8E0"
-  TailDia: {fileID: 0}
+  - characterName: end
+    Portrait: 0
+    CamNumber: 2
+    CharInterval: 0.05
+    QuestionDia: {fileID: 0}
+    text: 
+  TailDia: {fileID: 11400000, guid: c218112acdaff9b4cb5390a9ad0bf02d, type: 2}
   Choices: {fileID: 0}
   continueIdx: 0
   OnStart:

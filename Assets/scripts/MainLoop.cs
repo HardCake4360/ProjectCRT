@@ -71,7 +71,6 @@ public class MainLoop : MonoBehaviour
         switch (MainLoopState)
         {
             case MainState.Main:
-                if (Cursor.lockState == CursorLockMode.None) Cursor.lockState = CursorLockMode.Locked;
                 if(Raycaster) Raycaster.RaycastAndInteract();
 
                 if (PC)
@@ -97,7 +96,7 @@ public class MainLoop : MonoBehaviour
                 break;
             case MainState.Interogate:
                 //심문 모드
-
+                PC.enabled = false;
                 break;
 
         }

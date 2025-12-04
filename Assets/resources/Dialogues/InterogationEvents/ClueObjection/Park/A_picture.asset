@@ -17,7 +17,14 @@ MonoBehaviour:
   - characterName: 
     Portrait: 0
     CamNumber: 0
-    CharInterval: 0
+    CharInterval: 0.05
+    QuestionDia: {fileID: 0}
+    text: "\uC774\uB801\uAC8C \uC0DD\uAE34 \uACE0\uC591\uC774\uB97C \uBCF8 \uC801
+      \uC788\uC2B5\uB2C8\uAE4C?"
+  - characterName: end
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0.05
     QuestionDia: {fileID: 0}
     text: 
   TailDia: {fileID: 0}

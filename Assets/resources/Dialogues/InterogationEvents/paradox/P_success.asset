@@ -16,7 +16,25 @@ MonoBehaviour:
   lines:
   - characterName: 
     Portrait: 0
-    CamNumber: 3
+    CamNumber: 0
+    CharInterval: 0.05
+    QuestionDia: {fileID: 0}
+    text: "...\uC774\uC815\uB3C4\uBA74 \uCDA9\uBD84\uD574 \uBCF4\uC774\uB294\uAD70\uC694"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0.05
+    QuestionDia: {fileID: 0}
+    text: "\uC11C\uAE4C\uC9C0 \uB3D9\uD589\uD574\uC8FC\uC154\uC57C \uACA0\uC2B5\uB2C8\uB2E4"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0.05
+    QuestionDia: {fileID: 0}
+    text: "\uC820\uC7A5 \uC774\uB7F4\uC218\uAC00!!!"
+  - characterName: end
+    Portrait: 0
+    CamNumber: 1
     CharInterval: 0
     QuestionDia: {fileID: 0}
     text: 

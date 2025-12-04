@@ -437,6 +437,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 130727898721099407, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 680.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 130727898721099407, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 130727898721099407, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -567,6 +575,14 @@ PrefabInstance:
     - target: {fileID: 8569498713177244410, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.0016964771
+      objectReference: {fileID: 0}
+    - target: {fileID: 8733490321728059999, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
+      propertyPath: DefaultBlend.Time
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8733490321728059999, guid: bc48358a32d03c542891f7c80eaef9a2, type: 3}
+      propertyPath: DefaultBlend.Style
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

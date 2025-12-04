@@ -37,6 +37,9 @@ MonoBehaviour:
   continueIdx: 0
   OnStart:
     m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000}
         m_TargetAssemblyTypeName: DialogueObject, Assembly-CSharp
@@ -50,6 +53,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnEnd:
-    m_PersistentCalls:
-      m_Calls: []

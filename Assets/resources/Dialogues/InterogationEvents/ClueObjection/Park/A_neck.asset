@@ -17,27 +17,27 @@ MonoBehaviour:
   - characterName: 
     Portrait: 0
     CamNumber: 0
-    CharInterval: 0
+    CharInterval: 0.05
     QuestionDia: {fileID: 0}
     text: "\uB2F9\uC2E0 \uC18C\uC9C0\uD488\uC744 \uAC80\uC0AC\uD574\uBD24\uB294\uB370
       \uB72F\uC5B4\uC9C4 \uBAA9\uC904 \uAC19\uC740 \uAC83\uC774 \uC788\uB354\uAD70\uC694"
   - characterName: 
     Portrait: 0
     CamNumber: 0
-    CharInterval: 0
+    CharInterval: 0.05
     QuestionDia: {fileID: 0}
     text: "\uB9C8\uCE68 \uC0AC\uB77C\uC9C4 \uACE0\uC591\uC774\uC758 \uBAA9\uC904\uACFC
       \uAC19\uC740 \uC0C9\uC778 \uAC83\uC73C\uB85C \uB9D0\uC785\uB2C8\uB2E4"
   - characterName: 
     Portrait: 0
     CamNumber: 0
-    CharInterval: 0
+    CharInterval: 0.05
     QuestionDia: {fileID: 0}
     text: "...\uC774 \uBAA9\uC904\uC740 \uC5B4\uB514\uC11C \uB09C \uAC81\uB2C8\uAE4C?"
   - characterName: 
     Portrait: 0
     CamNumber: 1
-    CharInterval: 0
+    CharInterval: 0.05
     QuestionDia: {fileID: 0}
     text: "\uADF8...\uADF8\uAC74 \uC5B4...\uC74C... \uB0B4\uAC00 \uC4F0\uB358\uAC70\uC57C..."
   - characterName: end
