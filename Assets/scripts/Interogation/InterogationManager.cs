@@ -21,9 +21,9 @@ public class InterogationManager : MonoBehaviour
 
     [Header("Setting")]
     [SerializeField] private float questionDelay; // 추궁 애니메이션 후 이벤트 진행까지 걸리는 시간
+    [SerializeField] private Animator UIAnimator;
 
     private bool isInterogationEnd;
-    private Animator UIAnimator;
 
     private int idx;
     private DialogueObject[] clues; // 다이어로그 오브젝트로 했지만 클루에 따른 패러독스 획득을 위해 변경할 수 있음
@@ -65,7 +65,7 @@ public class InterogationManager : MonoBehaviour
         // 모든 열거형 값 순회
         foreach (InterogationState item in Enum.GetValues(typeof(InterogationState)))
         {
-            if(item.ToString() == state)
+            if (item.ToString() == state)
             {
                 InterogationState = item;
             }
@@ -103,7 +103,7 @@ public class InterogationManager : MonoBehaviour
 
             case InterogationState.Question:
                 // 진술 도중 추궁
-                
+
                 break;
 
             case InterogationState.Clue:
@@ -118,12 +118,17 @@ public class InterogationManager : MonoBehaviour
 
         }
     }
+
     private IEnumerator questionAni()
     {
         // 애니메이션 재생+딜레이
-
+        UIAnimator.Play("question", 0, 0f);
+        yield return new WaitForSeconds(questionDelay);
+        
         //이벤트 실행
         LocalDiaManager.Instance.QuestionEvent();
         InterogationState = InterogationState.Question;
+
+        yield break;
     }
 }

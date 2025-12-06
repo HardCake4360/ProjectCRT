@@ -1,0 +1,42 @@
+using UnityEngine;
+
+public class InputManager : MonoBehaviour
+{
+    public static InputManager Instance { get; private set; }
+
+    [Header("대사 진행 키 설정")]
+    public KeyCode[] DialogueAdvanceKeys    = new KeyCode[] { KeyCode.Return, KeyCode.Mouse0 };
+    [Header("상호작용 키 설정")]
+    public KeyCode[] interactionKeys        = new KeyCode[] { KeyCode.E, KeyCode.Mouse0 };
+    [Header("선택지 상하 이동 키 설정")]
+    public KeyCode[] SelectUp               = new KeyCode[] { KeyCode.UpArrow, KeyCode.W };
+    public KeyCode[] SelectDown             = new KeyCode[] { KeyCode.DownArrow, KeyCode.S };
+    [Header("선택지 결정 키 설정")]
+    public KeyCode[] SelectConfirm          = new KeyCode[] { KeyCode.Space, KeyCode.Return };
+    [Header("시점 이동 키 설정")]
+    public KeyCode[] ToLeft                 = new KeyCode[] { KeyCode.Q };
+    public KeyCode[] ToRight                = new KeyCode[] { KeyCode.E };
+    [Header("오브젝션 키 설정")]
+    public KeyCode[] Objection              = new KeyCode[] { KeyCode.Space };
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // 씬 전환에도 유지
+    }
+
+    public bool IsAnyKeyPressedIn(KeyCode[] keys)
+    {
+        foreach (var key in keys)
+        {
+            if (Input.GetKeyDown(key))
+                return true;
+        }
+        return false;
+    }
+}
