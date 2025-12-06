@@ -9,6 +9,7 @@ public class DialogueUIManager : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private bool showPortrait;
+    [SerializeField] private bool useCharInterval;
 
     [Header("Properties")]
     public Canvas canvas;
@@ -112,8 +113,16 @@ public class DialogueUIManager : MonoBehaviour
             }
 
             dialogueText.text += text[i];
+            AudioManager.Instance.PlayTypeSFX();
             i++;
-            yield return new WaitForSeconds(line.CharInterval);
+            if (useCharInterval)
+            {
+                yield return new WaitForSeconds(line.CharInterval);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
         }
         isTyping = false;
 

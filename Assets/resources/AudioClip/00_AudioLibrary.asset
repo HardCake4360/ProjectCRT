@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74edb10bf6edd945821d55ac897aa29, type: 3}
+  m_Name: 00_AudioLibrary
+  m_EditorClassIdentifier: 
+  bgmClips:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+        m_TextWithWhitespace: "Keys\u200B"
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - Title
+    - Home
+    - Lspd
+    - Park
+    _keys:
+    - Title
+    - Home
+    - Lspd
+    - Park
+    _values:
+    - {fileID: 8300000, guid: dd8a39db076144a42a926abf0901b058, type: 3}
+    - {fileID: 8300000, guid: 33702afbad88660498477f4bb9d319df, type: 3}
+    - {fileID: 8300000, guid: c874ffe197a2f27419f180cdf57e77d0, type: 3}
+    - {fileID: 8300000, guid: 0e3e68bdceb45734b8ff1cd873e7fe9a, type: 3}
+  sfxClips:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+        m_TextWithWhitespace: "Keys\u200B"
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - type0
+    - type1
+    - type2
+    - type3
+    - type4
+    - type5
+    - 
+    _keys:
+    - type0
+    - type1
+    - type2
+    - type3
+    - type4
+    - type5
+    - 
+    _values:
+    - {fileID: 8300000, guid: 2dd1aea6f3229794da934ee4d8ef676f, type: 3}
+    - {fileID: 8300000, guid: 79d000dfd242d1a4380934c8d726cf3e, type: 3}
+    - {fileID: 8300000, guid: f7f97683fba273a488da856a876beada, type: 3}
+    - {fileID: 8300000, guid: 54424d7b6ad255a45a436f8eb511321b, type: 3}
+    - {fileID: 8300000, guid: 283862785699ec7498cfb116301a06d4, type: 3}
+    - {fileID: 8300000, guid: 83fcd7498f894644ea2c7656818701f0, type: 3}
+    - {fileID: 8300000, guid: 83fcd7498f894644ea2c7656818701f0, type: 3}

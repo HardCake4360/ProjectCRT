@@ -12,7 +12,7 @@ public class DialogueManager : MonoBehaviour
 
     public int index = 0;
     private bool dialogueStartFlag = false;
-    private bool selecting = false;
+    [SerializeField] private bool selecting = false;
     public void SetSelecting(bool val) { selecting = val; }
 
     public UnityEvent StaticOnDialogueStart;
@@ -65,10 +65,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (!dialogueStartFlag) return;
 
-        if ((index == 0 ||  InputManager.Instance.IsAnyKeyPressedIn(
-                            InputManager.Instance.DialogueAdvanceKeys))
-             || dialogueData.IsStart
-             && !selecting)
+        if ((index == 0 ||InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.DialogueAdvanceKeys)
+            || dialogueData.IsStart)
+            && !selecting)
         {
             dialogueData.IsStart = false;
             // 타이핑 중이면 스킵
@@ -81,6 +80,7 @@ public class DialogueManager : MonoBehaviour
             
             if (dialogueData.lines[index].characterName == "end")
             {
+                Debug.Log("dsalkjhfkasd  대사 종료");
                 if (dialogueData.TailDia)
                 {
                     dialogueData.TailDia.DetonateEvent();
@@ -90,6 +90,8 @@ public class DialogueManager : MonoBehaviour
                 dialogueStartFlag = false;
                 StaticOnDialogueEnd?.Invoke();
                 OnDialogueEnd?.Invoke();
+                MainLoop.Instance.SetMainLoopState_Main();
+
 
                 //모든 상호작용 오브젝트에 딜레이 생성
                 foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))

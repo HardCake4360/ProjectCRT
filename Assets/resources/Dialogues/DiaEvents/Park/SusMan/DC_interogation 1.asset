@@ -26,6 +26,12 @@ MonoBehaviour:
     CharInterval: 0
     QuestionDia: {fileID: 0}
     text: "(\uC870\uAE08\uB9CC \uB354 \uB458\uB7EC\uBCF4\uACE0 \uC640\uC57C\uACA0\uC5B4...)"
+  - characterName: end
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    text: 
   TailDia: {fileID: 0}
   Choices: {fileID: 0}
   continueIdx: 0
