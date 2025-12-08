@@ -44,10 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458c501d15e9a6f4ba459bcee06a4fc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueAdvanceKeys: 200000000d00000043010000
+  DialogueAdvanceKeys: 0d00000043010000
   interactionKeys: 6500000043010000
   SelectUp: 1101000077000000
   SelectDown: 1201000073000000
   SelectConfirm: 200000000d000000
   ToLeft: 71000000
   ToRight: 65000000
+  Objection: 20000000

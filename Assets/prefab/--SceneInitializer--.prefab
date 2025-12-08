@@ -50,5 +50,10 @@ MonoBehaviour:
   OnInitial:
     m_PersistentCalls:
       m_Calls: []
-  Delay: 2
+  Delay: 1
+  startBgm: 
+  UIManager: {fileID: 0}
+  Raycaster: {fileID: 0}
+  CamCon: {fileID: 0}
+  MainCam: {fileID: 0}
   PC: {fileID: 0}

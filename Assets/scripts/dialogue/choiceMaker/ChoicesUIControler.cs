@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ChoicesUIControler : MonoBehaviour
 {
-    private ChoicesObj choices;
+    [SerializeField] private ChoicesObj choices;
     public GameObject choicePrefab;
     public Transform ChoiceParent;
     private List<GameObject> choiceObjs = new List<GameObject>();
@@ -17,7 +17,7 @@ public class ChoicesUIControler : MonoBehaviour
     {
         foreach (Transform child in target)
         {
-            if (child.gameObject.GetComponent<ChoiceIndicator>()) continue;
+            if (child.gameObject.tag == "OutOfLayout") continue;
             Destroy(child.gameObject);
         }
     }

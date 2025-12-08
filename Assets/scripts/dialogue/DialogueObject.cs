@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
+
 public enum PortraitType
 {
     Neutral,
@@ -24,6 +25,8 @@ public class DialogueObject : ScriptableObject
 
         public DialogueObject QuestionDia;
 
+        public UnityEvent OnLineStart;
+
         [TextArea(3, 5)]
         public string text;
     }
@@ -38,13 +41,11 @@ public class DialogueObject : ScriptableObject
     public UnityEvent OnStart;
     public UnityEvent OnEnd;
 
-    virtual public void DetonateEvent(int i = -1)
+    virtual public void DetonateEvent(int i = 0)
     {
-        DialogueManager.Instance.DialogueEventTrigger(this);
-        if(i != -1)
-        {
-            DialogueManager.Instance.index = i;
-        }
         IsStart = true;
+        DialogueManager.Instance.DialogueEventTrigger(this);
+        DialogueManager.Instance.index = i;
+
     }
 }

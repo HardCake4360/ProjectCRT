@@ -12,49 +12,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
   m_Name: D_phone
   m_EditorClassIdentifier: 
+  IsStart: 0
   lines:
   - characterName: "\uC0B0"
-    portrait: 0
-    charInterval: 0.05
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
     text: "LSPD \uACBD\uAD00 \uC0B0\uC785\uB2C8\uB2E4. "
   - characterName: "\uC11C\uC7A5"
-    portrait: 0
-    charInterval: 0.05
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
     text: "\uC11C\uC7A5\uC774\uB124. \uC0C8\uB85C\uC6B4 \uC758\uB8B0\uAC00 \uB4E4\uC5B4\uC640\uC11C
       \uB9D0\uC774\uC9C0"
   - characterName: "\uC11C\uC7A5"
-    portrait: 0
-    charInterval: 0.05
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
     text: "\uC9C0\uAE08 \uC11C\uB85C \uC624\uB3C4\uB85D \uD558\uAC8C."
   - characterName: "\uC0B0"
-    portrait: 0
-    charInterval: 0.05
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
     text: "\uC804\uD654\uB85C\uB294 \uC548\uB418\uB294 \uAC81\uB2C8\uAE4C?"
   - characterName: "\uC11C\uC7A5"
-    portrait: 0
-    charInterval: 0.05
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
     text: "\uB530\uB85C \uC804\uB2EC\uD560 \uBB3C\uAC74\uC774 \uC788\uC5B4\uC11C
       \uB9D0\uC774\uC9C0. \uC5EC\uAE30\uAE4C\uC9C0 \uC640\uC11C \uBC1B\uC544\uAC00\uAC8C"
   - characterName: "\uC0B0"
-    portrait: 0
-    charInterval: 0.05
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
     text: "\uD6C4...\uC54C\uC558\uC2B5\uB2C8\uB2E4"
   - characterName: "\uC0B0"
-    portrait: 0
-    charInterval: 0.05
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
     text: "30\uBD84 \uC548\uC5D0 \uAC00\uB3C4\uB85D \uD558\uC8E0"
   - characterName: end
-    portrait: 0
-    charInterval: 0.05
-    choices: {fileID: 0}
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
     text: 
+  TailDia: {fileID: 0}
+  Choices: {fileID: 0}
+  continueIdx: 0
   OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -71,5 +83,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6910078529123848000, guid: 1ba08e395524056478cecb913e26e9e1, type: 3}
+        m_TargetAssemblyTypeName: InspectorStaticFunctions, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: phoneClose
           m_BoolArgument: 0
         m_CallState: 2

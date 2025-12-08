@@ -10,10 +10,4 @@ public class HintText : MonoBehaviour
         text = GetComponent<TextMeshProUGUI>();
         text.enabled = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

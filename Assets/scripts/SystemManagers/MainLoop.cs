@@ -6,7 +6,8 @@ public enum MainState
 {
     Main,
     Interact,
-    Interogate
+    Interogate,
+    Freeze
 }
 
 public class MainLoop : MonoBehaviour
@@ -75,6 +76,11 @@ public class MainLoop : MonoBehaviour
 
                 if (PC)
                 {
+                    if (!PC.enabled)
+                    {
+                        PC.enabled = true;
+                        Cursor.lockState = CursorLockMode.Locked;
+                    }
                     PC.UpdatePlayer();
                 }
 
@@ -96,9 +102,19 @@ public class MainLoop : MonoBehaviour
                 break;
             case MainState.Interogate:
                 //심문 모드
-                PC.enabled = false;
+                if (PC)
+                {
+                    if (PC.enabled)
+                    {
+                        PC.HideHint();
+                        PC.enabled = false;
+                    }
+                }
+                Cursor.lockState = CursorLockMode.None;
                 break;
-
+            case MainState.Freeze:
+                //아무 동작도 하지 않도록
+                break;
         }
 
     }

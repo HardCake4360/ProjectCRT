@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ba673411d42784186398b00495ebf8, type: 3}
+  m_Name: C_paradox
+  m_EditorClassIdentifier: 
+  lines:
+  - name: "\uC9C4\uD589\uD55C\uB2E4"
+    OnSelectDialogue: {fileID: 0}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6910078529123848000, guid: 1ba08e395524056478cecb913e26e9e1, type: 3}
+          m_TargetAssemblyTypeName: InspectorStaticFunctions, Assembly-CSharp
+          m_MethodName: ParadoxBuildAndRun
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: "\uC880\uB354 \uC0DD\uAC01\uD574\uBCF8\uB2E4"
+    OnSelectDialogue: {fileID: 0}
+    OnSelect:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6910078529123848000, guid: 1ba08e395524056478cecb913e26e9e1, type: 3}
+          m_TargetAssemblyTypeName: InspectorStaticFunctions, Assembly-CSharp
+          m_MethodName: LocalForceEndDia
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

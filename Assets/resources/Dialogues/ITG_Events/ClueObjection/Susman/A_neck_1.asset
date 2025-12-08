@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75db258a7ba0e4741a3f49b1bdb051ec, type: 3}
+  m_Name: A_neck_1
+  m_EditorClassIdentifier: 
+  IsStart: 0
+  lines:
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0.05
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uADF8\uB7F0 \uB9D0\uB3C4 \uC548\uB418\uB294 \uBCC0\uBA85\uC774 \uD1B5\uD560
+      \uAC70\uB77C\uACE0 \uC0DD\uAC01\uD569\uB2C8\uAE4C..."
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0.05
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uD55C\uB208\uC5D0 \uBD10\uB3C4 \uADF8\uCABD\uC774 \uC0AC\uC6A9\uD558\uAE30\uC5D4
+      \uC791\uC544\uBCF4\uC774\uB294\uB370\uC694"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0.2
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6910078529123848000, guid: 1ba08e395524056478cecb913e26e9e1, type: 3}
+          m_TargetAssemblyTypeName: InspectorStaticFunctions, Assembly-CSharp
+          m_MethodName: PlayUIAnim
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: ParadoxOccured
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000, guid: f0e7c3842e6f5b7459315d9ede207a4a, type: 2}
+          m_TargetAssemblyTypeName: ParadoxParts, Assembly-CSharp
+          m_MethodName: AddParadoxParts
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: ParadoxOccured
+            m_BoolArgument: 0
+          m_CallState: 2
+    text: "\uC774\uAC74 \uC880 \uBB34\uB9AC\uC218\uC600\uB098..."
+  - characterName: 
+    Portrait: 0
+    CamNumber: 2
+    CharInterval: 0.05
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "(\uC62C\uBC14\uB978 \uB2F5\uC744 \uACE0\uB978 \uAC83 \uAC19\uB2E4)"
+  - characterName: end
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: 
+  TailDia: {fileID: 0}
+  Choices: {fileID: 0}
+  continueIdx: 0
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

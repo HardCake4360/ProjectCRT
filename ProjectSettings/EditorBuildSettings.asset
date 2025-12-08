@@ -12,17 +12,20 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: 441c5d3493474d748b41efb39953c6a2
   - enabled: 1
-    path: Assets/Scenes/LSPD.unity
-    guid: 2e8377837725b5f41a11c7f83480007c
-  - enabled: 1
-    path: Assets/Scenes/HomeScene_1.unity
-    guid: 33d6768222f5ad443b267b5e9182035e
-  - enabled: 1
     path: Assets/Scenes/Park.unity
     guid: 82fb01c3ccd24104b97d2b59d9093f0f
   - enabled: 1
     path: Assets/Scenes/InterogationScene.unity
     guid: 7886df1b06b854844bca01e6933eb151
+  - enabled: 1
+    path: Assets/Scenes/Lspd.unity
+    guid: 2e8377837725b5f41a11c7f83480007c
+  - enabled: 1
+    path: Assets/Scenes/Lspd1.unity
+    guid: 28e9bb242d0b9f8479ca6f689c17bd63
+  - enabled: 1
+    path: Assets/Scenes/HomeScene_1.unity
+    guid: 28e79a05924e7eb46a83896ae8252245
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

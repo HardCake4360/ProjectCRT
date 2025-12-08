@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 public class LocalDiaManager : MonoBehaviour
 {
     public static LocalDiaManager Instance { get; private set; }
-    public DialogueObject dialogueData;
+    public InterogationDiaObject dialogueData;
     public DialogueObject NullDia;
     public DialogueUIManager DUIManager;
     public ChoicesUIControler CUI;
 
     public int index = 0;
-    private bool dialogueStartFlag = false;
+    [SerializeField] private bool dialogueStartFlag = false;
     public bool isDiaEnd = false;
-    private bool selecting = false; public bool IsSelecting() { return selecting; }
+    [SerializeField] private bool selecting = false; public bool IsSelecting() { return selecting; }
     public void SetSelecting(bool val) { selecting = val; }
 
     public UnityEvent StaticOnDialogueStart;
@@ -39,7 +39,7 @@ public class LocalDiaManager : MonoBehaviour
         DUIManager.SetChoicesUIActive(false);
     }
 
-    public void DialogueEventTrigger(DialogueObject data)
+    public void DialogueEventTrigger(InterogationDiaObject data)
     {
         index = 0;
         dialogueData = data;
@@ -66,11 +66,10 @@ public class LocalDiaManager : MonoBehaviour
     void Update()
     {
         if (!dialogueStartFlag) return;
-
-        if ((index == 0 || InputManager.Instance.IsAnyKeyPressedIn(
-                            InputManager.Instance.DialogueAdvanceKeys))
-             || dialogueData.IsStart
-             && !selecting)
+        
+        if ((index == 0 || InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.DialogueAdvanceKeys)
+            || dialogueData.IsStart)
+            && !selecting)
         {
             dialogueData.IsStart = false;
             // 타이핑 중이면 스킵
@@ -83,26 +82,15 @@ public class LocalDiaManager : MonoBehaviour
 
             if (dialogueData.lines[index].characterName == "end")
             {
-                //선택지 표시
+                //tailDia로 전환 또는 질문상태로 전환
                 if (dialogueData.TailDia 
-                    || InterogationManager.Instance.InterogationState == InterogationState.Question)
+                    /*|| InterogationManager.Instance.InterogationState == InterogationState.Question*/)
                 {
-                    isDiaEnd = true;
-                    dialogueData.OnEnd?.Invoke();
                     dialogueData.TailDia.DetonateEvent(dialogueData.continueIdx);
                     return;
                 }
-                isDiaEnd = true;
-                DUIManager.SetCanvasActive(false);
-                dialogueStartFlag = false;
-                StaticOnDialogueEnd?.Invoke();
-                OnDialogueEnd?.Invoke();
 
-                Debug.Log("다이어로그 종료");
-
-                //모든 상호작용 오브젝트에 딜레이 생성
-                foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
-                    interactObj.SetInteractableWithDelay(0.2f);
+                ForceEndDia();
 
                 return;
             }
@@ -124,6 +112,23 @@ public class LocalDiaManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public void ForceEndDia()
+    {
+        isDiaEnd = true;
+        DUIManager.SetCanvasActive(false);
+        dialogueStartFlag = false;
+        StaticOnDialogueEnd?.Invoke();
+        OnDialogueEnd?.Invoke();
+
+        Debug.Log("다이어로그 종료");
+
+        //모든 상호작용 오브젝트에 딜레이 생성
+        foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
+            interactObj.SetInteractableWithDelay(0.2f);
+
+        return;
     }
 
     public void ChoiceEvent()

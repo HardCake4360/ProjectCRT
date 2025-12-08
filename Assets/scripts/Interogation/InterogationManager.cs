@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public enum InterogationState
@@ -18,6 +19,7 @@ public class InterogationManager : MonoBehaviour
     public static InterogationManager Instance { get; private set; }
 
     public InterogationState InterogationState;
+    public List<ParadoxParts> ParadoxSet;
 
     [Header("Setting")]
     [SerializeField] private float questionDelay; // 추궁 애니메이션 후 이벤트 진행까지 걸리는 시간
@@ -26,15 +28,29 @@ public class InterogationManager : MonoBehaviour
     private bool isInterogationEnd;
 
     private int idx;
-    private DialogueObject[] clues; // 다이어로그 오브젝트로 했지만 클루에 따른 패러독스 획득을 위해 변경할 수 있음
+    public TipObj ITG_tip;
+
+    [Header("Properties")]
+    public GameObject ItgGroup;
+    public ReactiveButton button_tes;
+    public ReactiveButton button_clues;
+    public ReactiveButton button_paradox;
+    [SerializeField] private ParadoxParts paradoxOpening;
+    [SerializeField] private ParadoxParts paradoxEnding;
 
     // 하위 매니저들
     [Header("ManagerSetting")]
     public DTB_transformSetter DTB_Setter;
+    public ChoicesUIControler CUI;
 
-    public void ActivateInterogation()
+    public void StartInterogation()
     {
-        gameObject.SetActive(true);
+        MainLoop.Instance.SetMainLoopState(MainState.Interogate);
+        ItgGroup.SetActive(true);
+    }
+    public void EndInterogation()
+    {
+        SceneLoader.Instance.LoadScene("Lspd1");
     }
 
     void Awake()
@@ -50,6 +66,7 @@ public class InterogationManager : MonoBehaviour
     // 디버깅 완료 후 OnStart 함수에서 호출하는 함수로 변경할 것
     void Start()
     {
+        ITG_tip = ScriptableObject.Instantiate(ITG_tip);
         isInterogationEnd = false;
         InterogationState = InterogationState.Idle;
     }
@@ -119,6 +136,35 @@ public class InterogationManager : MonoBehaviour
         }
     }
 
+    public void BuildParadoxAndExecute()
+    {
+        LocalDiaManager.Instance.SetSelecting(false);
+        LocalDiaManager.Instance.CUI.SetSelfActive(false);
+
+        // 1) 런타임 전용 복제본 리스트 구성
+        var runtimeSet = new List<ParadoxParts>();
+
+        // 기존 ParadoxSet의 항목들을 전부 런타임 복제
+        foreach (var p in ParadoxSet)
+            runtimeSet.Add(ScriptableObject.Instantiate(p));
+
+        // 오프닝/엔딩도 복제해서 사용
+        var op = ScriptableObject.Instantiate(paradoxOpening);
+        var ed = ScriptableObject.Instantiate(paradoxEnding);
+
+        runtimeSet.Add(op);
+        runtimeSet.Sort((a, b) => a.SortingPriority.CompareTo(b.SortingPriority));
+        runtimeSet.Add(ed);
+
+        // 2) 복제본들끼리만 TailDia 연결 (원본 SO는 건드리지 않음)
+        for (int i = 0; i < runtimeSet.Count - 1; i++)
+            runtimeSet[i].TailDia = runtimeSet[i + 1];
+
+        // 3) 실행
+        runtimeSet[0].DetonateEvent();
+    }
+
+
     private IEnumerator questionAni()
     {
         // 애니메이션 재생+딜레이
@@ -130,5 +176,11 @@ public class InterogationManager : MonoBehaviour
         InterogationState = InterogationState.Question;
 
         yield break;
+    }
+
+    // 스크립터블 오브젝트 전역함수 연결용
+    public void PlayUIAnim(string name)
+    {
+        UIAnimator.Play(name);
     }
 }

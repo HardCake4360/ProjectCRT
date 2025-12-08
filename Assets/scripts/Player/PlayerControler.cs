@@ -100,4 +100,9 @@ public class PlayerControler : MonoBehaviour
         Vector3 vel = (transform.forward * verticalInput) + (transform.right * horizontalInput);
         return new Vector3(vel.x, -9.8f, vel.z) * speed;
     }
+
+    public void HideHint()
+    {
+        hintText.enabled = false;
+    }
 }

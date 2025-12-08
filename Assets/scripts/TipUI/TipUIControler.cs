@@ -65,7 +65,7 @@ public class TipUIControler : MonoBehaviour
     }
     public void EndEvent()
     {
-        MainLoop.Instance.SetMainLoopState_Main();
+        if(MainLoop.Instance.MainLoopState != MainState.Interogate) MainLoop.Instance.SetMainLoopState_Main();
         StaticOnEnd?.Invoke();
         OnEnd?.Invoke();
     }
@@ -104,7 +104,12 @@ public class TipUIControler : MonoBehaviour
                 prevIdx = idx;
                 TipName.text = tipObj.TipName;
                 TipText.text = tipObj.lines[idx].TipText;
-                TipImage.sprite = tipObj.lines[idx].TipImage;
+                if (tipObj.lines[idx].TipImage == null) TipImage.gameObject.SetActive(false);
+                else
+                {
+                    TipImage.gameObject.SetActive(true);
+                    TipImage.sprite = tipObj.lines[idx].TipImage;
+                }
             }
         }
 

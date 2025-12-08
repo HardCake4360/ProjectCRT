@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75db258a7ba0e4741a3f49b1bdb051ec, type: 3}
+  m_Name: Susman_tes
+  m_EditorClassIdentifier: 
+  IsStart: 0
+  lines:
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uBA3C\uC800 \uC0AC\uAC74\uC5D0 \uAD00\uD574 \uC9C4\uC220\uC744 \uB4E3\uACA0\uC2B5\uB2C8\uB2E4"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uC0AC\uAC74 \uB2F9\uC77C \uC624\uC804\uC5D0 \uC788\uC5C8\uB358 \uC77C\uC5D0
+      \uB300\uD574 \uB9D0\uC500 \uD574\uC8FC\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uADF8\uB798 \uBB50... \uB09C \uC5B4\uCC28\uD53C \uACB0\uBC31\uD558\uB2C8\uAE4C..."
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uB098\uB294 \uADF8\uB54C \uACF5\uC6D0\uC744 \uC0B0\uCC45\uC911\uC774\uC5C8\uC9C0"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uADF8\uB7EC\uB2E4\uAC00 \uC9D0\uC774 \uB9CE\uC774 \uBB34\uAC70\uC6CC
+      \uBCF4\uC774\uB294 \uD560\uBA38\uB2C8\uB97C \uBC1C\uACAC\uD588\uC5B4"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uC790\uB124\uB3C4 \uC798 \uC544\uB294 \uACE0\uC591\uC774\uB97C \uB370\uB9AC\uACE0
+      \uC788\uB294 \uD560\uBA38\uB2C8\uC600\uC9C0"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 11400000, guid: 635eaabae4e300045ac162ea688f1553, type: 2}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uC544\uBB34\uD2BC \uB098\uB294 \uADF8 \uD560\uBA38\uB2C8\uC758 \uC9D0\uC744
+      \uC62E\uAE30\uB294\uAC78 \uC7A0\uAE50 \uB3C4\uC640\uC8FC\uACE0 \uD5E4\uC5B4\uC84C\uC5B4"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 11400000, guid: 635eaabae4e300045ac162ea688f1553, type: 2}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uB09C \uC624\uD788\uB824 \uD560\uBA38\uB2C8\uB97C \uB3C4\uC640\uB4DC\uB838\uB2E4\uB2C8\uAE4C??"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "(\uC9C4\uC220\uC740 \uC5EC\uAE30\uAE4C\uC9C0\uC778 \uB4EF \uD558\uB2E4...)"
+  - characterName: end
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: 
+  TailDia: {fileID: 0}
+  Choices: {fileID: 0}
+  continueIdx: 0
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  tip: {fileID: 0}

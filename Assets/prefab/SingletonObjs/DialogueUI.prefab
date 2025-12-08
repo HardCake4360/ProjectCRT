@@ -350,6 +350,7 @@ MonoBehaviour:
   DUIManager: {fileID: 2980341832655779246}
   CUI: {fileID: 4345174984830124944}
   index: 0
+  dialogueStartFlag: 0
   selecting: 0
   StaticOnDialogueStart:
     m_PersistentCalls:
@@ -370,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showPortrait: 1
+  useCharInterval: 0
   canvas: {fileID: 5782901321656574082}
   portraitAnim: {fileID: 383895759092992864}
   nameText: {fileID: 5480066165803701506}
@@ -392,6 +394,7 @@ MonoBehaviour:
           m_StringArgument: typing end
           m_BoolArgument: 0
         m_CallState: 2
+  isTyping: 0
 --- !u!114 &6526073465556566112
 MonoBehaviour:
   m_ObjectHideFlags: 0

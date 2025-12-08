@@ -486,18 +486,6 @@ MonoBehaviour:
           m_StringArgument: HomeScene
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1264067617}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: StopBGM
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: HomeScene
-          m_BoolArgument: 0
-        m_CallState: 2
   OnDeselect:
     m_PersistentCalls:
       m_Calls: []
@@ -1637,16 +1625,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1344677682239290417, guid: 3c0740b11ae78d742b8104310554a74b, type: 3}
+      propertyPath: bgmMute
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344677682239290417, guid: 3c0740b11ae78d742b8104310554a74b, type: 3}
       propertyPath: library
       value: 
       objectReference: {fileID: 11400000, guid: 8a0ae19fbbbbc03429baa5e4e40daa73, type: 2}
     - target: {fileID: 1344677682239290417, guid: 3c0740b11ae78d742b8104310554a74b, type: 3}
       propertyPath: bgmVolume
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1344677682239290417, guid: 3c0740b11ae78d742b8104310554a74b, type: 3}
       propertyPath: sfxVolume
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1344677682239290417, guid: 3c0740b11ae78d742b8104310554a74b, type: 3}
       propertyPath: masterVolume
@@ -2166,8 +2158,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
+      propertyPath: startBgm
+      value: Title
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -3025,17 +3021,6 @@ Transform:
   - {fileID: 2117784388}
   m_Father: {fileID: 1721008275}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1264067617 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1344677682239290417, guid: 3c0740b11ae78d742b8104310554a74b, type: 3}
-  m_PrefabInstance: {fileID: 533091258}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5dedb1c79f763846a501399a91c3ce4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1267351799
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -33,6 +33,7 @@ public class ChoicePrefab : MonoBehaviour
     {
         textMesh.text = cho.name;
         selfIdx = idx;
+        button.OnClick = cho.OnSelect;
         button.OnClick.AddListener(() =>
         {
             if (cho.OnSelectDialogue != null)
@@ -41,7 +42,7 @@ public class ChoicePrefab : MonoBehaviour
                 {
                     LocalDiaManager.Instance.SetSelecting(false);
                     LocalDiaManager.Instance.DUIManager.SetChoicesUIActive(false);
-                    LocalDiaManager.Instance.DialogueEventTrigger(cho.OnSelectDialogue);
+                    LocalDiaManager.Instance.DialogueEventTrigger((InterogationDiaObject)cho.OnSelectDialogue);
                 }
                 else
                 {
@@ -51,7 +52,7 @@ public class ChoicePrefab : MonoBehaviour
                     Cursor.lockState = CursorLockMode.Locked;
                 }
             }
-            cho.OnSelect?.Invoke();
+            //cho.OnSelect?.Invoke();
         });
     }
 

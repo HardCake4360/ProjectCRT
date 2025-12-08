@@ -38,13 +38,20 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        Debug.Log("Loading: " + sceneName);
         canvas.enabled = true;
+        if (AudioManager.Instance.IsBGMPlaying())
+        {
+            AudioManager.Instance.StopBGM();
+        }
         if (!isLoading)
             StartCoroutine(LoadSceneProcess(sceneName));
     }
 
     private IEnumerator LoadSceneProcess(string sceneName)
     {
+        if(MainLoop.Instance) MainLoop.Instance.SetMainLoopState(MainState.Freeze);
+
         isLoading = true;
         LoadingObjs.SetActive(true);
 
@@ -69,12 +76,13 @@ public class SceneLoader : MonoBehaviour
         // "Press Any Key" 텍스트 표시
         if (PressAnyKeyText != null)
             PressAnyKeyText.SetActive(true);
+        
+        // 입력 대기
+        yield return StartCoroutine(WaitForAnyKey());
 
         // 씬 활성화
         op.allowSceneActivation = true;
-
-        // 키 입력 대기
-        yield return StartCoroutine(WaitForAnyKey());
+        yield return null;
 
         // 페이드 인 (새 씬 보이게)
         yield return StartCoroutine(FadeIn());
@@ -82,6 +90,7 @@ public class SceneLoader : MonoBehaviour
         if (PressAnyKeyText != null)
             PressAnyKeyText.SetActive(false);
 
+        if(MainLoop.Instance) MainLoop.Instance.SetMainLoopState(MainState.Main);
         isLoading = false;
     }
 

@@ -18,9 +18,21 @@ MonoBehaviour:
     OnSelect:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4776401451639454522, guid: a19088febb278804483c7a9e0e61f778, type: 3}
-          m_TargetAssemblyTypeName: SingletonObjLinker, Assembly-CSharp
-          m_MethodName: StaticLoadScene
+        - m_Target: {fileID: 6910078529123848000, guid: 1ba08e395524056478cecb913e26e9e1, type: 3}
+          m_TargetAssemblyTypeName: InspectorStaticFunctions, Assembly-CSharp
+          m_MethodName: ForceEndDia
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: HomeScene_1
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 6910078529123848000, guid: 1ba08e395524056478cecb913e26e9e1, type: 3}
+          m_TargetAssemblyTypeName: InspectorStaticFunctions, Assembly-CSharp
+          m_MethodName: LoadScene
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -34,4 +46,16 @@ MonoBehaviour:
     OnSelectDialogue: {fileID: 0}
     OnSelect:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 6910078529123848000, guid: 1ba08e395524056478cecb913e26e9e1, type: 3}
+          m_TargetAssemblyTypeName: InspectorStaticFunctions, Assembly-CSharp
+          m_MethodName: ForceEndDia
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

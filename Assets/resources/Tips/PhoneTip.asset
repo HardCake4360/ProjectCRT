@@ -14,12 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TipName: "\uC0C1\uD638\uC791\uC6A9"
   lines:
-  - TipImage: {fileID: 0}
+  - TipImage: {fileID: 21300000, guid: 1b25d8b7d755c874ca2ff3578dd8b9cd, type: 3}
     TipText: "\uC88C\uC6B0 \uBC84\uD2BC(Q,E)\uC744 \uC774\uC6A9\uD558\uC5EC \uC2DC\uC810\uC744
       \uC804\uD658\uD558\uB294 \uAC83\uC774 \uAC00\uB2A5\uD569\uB2C8\uB2E4"
-  - TipImage: {fileID: 0}
+  - TipImage: {fileID: 21300000, guid: 8725c9d2d9844954d98da3fce212a5c6, type: 3}
     TipText: "\uC624\uBE0C\uC81D\uD2B8\uB97C \uD074\uB9AD\uD574 \uC0C1\uD638\uC791\uC6A9
       \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
   - TipImage: {fileID: 0}
     TipText: "\uC804\uD654\uAE30\uAE4C\uC9C0 \uC2DC\uC810\uC744 \uC804\uD658\uD558\uC5EC
       \uC751\uB2F5\uD569\uC2DC\uB2E4"
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

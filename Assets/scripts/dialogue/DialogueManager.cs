@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
     public ChoicesUIControler CUI;
 
     public int index = 0;
-    private bool dialogueStartFlag = false;
+    [SerializeField] private bool dialogueStartFlag = false;
     [SerializeField] private bool selecting = false;
     public void SetSelecting(bool val) { selecting = val; }
 
@@ -80,23 +80,12 @@ public class DialogueManager : MonoBehaviour
             
             if (dialogueData.lines[index].characterName == "end")
             {
-                Debug.Log("dsalkjhfkasd  대사 종료");
                 if (dialogueData.TailDia)
                 {
                     dialogueData.TailDia.DetonateEvent();
                     return;
                 }
-                DUIManager.SetCanvasActive(false);
-                dialogueStartFlag = false;
-                StaticOnDialogueEnd?.Invoke();
-                OnDialogueEnd?.Invoke();
-                MainLoop.Instance.SetMainLoopState_Main();
-
-
-                //모든 상호작용 오브젝트에 딜레이 생성
-                foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
-                    interactObj.SetInteractableWithDelay(0.2f);
-                
+                ForceEndDia();
                 return;
             }
 
@@ -115,6 +104,25 @@ public class DialogueManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public void ForceEndDia()
+    {
+        MainLoop.Instance.SetMainLoopState(MainState.Main);
+        selecting = false;
+        CUI.SetSelfActive(false);
+        DUIManager.SetCanvasActive(false);
+        dialogueStartFlag = false;
+        StaticOnDialogueEnd?.Invoke();
+        OnDialogueEnd?.Invoke();
+        Debug.Log("dialogue end");
+
+        dialogueData = null;
+
+        //모든 상호작용 오브젝트에 딜레이 생성
+        foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
+            interactObj.SetInteractableWithDelay(0.2f);
+
     }
 
     public void ChoiceEvent()

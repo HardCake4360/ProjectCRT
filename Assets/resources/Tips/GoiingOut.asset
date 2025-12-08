@@ -17,11 +17,11 @@ MonoBehaviour:
   - TipImage: {fileID: 0}
     TipText: "\uBC29 \uBC16\uC73C\uB85C \uB098\uC624\uAC8C \uB418\uBA74 WASD\uC640
       \uB9C8\uC6B0\uC2A4\uB85C \uC6C0\uC9C1\uC774\uAC8C \uB429\uB2C8\uB2E4"
-  - TipImage: {fileID: 0}
+  - TipImage: {fileID: 21300000, guid: 7f29ede867c8fa645811a27d08195f07, type: 3}
     TipText: "\uC0C1\uD638\uC791\uC6A9 \uAC00\uB2A5\uD55C \uC624\uBE0C\uC81D\uD2B8\uAC00
       \uC788\uC73C\uBA74 \uD654\uBA74 \uAC00\uC6B4\uB370 \uC774\uB984\uC774 \uB098\uC624\uAC8C
       \uB429\uB2C8\uB2E4"
-  - TipImage: {fileID: 0}
+  - TipImage: {fileID: 21300000, guid: 7f29ede867c8fa645811a27d08195f07, type: 3}
     TipText: "\uB9C8\uC6B0\uC2A4 \uC88C\uD074\uB9AD, \uB610\uB294 E\uD0A4\uB97C \uC774\uC6A9\uD574
       \uC0C1\uD638\uC791\uC6A9\uD569\uC2DC\uB2E4"
   OnStart:

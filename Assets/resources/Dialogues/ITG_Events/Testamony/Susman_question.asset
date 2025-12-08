@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75db258a7ba0e4741a3f49b1bdb051ec, type: 3}
+  m_Name: Susman_question
+  m_EditorClassIdentifier: 
+  IsStart: 0
+  lines:
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uC7A0\uAE50..."
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uADF8 \uD560\uBA38\uB2C8\uC640\uB294 \uC800\uB3C4 \uC774\uBBF8 \uB300\uD654\uB97C
+      \uB098\uB220\uBD24\uC2B5\uB2C8\uB2E4"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uD558\uC9C0\uB9CC \uADF8\uBD84\uC740 \uB2F9\uC2E0\uC5D0 \uB300\uD55C
+      \uAC83\uC740 \uC804\uD600 \uAE30\uC5B5\uD558\uC9C0 \uBABB\uD558\uB354\uAD70\uC694"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uC560\uCD08\uC5D0 \uB9CC\uB09C \uAC83\uC740 \uB9DE\uC2B5\uB2C8\uAE4C?"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6910078529123848000, guid: 1ba08e395524056478cecb913e26e9e1, type: 3}
+          m_TargetAssemblyTypeName: InspectorStaticFunctions, Assembly-CSharp
+          m_MethodName: PlayUIAnim
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: ParadoxOccured
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000, guid: 31c2bd95436f36d498a646798bdebb28, type: 2}
+          m_TargetAssemblyTypeName: ParadoxParts, Assembly-CSharp
+          m_MethodName: AddParadoxParts
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: ParadoxOccured
+            m_BoolArgument: 0
+          m_CallState: 2
+    text: "\uBB50\uB77C\uACE0???"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 1
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uADF8\uB7F4\uB9AC\uAC00!! \uADF8 \uD560\uB9DD\uAD6C\uAC00 \uAE4C\uBA39\uC740\uAC70\uACA0\uC9C0!!"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uBB50... \uC77C\uB2E8 \uC54C\uACA0\uC2B5\uB2C8\uB2E4"
+  - characterName: 
+    Portrait: 0
+    CamNumber: 2
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "(\uC9C4\uC220\uC758 \uBE48\uD2C8\uC744 \uCC0C\uB978 \uAC83 \uAC19\uB2E4)"
+  - characterName: end
+    Portrait: 0
+    CamNumber: 2
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: 
+  TailDia: {fileID: 11400000, guid: 662691360def75248b968c562afc889b, type: 2}
+  Choices: {fileID: 0}
+  continueIdx: 6
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

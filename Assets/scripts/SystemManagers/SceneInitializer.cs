@@ -8,6 +8,9 @@ public class SceneInitializer : MonoBehaviour
     public UnityEvent OnInitial;
     public float Delay;
 
+    [Header("Settings")]
+    [SerializeField] private string startBgm;
+
     [Header("home scene Initial set")]
     //home scene
     public UIManager UIManager;
@@ -22,7 +25,7 @@ public class SceneInitializer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        OnStart?.Invoke();
+        if (startBgm != null) StartCoroutine(PlayBGMWhenReady(startBgm));
         StartCoroutine(initializeScene());
     }
 
@@ -54,5 +57,12 @@ public class SceneInitializer : MonoBehaviour
     public void InitMainLoop_OuterScene()
     {
         MainLoop.Instance.PC = PC;
+    }
+
+    IEnumerator PlayBGMWhenReady(string name)
+    {
+        yield return new WaitUntil(() => AudioManager.Instance != null);
+        yield return new WaitForEndOfFrame();
+        AudioManager.Instance.PlayBGM(name);
     }
 }

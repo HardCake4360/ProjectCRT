@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42492e0f17ac7b4d8340686e40c8f33, type: 3}
+  m_Name: ITG_tip
+  m_EditorClassIdentifier: 
+  TipName: 
+  lines:
+  - TipImage: {fileID: 0}
+    TipText: "\uC2EC\uBB38\uC5D0\uC11C\uB294 \uC9C4\uC220, \uC99D\uAC70 \uC81C\uC2DC,
+      Paradox \uC138\uAC00\uC9C0\uC758 \uC561\uC158\uC744 \uC2E4\uD589\uD560 \uC218
+      \uC788\uC2B5\uB2C8\uB2E4"
+  - TipImage: {fileID: 21300000, guid: f4db3770f3b9eee4faaf7e864d090b46, type: 3}
+    TipText: "\uC9C4\uC220: \uC6A9\uC758\uC790\uC758 \uC9C4\uC220 \uB3C4\uC911 \"Space
+      Bar\"\uB97C \uB20C\uB7EC \uAC70\uC9D3\uC744 \uC7A1\uC544\uB0BC \uC218 \uC788\uC2B5\uB2C8\uB2E4"
+  - TipImage: {fileID: 21300000, guid: 42e7627dccffaa440adc1f7c1bc216e8, type: 3}
+    TipText: "\uC99D\uAC70 \uC81C\uC2DC: \uC6A9\uC758\uC790\uC5D0\uAC8C \uC99D\uAC70\uC5D0
+      \uB300\uD574 \uBB3C\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4"
+  - TipImage: {fileID: 21300000, guid: 0e6d7fd5f7d128247bcd8dd73d2691f2, type: 3}
+    TipText: "Paradox: \uC5BB\uAC8C\uB41C \uC815\uBCF4\uB4E4\uC744 \uC885\uD569\uD558\uC5EC
+      \uC2EC\uBB38\uC744 \uC885\uB8CC\uD569\uB2C8\uB2E4"
+  - TipImage: {fileID: 21300000, guid: 0e6d7fd5f7d128247bcd8dd73d2691f2, type: 3}
+    TipText: "Paradox\uC5D0 \uC131\uACF5\uD558\uAC8C \uB418\uBA74 \uC131\uACF5\uC801\uC73C\uB85C
+      \uC218\uC0AC\uB97C \uB9C8\uCE69\uB2C8\uB2E4. \uD589\uC6B4\uC744 \uBE55\uB2C8\uB2E4"
+  isActive: 0
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

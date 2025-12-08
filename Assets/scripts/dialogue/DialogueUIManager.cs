@@ -25,7 +25,7 @@ public class DialogueUIManager : MonoBehaviour
     public UnityEvent OnTypingComplete;
 
     private Coroutine typingCorutine;
-    private bool isTyping;
+    [SerializeField] private bool isTyping;
     private string fullText;
 
     private SpriteSheetObject currentSheet;
@@ -84,7 +84,7 @@ public class DialogueUIManager : MonoBehaviour
                 }
             }
         }
-
+        line.OnLineStart?.Invoke();
         //새 대사 시작
         typingCorutine = StartCoroutine(TypeText(line));
     }
