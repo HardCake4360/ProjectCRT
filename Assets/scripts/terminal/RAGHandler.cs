@@ -6,11 +6,19 @@ using System.Text;
 
 public class RAGHandler : MonoBehaviour
 {
+    [Header("Server Settings")]
+    [SerializeField] private string serverBaseUrl = "http://localhost:5000";
+    [SerializeField] private string userId = "test";
+
+    [Header("Persona")]
+    [SerializeField] private string personaKey = "";  // 빈 값이면 페르소나 미사용
+
     [System.Serializable]
     public class AskRequest
     {
         public string question;
         public string user_id;
+        public string personaKey; // 빈 문자열이면 서버에서 미사용으로 처리
     }
 
     [System.Serializable]
@@ -61,55 +69,64 @@ public class RAGHandler : MonoBehaviour
         }
     }
 
+    private string AskUrl => $"{serverBaseUrl}/ask";
+    private string AskStream => $"{serverBaseUrl}/ask-stream";
 
-    public IEnumerator AskServer(string question, System.Action<string,string[]> onResponse)
+    /// <summary>
+    /// 스트리밍 호출 (/ask-stream).
+    /// 서버의 ask_stream(question, personaKey?) 포맷에 맞춰 user_id와 personaKey 포함.
+    /// </summary>
+    public IEnumerator AskServerStream(string question, Action<string> onTextStream)
     {
-        AskRequest requestData = new AskRequest { question = question };
+        var requestData = new AskRequest
+        {
+            question = question,
+            user_id = string.IsNullOrEmpty(userId) ? "anonymous" : userId,
+            personaKey = personaKey ?? ""
+        };
+
         string json = JsonUtility.ToJson(requestData);
-        Debug.Log("전송할 JSON: " + json);
+        Debug.Log("[AskServerStream] 전송 JSON: " + json);
 
-        UnityWebRequest request = new UnityWebRequest("http://localhost:5000/ask", "POST");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
+        using (UnityWebRequest request = new UnityWebRequest(AskStream, "POST"))
         {
-            string jsonResult = request.downloadHandler.text;
-            AskResponse response = JsonUtility.FromJson<AskResponse>(jsonResult);
-            onResponse?.Invoke(response.answer, response.context);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+
+            // 스트리밍 수신 핸들러
+            request.downloadHandler = new StreamingHandler(chunk =>
+            {
+                // 실시간 수신 텍스트 콜백
+                onTextStream?.Invoke(chunk);
+            });
+
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("[AskServerStream] 스트리밍 오류: " + request.error);
+            }
         }
-        else
-        {
-            Debug.LogError("오류 발생: " + request.error);
-        }
-        request.Dispose();
     }
 
-    public IEnumerator AskServerStream(string question, System.Action<string> onTextStream)
+    // 런타임에 페르소나 교체하고 싶을 때 호출
+    public void SetPersonaKey(string key)
     {
-        AskRequest requestData = new AskRequest { question = question,user_id = "test" };
-        string json = JsonUtility.ToJson(requestData);
-        Debug.Log("전송할 JSON: " + json);
+        personaKey = key ?? "";
+    }
+    public string GetPersonaKey()
+    {
+        return personaKey;
+    }
 
-        UnityWebRequest request = new UnityWebRequest("http://localhost:5000/ask-stream", "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = new StreamingHandler(chunk =>
-        {
-            Debug.Log("받은 청크: " + chunk);  // 실시간 로그 확인
-            onTextStream?.Invoke(chunk);
-        });
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        yield return request.SendWebRequest();
-
-        if (request.result != UnityWebRequest.Result.Success)
-            Debug.LogError("스트리밍 오류: " + request.error);
-        request.Dispose();
+    // 런타임에 서버/유저 설정 변경이 필요할 때
+    public void Configure(string newServerBaseUrl = null, string newUserId = null, string newPersonaKey = null)
+    {
+        if (!string.IsNullOrEmpty(newServerBaseUrl)) serverBaseUrl = newServerBaseUrl;
+        if (!string.IsNullOrEmpty(newUserId)) userId = newUserId;
+        if (newPersonaKey != null) personaKey = newPersonaKey;
     }
 
 }

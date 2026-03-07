@@ -5,6 +5,13 @@ using UnityEngine.UI;
 using System.IO;
 using TMPro;
 
+public enum Persona
+{
+    shinji,
+    rei,
+    asuka
+}
+
 public class Interpreter : MonoBehaviour
 {
     RAGHandler ragHandler;
@@ -59,6 +66,29 @@ public class Interpreter : MonoBehaviour
             yield return StartCoroutine(PrintSequentialy(outputTarget));
             onComplete?.Invoke();
             yield break;
+        }
+        if(args[0] == "/set_persona" && args[1] != null)
+        {
+            string personaKey = args[1];
+            outputTarget.text = ""; // 초기화
+            if (IsValidEnumName<Persona>(personaKey))
+            {
+                ragHandler.SetPersonaKey(personaKey);
+                response.Add("페르소나를 변경하였습니다.");
+                response.Add("현재 페르소나: " + ragHandler.GetPersonaKey());
+                yield return StartCoroutine(PrintSequentialy(outputTarget));
+                onComplete?.Invoke();
+                yield break;
+            }
+            else
+            {
+                response.Add("유효하지 않은 페르소나입니다.");
+                response.Add("현재 페르소나: " + ragHandler.GetPersonaKey());
+                yield return StartCoroutine(PrintSequentialy(outputTarget));
+                onComplete?.Invoke();
+                yield break;
+            }
+
         }
 
         if (args[0] == "/help")
@@ -172,5 +202,10 @@ public class Interpreter : MonoBehaviour
 
         file.Close();
 
+    }
+
+    bool IsValidEnumName<T>(string value) where T : struct, System.Enum
+    {
+        return System.Enum.TryParse<T>(value, out _);
     }
 }

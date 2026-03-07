@@ -90,7 +90,7 @@ public class PlayerControler : MonoBehaviour
         {
             // 레이가 아무것도 충돌하지 않았을 때
             Debug.DrawRay(rayOrigin.position, rayOrigin.forward * rayDistance, Color.red);
-            hintText.enabled = false;
+            if(hintText) hintText.enabled = false;
         }
 
     }

@@ -435,8 +435,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457296649257186875}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0020782005, y: -0.20366938, z: 0.0016964771, w: 0.9790361}
-  m_LocalPosition: {x: 0.495, y: 0.774, z: 1.0370021}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 1.057, z: 105.397995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -473,8 +473,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
-  far clip plane: 5
+  near clip plane: 0.18
+  far clip plane: 1000
   field of view: 60.000004
   orthographic: 0
   orthographic size: 5
@@ -1731,6 +1731,7 @@ MonoBehaviour:
   ParadoxSet: []
   questionDelay: 0
   UIAnimator: {fileID: 2914596393905505180}
+  ITG_tip: {fileID: 0}
   ItgGroup: {fileID: 2748601976396643786}
   button_tes: {fileID: 3629626595963129240}
   button_clues: {fileID: 1635645048590388124}
@@ -4648,11 +4649,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3059699305842669621, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 680.01
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3059699305842669621, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100.01
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3059699305842669621, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4768,11 +4769,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4257809975380470604, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 790.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4257809975380470604, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 85
+      value: 415.005
       objectReference: {fileID: 0}
     - target: {fileID: 4257809975380470604, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_AnchoredPosition.y

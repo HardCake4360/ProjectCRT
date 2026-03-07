@@ -39,6 +39,11 @@ public class MainLoop : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        PC = FindAnyObjectByType<PlayerControler>();
+    }
+
     public void SetMainLoopState(MainState state)
     {
         MainLoopState = state;

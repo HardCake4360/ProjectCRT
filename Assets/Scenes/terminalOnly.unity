@@ -247,6 +247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Phone
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5895278bf6c550d4a8db1bbd4d37df3e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4306643203051859313, guid: 5895278bf6c550d4a8db1bbd4d37df3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7920,7 +7924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -7940,7 +7944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -7969,11 +7973,11 @@ PrefabInstance:
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 84f3a77e73876c94793270f6f31e6984, type: 2}
+      objectReference: {fileID: 2136848240}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 670215486}
+      objectReference: {fileID: 2136848240}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -8024,11 +8028,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DetonateEvent
+      value: OnCall
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: InitMainLoop_HomeScene
+      value: OnCall
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -8052,11 +8056,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: DialogueObject, Assembly-CSharp
+      value: Phone, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: SceneInitializer, Assembly-CSharp
+      value: Phone, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2758273287263534544, guid: b500876f8edc26f418faa740620df01c, type: 3}
       propertyPath: OnInitial.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -9099,13 +9103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d05a1b14d2691344b25120895ca0cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartCamNum: 2
+  StartCamNum: 0
   CurrentCamNum: 0
   cameras:
-  - {fileID: 802919419}
-  - {fileID: 982698107}
   - {fileID: 1537250841}
-  - {fileID: 1510515570}
 --- !u!114 &1941081401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9768,7 +9769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8066381264635885882, guid: 29e92194039ab774dbc9ae9528fca4dc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8716329132942232615, guid: 29e92194039ab774dbc9ae9528fca4dc, type: 3}
       propertyPath: UI
@@ -10542,7 +10543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3292777661314485427, guid: c16a4051dc1112446ad720f3d1499a58, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7990173434353352879, guid: c16a4051dc1112446ad720f3d1499a58, type: 3}
       propertyPath: m_LocalPosition.x

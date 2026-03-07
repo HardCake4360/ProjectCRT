@@ -426,6 +426,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5fd514dd7beb648a9c5b46718f4e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serverBaseUrl: http://localhost:5000
+  userId: test
+  personaKey: shinji
 --- !u!222 &7442940721542093409
 CanvasRenderer:
   m_ObjectHideFlags: 0
