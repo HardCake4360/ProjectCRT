@@ -1,0 +1,606 @@
+ProjectCRT Unity -> Unreal Engine Migration Plan
+
+작성일: 2026-03-20
+대상 프로젝트: C:\Users\user\Documents\GitHub\ProjectCRT
+기준 엔진 현황:
+- Unity 6 (6000.0.32f1)
+- 주요 패키지: URP, Cinemachine, Input System, uGUI, Timeline, AI Navigation
+- 주요 씬: TitleScene, HomeScene, Park, InterogationScene, Lspd, Lspd1
+
+1. 목적
+이 문서는 현재 Unity 기반으로 개발된 ProjectCRT를 Unreal Engine으로 전환하기 위한 실행 계획서다.
+목표는 "기능을 가능한 한 유지하면서 엔진 의존 구조를 Unreal 방식으로 재구성"하는 것이다.
+중요한 전제는 Unity 프로젝트를 Unreal로 자동 변환하는 것이 아니라, 게임 로직과 콘텐츠를 재구현하는 마이그레이션 프로젝트라는 점이다.
+
+2. 현재 프로젝트 분석 요약
+확인된 구조는 다음과 같다.
+
+- 게임 흐름은 다중 씬 기반이다.
+  - Title, Home, Park, Interogation, Lspd 등으로 구분되어 있다.
+- 전역 싱글톤 매니저 구조를 강하게 사용한다.
+  - MainLoop
+  - DialogueManager
+  - InputManager
+  - SceneLoader
+  - AudioManager
+  - InterogationManager
+- 데이터 중심 구조로 ScriptableObject를 폭넓게 사용한다.
+  - DialogueObject
+  - InterogationDataSet
+  - ClueObj
+  - AudioLibrary
+  - ParadoxParts 및 스토리 관련 데이터
+- 커스텀 UI 시스템 비중이 높다.
+  - WindowManager 기반 데스크톱형 창 UI
+  - terminalManager 기반 터미널 UI
+  - Dialogue UI, Choice UI, Tip UI, Status UI
+- 스토리/퀘스트 도메인 코드가 분리되기 시작한 상태다.
+  - StorySystem
+  - StoryState
+  - QuestRuntime
+  - QuestDefinition
+  - QuestNode
+- Unity 전용 기술 의존성이 존재한다.
+  - Cinemachine 카메라 우선순위 제어
+  - CharacterController + Input.GetAxis / KeyCode
+  - SceneManager 비동기 로딩 + Canvas 페이드
+  - Animator 기반 UI/연출
+  - URP 셰이더 그래프 및 머티리얼
+  - Resources 폴더 기반 에셋 로드 관례
+  - Unity EditorWindow 기반 스토리 그래프 에디터
+
+3. 핵심 판단
+이 프로젝트는 "엔진만 갈아끼우는 작업"으로 접근하면 실패 확률이 높다.
+언리얼 전환은 아래 3가지를 동시에 수행하는 재개발로 보는 것이 맞다.
+
+- 런타임 프레임워크 재설계
+- 데이터 자산 구조 재정의
+- UI/연출/레벨 콘텐츠 재구현
+
+따라서 가장 안전한 방식은 전체를 한 번에 옮기는 빅뱅 방식이 아니라, 세로 슬라이스 방식으로 이행하는 것이다.
+권장 슬라이스는 다음 순서다.
+
+- 슬라이스 1: 타이틀 -> 메인 허브(HomeScene) -> 상호작용 -> 대화
+- 슬라이스 2: 증거/단서/창 UI/터미널
+- 슬라이스 3: 조사 씬(Park, Lspd)
+- 슬라이스 4: Interogation 전용 루프
+- 슬라이스 5: 스토리 에디터/제작 파이프라인
+
+4. Unity 시스템 -> Unreal 대응 전략
+
+4-1. 전역 매니저 구조
+Unity 현재 구조:
+- MonoBehaviour 싱글톤 + DontDestroyOnLoad
+
+Unreal 권장 구조:
+- UGameInstance
+- GameInstance Subsystem
+- LocalPlayer Subsystem
+- World Subsystem
+- 필요 시 SaveGame
+
+권장 매핑:
+- MainLoop -> GameInstance Subsystem + 월드 상태 관리자
+- InputManager -> Enhanced Input 기반 Input Mapping Context
+- SceneLoader -> Level Streaming 또는 Open Level + Loading Screen Subsystem
+- AudioManager -> Audio Manager Subsystem + Sound Cue / MetaSound / Data Asset
+- DialogueManager -> Dialogue Subsystem
+- InterogationManager -> Interrogation Game Flow Component 또는 Subsystem
+
+4-2. 씬 구조
+Unity 현재 구조:
+- 씬 단위 전환
+- 씬마다 초기화 스크립트 배치
+
+Unreal 권장 구조:
+- Persistent Level + Sub Level/World Partition 검토
+- 게임 모드별 레벨 전환 규칙 정의
+- 공통 UI/오디오/스토리 상태는 GameInstance 계층 유지
+
+권장 방향:
+- Title은 독립 레벨
+- Home/Park/Lspd/Interrogation은 개별 레벨 또는 Persistent Level 하위 스트리밍 레벨로 설계
+- 씬 초기화 로직은 Level Blueprint 의존을 최소화하고 Actor/Subsystem으로 이동
+
+4-3. 입력
+Unity 현재 구조:
+- KeyCode 배열 기반 직접 입력 처리
+- Input.GetAxis, Input.anyKeyDown 혼용
+
+Unreal 권장 구조:
+- Enhanced Input 사용
+- Input Action / Input Mapping Context 분리
+
+권장 입력 액션 예시:
+- IA_Move
+- IA_Look
+- IA_Interact
+- IA_DialogueAdvance
+- IA_SelectUp
+- IA_SelectDown
+- IA_SelectConfirm
+- IA_CameraLeft
+- IA_CameraRight
+- IA_Objection
+- IA_AnyKeyConfirm
+
+4-4. 플레이어 및 카메라
+Unity 현재 구조:
+- CharacterController 기반 이동
+- 마우스 룩 수동 구현
+- Cinemachine 우선순위 전환
+
+Unreal 권장 구조:
+- Character + CharacterMovementComponent
+- PlayerController + Pawn/Character 구조
+- CameraActor 또는 SpringArm 기반 카메라
+- Sequencer 또는 카메라 블렌드 활용
+
+권장 방향:
+- 일반 탐색 씬은 1인칭 또는 제한형 3D 탐색 Character로 구현
+- 카메라 포커스 전환은 Cinemachine 대체로 CameraActor 세트 + Blend 또는 Sequencer 사용
+- 조사/심문에서 필요한 고정 카메라 전환은 Data-driven camera table로 관리
+
+4-5. 대화 시스템
+Unity 현재 구조:
+- DialogueObject ScriptableObject
+- DialogueLine 배열
+- Choice UI 연동
+- UnityEvent 기반 시작/종료/라인 이벤트
+
+Unreal 권장 구조:
+- Primary Data Asset 또는 Data Table(Row Struct) 기반 대화 데이터
+- UMG 기반 Dialogue Widget
+- 이벤트는 Interface, Delegate, Gameplay Tag, Event Dispatcher로 대체
+
+권장 데이터 모델:
+- FDialogueLine
+  - SpeakerId
+  - PortraitState
+  - CameraId
+  - CharInterval
+  - Text
+  - OptionalEventId
+  - OptionalQuestionDialogueId
+- UDialogueDataAsset
+  - DialogueId
+  - Lines
+  - NextDialogueId
+  - ChoiceSetId
+  - StartEventId
+  - EndEventId
+
+중요 포인트:
+- UnityEvent 직결 방식은 Unreal에서 유지보수가 어렵다.
+- 이벤트는 문자열 ID, Tag, DataAsset 참조 등으로 느슨하게 결합해야 한다.
+
+4-6. 심문(Interogation) 시스템
+Unity 현재 구조:
+- InterogationManager 중심 상태 머신
+- Testify / Question / Clue / Paradox 상태
+- Animator 연출
+- ScriptableObject 복제 후 체인 연결
+
+Unreal 권장 구조:
+- 명시적 상태 머신 구현
+  - Enum + State Handler
+  - 또는 Gameplay Tags 기반 상태
+- UI 애니메이션은 UMG Animation
+- 연출은 Sequencer 또는 Widget Animation
+
+권장 구현 순서:
+- 상태 전이 표 먼저 문서화
+- Testify 루프 구현
+- Question 반박 흐름 구현
+- Clue 제시 흐름 구현
+- Paradox 조합 흐름 구현
+
+심문 시스템은 이 프로젝트의 차별화 포인트로 보이며, Unreal 전환 시 가장 먼저 프로토타입을 만들어야 한다.
+
+4-7. 터미널 및 창 UI
+Unity 현재 구조:
+- WindowManager 기반 다중 창 UI
+- 터미널 입력/출력 스크롤
+- 단서 키워드 감지 후 대화 이벤트 발생
+
+Unreal 권장 구조:
+- UMG 위젯 계층 구조
+- 드래그/리사이즈 가능한 Window Widget
+- ScrollBox 기반 터미널 출력
+- 입력은 EditableTextBox 또는 MultiLineEditableText
+
+권장 설계:
+- WBP_WindowFrame
+- WBP_WindowTab
+- WBP_Terminal
+- WBP_Dialogue
+- WBP_ChoiceList
+- WBP_Status
+- WBP_Tip
+
+추가 권장:
+- 터미널 파서/인터프리터는 UI와 분리한 UObject 또는 Subsystem으로 이동
+- 단서 판정은 "출력 텍스트 포함 여부"보다 명시적 command result/event 구조로 바꾸는 것이 안정적이다
+
+4-8. 스토리/퀘스트 시스템
+Unity 현재 구조:
+- StorySystem, StoryState, QuestRuntime, QuestDefinition 등 도메인 코드가 이미 분리되어 있음
+
+평가:
+- 이 영역은 언리얼 이식이 비교적 쉽다.
+- 순수 로직에 가까워서 C++ 또는 Blueprint Function Library/Data Asset로 재구성 가능하다.
+
+권장 방향:
+- 핵심 상태 및 진행 로직은 C++ 우선
+- 디자이너 편집 데이터는 Data Asset/Data Table
+- 조건/효과는 Interface 기반 확장 구조 사용
+
+예시:
+- ICondition -> UInterface
+- IEffect -> UInterface
+- QuestDefinition -> UPrimaryDataAsset
+- StoryState -> UObject 또는 SaveGame 데이터 구조
+
+4-9. 오디오
+Unity 현재 구조:
+- AudioLibrary ScriptableObject + Dictionary
+- BGM/SFX 채널 분리
+
+Unreal 권장 구조:
+- Sound Cue / MetaSound / Sound Class / Sound Mix
+- Audio Data Asset로 키-사운드 매핑
+
+권장 방향:
+- BGM, UI, SFX, Voice를 Sound Class로 분리
+- 현재 문자열 키 기반 호출은 Data Asset 기반 조회로 유지 가능
+
+4-10. 리소스 로딩 및 데이터 참조
+Unity 현재 구조:
+- Resources 폴더 비중이 큼
+- ScriptableObject와 프리팹이 강하게 연결
+
+Unreal 권장 구조:
+- Soft Object Reference 사용
+- Primary Asset Id 체계 도입
+- 필요 시 Asset Manager 활용
+
+중요:
+- Unity의 Resources 방식은 Unreal에 그대로 대응되지 않는다.
+- 데이터 참조 체계를 초기에 정리하지 않으면 에셋 의존성 지옥이 생긴다.
+
+4-11. 셰이더/렌더링
+Unity 현재 구조:
+- URP
+- Shader Graph
+- 커스텀 머티리얼 및 렌더 텍스처
+
+Unreal 권장 구조:
+- Unreal Material / Material Instance
+- Render Target
+- Post Process Material
+
+주의:
+- Shader Graph는 자동 변환되지 않는다.
+- 시각 스타일 핵심 머티리얼은 우선순위를 정해 재작성해야 한다.
+
+4-12. 에디터 툴
+Unity 현재 구조:
+- StoryGraphEditorWindow
+- GraphView 기반 커스텀 툴
+
+Unreal 권장 구조:
+- 초기에는 외부 도구 없이 Data Asset 편집으로 운영
+- 이후 필요 시 Editor Utility Widget 또는 커스텀 에디터 모듈 개발
+
+권장 판단:
+- 에디터 툴은 1차 마이그레이션 범위에서 제외
+- 런타임 기능이 안정화된 뒤 2차 제작도구 개선 과제로 분리
+
+5. 권장 기술 선택
+
+필수:
+- Unreal Engine 5.x
+- Enhanced Input
+- UMG
+- Data Asset / Data Table
+- Sequencer
+- SaveGame
+
+권장:
+- C++ + Blueprint 혼합 개발
+- 핵심 시스템은 C++
+- UI 플로우와 연출은 Blueprint/UMG
+
+이 프로젝트에서 순수 Blueprint만으로 끝까지 가는 것은 권장하지 않는다.
+이유는 상태 머신, 데이터 참조, 퀘스트/대화/심문 로직이 이미 코드 중심으로 성장하고 있기 때문이다.
+
+6. 단계별 실행 계획
+
+Phase 0. 사전 분석 및 기준선 확정 (약 1주)
+목표:
+- 현재 Unity 버전을 고정하고 마이그레이션 기준 빌드를 확보
+- 이식 범위와 제외 범위를 확정
+
+작업:
+- 현재 플레이 가능한 핵심 루프 영상/문서 기록
+- 씬별 기능 목록 작성
+- 모든 ScriptableObject 유형 목록화
+- 프리팹 목록화
+- 오디오/폰트/텍스처/FBX 저작권 및 원본 파일 정리
+- Unity 이벤트 흐름도 작성
+
+산출물:
+- 기능 인벤토리
+- 에셋 인벤토리
+- 씬별 책임표
+- Unreal 전환 범위표
+
+Phase 1. Unreal 기반 프로젝트 골격 구축 (약 1주)
+목표:
+- 런타임 아키텍처 뼈대 구성
+
+작업:
+- Unreal 신규 프로젝트 생성
+- 기본 폴더 구조 정의
+  - Content/Core
+  - Content/UI
+  - Content/Dialogue
+  - Content/Interrogation
+  - Content/Levels
+  - Content/Audio
+  - Content/Characters
+  - Content/Props
+- GameInstance, Subsystem, SaveGame, Input 세팅
+- 공통 네이밍 규칙 수립
+
+산출물:
+- 기본 실행 프로젝트
+- 공통 Subsystem 골격
+- 입력 매핑 초안
+
+Phase 2. 코어 시스템 포팅 (약 2~3주)
+목표:
+- 게임 전체가 의존하는 기반 시스템 우선 구축
+
+작업:
+- Input Subsystem
+- Scene/Level Loading System
+- Audio System
+- Story State / Quest Runtime
+- Save/Load 기본 구조
+- 전역 이벤트 라우팅 설계
+
+산출물:
+- 레벨 전환 가능
+- 오디오 재생 가능
+- 스토리 상태 저장 가능
+
+Phase 3. 대화 시스템 포팅 (약 2주)
+목표:
+- 현재 프로젝트의 대화 루프를 Unreal에서 재현
+
+작업:
+- Dialogue Data Asset 구조 구현
+- Dialogue Widget 구현
+- 타이핑 효과, 스킵, 선택지, 시작/종료 이벤트 구현
+- Portrait/Camera 연동
+
+산출물:
+- Unity의 DialogueObject 1종을 Unreal 대화 데이터로 수동 이관
+- 대화 1개 시나리오 재생 성공
+
+Phase 4. 허브 씬 세로 슬라이스 구현 (약 2~3주)
+목표:
+- Title -> Home -> 상호작용 -> 대화까지 연결
+
+작업:
+- 플레이어 이동
+- 카메라 전환
+- 상호작용 레이캐스트/라인트레이스
+- 힌트 텍스트
+- 기본 창 UI 1종
+
+산출물:
+- 실플레이 가능한 첫 번째 Unreal 빌드
+
+Phase 5. 창 UI/터미널/단서 시스템 포팅 (약 2~4주)
+목표:
+- 게임의 개성 요소 재현
+
+작업:
+- 다중 창 프레임워크
+- 최소화/복원/드래그
+- 터미널 입력/응답
+- 단서 해금 및 이벤트 발생
+- Status/Tip UI 연동
+
+산출물:
+- 터미널 기반 단서 흐름 재현
+
+Phase 6. 심문 시스템 프로토타입 및 본이식 (약 3~5주)
+목표:
+- Testify / Question / Clue / Paradox 흐름 재현
+
+작업:
+- 상태 머신 구현
+- 심문 전용 UI
+- 반박/증거제시/패러독스 체인 구현
+- UI 애니메이션 및 연출 연결
+
+산출물:
+- 대표 심문 1개 완전 이식
+
+Phase 7. 나머지 레벨/콘텐츠 이관 (약 3~6주)
+목표:
+- Park, Lspd 등 나머지 게임 콘텐츠 이식
+
+작업:
+- 레벨 구성
+- NPC 및 상호작용 오브젝트 배치
+- 대화/퀘스트 데이터 이식
+- 오디오/머티리얼/애니메이션 적용
+
+Phase 8. 제작도구 및 데이터 파이프라인 개선 (선택, 약 2~4주)
+목표:
+- 장기 운영 가능한 제작 환경 확보
+
+작업:
+- CSV/JSON -> Data Asset 변환 파이프라인
+- Editor Utility Widget 또는 전용 편집도구
+- QA용 디버그 툴
+
+7. 우선순위
+
+최우선:
+- 대화 시스템
+- 플레이어 상호작용
+- 씬/레벨 전환
+- 심문 시스템 프로토타입
+
+중요:
+- 창 UI
+- 터미널 시스템
+- 스토리 상태 관리
+
+후순위:
+- Unity 에디터 커스텀 툴 재현
+- 셰이더 완전 재현
+- 보조 연출 세부 다듬기
+
+8. 데이터 이관 전략
+
+권장 원칙:
+- 처음부터 자동 변환 툴을 만들지 않는다.
+- 대표 데이터셋 1~2개를 수동 이관해서 Unreal 데이터 구조를 먼저 검증한다.
+- 구조가 확정된 뒤 일괄 변환 스크립트를 만든다.
+
+권장 순서:
+1. DialogueObject 샘플 3개 수동 이관
+2. ClueObj/Choice 데이터 수동 이관
+3. InterogationDataSet 수동 이관
+4. 구조 안정화 후 Unity YAML/메타 기반 보조 추출 도구 제작 검토
+
+9. 주요 리스크
+
+리스크 A. UnityEvent 의존
+설명:
+- 현재 데이터와 런타임이 UnityEvent로 연결되어 있어 Unreal로 1:1 이전이 어렵다.
+대응:
+- EventId / GameplayTag 기반 이벤트 호출 체계로 재설계
+
+리스크 B. ScriptableObject 결합도
+설명:
+- Dialogue, Clue, Audio, Paradox가 SO 중심으로 얽혀 있다.
+대응:
+- Unreal Data Asset + Soft Reference 구조로 분해
+
+리스크 C. UI 복잡도
+설명:
+- 다중 창, 리사이즈, 탭, 터미널은 UMG에서 생각보다 구현 비용이 높다.
+대응:
+- 먼저 최소 기능 버전으로 구현 후 확장
+
+리스크 D. 심문 시스템 재현 난이도
+설명:
+- 이 프로젝트의 핵심 연출/상태 로직이 집중되어 있다.
+대응:
+- 초기에 프로토타입으로 기술 검증
+
+리스크 E. 렌더링 차이
+설명:
+- URP 머티리얼, 셰이더 그래프, 렌더 텍스처가 Unreal에서 바로 재현되지 않는다.
+대응:
+- 게임플레이 우선, 시각 효과는 후순위
+
+리스크 F. 에셋 참조 구조
+설명:
+- Unity Resources/Prefab 사고방식이 Unreal Asset 참조 체계와 다르다.
+대응:
+- Asset Manager/Soft Reference 원칙을 초기에 문서화
+
+10. 팀 구성 권장
+
+최소 구성:
+- 테크니컬 리드 1
+- 언리얼 게임플레이 프로그래머 1
+- UI/UMG 담당 1
+- 레벨/콘텐츠 이식 담당 1
+
+1인 또는 소수 인원 진행 시:
+- "전체 이식"보다 "Playable slice 완성 -> 점진 확장" 방식으로 관리해야 한다.
+
+11. 일정 감각
+실제 구현 범위와 완성도 목표에 따라 차이가 크지만, 현재 구조 기준으로 현실적인 범위는 다음과 같다.
+
+- 최소 프로토타입: 6~10주
+- 핵심 루프 이식: 10~16주
+- 콘텐츠 포함 실사용 전환: 4~6개월 이상
+
+만약 인원이 적고 병행 개발이라면 더 길어질 수 있다.
+
+12. 바로 시작할 작업 목록
+
+Step 1.
+- Unity 기준 기능 명세서 작성
+- 각 씬에서 "플레이어가 실제로 할 수 있는 행동"을 표로 정리
+
+Step 2.
+- Unreal 프로젝트 생성
+- 폴더 구조, 네이밍, Data Asset 규칙 확정
+
+Step 3.
+- Input, GameInstance, Loading, Audio 뼈대 구현
+
+Step 4.
+- Dialogue 시스템 샘플 구현
+- DialogueObject 1개 수동 이식
+
+Step 5.
+- HomeScene 세로 슬라이스 제작
+
+Step 6.
+- Interrogation 프로토타입 제작
+
+13. 결론
+ProjectCRT의 Unreal 전환은 가능하다.
+다만 자동 변환이나 단순 포팅이 아니라, Unity의 씬/매니저/ScriptableObject 중심 구조를 Unreal의 Subsystem/Data Asset/UMG 중심 구조로 다시 설계하는 프로젝트로 봐야 한다.
+
+가장 성공 가능성이 높은 접근은 다음과 같다.
+
+- 코어 시스템부터 재설계한다.
+- 대화와 심문을 가장 먼저 기술 검증한다.
+- HomeScene 기준 세로 슬라이스를 먼저 완성한다.
+- 이후 나머지 레벨과 데이터를 단계적으로 이관한다.
+
+14. 부록: 현재 프로젝트에서 Unreal 전환 시 우선 확인 대상
+
+코드 기준 핵심 파일:
+- Assets/scripts/SystemManagers/MainLoop.cs
+- Assets/scripts/SystemManagers/SceneInitializer.cs
+- Assets/scripts/SystemManagers/SceneLoader/SceneLoader.cs
+- Assets/scripts/SystemManagers/Input/InputManager.cs
+- Assets/scripts/SystemManagers/AudioManager/AudioManager.cs
+- Assets/scripts/dialogue/DialogueManager.cs
+- Assets/scripts/dialogue/DialogueObject.cs
+- Assets/scripts/Interogation/InterogationManager.cs
+- Assets/scripts/Interogation/InterogationDataSet.cs
+- Assets/scripts/terminal/terminalManager.cs
+- Assets/scripts/UI/Window/WindowManager.cs
+- Assets/scripts/StoryManager/Domain/core/StorySystem.cs
+
+확인된 에디터/제작도구:
+- Assets/Editor/StoryGraphEditorWindow.cs
+
+확인된 패키지 의존:
+- com.unity.cinemachine
+- com.unity.inputsystem
+- com.unity.render-pipelines.universal
+- com.unity.timeline
+- com.unity.ai.navigation
+- com.unity.ugui
+
+추천 다음 액션:
+- Unreal용 시스템 설계 문서 2차본 작성
+- 대화 데이터 구조안 확정
+- 심문 상태 전이표 상세화
+- HomeScene 세로 슬라이스 작업 분해

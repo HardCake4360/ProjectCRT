@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+enum emotionState
+{
+    happy,
+    sad,
+    surprise,
+}
+
 public class NPC_script : Interactable
 {
     public UnityEvent OnInteract;
-
 
     override public void Interact()
     {
@@ -17,4 +23,8 @@ public class NPC_script : Interactable
         DialogueManager.Instance.DialogueEventTrigger(data);
     }
 
+    public void Emotion()
+    {
+
+    }
 }

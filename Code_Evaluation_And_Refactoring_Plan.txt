@@ -1,0 +1,675 @@
+ProjectCRT Code Evaluation And Refactoring Plan
+
+작성일: 2026-03-20
+대상 프로젝트: C:\Users\user\Documents\GitHub\ProjectCRT
+분석 범위:
+- Assets/scripts
+- Assets/Editor
+- ProjectSettings 및 패키지 구성 일부
+
+1. 문서 목적
+이 문서는 현재 ProjectCRT 코드베이스를 분석한 뒤, 구조적 문제점과 유지보수 리스크를 평가하고 단계별 리팩터링 계획을 제시하기 위한 문서다.
+목표는 "현재 프로젝트를 무너뜨리지 않고, 기능 개발 속도와 안정성을 높이는 방향으로 구조를 정리하는 것"이다.
+
+2. 전체 평가 요약
+
+현재 프로젝트는 다음과 같은 특성을 가진다.
+
+- 빠르게 기능을 쌓아 올린 프로토타입/인디 개발형 구조다.
+- 실제 게임플레이 시스템은 이미 적지 않게 구현되어 있다.
+- 대화, 심문, 단서, UI 창 시스템, 스토리 상태 등 핵심 아이디어는 분명하다.
+- 하지만 구조적으로는 전역 싱글톤, 씬 의존 초기화, UnityEvent 연결, 런타임 데이터 변형, 중복 코드가 많아 확장성과 안정성이 떨어진다.
+
+한 줄 평가:
+"기능은 살아 있지만, 시스템 경계가 약해서 기능 추가 때마다 버그가 번질 가능성이 높은 상태"
+
+3. 점수 기반 평가
+
+아키텍처 일관성: 4/10
+- 매니저 패턴은 있으나 기준이 통일되지 않았다.
+- 전역 객체, 씬 객체, 프리팹 초기화 책임이 섞여 있다.
+
+유지보수성: 4/10
+- 이름과 역할이 겹치는 클래스가 많다.
+- 동일한 로직이 여러 군데 복제되어 있다.
+
+확장성: 5/10
+- StorySystem처럼 분리 가능성이 있는 영역도 있으나,
+- 대화/UI/입력/씬 흐름은 결합도가 높다.
+
+테스트 용이성: 2/10
+- 대부분 MonoBehaviour와 싱글톤 중심이라 단위 테스트가 어렵다.
+- 순수 로직과 Unity 의존 로직 분리가 부족하다.
+
+안정성: 4/10
+- 널 참조 위험과 이벤트 누수 가능성이 보인다.
+- 런타임 상태가 예기치 않게 누적될 수 있다.
+
+도메인 설계 잠재력: 7/10
+- StoryState, QuestRuntime, QuestDefinition처럼 분리 가능한 구조가 이미 존재한다.
+- 핵심 게임 아이디어를 데이터 중심 구조로 정리할 여지가 크다.
+
+4. 핵심 강점
+
+4-1. 게임 도메인이 분명하다
+- 대화
+- 심문
+- 단서
+- 창 UI
+- 터미널
+- 스토리 상태
+
+즉, 무엇을 만들고 싶은지는 코드에 이미 잘 드러난다.
+
+4-2. 일부 영역은 순수 로직으로 분리될 가능성이 높다
+- StorySystem
+- StoryState
+- QuestRuntime
+- QuestNode
+- ICondition / IEffect
+
+이 영역은 향후 리팩터링의 좋은 기반이다.
+
+4-3. 데이터 기반 접근을 시도하고 있다
+- DialogueObject
+- InterogationDataSet
+- ClueObj
+- AudioLibrary
+
+지금은 ScriptableObject 결합이 강하지만, 방향 자체는 나쁘지 않다.
+
+4-4. UI/연출 시도가 적극적이다
+- WindowManager 기반 다중 창
+- 메쉬 기반 UI 레이캐스트
+- 타이핑 연출
+- 카메라 포커스 연동
+
+이는 리팩터링 후에도 유지할 가치가 큰 프로젝트 자산이다.
+
+5. 핵심 문제점
+
+5-1. 싱글톤 과다 사용
+관찰 대상:
+- MainLoop
+- DialogueManager
+- LocalDiaManager
+- InputManager
+- SceneLoader
+- AudioManager
+- InterogationManager
+- WindowManager
+- CameraFocusControl
+- CustomCursor 등
+
+문제:
+- 객체 생명주기와 책임 범위가 불분명하다.
+- 씬 전환 시 어떤 객체가 살아남고 어떤 객체가 다시 생성되는지 예측하기 어렵다.
+- 테스트와 모킹이 매우 어렵다.
+- 다른 시스템이 전역 상태에 직접 의존한다.
+
+영향:
+- 초기화 순서 버그
+- 씬 전환 후 참조 꼬임
+- 재사용성 저하
+
+5-2. 대화 시스템 중복
+관찰 대상:
+- DialogueManager
+- LocalDiaManager
+
+문제:
+- 사실상 같은 로직이 이름만 바뀐 채 이중화되어 있다.
+- 버그 수정이나 기능 추가 시 두 군데를 동시에 수정해야 한다.
+- 조건 분기와 상태 차이 때문에 점점 더 벌어질 가능성이 높다.
+
+영향:
+- 유지보수 비용 급증
+- 기능 불일치
+- 심문/일반 대화 간 회귀 버그 증가
+
+5-3. UI, 입력, 게임 상태가 강하게 결합됨
+관찰 대상:
+- MainLoop.Update
+- PlayerControler.UpdatePlayer
+- MonitorUIRaycaster.RaycastAndInteract
+- DialogueUIManager
+- terminalManager
+
+문제:
+- 입력 처리, 상태 전이, UI 제어가 같은 클래스에서 함께 일어난다.
+- 로직 흐름을 추적하기 어렵다.
+- 특정 기능을 바꾸면 예상치 못한 다른 기능이 깨질 수 있다.
+
+예:
+- 대화 종료 시 상호작용 재활성화
+- 입력 키 처리와 상태 변경이 여러 클래스에 흩어짐
+- UI 완료 이벤트가 곧바로 게임 상태를 바꿈
+
+5-4. UnityEvent 중심 연결이 과도함
+관찰 대상:
+- DialogueObject
+- ChoicesObj
+- TipObj
+- NPC_script
+- InterogationDataSet
+- InspectorStaticFunctions
+
+문제:
+- 실행 경로가 코드 탐색만으로 보이지 않는다.
+- 데이터 에셋과 런타임 오브젝트가 강하게 결합된다.
+- 이벤트 중복 등록, 해제 누락, 흐름 추적 어려움이 발생한다.
+
+영향:
+- 디버깅 비용 증가
+- 에셋 설정 실수로 인한 런타임 버그
+- 리팩터링 난이도 상승
+
+5-5. 런타임 데이터가 원본 자산을 변형할 가능성
+관찰 대상:
+- LocalDiaManager.QuestionEvent
+- LocalDiaManager.questionIsNull
+- InterogationManager.BuildParadoxAndExecute
+
+문제:
+- 대화 체인, continueIdx, OnEnd 리스너 등이 런타임에 변경된다.
+- 일부는 Instantiate로 방어하고 있지만, 일부는 원본 자산을 직접 수정한다.
+
+영향:
+- 한 번 플레이 후 상태가 이상해지는 버그
+- 이벤트 중복 실행
+- 같은 데이터를 여러 곳에서 사용할 때 부작용 발생
+
+5-6. 널 안정성과 경계 조건 처리 부족
+관찰 대상:
+- DialogueManager.Update
+- LocalDiaManager.Update
+- DialogueUIManager.Start / handleEndEvent
+- QuestRuntime.Evaluate
+- terminalManager.CheckCluesSequentially
+
+문제:
+- 인덱스 접근 전에 충분한 검증이 없다.
+- 싱글톤 존재를 가정하는 코드가 많다.
+- Dictionary 키 존재를 가정한다.
+
+예상 리스크:
+- IndexOutOfRangeException
+- NullReferenceException
+- 씬 의존 오브젝트 미배치 시 즉시 오류
+
+5-7. 코루틴 사용은 많지만 취소/중복 제어가 약함
+관찰 대상:
+- SceneLoader
+- DialogueUIManager
+- InterogationManager
+- Interactable
+- HiddenUI 등
+
+문제:
+- StopAllCoroutines 사용은 의도하지 않은 작업까지 멈출 수 있다.
+- 동일 동작이 중복 실행될 가능성이 있다.
+- 상태와 코루틴 생명주기가 분리되어 있지 않다.
+
+5-8. 이름 품질과 코드 일관성이 떨어짐
+예시:
+- Interogation / Interrogation 표기 혼재
+- PlayerControler 오탈자
+- IContent, IExecute가 인터페이스처럼 보이지만 실제 클래스
+- WhoolWindow 오탈자
+- IRectAinmation 오탈자
+
+영향:
+- 코드 탐색 피로 증가
+- 새 인원이 적응하기 어려움
+- 역할 오해 가능성 증가
+
+5-9. 책임이 큰 클래스가 많음
+관찰 대상:
+- MainLoop
+- DialogueManager
+- LocalDiaManager
+- terminalManager
+- WindowManager
+- SceneLoader
+
+문제:
+- 상태 관리, 입력 처리, UI 제어, 데이터 참조, 연출 호출이 한 클래스에 몰려 있다.
+- 변경 이유가 여러 개인 클래스가 많다.
+
+5-10. 일부 좋은 구조가 전체 구조에 묻혀 있음
+관찰 대상:
+- StorySystem
+- StoryState
+- QuestRuntime
+
+문제:
+- 이 영역은 상대적으로 잘 분리되어 있지만, 프로젝트 전반의 구조 개선으로 이어지지 못하고 있다.
+
+6. 우선순위별 리팩터링 방향
+
+원칙:
+- 동작 중인 게임을 한 번에 뒤엎지 않는다.
+- 가장 위험한 결합부터 줄인다.
+- "로직 분리 -> 상태 명확화 -> 데이터 안정화" 순서로 진행한다.
+
+Priority 1. 대화 시스템 통합
+목표:
+- DialogueManager와 LocalDiaManager를 하나의 공통 시스템으로 정리
+
+해야 할 일:
+- 공통 베이스 로직 추출
+- 일반 대화와 심문 대화의 차이를 전략/모드로 분리
+- DialogueSession 같은 런타임 컨텍스트 도입
+- DialogueObject 원본 변경 금지
+
+권장 결과 구조:
+- DialogueController
+- DialogueSession
+- DialoguePresenter
+- DialogueInputHandler
+- DialogueData
+
+Priority 2. 전역 상태 정리
+목표:
+- 전역 싱글톤 의존을 줄이고 초기화 순서를 명시화
+
+해야 할 일:
+- Core 루트 오브젝트 또는 Bootstrapper 정의
+- 씬 지속 객체와 씬 로컬 객체 구분
+- Instance 직접 참조 대신 명시적 주입 가능한 부분부터 변경
+
+Priority 3. 입력 처리 일원화
+목표:
+- 입력이 여러 클래스에 흩어져 있는 문제 해결
+
+해야 할 일:
+- 입력 수집과 입력 소비를 분리
+- InputManager는 입력 상태만 제공
+- Dialogue, Player, UI가 직접 KeyCode를 해석하지 않도록 정리
+
+Priority 4. 이벤트 체계 정리
+목표:
+- UnityEvent 남용을 줄이고 이벤트 흐름을 코드에서 추적 가능하게 변경
+
+해야 할 일:
+- 도메인 이벤트와 인스펙터 이벤트를 구분
+- 자주 쓰는 흐름은 명시적 메서드 호출로 전환
+- UnityEvent는 UI 버튼이나 단순 트리거 연결 용도 위주로 제한
+
+Priority 5. ScriptableObject를 순수 데이터로 정리
+목표:
+- 데이터와 런타임 상태를 분리
+
+해야 할 일:
+- isCleared, IsStart, continueIdx 같은 런타임 값 분리
+- 런타임 전용 복제 구조 표준화
+- 데이터 에셋은 불변 객체처럼 사용
+
+Priority 6. UI 계층 구조 정리
+목표:
+- Window, Dialogue, Tip, Terminal UI를 화면 표시 계층으로 정리
+
+해야 할 일:
+- UI 표시 책임과 게임 로직 책임 분리
+- UI에서 직접 전역 매니저를 호출하는 흐름 축소
+- View / Presenter 스타일로 단순화
+
+Priority 7. 네이밍 및 폴더 구조 정리
+목표:
+- 코드 탐색성을 높이고 역할 혼동을 줄임
+
+해야 할 일:
+- 오탈자 수정
+- 인터페이스/클래스 명명 규칙 통일
+- 시스템별 폴더 기준 수립
+
+7. 권장 리팩터링 구조
+
+7-1. Core
+- GameBootstrap
+- GameContext
+- SceneContext
+- ServiceRegistry 또는 최소한의 Dependency Resolver
+
+7-2. Dialogue
+- DialogueController
+- DialogueSession
+- DialogueState
+- DialogueView
+- DialogueChoiceController
+- DialogueRuntimeData
+
+7-3. Interrogation
+- InterrogationController
+- InterrogationStateMachine
+- InterrogationSession
+- ParadoxBuilder
+
+7-4. Story
+- 현재 구조 유지 후 주변 의존성만 정리
+- StorySystem
+- StoryState
+- QuestRuntime
+- QuestDefinition
+- Condition / Effect
+
+7-5. UI
+- WindowSystem
+- TerminalSystem
+- TipSystem
+- StatusSystem
+
+7-6. Infrastructure
+- InputService
+- AudioService
+- SceneTransitionService
+- SaveService
+
+8. 단계별 실행 계획
+
+Phase 0. 안전장치 확보 (1~2일)
+목표:
+- 리팩터링 중 기능 붕괴를 막는다.
+
+작업:
+- 현재 플레이 가능 시나리오 체크리스트 작성
+- 핵심 플레이 흐름 영상 기록
+- 씬별 수동 QA 시나리오 작성
+
+체크 대상:
+- 타이틀 -> 게임 시작
+- 홈 씬 이동/상호작용
+- 일반 대화 시작/진행/종료
+- 선택지 표시/선택
+- 심문 진입/질문/종료
+- 터미널 입력/단서 해금
+
+Phase 1. 네이밍과 경미한 구조 정리 (2~3일)
+목표:
+- 위험도 낮은 정리부터 시작
+
+작업:
+- 오탈자 수정 계획 수립
+- 폴더 역할 주석/문서화
+- 불필요한 using 제거
+- public 필드 중 외부 노출이 불필요한 항목 축소
+
+예:
+- PlayerControler -> PlayerController
+- Interogation -> Interrogation
+- WhoolWindow -> WholeWindow
+
+주의:
+- 한 번에 모든 리네임을 하지 말고 컴파일 가능한 작은 단위로 진행
+
+Phase 2. 대화 시스템 통합 준비 (3~5일)
+목표:
+- DialogueManager / LocalDiaManager 공통 로직 분리
+
+작업:
+- 공통 처리 목록 추출
+  - 대화 시작
+  - 라인 진행
+  - 타이핑 스킵
+  - 선택지 표시
+  - 종료 처리
+- 차이점 목록 추출
+  - 심문 질문 처리
+  - 카메라 포커스
+  - 상태머신 연동
+
+산출물:
+- 공통 베이스 클래스 또는 순수 서비스 설계안
+
+Phase 3. 런타임 대화 상태 분리 (4~6일)
+목표:
+- ScriptableObject 원본 수정 제거
+
+작업:
+- DialogueRuntimeContext 도입
+- 현재 인덱스, tail override, continue index, selection state를 런타임 컨텍스트로 이동
+- QuestionEvent와 NullDia 처리 로직에서 원본 데이터 수정 금지
+
+기대 효과:
+- 반복 플레이 안정성 향상
+- 심문 로직 예측 가능성 증가
+
+Phase 4. 입력과 상태 전이 분리 (4~6일)
+목표:
+- MainLoop, PlayerControler, DialogueManager, MonitorUIRaycaster 간 결합 감소
+
+작업:
+- 입력 판정 전용 계층 도입
+- 상태 전이 메서드 명시화
+- MainLoop는 상태만 관리하고 세부 동작은 전담 컴포넌트에 위임
+
+예시:
+- TryInteract()
+- AdvanceDialogue()
+- RequestCameraShift()
+- EnterInterrogation()
+
+Phase 5. UnityEvent 정리 (3~5일)
+목표:
+- 흐름 추적이 가능한 구조로 변경
+
+작업:
+- 자주 쓰는 UnityEvent 연결을 명시적 코드 호출로 전환
+- OnStart, OnEnd, OnLineStart의 역할 재정의
+- 이벤트 중복 등록 방지
+
+특히 확인할 부분:
+- QuestionEvent 내부 AddListener 누적
+- terminalManager의 이벤트 구독/해제 흐름
+
+Phase 6. UI 시스템 분리 (5~8일)
+목표:
+- UI가 로직을 가지는 비율 감소
+
+작업:
+- DialogueUIManager는 View 역할만 남기기
+- terminalManager에서 인터프리터/단서 판정을 분리
+- WindowManager에서 창 생성 책임과 상태 관리를 구분
+
+Phase 7. Story 도메인 확장 기반 정리 (2~4일)
+목표:
+- 현재 괜찮은 구조를 프로젝트 표준으로 확장
+
+작업:
+- QuestRuntime의 방어 코드 보강
+- Definition/Runtime/State 계층 명확화
+- 다른 시스템도 같은 패턴으로 정리 가능한지 검토
+
+9. 구체적인 리팩터링 대상
+
+대상 A. DialogueManager + LocalDiaManager
+평가:
+- 가장 큰 중복과 구조적 리스크가 있는 영역
+
+문제:
+- 거의 동일한 Update 루프
+- 종료/선택/타이핑 처리 중복
+- 심문 전용 기능 때문에 중복이 커짐
+
+리팩터링 방향:
+- 공통 DialogueFlowController 추출
+- 일반/심문 대화는 정책 객체 또는 enum mode로 구분
+
+대상 B. DialogueUIManager
+평가:
+- Presenter/View 역할이 섞여 있음
+
+문제:
+- LocalDiaManager 또는 DialogueManager 존재 여부를 직접 판단
+- 오디오, 초상화, 완료 이벤트까지 모두 담당
+
+리팩터링 방향:
+- 외부에서 넘겨준 ViewModel만 표시
+- 완료 시 콜백만 호출
+- 어느 매니저가 쓸지 UI가 알지 않도록 수정
+
+대상 C. MainLoop
+평가:
+- 사실상 게임 상태 허브이지만 너무 많은 책임을 가짐
+
+문제:
+- 입력 처리
+- 플레이어 활성/비활성
+- 레이캐스트 호출
+- 카메라 이동
+- 상태 전이
+
+리팩터링 방향:
+- MainLoop는 상태 머신 역할만 수행
+- 각 상태별 핸들러로 위임
+
+대상 D. PlayerControler
+평가:
+- 플레이어 이동과 상호작용이 강하게 묶여 있음
+
+문제:
+- 입력, 이동, 카메라, 레이캐스트, 힌트 UI가 한 클래스에 있음
+
+리팩터링 방향:
+- PlayerMovement
+- PlayerLook
+- PlayerInteractionDetector
+- HintPresenter
+로 분리 검토
+
+대상 E. MonitorUIRaycaster
+평가:
+- 복잡한 기능을 단일 메서드에서 처리 중
+
+문제:
+- 월드 레이캐스트
+- 인터랙터블 처리
+- 메쉬 UI 좌표 변환
+- 포인터 이벤트 디스패치
+- 드래그 상태 관리
+
+리팩터링 방향:
+- 레이캐스트 계산
+- UI 포인터 브리지
+- 드래그 상태
+를 분리
+
+대상 F. terminalManager
+평가:
+- UI 컨트롤러, 로그 뷰, 커맨드 실행기, 단서 해금기가 결합됨
+
+리팩터링 방향:
+- TerminalController
+- TerminalView
+- CommandInterpreter
+- ClueDetectionService
+로 분리
+
+대상 G. QuestRuntime
+평가:
+- 구조는 좋지만 안전장치 부족
+
+문제:
+- CurrentNodeId 유효성 검증 부족
+- 이벤트 구독 해제 없음
+
+리팩터링 방향:
+- TryGetNode 패턴 적용
+- Dispose 또는 명시적 해제 메서드 추가
+
+10. 코딩 규칙 권장안
+
+규칙 1.
+- MonoBehaviour는 "Unity 수명주기 연결"과 "씬 오브젝트 참조" 위주로만 사용
+
+규칙 2.
+- 순수 게임 로직은 가능한 일반 C# 클래스로 분리
+
+규칙 3.
+- ScriptableObject는 가급적 불변 데이터로 사용
+
+규칙 4.
+- 런타임 상태는 Session, RuntimeContext, State 클래스로 분리
+
+규칙 5.
+- UI는 상태를 표시하고 입력 이벤트를 전달하되, 게임 규칙을 직접 결정하지 않음
+
+규칙 6.
+- Instance 직접 참조는 Core 시스템에 한정하고, 나머지는 명시적 참조 주입 선호
+
+규칙 7.
+- UnityEvent는 인스펙터 편의용으로 제한하고, 핵심 흐름은 코드 기반 이벤트로 작성
+
+규칙 8.
+- Update 메서드는 입력 수집 또는 상태 폴링 정도로 최소화
+
+11. 예상 효과
+
+이 계획대로 정리하면 다음 효과를 기대할 수 있다.
+
+- 대화/심문 버그 수정 속도 향상
+- 씬 전환과 전역 객체 관련 버그 감소
+- 새 기능 추가 시 영향 범위 축소
+- 언리얼 전환 또는 다른 엔진 전환 시 재사용 가능한 순수 로직 증가
+- 협업 시 코드 이해도 향상
+
+12. 현실적인 진행 순서
+
+가장 추천하는 순서는 다음과 같다.
+
+1. 대화 시스템 중복 제거
+2. ScriptableObject 런타임 상태 분리
+3. 입력/상태 전이 정리
+4. terminal / window UI 분리
+5. 네이밍 정리
+6. Story 도메인 확장
+
+이 순서가 좋은 이유는, 현재 프로젝트에서 가장 많은 버그와 확장 비용이 발생할 가능성이 높은 구간이 대화/심문/상태 흐름이기 때문이다.
+
+13. 결론
+
+현재 ProjectCRT는 아이디어와 기능은 충분히 매력적이지만, 구조적으로는 "작동하는 프로토타입을 계속 확장한 상태"에 가깝다.
+가장 중요한 문제는 코드가 나쁘다는 것이 아니라, 시스템 경계와 책임 분리가 약해서 복잡도가 빠르게 증가하고 있다는 점이다.
+
+따라서 리팩터링의 핵심 목표는 다음 3가지다.
+
+- 중복 제거
+- 런타임 상태 분리
+- 전역 의존성 축소
+
+이 세 가지만 성공해도 프로젝트의 안정성과 개발 속도는 크게 좋아질 가능성이 높다.
+
+14. 우선 검토 파일 목록
+
+핵심 리팩터링 대상:
+- Assets/scripts/dialogue/DialogueManager.cs
+- Assets/scripts/dialogue/LocalDiaManager.cs
+- Assets/scripts/dialogue/DialogueUIManager.cs
+- Assets/scripts/dialogue/DialogueObject.cs
+- Assets/scripts/Interogation/InterogationManager.cs
+- Assets/scripts/Interogation/InterogationDataSet.cs
+- Assets/scripts/SystemManagers/MainLoop.cs
+- Assets/scripts/SystemManagers/SceneLoader/SceneLoader.cs
+- Assets/scripts/SystemManagers/Input/InputManager.cs
+- Assets/scripts/Player/PlayerControler.cs
+- Assets/scripts/MeshToUI/MonitorUIRaycaster.cs
+- Assets/scripts/terminal/terminalManager.cs
+- Assets/scripts/UI/Window/WindowManager.cs
+- Assets/scripts/StoryManager/Domain/core/QuestRuntime.cs
+- Assets/scripts/StoryManager/Domain/core/StorySystem.cs
+
+보조 검토 대상:
+- Assets/scripts/Props/Interactable.cs
+- Assets/scripts/SystemManagers/SingletonObjLinker.cs
+- Assets/scripts/SystemManagers/InspectorStaticFunctions.cs
+- Assets/scripts/Camera/CameraFocusControl.cs
+- Assets/scripts/dialogue/choiceMaker/ChoicesObj.cs
+- Assets/scripts/terminal/ClueObj.cs
+
+15. 추천 다음 액션
+
+- 대화 시스템 통합 설계 문서 작성
+- 실제 리팩터링 1차 대상으로 DialogueManager 계열 선정
+- UnityEvent 사용처 목록화
+- 런타임 상태를 가진 ScriptableObject 목록화
+- 전역 싱글톤 생명주기 표 작성
