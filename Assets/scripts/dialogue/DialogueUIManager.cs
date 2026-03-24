@@ -3,7 +3,6 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using System;
 
 public class DialogueUIManager : MonoBehaviour
 {
@@ -26,66 +25,57 @@ public class DialogueUIManager : MonoBehaviour
 
     private Coroutine typingCorutine;
     [SerializeField] private bool isTyping;
-    private string fullText;
 
     private SpriteSheetObject currentSheet;
     private SpriteSheetObject prevSheet;
 
     public bool IsTyping() => isTyping;
-    public void SetCanvasActive(bool val) { canvas.enabled = val; }
+    public void SetCanvasActive(bool val)
+    {
+        if (canvas != null)
+        {
+            canvas.enabled = val;
+        }
+    }
+
     void Start()
     {
         portraitManager = FindFirstObjectByType<PortraitManager>();
         isTyping = false;
-        fullText = "";
-        //다이어로그 종료 시 선택지 있으면 이벤트 발생
-        if (LocalDiaManager.Instance)
-        {
-            OnTypingComplete.AddListener(() =>
-            {
-                LocalDiaManager.Instance.ChoiceEvent();
-            });
-        }
-        else
-        {
-            OnTypingComplete.AddListener(() =>
-            {
-                DialogueManager.Instance.ChoiceEvent();
-            });
-        }
     }
 
     public void DisplayDialogue(DialogueObject.DialogueLine line)
     {
-        //기존 코루틴 중단
-        if (typingCorutine != null)
-            StopCoroutine(typingCorutine);
+        StopTyping();
 
-        if (showPortrait)
+        if (showPortrait && portraitManager != null)
         {
             if (line.characterName == "null")
             {
-                Portrait.SetActive(false);
-                Name.SetActive(false);
+                if (Portrait != null) Portrait.SetActive(false);
+                if (Name != null) Name.SetActive(false);
             }
             else
             {
-                Portrait.SetActive(true);
-                Name.SetActive(true);
+                if (Portrait != null) Portrait.SetActive(true);
+                if (Name != null) Name.SetActive(true);
 
-                nameText.text = line.characterName.ToString();
+                if (nameText != null)
+                {
+                    nameText.text = line.characterName;
+                }
+
                 currentSheet = portraitManager.GetPortrait(line.characterName, line.Portrait);
 
-                //이전 라인과 초상화 같으면 업데이트 하지 않음 (둘이 달라야 업데이트)
-                if (prevSheet != currentSheet)
+                if (prevSheet != currentSheet && portraitAnim != null)
                 {
                     portraitAnim.SetPortrait(currentSheet);
                     prevSheet = currentSheet;
                 }
             }
         }
+
         line.OnLineStart?.Invoke();
-        //새 대사 시작
         typingCorutine = StartCoroutine(TypeText(line));
     }
 
@@ -93,28 +83,40 @@ public class DialogueUIManager : MonoBehaviour
     {
         string text = line.text;
         isTyping = true;
-        fullText = text;
-        dialogueText.text = "";
+        if (dialogueText != null)
+        {
+            dialogueText.text = "";
+        }
         int i = 0;
 
         while (i < text.Length)
         {
-            // 특수기호 처리 (“<”로 시작하면 “>”까지 한 번에 출력)
             if (text[i] == '<')
             {
                 int end = text.IndexOf('>', i);
                 if (end != -1)
                 {
                     string specialWord = text.Substring(i + 1, end - i - 1);
-                    dialogueText.text += specialWord;
+                    if (dialogueText != null)
+                    {
+                        dialogueText.text += specialWord;
+                    }
                     i = end + 1;
                     continue;
                 }
             }
 
-            dialogueText.text += text[i];
-            AudioManager.Instance.PlayTypeSFX();
+            if (dialogueText != null)
+            {
+                dialogueText.text += text[i];
+            }
+
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlayTypeSFX();
+            }
             i++;
+
             if (useCharInterval)
             {
                 yield return new WaitForSeconds(line.CharInterval);
@@ -124,46 +126,67 @@ public class DialogueUIManager : MonoBehaviour
                 yield return new WaitForSeconds(0.1f);
             }
         }
-        isTyping = false;
 
+        isTyping = false;
+        typingCorutine = null;
         handleEndEvent();
     }
 
     public void SkipText(string text)
     {
-        dialogueText.text = text;
+        if (dialogueText != null)
+        {
+            dialogueText.text = text;
+        }
         isTyping = false;
+        typingCorutine = null;
         handleEndEvent();
     }
-    
+
+    public void StopTyping()
+    {
+        if (typingCorutine != null)
+        {
+            StopCoroutine(typingCorutine);
+            typingCorutine = null;
+        }
+
+        isTyping = false;
+    }
+
     private void handleEndEvent()
     {
-        if (LocalDiaManager.Instance)
+        var activeFlow = DialogueFlowLocator.GetActive();
+        if (activeFlow != null && activeFlow.IsDiaEnd())
         {
-            if (LocalDiaManager.Instance.IsDiaEnd())
-            {
-                OnTypingComplete?.Invoke();
-            }
-        }
-        else
-        {
-            if (DialogueManager.Instance.IsDiaEnd())
-            {
-                OnTypingComplete?.Invoke();
-            }
+            OnTypingComplete?.Invoke();
+            activeFlow.ChoiceEvent();
         }
     }
 
     public void InitChoiceUI(ChoicesObj choices)
     {
-        var CUI = ChoicesUI.GetComponent<ChoicesUIControler>();
-        CUI.SetChoices(choices);
-        CUI.InstantiateChoices();
+        if (ChoicesUI == null)
+        {
+            return;
+        }
+
+        var choiceUIController = ChoicesUI.GetComponent<ChoicesUIControler>();
+        if (choiceUIController == null)
+        {
+            return;
+        }
+
+        choiceUIController.SetChoices(choices);
+        choiceUIController.InstantiateChoices();
         Debug.Log("Choice UI Initiate Complete");
     }
 
     public void SetChoicesUIActive(bool val)
     {
-        ChoicesUI.SetActive(val);
+        if (ChoicesUI != null)
+        {
+            ChoicesUI.SetActive(val);
+        }
     }
 }

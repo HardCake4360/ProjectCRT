@@ -32,11 +32,13 @@ public class SceneInitializer : MonoBehaviour
     IEnumerator initializeScene()
     {
         yield return new WaitForSeconds(Delay);
+        yield return new WaitUntil(() => MainLoop.Instance != null);
         OnInitial?.Invoke();
     }
     
     public void OuterSceneInitPlayer()
     {
+        if (MainLoop.Instance == null) return;
         MainLoop.Instance.PC = this.PC;
     }
 
@@ -48,6 +50,7 @@ public class SceneInitializer : MonoBehaviour
 
     public void InitMainLoop_HomeScene()
     {
+        if (MainLoop.Instance == null) return;
         MainLoop.Instance.UI = UIManager;
         MainLoop.Instance.Raycaster = Raycaster;
         MainLoop.Instance.CamControler = CamCon;
@@ -56,6 +59,7 @@ public class SceneInitializer : MonoBehaviour
 
     public void InitMainLoop_OuterScene()
     {
+        if (MainLoop.Instance == null) return;
         MainLoop.Instance.PC = PC;
     }
 

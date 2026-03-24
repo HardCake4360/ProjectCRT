@@ -18,12 +18,15 @@ public class terminalManager : MonoBehaviour
     public List<ClueObj> Clues;
 
     Interpreter interpreter;
-
+    private RectTransform msgListRect;
+    private bool isProcessingInput;
 
     private void Start()
     {
         interpreter = GetComponent<Interpreter>();
-        foreach(var clue in Clues)
+        msgListRect = msgList != null ? msgList.GetComponent<RectTransform>() : null;
+
+        foreach (var clue in Clues)
         {
             clue.isCleared = false;
         }
@@ -31,51 +34,44 @@ public class terminalManager : MonoBehaviour
 
     private void OnGUI()
     {
-        if(terminalInput.isFocused && terminalInput.inputField.text != "" && Input.GetKeyDown(KeyCode.Return))
+        if (CanSubmitInput())
         {
-            //유저의 입력을 저장
-            string userInput = terminalInput.inputField.text;
-
-            //인풋 필드 클리어
-            ClearInputField();
-
-            //디렉토리 라인 인스턴스화
-            AddUserLine(userInput);
-
-            // 프리팹 미리 생성
-            GameObject response = Instantiate(responseLine, msgList.transform);
-            response.transform.SetAsLastSibling();
-
-            // 높이 증가
-            Vector2 listSize = msgList.GetComponent<RectTransform>().sizeDelta;
-            msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(listSize.x, listSize.y + 35f);
-
-            //입력 라인을 마지막줄로 옮기고 출력하는동안 숨기기
-            userInputLine.transform.SetAsLastSibling();
-            userInputLine.SetActive(false);
-
-            TextMeshProUGUI uiText = response.GetComponentInChildren<TextMeshProUGUI>();
-
-            StartCoroutine(interpreter.Interpret(userInput,uiText, () =>
-            {
-                //출력 끝난 뒤(OnComplete) 구문
-                userInputLine.SetActive(true);
-
-                //입력 라인을 마지막줄로 옮기기
-                userInputLine.transform.SetAsLastSibling();
-
-                //바닥쪽으로 스크롤
-                scrollRect.verticalNormalizedPosition = 0;
-
-                //일반적으로 답변 완성시 특정 문자열의 포함을 확인
-                StartCoroutine(CheckCluesSequentially(uiText.text));
-
-
-                //입력 필드 리포커싱
-                terminalInput.inputField.ActivateInputField();
-                terminalInput.inputField.Select();
-            }));
+            SubmitInput();
         }
+    }
+
+    private bool CanSubmitInput()
+    {
+        return !isProcessingInput
+            && terminalInput != null
+            && terminalInput.inputField != null
+            && terminalInput.isFocused
+            && terminalInput.inputField.text != ""
+            && Input.GetKeyDown(KeyCode.Return)
+            && interpreter != null;
+    }
+
+    private void SubmitInput()
+    {
+        string userInput = terminalInput.inputField.text;
+        isProcessingInput = true;
+
+        ClearInputField();
+        AddUserLine(userInput);
+
+        GameObject response = Instantiate(responseLine, msgList.transform);
+        response.transform.SetAsLastSibling();
+        ResizeMessageList(35f);
+
+        userInputLine.transform.SetAsLastSibling();
+        userInputLine.SetActive(false);
+
+        TextMeshProUGUI uiText = response.GetComponentInChildren<TextMeshProUGUI>();
+
+        StartCoroutine(interpreter.Interpret(userInput, uiText, () =>
+        {
+            HandleInterpretationCompleted(uiText);
+        }));
     }
 
     void ClearInputField()
@@ -85,17 +81,10 @@ public class terminalManager : MonoBehaviour
 
     void AddUserLine(string userInput)
     {
-        //커맨드 라인 컨테이너 리사이즈
-        Vector2 msgListSize = msgList.GetComponent<RectTransform>().sizeDelta;
-        msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(msgListSize.x, msgListSize.y + 35f);
+        ResizeMessageList(35f);
 
-        //디렉토리 라인 객체 생성
         GameObject msg = Instantiate(dirLine, msgList.transform);
-
-        //자식객체 인덱스 설정
         msg.transform.SetSiblingIndex(msgList.transform.childCount - 1);
-
-        //생성한 객체 텍스트 설정
         msg.GetComponentsInChildren<TextMeshProUGUI>()[1].text = userInput;
     }
 
@@ -103,18 +92,10 @@ public class terminalManager : MonoBehaviour
     {
         for(int i = 0; i < interpretation.Count; i++)
         {
-            //답변 객체화
             GameObject response = Instantiate(responseLine, msgList.transform);
-
-            //마지막에 위치하도록 함
             response.transform.SetAsLastSibling();
-
-            //메시지 리스트의 크기를 받아온 후 리사이즈
-            Vector2 listSize = msgList.GetComponent<RectTransform>().sizeDelta;
-            msgList.GetComponent<RectTransform>().sizeDelta = new Vector2(listSize.x, listSize.y + 35f);
-
+            ResizeMessageList(35f);
             response.GetComponentInChildren<TextMeshProUGUI>().text = interpretation[i];
-
         }
 
         return interpretation.Count;
@@ -132,29 +113,61 @@ public class terminalManager : MonoBehaviour
         }
     }
 
+    private void ResizeMessageList(float deltaHeight)
+    {
+        if (msgListRect == null)
+        {
+            return;
+        }
+
+        Vector2 size = msgListRect.sizeDelta;
+        msgListRect.sizeDelta = new Vector2(size.x, size.y + deltaHeight);
+    }
+
+    private void HandleInterpretationCompleted(TextMeshProUGUI uiText)
+    {
+        isProcessingInput = false;
+
+        userInputLine.SetActive(true);
+        userInputLine.transform.SetAsLastSibling();
+
+        if (scrollRect != null)
+        {
+            scrollRect.verticalNormalizedPosition = 0;
+        }
+
+        StartCoroutine(CheckCluesSequentially(uiText != null ? uiText.text : string.Empty));
+
+        if (terminalInput?.inputField != null)
+        {
+            terminalInput.inputField.ActivateInputField();
+            terminalInput.inputField.Select();
+        }
+    }
+
     private IEnumerator CheckCluesSequentially(string text)
     {
+        if (DialogueManager.Instance == null)
+        {
+            yield break;
+        }
+
         foreach (var clue in Clues)
         {
             if (clue.isCleared) continue;
             Debug.Log("----------------checking " + clue.Keyword);
             bool dialogueFinished = false;
 
-            // 종료 이벤트 감시
             UnityAction onEnd = () => dialogueFinished = true;
             DialogueManager.Instance.StaticOnDialogueEnd.AddListener(onEnd);
 
-            // 키워드 있으면 Dialogue 시작
             bool isContaining = clue.FindKeywordFrom(text);
 
-            // Dialogue 발생했으면 종료될 때까지 기다리기
             while (isContaining && !dialogueFinished)
                 yield return null;
 
-            // 리스너 제거 (중복 방지)
             DialogueManager.Instance.StaticOnDialogueEnd.RemoveListener(onEnd);
         }
         Debug.Log("checking end");
     }
-
 }

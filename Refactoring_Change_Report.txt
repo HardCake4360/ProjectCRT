@@ -1,0 +1,356 @@
+ProjectCRT Refactoring Change Report
+
+작성일: 2026-03-20
+대상 프로젝트: C:\Users\user\Documents\GitHub\ProjectCRT
+목적:
+- 지금까지 진행한 리팩터링 변경 사항을 기존 로직과 비교해 기록
+- 어떤 문제가 왜 수정되었는지 추적 가능하도록 정리
+- 아직 남아 있는 리스크와 이후 권장 작업을 구분
+
+1. 전체 요약
+
+이번 리팩터링은 크게 4개의 축으로 진행되었다.
+
+1. 대화 시스템 단일화 방향 정리
+2. 심문 대화의 UI 바인딩을 호환 어댑터 방식으로 축소
+3. 일반 플레이 루프(MainLoop, MonitorUIRaycaster, terminalManager) 책임 분리
+4. 초기화 순서와 널 참조 방어 코드 보강
+
+중요한 점:
+- 심문 시스템 자체는 구조적으로 복잡도가 높고, 전면 개편 예정이므로 현재는 "안정화와 호환 유지"까지만 반영했다.
+- 따라서 이번 변경의 중심은 심문 완성도가 아니라, 일반 시스템과 대화 시스템의 구조 정리에 있다.
+
+2. 변경 파일 목록
+
+핵심 변경 파일:
+- Assets/scripts/dialogue/DialogueManager.cs
+- Assets/scripts/dialogue/DialogueUIManager.cs
+- Assets/scripts/dialogue/DialogueFlowLocator.cs
+- Assets/scripts/dialogue/LocalDiaManager.cs
+- Assets/scripts/dialogue/choiceMaker/ChoicePrefab.cs
+- Assets/scripts/SystemManagers/MainLoop.cs
+- Assets/scripts/MeshToUI/MonitorUIRaycaster.cs
+- Assets/scripts/terminal/terminalManager.cs
+- Assets/scripts/SystemManagers/SceneInitializer.cs
+
+심문 호환 관련 변경 파일:
+- Assets/scripts/Interogation/InterogationManager.cs
+- Assets/scripts/Interogation/InterogationDiaObject.cs
+- Assets/scripts/SystemManagers/InspectorStaticFunctions.cs
+
+3. 대화 시스템 변경 사항
+
+3-1. DialogueManager / LocalDiaManager 관계 재정리
+
+기존 구조:
+- DialogueManager와 LocalDiaManager가 거의 동일한 로직을 각각 따로 가짐
+- 일반 대화는 DialogueManager
+- 심문 대화는 LocalDiaManager
+- UIManager, 선택지, 종료 처리, 타이핑 스킵, 진행 로직이 중복
+
+변경 후:
+- 실제 대화 흐름은 DialogueManager 중심으로 통합
+- LocalDiaManager는 심문 씬에서 사용할 UI 타깃과 폴백 대화를 전달하는 얇은 어댑터 역할만 유지
+
+기존 문제:
+- 같은 버그를 두 군데 수정해야 했음
+- 일반 대화와 심문 대화 동작이 점점 달라질 위험이 컸음
+- 어떤 UI가 어떤 매니저에 붙는지 코드 추적이 어려웠음
+
+현재 상태:
+- LocalDiaManager는 더 이상 독립적인 대화 상태 머신이 아님
+- 심문 대화도 DialogueManager가 처리
+- 다만 심문 전체 상태 흐름은 여전히 별도 구조로 남아 있음
+
+3-2. DialogueFlowLocator 도입
+
+기존 구조:
+- ChoicePrefab, DialogueUIManager 같은 UI 계층이 LocalDiaManager.Instance 또는 DialogueManager.Instance를 직접 분기
+
+변경 후:
+- IDialogueFlowController 인터페이스와 DialogueFlowLocator를 도입
+- UI 계층이 활성 대화 흐름을 직접 찾도록 변경
+
+기존 문제:
+- UI가 대화 구현체를 알아야 했음
+- 일반/심문 분기 코드가 여러 파일에 퍼져 있었음
+
+개선 효과:
+- UI와 대화 흐름 구현의 결합 감소
+- 이후 DialogueManager 완전 단일화 시 정리 비용 감소
+
+3-3. DialogueUIManager 일반화
+
+기존 구조:
+- LocalDiaManager가 있는지 여부로 어떤 매니저에 연결할지 판단
+- 초상화, 이름, 선택지, 타이핑, 완료 이벤트, 특정 매니저 분기 로직이 섞여 있었음
+
+변경 후:
+- 활성 대화 흐름은 DialogueFlowLocator를 통해 얻음
+- StopAllCoroutines 대신 StopTyping 사용
+- 텍스트 외 UI 요소가 없어도 죽지 않도록 널 가드 추가
+
+기존 문제:
+- 심문 UI가 씬에 존재하기만 해도 일반 대화에 영향 줄 가능성
+- 일부 UI 요소가 비어 있는 경량 UI에서 NRE 위험
+- 타이핑 스킵 시 모든 코루틴 중단 가능성
+
+개선 효과:
+- 텍스트만 있는 간단한 대화 UI 지원 가능성 증가
+- UI가 더 수동적인 표시 계층에 가까워짐
+
+3-4. ChoicePrefab 결합도 완화
+
+기존 구조:
+- ChoicePrefab 내부에서 LocalDiaManager/DialogueManager를 직접 분기
+- 선택지 hover와 click 동작이 특정 매니저 구조를 전제로 함
+
+변경 후:
+- DialogueFlowLocator를 통해 현재 대화 흐름을 사용
+- 선택지 UI와 대화 재진입 로직이 공통 인터페이스를 기준으로 동작
+
+기존 문제:
+- 선택지 로직이 대화 구현체 구조를 강하게 알고 있었음
+- 심문/일반 대화 선택지 동작 차이가 쉽게 벌어질 수 있었음
+
+4. 심문 관련 변경 사항
+
+4-1. 심문 대화의 처리 위치 변경
+
+기존 구조:
+- InterogationDiaObject -> LocalDiaManager 직접 호출
+- 질문 분기, 폴백, TailDia 이어붙이기, 선택지 복귀 처리까지 LocalDiaManager가 독자 수행
+
+변경 후:
+- InterogationDiaObject는 여전히 LocalDiaManager를 호출하지만,
+- LocalDiaManager는 실제 처리 대신 DialogueManager로 UI 타깃과 종료 후 상태를 전달
+
+의도:
+- 심문 대화를 DialogueManager 단일 시스템 안에 흡수
+
+현재 한계:
+- 심문은 상태 전환이 많고 UI 타깃도 특수하므로, 여전히 완전한 구조 정리는 아님
+- 현재는 "호환 유지용 연결층" 상태
+
+4-2. 심문 종료 후 상태 복귀 보정
+
+문제 발생 이력:
+- 리팩터링 후 심문 대화 종료 시 MainLoop가 Main 상태로 돌아가서, 심문 중에도 상호작용 가능해지는 버그 발생
+
+원인:
+- DialogueManager.ForceEndDia가 일반 대화 기준으로 항상 MainState.Main 복귀 처리
+
+변경 후:
+- 대화 세션별 종료 후 복귀 상태(stateAfterDialogue)를 DialogueManager가 관리
+- 심문 UI로 시작한 대화는 종료 후 MainState.Interogate로 복귀하도록 수정
+
+효과:
+- 심문 중 대화 종료 후 메인 상호작용으로 풀리는 문제 완화
+
+4-3. 질문 후 Testify / 선택 단계 복귀 보정
+
+문제 발생 이력:
+- Testify 이후 질문을 마친 뒤 다시 선택 단계로 복귀하지 않는 현상 발생
+
+원인:
+- TailDia 전환 시 기존 대화의 OnEnd가 호출되지 않아 상태 전환 리스너가 누락될 수 있었음
+- 심문 상태를 명시적으로 선택 단계로 되돌리는 처리 부족
+
+변경 후:
+- TailDia 전환 직전에 OnDialogueEnd를 호출하도록 보강
+- InterogationManager에 ReturnToSelection 추가
+
+현재 판단:
+- 심문 시스템은 구조적으로 복잡해 현재 단계에서는 최소한의 안정화까지만 반영
+- 전면 개편 예정이므로 추가 수정은 중단
+
+5. MainLoop 변경 사항
+
+기존 구조:
+- Update 내부에 Main / Interogate 상태 처리 로직이 직접 펼쳐져 있었음
+- 플레이어 활성화/비활성화, 카메라 입력, 레이캐스터 호출이 한 메서드에 혼합
+
+변경 후:
+- HandleMainState
+- HandleInterogationState
+- SetPlayerActive
+- HandleCameraShortcuts
+로 분리
+
+기존 문제:
+- 상태별 책임이 섞여 있어 추적이 어려움
+- 플레이어 활성화/비활성화 로직이 상태 분기 내부에 박혀 있었음
+
+개선 효과:
+- 메인 루프가 상태 허브 역할에 더 가까워짐
+- 플레이어 on/off와 카메라 입력 로직의 위치가 명확해짐
+
+6. MonitorUIRaycaster 변경 사항
+
+기존 구조:
+- 하나의 RaycastAndInteract에 월드 상호작용, 메쉬 UI 좌표 변환, hover/drag 처리, WindowManager 전달이 모두 들어 있었음
+- Start 시 MainLoop.Instance를 바로 가정
+
+변경 후:
+- TryHandleWorldInteraction
+- HandleMonitorUI
+- UpdateHoverState
+- HandleDragState
+- ClearHoverState
+로 분리
+- 널 가드 추가
+
+기존 문제:
+- 초기화 순서에 따라 Start에서 NullReferenceException 가능
+- Camera/UI/EventSystem이 빠지면 전체가 즉시 오류
+- 한 메서드가 너무 많은 역할 담당
+
+개선 효과:
+- 기능 단위별 디버깅 용이
+- 의존성 미준비 시 조용히 빠져나가도록 안정화
+
+7. terminalManager 변경 사항
+
+기존 구조:
+- OnGUI 내부에서 입력 감지, 메시지 생성, 출력 완료 후 후처리까지 한 번에 처리
+- msgList RectTransform 반복 조회
+- 연속 입력 또는 해석 중 중복 입력 방어 없음
+
+변경 후:
+- CanSubmitInput
+- SubmitInput
+- ResizeMessageList
+- HandleInterpretationCompleted
+로 분리
+- isProcessingInput 추가
+- msgListRect 캐싱
+- DialogueManager 부재 시 단서 검사 코루틴 즉시 종료
+
+기존 문제:
+- 입력 중복 처리 위험
+- UI 참조 반복 접근
+- 단서 검사 시 대화 매니저 없으면 NRE 가능
+
+개선 효과:
+- 터미널 입력 흐름이 명확해짐
+- 입력 중복 처리 감소
+- 후처리 단계 추적 쉬워짐
+
+8. SceneInitializer 변경 사항
+
+기존 구조:
+- Delay 후 바로 OnInitial 실행
+- MainLoop.Instance가 이미 존재한다고 가정하고 씬 초기화 함수 수행
+
+변경 후:
+- initializeScene에서 MainLoop.Instance가 생길 때까지 대기
+- InitMainLoop_HomeScene / InitMainLoop_OuterScene / OuterSceneInitPlayer에 널 가드 추가
+
+기존 문제:
+- 싱글톤 생성 순서가 늦으면 SceneInitializer에서 NRE 발생
+
+개선 효과:
+- 씬 초기화 시점이 더 안정적
+
+9. 초기화 순서 / 널 참조 안정화
+
+실제 발생한 오류:
+- MonitorUIRaycaster.Start에서 MainLoop.Instance null
+- SceneInitializer.InitMainLoop_HomeScene에서 MainLoop.Instance null
+- DialogueManager.Update에서 InputManager 또는 카메라 관련 의존성 null
+
+반영된 수정:
+- MainLoop.Instance 널 체크
+- InputManager.Instance 널 체크
+- CameraFocusControl.Instance 널 체크
+- DTB_Setter 널 체크
+- DialogueUI 널 체크
+- SceneInitializer의 WaitUntil(MainLoop.Instance != null)
+
+결과:
+- 초기화 순서에 민감하던 구간의 런타임 오류 완화
+
+10. 기존 로직과 비교한 설계 변화
+
+Before:
+- 시스템이 "누가 실행 중인지"를 직접 알고 직접 호출
+- 전역 싱글톤 다수 + 동일 역할 매니저 중복
+- UI가 로직 구현체를 직접 분기
+- 초기화 순서가 암묵적
+- 일부 데이터(ScriptableObject)가 런타임 상태까지 함께 가짐
+
+After:
+- 대화 흐름은 DialogueManager 중심으로 수렴
+- UI는 DialogueFlowLocator를 통해 현재 흐름에 연결
+- MainLoop / MonitorUIRaycaster / terminalManager는 내부 책임을 분리
+- 초기화 순서에 대한 방어 코드 추가
+- 심문 관련 상태 복귀는 런타임 세션 상태로 처리
+
+11. 아직 남아 있는 문제 / 리스크
+
+11-1. 심문 시스템은 여전히 임시 호환 상태
+- LocalDiaManager는 얇아졌지만 완전히 제거되진 않음
+- InterogationState와 대화 흐름의 결합이 남아 있음
+- 질문, 반박, 패러독스 흐름은 구조적으로 재설계가 필요
+
+11-2. DialogueObject에 런타임 상태가 남아 있음
+- IsStart
+- TailDia
+- continueIdx
+
+현재 일부는 런타임 세션으로 옮기기 시작했지만, 완전한 분리는 아직 아님
+
+11-3. PlayerControler는 여전히 책임이 큼
+- 이동
+- 카메라
+- 상호작용
+- 힌트 UI
+가 한 클래스에 있음
+
+11-4. MonitorUIRaycaster의 interacting 플래그는 아직 구조상 의미가 약함
+- 현재는 거의 상태 기록 용도만 하고 있음
+- 이후 실제 상태 제어에 쓸지, 제거할지 판단 필요
+
+11-5. terminalManager는 아직 View/Controller 분리가 완전하지 않음
+- Interpreter와 clue 흐름이 여전히 한 클래스에 결합
+
+12. 이번 리팩터링의 의의
+
+이번 변경은 프로젝트를 "완전히 새 구조"로 바꾼 것이 아니다.
+대신 다음 목표를 중심으로 한 중간 정리 작업에 가깝다.
+
+- 대화 시스템을 하나로 모으기 시작함
+- 일반 시스템의 과도한 결합을 조금씩 분리함
+- 런타임 NRE와 초기화 순서 문제를 줄임
+- 앞으로 더 큰 구조 개편을 하기 쉬운 기반을 마련함
+
+즉, 지금 단계의 성과는 "기능을 보존하면서 구조를 덜 위험하게 만든 것"에 있다.
+
+13. 권장 다음 단계
+
+심문 제외 권장 순서:
+
+1. DialogueObject의 런타임 상태를 별도 Session/RuntimeContext로 이동
+2. PlayerControler 분리
+   - 이동
+   - 카메라 회전
+   - 상호작용 감지
+   - 힌트 표시
+3. terminalManager를 View / Controller / ClueDetection으로 분리
+4. MainLoop의 상태 전이를 명시적 메서드 중심으로 정리
+
+심문 관련:
+- 현재는 추가 수정 중단
+- 향후 전면 재설계 대상으로 별도 분리
+
+14. 결론
+
+이번 리팩터링으로 프로젝트는 다음 상태로 이동했다.
+
+- 중복된 대화 시스템 -> 단일화 방향으로 정리 중
+- 일반 시스템의 결합도 -> 일부 감소
+- 초기화 순서 취약성 -> 완화
+- 심문 시스템 -> 호환 유지 상태, 전면 개편 대기
+
+아직 완성된 구조는 아니지만, 기존보다 변경 영향 범위를 예측하기 쉬워졌고,
+특히 대화/UI/초기화 관련 런타임 오류에 대한 방어력은 이전보다 확실히 좋아졌다.

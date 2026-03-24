@@ -49,11 +49,11 @@ public class MainLoop : MonoBehaviour
         MainLoopState = state;
     }
 
-    //인스펙터 연결용 함수
     public void SetMainLoopState_Main()
     {
         MainLoopState = MainState.Main;
     }
+
     public void SetMainLoopState_Interacting()
     {
         MainLoopState = MainState.Interact;
@@ -61,7 +61,6 @@ public class MainLoop : MonoBehaviour
 
     public void OnLoadSceneEnd()
     {
-        //씬 이동하면서 파괴되는 오브젝트라 비교연산 이용
         if (PC == null) 
         {
             Cursor.lockState = CursorLockMode.None;
@@ -71,56 +70,80 @@ public class MainLoop : MonoBehaviour
         Debug.Log("SceneLoaded and MainLoop initialized");
     }
 
-    // Update is called once per frame
     void Update()
     {
         switch (MainLoopState)
         {
             case MainState.Main:
-                if(Raycaster) Raycaster.RaycastAndInteract();
-
-                if (PC)
-                {
-                    if (!PC.enabled)
-                    {
-                        PC.enabled = true;
-                        Cursor.lockState = CursorLockMode.Locked;
-                    }
-                    PC.UpdatePlayer();
-                }
-
-                //camControler 없는 씬에서는 작동하지 않도록
-                if (!CamControler) break;
-                if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.ToLeft))
-                {
-                    CamControler.AddToCurrentCamNum(-1);
-                }
-                else if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.ToRight))
-                {
-                    CamControler.AddToCurrentCamNum(1);
-                }
-                
+                HandleMainState();
                 break;
             case MainState.Interact:
-                //대사 출력 등 상호작용
-
                 break;
             case MainState.Interogate:
-                //심문 모드
-                if (PC)
-                {
-                    if (PC.enabled)
-                    {
-                        PC.HideHint();
-                        PC.enabled = false;
-                    }
-                }
-                Cursor.lockState = CursorLockMode.None;
+                HandleInterogationState();
                 break;
             case MainState.Freeze:
-                //아무 동작도 하지 않도록
                 break;
         }
+    }
 
+    private void HandleMainState()
+    {
+        if (Raycaster)
+        {
+            Raycaster.RaycastAndInteract();
+        }
+
+        SetPlayerActive(true);
+        HandleCameraShortcuts();
+    }
+
+    private void HandleInterogationState()
+    {
+        SetPlayerActive(false);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void SetPlayerActive(bool shouldEnable)
+    {
+        if (!PC)
+        {
+            return;
+        }
+
+        if (shouldEnable)
+        {
+            if (!PC.enabled)
+            {
+                PC.enabled = true;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+
+            PC.UpdatePlayer();
+            return;
+        }
+
+        if (PC.enabled)
+        {
+            PC.HideHint();
+            PC.enabled = false;
+        }
+    }
+
+    private void HandleCameraShortcuts()
+    {
+        if (!CamControler)
+        {
+            return;
+        }
+
+        if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.ToLeft))
+        {
+            CamControler.AddToCurrentCamNum(-1);
+        }
+        else if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.ToRight))
+        {
+            CamControler.AddToCurrentCamNum(1);
+        }
     }
 }

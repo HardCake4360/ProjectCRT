@@ -4,14 +4,13 @@ using UnityEngine;
 public class InterogationDiaObject : DialogueObject
 {
     public TipObj tip;
+
     override public void DetonateEvent(int i = -1)
     {
         LocalDiaManager.Instance.DialogueEventTrigger(this);
-        if (i != -1)
+        if (i != -1 && DialogueManager.Instance != null)
         {
-            LocalDiaManager.Instance.index = i;
+            DialogueManager.Instance.index = i;
         }
-        IsStart = true;
     }
-
 }

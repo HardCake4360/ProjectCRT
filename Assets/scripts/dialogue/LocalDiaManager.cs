@@ -1,26 +1,13 @@
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
-//DiaManagerøÕ µ∂∏≥¿˚¿∏∑Œ Ω««‡µ«¥¬ Ω…πÆ ±‚¥…¿ª ¿ß«— Ω∫≈©∏≥∆Æ(ªÁΩ«ªÛ DiaManagerøÕ ∞∞∞Ì ¿Ã∏ß∏∏ ¥Ÿ∏ß)
+// Ïã¨Î¨∏ Ïî¨ÏóêÏÑú ÏÇ¨Ïö©Ìï† ÎåÄÌôî UI Î∞îÏù∏Îî©ÏùÑ Ï†úÍ≥µÌïòÎäî Ìò∏ÌôòÏö© Ïñ¥ÎåëÌÑ∞
 public class LocalDiaManager : MonoBehaviour
 {
     public static LocalDiaManager Instance { get; private set; }
-    public InterogationDiaObject dialogueData;
+
     public DialogueObject NullDia;
     public DialogueUIManager DUIManager;
     public ChoicesUIControler CUI;
-
-    public int index = 0;
-    [SerializeField] private bool dialogueStartFlag = false;
-    public bool isDiaEnd = false;
-    [SerializeField] private bool selecting = false; public bool IsSelecting() { return selecting; }
-    public void SetSelecting(bool val) { selecting = val; }
-
-    public UnityEvent StaticOnDialogueStart;
-    public UnityEvent StaticOnDialogueEnd;
-    private UnityEvent OnDialogueStart;
-    private UnityEvent OnDialogueEnd;
 
     void Awake()
     {
@@ -29,151 +16,37 @@ public class LocalDiaManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
-        DUIManager.SetCanvasActive(false);
-        DUIManager.SetChoicesUIActive(false);
+        Instance = this;
     }
 
     public void DialogueEventTrigger(InterogationDiaObject data)
     {
-        index = 0;
-        dialogueData = data;
-
-        OnDialogueStart = data.OnStart;
-        OnDialogueEnd = data.OnEnd;
-
-        DUIManager.SetCanvasActive(true);//¿Ã∫•∆Æ Ω««‡«ﬂ¿ª∂ß UI ∫∏¿Ãµµ∑œ
-        dialogueStartFlag = true;
-        StaticOnDialogueStart?.Invoke();
-        OnDialogueStart?.Invoke();
-    }
-
-    public bool IsDiaEnd()
-    {
-        if (index == dialogueData.lines.Length - 1
-            && !DUIManager.IsTyping())
-        {
-            return true;
-        }
-        else return false;
-    }
-
-    void Update()
-    {
-        if (!dialogueStartFlag) return;
-        
-        if ((index == 0 || InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.DialogueAdvanceKeys)
-            || dialogueData.IsStart)
-            && !selecting)
-        {
-            dialogueData.IsStart = false;
-            // ≈∏¿Ã«Œ ¡ﬂ¿Ã∏È Ω∫≈µ
-            if (DUIManager.IsTyping())
-            {
-                DUIManager.StopAllCoroutines();
-                DUIManager.SkipText(dialogueData.lines[index - 1].text);
-                return;
-            }
-
-            if (dialogueData.lines[index].characterName == "end")
-            {
-                //tailDia∑Œ ¿¸»Ø ∂«¥¬ ¡˙πÆªÛ≈¬∑Œ ¿¸»Ø
-                if (dialogueData.TailDia 
-                    /*|| InterogationManager.Instance.InterogationState == InterogationState.Question*/)
-                {
-                    dialogueData.TailDia.DetonateEvent(dialogueData.continueIdx);
-                    return;
-                }
-
-                ForceEndDia();
-
-                return;
-            }
-
-            // ¥ÎªÁ ≈∏¿Ã«Œ Ω√¿€
-            if (index < dialogueData.lines.Length)
-            {
-                CameraFocusControl.Instance.FocusTo(dialogueData.lines[index].CamNumber);
-                InterogationManager.Instance.DTB_Setter.SetPosition(dialogueData.lines[index].CamNumber);
-                DUIManager.DisplayDialogue(dialogueData.lines[index]);
-                index++;
-            }
-        }
-
-        //º±≈√ ªÛ≈¬ ¡¯¿‘
-        if (dialogueData.Choices 
-            && !DUIManager.IsTyping()
-            && isDiaEnd)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
+        DialogueManager.Instance.TryStartDialogue(data, DUIManager, CUI, 0, NullDia, MainState.Interogate);
     }
 
     public void ForceEndDia()
     {
-        isDiaEnd = true;
-        DUIManager.SetCanvasActive(false);
-        dialogueStartFlag = false;
-        StaticOnDialogueEnd?.Invoke();
-        OnDialogueEnd?.Invoke();
-
-        Debug.Log("¥Ÿ¿ÃæÓ∑Œ±◊ ¡æ∑·");
-
-        //∏µÁ ªÛ»£¿€øÎ ø¿∫Í¡ß∆Æø° µÙ∑π¿Ã ª˝º∫
-        foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
-            interactObj.SetInteractableWithDelay(0.2f);
-
-        return;
+        DialogueManager.Instance.ForceEndDia();
     }
 
     public void ChoiceEvent()
     {
-        if (!dialogueData.Choices) return;
-        selecting = true;
-        DUIManager.InitChoiceUI(dialogueData.Choices);
-        DUIManager.SetChoicesUIActive(true);
-        CUI.IndicateByIdx(0);
+        DialogueManager.Instance.ChoiceEvent();
     }
 
     public void QuestionEvent()
     {
-        var currentDia = dialogueData;
-        var question = (InterogationDiaObject)dialogueData.lines[index-1].QuestionDia;
-        if (!question)
-        {
-            questionIsNull();
-            return;
-        }
-        question.TailDia = currentDia;
-        question.continueIdx = index-1;
-        question.OnEnd.AddListener(() =>
-        {
-            InterogationManager.Instance.InterogationState = InterogationState.Testify;
-        });
-        question.DetonateEvent();
+        DialogueManager.Instance.QuestionEvent();
     }
 
-    private void questionIsNull()
+    public bool IsSelecting()
     {
-        //¡˙¿«∞° null¿œ∂ß √‚∑¬«œ¥¬ ¥ÎªÁ
-        Debug.Log("Question Event is null");
-        var currentDia = dialogueData;
-        NullDia.TailDia = currentDia;
-        NullDia.TailDia.continueIdx = index-1;
-        NullDia.OnEnd.AddListener(() =>
-        {
-            InterogationManager.Instance.InterogationState = InterogationState.Testify;
-        });
-        NullDia.DetonateEvent();
+        return DialogueManager.Instance != null && DialogueManager.Instance.IsSelecting();
     }
 
-    public void Log(string txt)
+    public bool IsTyping()
     {
-        Debug.Log(txt);
+        return DialogueManager.Instance != null && DialogueManager.Instance.IsTyping();
     }
 }

@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour, IDialogueFlowController
 {
     public static DialogueManager Instance { get; private set; }
     public DialogueObject dialogueData;
@@ -13,12 +12,26 @@ public class DialogueManager : MonoBehaviour
     public int index = 0;
     [SerializeField] private bool dialogueStartFlag = false;
     [SerializeField] private bool selecting = false;
-    public void SetSelecting(bool val) { selecting = val; }
 
     public UnityEvent StaticOnDialogueStart;
     public UnityEvent StaticOnDialogueEnd;
+
     private UnityEvent OnDialogueStart;
     private UnityEvent OnDialogueEnd;
+    private DialogueUIManager activeDialogueUI;
+    private ChoicesUIControler activeChoiceUI;
+    private DialogueObject questionFallbackDialogue;
+    private MainState stateAfterDialogue = MainState.Main;
+    private bool pendingAdvance;
+
+    public bool IsDialogueRunning => dialogueStartFlag;
+    public DialogueUIManager DialogueUI => activeDialogueUI != null ? activeDialogueUI : DUIManager;
+    public ChoicesUIControler ChoiceUI => activeChoiceUI != null ? activeChoiceUI : CUI;
+
+    public void SetSelecting(bool val) { selecting = val; }
+    public bool IsSelecting() => selecting;
+    public bool IsTyping() => DialogueUI != null && DialogueUI.IsTyping();
+    public MainState StateAfterDialogue => stateAfterDialogue;
 
     void Awake()
     {
@@ -33,73 +46,121 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        DUIManager.SetCanvasActive(false);
-        DUIManager.SetChoicesUIActive(false);
+        if (DialogueUI != null)
+        {
+            DialogueUI.SetCanvasActive(false);
+            DialogueUI.SetChoicesUIActive(false);
+        }
     }
 
     public void DialogueEventTrigger(DialogueObject data)
     {
+        if (data == null)
+        {
+            Debug.LogWarning("DialogueEventTrigger called with null data.");
+            return;
+        }
+
+        if (DialogueUI == null)
+        {
+            Debug.LogWarning("DialogueEventTrigger called without a valid DialogueUIManager.");
+            return;
+        }
+
         index = 0;
         dialogueData = data;
-        
+        selecting = false;
+        pendingAdvance = true;
+
         OnDialogueStart = data.OnStart;
         OnDialogueEnd = data.OnEnd;
-        
-        DUIManager.SetCanvasActive(true);//이벤트 실행했을때 UI 보이도록
+
+        DialogueUI.SetCanvasActive(true);
+        DialogueUI.SetChoicesUIActive(false);
         dialogueStartFlag = true;
         StaticOnDialogueStart?.Invoke();
         OnDialogueStart?.Invoke();
     }
 
-    public bool IsDiaEnd() 
+    public bool IsDiaEnd()
     {
-        if (index == dialogueData.lines.Length - 1
-            && !DUIManager.IsTyping())
-        {
-            return true;
-        }
-        else return false;
+        return dialogueData != null
+            && DialogueUI != null
+            && dialogueData.lines != null
+            && dialogueData.lines.Length > 0
+            && index == dialogueData.lines.Length - 1
+            && !DialogueUI.IsTyping();
     }
 
     void Update()
     {
-        if (!dialogueStartFlag) return;
+        if (!dialogueStartFlag || dialogueData == null || DialogueUI == null)
+        {
+            return;
+        }
 
-        if ((index == 0 ||InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.DialogueAdvanceKeys)
-            || dialogueData.IsStart)
+        if (dialogueData.lines == null || dialogueData.lines.Length == 0)
+        {
+            ForceEndDia();
+            return;
+        }
+
+        if ((index == 0 || (InputManager.Instance != null && InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.DialogueAdvanceKeys))
+            || pendingAdvance || dialogueData.IsStart)
             && !selecting)
         {
+            pendingAdvance = false;
             dialogueData.IsStart = false;
-            // 타이핑 중이면 스킵
-            if (DUIManager.IsTyping())
+
+            if (DialogueUI.IsTyping())
             {
-                DUIManager.StopAllCoroutines();
-                DUIManager.SkipText(dialogueData.lines[index-1].text);
+                if (index > 0 && index - 1 < dialogueData.lines.Length)
+                {
+                    DialogueUI.StopTyping();
+                    DialogueUI.SkipText(dialogueData.lines[index - 1].text);
+                }
                 return;
             }
-            
-            if (dialogueData.lines[index].characterName == "end")
+
+            if (index >= dialogueData.lines.Length)
             {
-                if (dialogueData.TailDia)
-                {
-                    dialogueData.TailDia.DetonateEvent();
-                    return;
-                }
                 ForceEndDia();
                 return;
             }
 
-            // 대사 타이핑 시작
-            if (index < dialogueData.lines.Length)
+            if (dialogueData.lines[index].characterName == "end")
             {
-                DUIManager.DisplayDialogue(dialogueData.lines[index]);
-                index++;
+                if (dialogueData.TailDia)
+                {
+                    OnDialogueEnd?.Invoke();
+                    OnDialogueEnd = null;
+                    dialogueData.TailDia.DetonateEvent();
+                    return;
+                }
+
+                ForceEndDia();
+                return;
             }
+
+            if (InterogationManager.Instance != null && InterogationManager.Instance.InterogationState != InterogationState.Idle)
+            {
+                if (CameraFocusControl.Instance != null)
+                {
+                    CameraFocusControl.Instance.FocusTo(dialogueData.lines[index].CamNumber);
+                }
+
+                if (InterogationManager.Instance.DTB_Setter != null)
+                {
+                    InterogationManager.Instance.DTB_Setter.SetPosition(dialogueData.lines[index].CamNumber);
+                }
+            }
+
+            DialogueUI.DisplayDialogue(dialogueData.lines[index]);
+            index++;
         }
 
-        //선택지 표시, 선택 상태 진입
         if (dialogueData.Choices
-            && !DUIManager.IsTyping()
+            && !DialogueUI.IsTyping()
             && IsDiaEnd())
         {
             Cursor.lockState = CursorLockMode.None;
@@ -108,34 +169,129 @@ public class DialogueManager : MonoBehaviour
 
     public void ForceEndDia()
     {
-        MainLoop.Instance.SetMainLoopState(MainState.Main);
+        if (MainLoop.Instance != null)
+        {
+            MainLoop.Instance.SetMainLoopState(stateAfterDialogue);
+        }
         selecting = false;
-        CUI.SetSelfActive(false);
-        DUIManager.SetCanvasActive(false);
+        if (ChoiceUI != null)
+        {
+            ChoiceUI.SetSelfActive(false);
+        }
+        if (DialogueUI != null)
+        {
+            DialogueUI.SetCanvasActive(false);
+            DialogueUI.SetChoicesUIActive(false);
+        }
         dialogueStartFlag = false;
+
+        if (stateAfterDialogue == MainState.Interogate && InterogationManager.Instance != null)
+        {
+            InterogationManager.Instance.ReturnToSelection();
+        }
+
         StaticOnDialogueEnd?.Invoke();
         OnDialogueEnd?.Invoke();
         Debug.Log("dialogue end");
 
         dialogueData = null;
 
-        //모든 상호작용 오브젝트에 딜레이 생성
         foreach (var interactObj in FindObjectsByType<Interactable>(FindObjectsSortMode.None))
+        {
             interactObj.SetInteractableWithDelay(0.2f);
+        }
 
+        OnDialogueStart = null;
+        OnDialogueEnd = null;
+        activeDialogueUI = null;
+        activeChoiceUI = null;
+        questionFallbackDialogue = null;
+        stateAfterDialogue = MainState.Main;
+        pendingAdvance = false;
+    }
+
+    public bool TryStartDialogue(DialogueObject data, int startIndex = 0)
+    {
+        if (data == null)
+        {
+            return false;
+        }
+
+        DialogueEventTrigger(data);
+        index = Mathf.Max(0, startIndex);
+        return true;
+    }
+
+    public bool TryStartDialogue(
+        DialogueObject data,
+        DialogueUIManager overrideUI,
+        ChoicesUIControler overrideChoiceUI,
+        int startIndex = 0,
+        DialogueObject fallbackQuestionDialogue = null,
+        MainState endState = MainState.Main)
+    {
+        activeDialogueUI = overrideUI;
+        activeChoiceUI = overrideChoiceUI;
+        questionFallbackDialogue = fallbackQuestionDialogue;
+        stateAfterDialogue = endState;
+        return TryStartDialogue(data, startIndex);
     }
 
     public void ChoiceEvent()
     {
-        if (!dialogueData.Choices) return;
+        if (dialogueData == null || !dialogueData.Choices) return;
         selecting = true;
-        DUIManager.InitChoiceUI(dialogueData.Choices);
-        DUIManager.SetChoicesUIActive(true);
-        CUI.IndicateByIdx(0);
+        DialogueUI.InitChoiceUI(dialogueData.Choices);
+        DialogueUI.SetChoicesUIActive(true);
+        if (ChoiceUI != null)
+        {
+            ChoiceUI.IndicateByIdx(0);
+        }
+    }
+
+    public void QuestionEvent()
+    {
+        if (dialogueData == null || index <= 0 || index - 1 >= dialogueData.lines.Length)
+        {
+            Debug.LogWarning("QuestionEvent called with an invalid dialogue index.");
+            return;
+        }
+
+        var currentDialogue = dialogueData;
+        var questionDialogue = CloneDialogue(dialogueData.lines[index - 1].QuestionDia as InterogationDiaObject);
+        if (!questionDialogue)
+        {
+            questionDialogue = CloneDialogue(questionFallbackDialogue as InterogationDiaObject);
+            if (!questionDialogue)
+            {
+                Debug.LogWarning("QuestionEvent could not find a fallback interrogation dialogue.");
+                ForceEndDia();
+                return;
+            }
+        }
+
+        questionDialogue.TailDia = currentDialogue;
+        questionDialogue.continueIdx = index - 1;
+        questionDialogue.OnEnd.AddListener(() =>
+        {
+            InterogationManager.Instance.InterogationState = InterogationState.Testify;
+        });
+
+        TryStartDialogue(questionDialogue, DialogueUI, ChoiceUI, 0, questionFallbackDialogue, stateAfterDialogue);
     }
 
     public void Log(string txt)
     {
         Debug.Log(txt);
+    }
+
+    private InterogationDiaObject CloneDialogue(InterogationDiaObject source)
+    {
+        if (!source)
+        {
+            return null;
+        }
+
+        return ScriptableObject.Instantiate(source);
     }
 }

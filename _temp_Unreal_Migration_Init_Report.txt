@@ -1,0 +1,20 @@
+ProjectCRT Unreal Migration Initial Report
+
+Date: 2026-03-21
+Target Workspace: C:\Users\user\Documents\Unreal Projects\ProjectCRT_Unreal
+
+Completed:
+- Verified Unreal Engine installations locally.
+- Confirmed UE 5.1 and UE 5.2 editor binaries are present.
+- Created external Unreal project folder for migration work.
+- Created initial project descriptor (.uproject).
+- Created migration work log document.
+
+Current Decision:
+- Use Unreal Engine 5.2 as the initial migration target.
+- Advance in small, safe steps rather than attempting a full port at once.
+- Keep interrogation system out of early direct migration decisions because it is expected to be redesigned.
+
+Recommended Next Step:
+- Open the new Unreal project once to let Unreal generate its standard folders and metadata.
+- Then create a migration design document inside the Unreal workspace.

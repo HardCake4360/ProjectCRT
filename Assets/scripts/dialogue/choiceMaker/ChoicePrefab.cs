@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 using TMPro;
 
 public class ChoicePrefab : MonoBehaviour
@@ -11,11 +10,12 @@ public class ChoicePrefab : MonoBehaviour
     [SerializeField] private ReactiveButton button;
 
     private bool isSelected;
+
     public void ContextSetSelect() { if (indicator) indicator.enabled = isSelected; }
 
     private void Start()
     {
-        if(indicator) indicator.enabled = isSelected;
+        if (indicator) indicator.enabled = isSelected;
     }
 
     void Awake()
@@ -24,11 +24,13 @@ public class ChoicePrefab : MonoBehaviour
         if (textMesh == null)
             Debug.LogError("TextMeshProUGUI not found in children!");
     }
-    public void SetSelected(bool val) 
-    { 
+
+    public void SetSelected(bool val)
+    {
         isSelected = val;
-        if (indicator) indicator.enabled = val; 
+        if (indicator) indicator.enabled = val;
     }
+
     public void InitMembers(int idx, ChoiceData cho)
     {
         textMesh.text = cho.name;
@@ -38,33 +40,38 @@ public class ChoicePrefab : MonoBehaviour
         {
             if (cho.OnSelectDialogue != null)
             {
-                if (LocalDiaManager.Instance)
+                var activeFlow = DialogueFlowLocator.GetActive();
+                if (activeFlow == null)
                 {
-                    LocalDiaManager.Instance.SetSelecting(false);
-                    LocalDiaManager.Instance.DUIManager.SetChoicesUIActive(false);
-                    LocalDiaManager.Instance.DialogueEventTrigger((InterogationDiaObject)cho.OnSelectDialogue);
+                    Debug.LogWarning("No active dialogue flow found for choice selection.");
+                    return;
                 }
-                else
+
+                activeFlow.SetSelecting(false);
+                activeFlow.DialogueUI.SetChoicesUIActive(false);
+
+                if (!activeFlow.TryStartDialogue(cho.OnSelectDialogue))
                 {
-                    DialogueManager.Instance.SetSelecting(false);
-                    DialogueManager.Instance.DUIManager.SetChoicesUIActive(false);
-                    DialogueManager.Instance.DialogueEventTrigger(cho.OnSelectDialogue);
+                    Debug.LogWarning($"Choice dialogue type mismatch: {cho.OnSelectDialogue.name}");
+                    return;
+                }
+
+                if (activeFlow is DialogueManager)
+                {
                     Cursor.lockState = CursorLockMode.Locked;
                 }
             }
-            //cho.OnSelect?.Invoke();
         });
     }
 
     public void OnHover()
     {
-        if (LocalDiaManager.Instance)
+        var activeFlow = DialogueFlowLocator.GetActive();
+        if (activeFlow == null || activeFlow.ChoiceUI == null)
         {
-            LocalDiaManager.Instance.CUI.IndicateByIdx(selfIdx);
+            return;
         }
-        else
-        {
-            DialogueManager.Instance.CUI.IndicateByIdx(selfIdx);
-        }
+
+        activeFlow.ChoiceUI.IndicateByIdx(selfIdx);
     }
 }
