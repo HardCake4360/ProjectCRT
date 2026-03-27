@@ -78,6 +78,7 @@ public class MainLoop : MonoBehaviour
                 HandleMainState();
                 break;
             case MainState.Interact:
+                HandleInteractState();
                 break;
             case MainState.Interogate:
                 HandleInterogationState();
@@ -102,6 +103,14 @@ public class MainLoop : MonoBehaviour
     {
         SetPlayerActive(false);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    private void HandleInteractState()
+    {
+        SetPlayerActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void SetPlayerActive(bool shouldEnable)
@@ -117,6 +126,7 @@ public class MainLoop : MonoBehaviour
             {
                 PC.enabled = true;
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
 
             PC.UpdatePlayer();

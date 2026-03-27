@@ -1,0 +1,263 @@
+$serverPath = "C:\Users\user\Documents\GitHub\Local-LLM-AI\virtualEnv\RAG_model\app\server.py"
+$personaPath = "C:\Users\user\Documents\GitHub\Local-LLM-AI\virtualEnv\RAG_model\app\data\personas\rebecca.json"
+
+$server = Get-Content -Raw $serverPath
+
+if ($server -notmatch 'import json') {
+    $server = $server -replace "import time", "import time`r`nimport json"
+}
+
+$helperBlock = @'
+
+def _clamp01(value):
+    return max(0.0, min(1.0, float(value)))
+
+def _safe_reply_text(text):
+    if not text:
+        return "..."
+    return text.replace(" <END>", "").strip()
+
+def _derive_signal(action_type, last_signal, reply_text):
+    last_signal = last_signal or {}
+    stress = float(last_signal.get("stress", 0.28))
+    distortion = float(last_signal.get("distortion", 0.16))
+    focus = float(last_signal.get("focus", 0.72))
+
+    action_boost = {
+        "Talk": (0.04, 0.02, -0.01),
+        "AskTopic": (0.08, 0.04, 0.02),
+        "PresentEvidence": (0.16, 0.12, -0.08),
+        "PointObject": (0.10, 0.07, -0.02),
+        "ChallengeStatement": (0.20, 0.18, -0.12),
+        "AskTimeline": (0.11, 0.09, 0.00),
+        "CompareTestimony": (0.18, 0.16, -0.10),
+    }
+
+    delta = action_boost.get(action_type or "Talk", (0.05, 0.03, 0.0))
+    stress += delta[0]
+    distortion += delta[1]
+    focus += delta[2]
+
+    suspicious_words = ["아니", "그건", "모르겠", "기억 안", "착각", "우연", "글쎄"]
+    if any(word in reply_text for word in suspicious_words):
+        stress += 0.06
+        distortion += 0.05
+
+    calming_words = ["차분", "확실", "분명", "기억해", "봤어"]
+    if any(word in reply_text for word in calming_words):
+        focus += 0.05
+
+    return {
+        "stress": round(_clamp01(stress), 3),
+        "distortion": round(_clamp01(distortion), 3),
+        "focus": round(_clamp01(focus), 3),
+    }
+
+def _extract_unlock_topics(interaction, reply_text):
+    unlocks = []
+    if not isinstance(interaction, dict):
+        return unlocks
+
+    topic_id = interaction.get("topicId")
+    evidence_id = interaction.get("evidenceId")
+    action_type = interaction.get("actionType")
+
+    if topic_id:
+        unlocks.append(topic_id)
+
+    if action_type == "PresentEvidence" and evidence_id:
+        unlocks.append(f"{evidence_id}_followup")
+
+    if "보청기" in reply_text and "hearing_aid_amplification_possibility" not in unlocks:
+        unlocks.append("hearing_aid_amplification_possibility")
+    if "노이즈" in reply_text and "noise_time" not in unlocks:
+        unlocks.append("noise_time")
+    if "CRT" in reply_text and "crt_signal_origin" not in unlocks:
+        unlocks.append("crt_signal_origin")
+
+    deduped = []
+    for topic in unlocks:
+        if topic and topic not in deduped:
+            deduped.append(topic)
+    return deduped
+
+def _build_investigation_prompt(payload, persona):
+    interaction = payload.get("interaction", {}) or {}
+    scene_state = payload.get("sceneState", {}) or {}
+    npc_state = payload.get("npcLocalState", {}) or {}
+    convo_context = payload.get("conversationContext", {}) or {}
+
+    prompt_payload = {
+        "sceneId": payload.get("sceneId"),
+        "npcId": payload.get("npcId"),
+        "phase": payload.get("phase"),
+        "interaction": interaction,
+        "sceneState": scene_state,
+        "npcLocalState": npc_state,
+        "recentExchanges": convo_context.get("recentExchanges", []),
+    }
+
+    persona_block = ""
+    if persona:
+        persona_block = (
+            "\n[페르소나]\n"
+            f"{json.dumps(persona, ensure_ascii=False, indent=2)}\n"
+        )
+
+    return (
+        "당신은 게임 Project CRT의 조사 파트 NPC다.\n"
+        "답변은 반드시 세계관 안에서만 하며, 메타 발언을 하지 마라.\n"
+        "정답을 직접 자백하거나 사건의 결론을 단정하지 말고, NPC 입장에서 반응하라.\n"
+        "플레이어의 조사 액션에 대해 1~3문장 정도의 짧은 대사로 답하라.\n"
+        "모호함, 회피, 관찰자 시점의 간접 힌트는 허용되지만 설정을 벗어나지 마라.\n"
+        "리베카는 범인이 아니며, 음침하고 관찰적이고 감정 표현이 적다.\n"
+        f"{persona_block}"
+        "\n[조사 컨텍스트]\n"
+        f"{json.dumps(prompt_payload, ensure_ascii=False, indent=2)}\n"
+        "\n[응답 규칙]\n"
+        "- 한국어로만 답하라.\n"
+        "- 질문 의도에 맞는 반응을 하라.\n"
+        "- 조사에 도움 되는 간접 힌트를 줄 수 있다.\n"
+        "- NPC가 모르는 사실은 단정하지 않는다.\n"
+        "\n답변:\n"
+    )
+'@
+
+if ($server -notmatch 'def _clamp01') {
+    $server = $server -replace "retriever = Retriever\(\)", "retriever = Retriever()`r`n$helperBlock"
+}
+
+$routeBlock = @'
+
+@app.route("/investigation/npc", methods=["POST"])
+def investigation_npc():
+    try:
+        data = request.get_json() or {}
+        npc_id = data.get("npcId", "npc")
+        persona_key = data.get("personaKey") or npc_id
+        player_id = data.get("playerId", "player")
+        interaction = data.get("interaction", {}) or {}
+
+        persona = load_persona(persona_key) if persona_key else None
+        prompt = _build_investigation_prompt(data, persona)
+        raw_reply = query_ollama(prompt, "gemma3:12b")
+        reply_text = _safe_reply_text(raw_reply)
+
+        statement_index = int((data.get("npcLocalState", {}) or {}).get("conversationCount", 0)) + 1
+        statement_id = f"{npc_id}_stmt_{statement_index:03d}"
+        signal = _derive_signal(interaction.get("actionType"), (data.get("npcLocalState", {}) or {}).get("lastKnownSignal"), reply_text)
+        unlock_topic_ids = _extract_unlock_topics(interaction, reply_text)
+
+        append_log(player_id, "user", json.dumps(interaction, ensure_ascii=False))
+        append_log(player_id, persona_key, reply_text)
+
+        return jsonify({
+            "ok": True,
+            "replyText": reply_text,
+            "signal": signal,
+            "stateDelta": {
+                "unlockTopicIds": unlock_topic_ids,
+                "markStatements": [
+                    {
+                        "statementId": statement_id,
+                        "text": reply_text
+                    }
+                ]
+            },
+            "presentationHints": {
+                "animation": "guarded_idle" if signal["stress"] < 0.6 else "defensive_glance",
+                "voiceTone": "calm" if signal["stress"] < 0.5 else "tense",
+                "uiNoiseLevel": signal["distortion"]
+            }
+        })
+    except Exception as e:
+        import traceback
+        print("[ERROR] investigation_npc 예외 발생:")
+        traceback.print_exc()
+        return jsonify({
+            "ok": False,
+            "error": str(e),
+            "replyText": "",
+            "signal": {
+                "stress": 0.0,
+                "distortion": 0.0,
+                "focus": 0.0
+            },
+            "stateDelta": {
+                "unlockTopicIds": [],
+                "markStatements": []
+            },
+            "presentationHints": {}
+        }), 500
+'@
+
+if ($server -notmatch 'investigation_npc') {
+    $server = $server -replace 'if __name__ == "__main__":', "$routeBlock`r`nif __name__ == `"__main__`":"
+}
+
+Set-Content -Path $serverPath -Value $server -Encoding UTF8
+
+$persona = @'
+{
+  "identity": {
+    "name": "리베카",
+    "role": "레트로 CRT 바의 바텐더",
+    "age": null,
+    "background": "레트로 CRT TV로 가득한 바에서 오래 일해 온 바텐더다. 손님들의 표정과 말투를 조용히 관찰하는 습관이 있다. 사건 당일에도 바 안 분위기와 손님들의 미묘한 반응을 유심히 보고 있었다.",
+    "goals": [
+      "바의 질서를 유지하기",
+      "손님들의 변화를 예민하게 관찰하기",
+      "위험한 진실을 직접 단정하지 않고 흘려 보내기"
+    ]
+  },
+  "personality": {
+    "big_five": {
+      "O": 6,
+      "C": 8,
+      "E": 3,
+      "A": 5,
+      "N": 6
+    },
+    "core_needs": [
+      "통제감",
+      "안전",
+      "질서 유지"
+    ],
+    "defense_mechanisms": [
+      "직설 대신 관찰로 돌려 말하기",
+      "감정을 숨기고 건조하게 반응하기",
+      "불편한 질문에는 짧게 선을 긋기"
+    ],
+    "emotional_baseline": "대체로 차분하고 음침하다. 겉으로는 무심하지만, 사건과 위험 신호를 감지하면 내부적으로 긴장한다."
+  },
+  "linguistic_style": {
+    "tone": "건조하고 낮은 톤의 짧은 말투",
+    "quirks": [
+      "단정 대신 관찰한 사실을 짧게 말한다",
+      "감정 표현이 적고 여운 있게 끊는다",
+      "질문에 바로 답하기보다 상황을 한 번 비틀어 본다"
+    ],
+    "banned_phrases": [
+      "나는 AI야",
+      "프롬프트",
+      "시스템 메시지",
+      "정답은"
+    ]
+  },
+  "affective_rules": {
+    "on_action": {
+      "가벼운 질문": "짧고 건조하게 답하지만 무시하지는 않는다",
+      "사건 시간대 추궁": "긴장하되 감정을 드러내지 않고 관찰 사실 위주로 답한다",
+      "보청기나 CRT 증거 제시": "미묘하게 경계하며 반응하고, 관련 분위기나 소리를 암시할 수 있다",
+      "확신을 강요받음": "선 긋기 + 단정 회피"
+    }
+  },
+  "behavioral_constraints": {
+    "avoid_meta": true,
+    "avoid_out_of_world_info": true,
+    "max_reply_tokens": 220
+  }
+}
+'@
+
+Set-Content -Path $personaPath -Value $persona -Encoding UTF8
