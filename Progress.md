@@ -80,12 +80,18 @@
 - `InvestigationInteractionUI`의 기존 런타임 UI 생성 코드를 제거하고 프리팹 로드/자식 참조 보정 방식으로 전환 완료
 - 프리팹 참조 보정 로직을 경로 고정식에서 자식 이름 탐색식으로 보강하고 누락 필드 로그 추가
 - 조사 UI 상호작용 중에는 커서를 해제하고 플레이어 시야/이동을 고정하도록 `MainLoop` 상태 처리 보강
+- `/investigation/npc` fallback 경로 제거, 조사 전용 엔드포인트만 사용하도록 클라이언트 정리
+- 조사 API 404 원인 추적을 위해 요청 URL, 응답 본문, 바인딩된 클라이언트 인스턴스 로그 추가
+- 조사 API 에러에서 `persona not found`를 감지해 요청한 `personaKey`를 Unity 로그와 UI 메시지에 명확히 표시하도록 개선
+- 조사 클라이언트를 NDJSON 기반 스트리밍 수신 준비 구조로 확장하고, NPC 답변을 부분 갱신할 수 있도록 채팅 UI 프레젠터 보강
+- 스트리밍 API 명세 문서를 프로젝트 루트에 작성하고, 바탕화면 전달본 생성 준비
+- `ask-stream` 패턴을 참고한 `/investigation/npc` 스트리밍 지원용 코드 블록을 별도 [codeBlock.py](/C:/Users/user/Documents/GitHub/ProjectCRT/codeBlock.py) 로 분리 작성
 - Unity `NpcInvestigationController` 및 `NPC_script` 연동 추가 완료
 - `Bar` 씬의 `Bartender` 오브젝트에 조사 컨트롤러 연결 완료
 - 실제 플레이 검증은 아직 진행 전
 
 ## Next Step
-- 실제 플레이 검증과 서버 응답 품질 확인
+- 스트리밍 API 명세 확정 및 서버 쪽 응답 형식 정렬
 - 프리팹 레이아웃 미세 조정 및 폰트/컬러 스타일 보정
 - `Bar` 씬에서 바텐더 상호작용 기준 실제 채팅 루프 검증
 

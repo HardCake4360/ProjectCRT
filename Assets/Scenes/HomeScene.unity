@@ -9702,6 +9702,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  investigationController: {fileID: 0}
 --- !u!114 &2136848240
 MonoBehaviour:
   m_ObjectHideFlags: 0

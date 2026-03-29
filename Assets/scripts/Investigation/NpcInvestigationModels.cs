@@ -109,3 +109,15 @@ public class NpcInvestigationResponse
     public InvestigationPresentationHintsPayload presentationHints = new();
     public string error;
 }
+
+[Serializable]
+public class NpcInvestigationStreamChunk
+{
+    public string type;
+    public string messageId;
+    public string npcDisplayName;
+    public string text;
+    public string error;
+    public BioSignalPayload signal;
+    public NpcInvestigationResponse response;
+}

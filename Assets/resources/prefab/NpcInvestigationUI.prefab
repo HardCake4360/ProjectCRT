@@ -50,7 +50,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100000}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.015686275, g: 0.023529412, b: 0.03529412, a: 0.72}
+  m_Color: {r: 0.015686275, g: 0.023529412, b: 0.03529412, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -282,7 +282,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -60, y: -50}
-  m_SizeDelta: {x: 560, y: 980}
+  m_SizeDelta: {x: 693.4097, y: 980}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &120002
 MonoBehaviour:
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rebecca Investigation Chat
+  m_text: Investigation Chat
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5b5020e0a33e44346b15620d81f284a2, type: 2}
   m_sharedMaterial: {fileID: -2645168292239245302, guid: 5b5020e0a33e44346b15620d81f284a2, type: 2}
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -1685,7 +1685,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC9C8\uBB38 \uC758\uB3C4 \uB610\uB294 \uC9C1\uC811 \uC785\uB825"
+  m_text: "\uC2EC\uBB38\uD560 \uB0B4\uC6A9\uC744 \uC785\uB825"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5b5020e0a33e44346b15620d81f284a2, type: 2}
   m_sharedMaterial: {fileID: -2645168292239245302, guid: 5b5020e0a33e44346b15620d81f284a2, type: 2}

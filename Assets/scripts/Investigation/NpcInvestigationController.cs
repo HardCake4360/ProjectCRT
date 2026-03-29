@@ -59,6 +59,13 @@ public class NpcInvestigationController : MonoBehaviour
         {
             interactionUI = InvestigationInteractionUI.GetOrCreateInstance();
         }
+
+        Debug.Log(
+            $"[NpcInvestigationController] Bound dependencies for npcId={npcId}\n" +
+            $"controllerObject={name}\n" +
+            $"apiClientObject={(apiClient != null ? apiClient.name : "null")}\n" +
+            $"uiObject={(interactionUI != null ? interactionUI.name : "null")}",
+            this);
     }
 
     private void OnEnable()
@@ -155,19 +162,49 @@ public class NpcInvestigationController : MonoBehaviour
             conversationState);
 
         bool completed = false;
+        bool streamStarted = false;
+        BioSignalPayload streamedSignal = conversationState.lastKnownSignal;
 
         yield return apiClient.SendRequest(
             request,
+            () =>
+            {
+                streamStarted = true;
+                interactionUI.BeginNpcStreamingMessage(npcDisplayName);
+                interactionUI.SetStatus("리베카가 답하고 있습니다...");
+            },
+            partialText =>
+            {
+                interactionUI.UpdateNpcStreamingMessage(npcDisplayName, partialText);
+            },
+            signal =>
+            {
+                streamedSignal = signal ?? BioSignalPayload.Default();
+                interactionUI.PresentSignal(streamedSignal);
+            },
             response =>
             {
                 string reply = string.IsNullOrWhiteSpace(response.replyText)
                     ? "..."
                     : response.replyText.Trim();
 
+                if (response.signal == null)
+                {
+                    response.signal = streamedSignal ?? BioSignalPayload.Default();
+                }
+
                 conversationState.RegisterExchange("npc", reply);
                 conversationState.ApplyResponse(response);
 
-                interactionUI.AppendNpcMessage(npcDisplayName, reply);
+                if (streamStarted)
+                {
+                    interactionUI.CommitNpcStreamingMessage(npcDisplayName, reply);
+                }
+                else
+                {
+                    interactionUI.AppendNpcMessage(npcDisplayName, reply);
+                }
+
                 interactionUI.PresentSignal(conversationState.lastKnownSignal);
                 interactionUI.SetStatus("새 조사 액션을 선택할 수 있습니다.");
 
@@ -184,6 +221,11 @@ public class NpcInvestigationController : MonoBehaviour
             },
             error =>
             {
+                if (streamStarted)
+                {
+                    interactionUI.CancelNpcStreamingMessage();
+                }
+
                 interactionUI.AppendSystemMessage($"서버 오류: {error}");
                 interactionUI.SetStatus("연결 실패. 서버 상태를 확인하세요.");
                 completed = true;

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class NpcDialoguePresenter : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class NpcDialoguePresenter : MonoBehaviour
     [SerializeField] private TMP_Text transcriptText;
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private ScrollRect scrollRect;
+    private readonly List<string> committedEntries = new();
+    private string streamingEntry;
 
     public void Configure(TMP_Text title, TMP_Text transcript, TMP_Text status, ScrollRect targetScrollRect)
     {
@@ -35,10 +38,9 @@ public class NpcDialoguePresenter : MonoBehaviour
 
     public void Clear()
     {
-        if (transcriptText != null)
-        {
-            transcriptText.text = string.Empty;
-        }
+        committedEntries.Clear();
+        streamingEntry = null;
+        RenderTranscript();
     }
 
     public void AppendPlayerMessage(string text)
@@ -56,19 +58,50 @@ public class NpcDialoguePresenter : MonoBehaviour
         AppendLine($"<align=\"center\"><color=#8F9AA8>{text}</color></align>");
     }
 
+    public void BeginStreamingNpcMessage(string speakerName)
+    {
+        streamingEntry = $"<color=#F6D77E>{speakerName}</color>\n";
+        RenderTranscript();
+    }
+
+    public void UpdateStreamingNpcMessage(string speakerName, string text)
+    {
+        streamingEntry = $"<color=#F6D77E>{speakerName}</color>\n{text}";
+        RenderTranscript();
+    }
+
+    public void CommitStreamingNpcMessage(string speakerName, string text)
+    {
+        streamingEntry = null;
+        AppendNpcMessage(speakerName, text);
+    }
+
+    public void CancelStreamingNpcMessage()
+    {
+        streamingEntry = null;
+        RenderTranscript();
+    }
+
     private void AppendLine(string text)
+    {
+        committedEntries.Add(text);
+        RenderTranscript();
+    }
+
+    private void RenderTranscript()
     {
         if (transcriptText == null)
         {
             return;
         }
 
-        if (!string.IsNullOrEmpty(transcriptText.text))
+        List<string> lines = new(committedEntries);
+        if (!string.IsNullOrEmpty(streamingEntry))
         {
-            transcriptText.text += "\n\n";
+            lines.Add(streamingEntry);
         }
 
-        transcriptText.text += text;
+        transcriptText.text = string.Join("\n\n", lines);
         Canvas.ForceUpdateCanvases();
 
         if (scrollRect != null)

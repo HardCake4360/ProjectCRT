@@ -150,6 +150,30 @@ public class InvestigationInteractionUI : MonoBehaviour
         dialoguePresenter.AppendNpcMessage(npcDisplayName, text);
     }
 
+    public void BeginNpcStreamingMessage(string npcDisplayName)
+    {
+        EnsureBuilt();
+        dialoguePresenter.BeginStreamingNpcMessage(npcDisplayName);
+    }
+
+    public void UpdateNpcStreamingMessage(string npcDisplayName, string text)
+    {
+        EnsureBuilt();
+        dialoguePresenter.UpdateStreamingNpcMessage(npcDisplayName, text);
+    }
+
+    public void CommitNpcStreamingMessage(string npcDisplayName, string text)
+    {
+        EnsureBuilt();
+        dialoguePresenter.CommitStreamingNpcMessage(npcDisplayName, text);
+    }
+
+    public void CancelNpcStreamingMessage()
+    {
+        EnsureBuilt();
+        dialoguePresenter.CancelStreamingNpcMessage();
+    }
+
     public void AppendSystemMessage(string text)
     {
         EnsureBuilt();
