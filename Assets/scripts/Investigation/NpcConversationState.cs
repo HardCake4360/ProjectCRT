@@ -9,7 +9,9 @@ public class NpcConversationState
     public bool hasIntroduced;
     public int conversationCount;
     public List<string> knownTopicsUnlocked = new();
-    public BioSignalPayload lastKnownSignal = BioSignalPayload.Default();
+    public InterrogationAffectPayload lastKnownAffect = InterrogationAffectPayload.Default();
+    public float lastKnownTell;
+    public int lastKnownPatience = 100;
     public string lastInteractionTime;
     public List<InvestigationStatementRecord> cachedRecentStatements = new();
     public List<InvestigationExchange> recentExchanges = new();
@@ -21,7 +23,8 @@ public class NpcConversationState
             hasIntroduced = hasIntroduced,
             conversationCount = conversationCount,
             knownTopicsUnlocked = new List<string>(knownTopicsUnlocked),
-            lastKnownSignal = lastKnownSignal ?? BioSignalPayload.Default(),
+            lastKnownAffect = CloneAffect(lastKnownAffect),
+            lastKnownPatience = lastKnownPatience,
             lastInteractionTime = lastInteractionTime,
             cachedRecentStatements = new List<InvestigationStatementRecord>(cachedRecentStatements)
         };
@@ -60,14 +63,19 @@ public class NpcConversationState
         }
     }
 
-    public void ApplyResponse(NpcInvestigationResponse response)
+    public void ApplyReplyResponse(NpcInvestigationReplyResponse response)
     {
         if (response == null)
         {
             return;
         }
 
-        lastKnownSignal = response.signal ?? BioSignalPayload.Default();
+        if (response.conversationState != null)
+        {
+            lastKnownAffect = CloneAffect(response.conversationState.affect);
+            lastKnownPatience = response.conversationState.patience;
+        }
+
         lastInteractionTime = DateTime.UtcNow.ToString("o");
 
         if (response.stateDelta == null)
@@ -117,5 +125,25 @@ public class NpcConversationState
         {
             cachedRecentStatements.RemoveAt(0);
         }
+    }
+
+    public void ApplyTellResult(TellResultPayload tellResult)
+    {
+        if (tellResult == null)
+        {
+            return;
+        }
+
+        lastKnownTell = tellResult.tell;
+    }
+
+    private static InterrogationAffectPayload CloneAffect(InterrogationAffectPayload affect)
+    {
+        affect ??= InterrogationAffectPayload.Default();
+        return new InterrogationAffectPayload
+        {
+            interest = affect.interest,
+            attitude = affect.attitude
+        };
     }
 }

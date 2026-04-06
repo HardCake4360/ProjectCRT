@@ -435,8 +435,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457296649257186875}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 1.057, z: 105.397995}
+  m_LocalRotation: {x: -0.0020782005, y: -0.20366938, z: 0.0016964771, w: 0.9790361}
+  m_LocalPosition: {x: 0.495, y: 0.774, z: 1.0370021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -473,8 +473,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.18
-  far clip plane: 1000
+  near clip plane: 0.01
+  far clip plane: 5
   field of view: 60.000004
   orthographic: 0
   orthographic size: 5
@@ -3526,68 +3526,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ccf5ecc0c2b384d8a0e431e58e0899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueData: {fileID: 0}
   NullDia: {fileID: 11400000, guid: ebc2d311a54f6c240b9db26a8a4eb0e7, type: 2}
   DUIManager: {fileID: 8513717610250444146}
   CUI: {fileID: 6712812138787066879}
-  index: 0
-  dialogueStartFlag: 0
-  isDiaEnd: 0
-  selecting: 0
-  StaticOnDialogueStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8470751777490891642}
-        m_TargetAssemblyTypeName: ChoicesUIControler, Assembly-CSharp
-        m_MethodName: SetSelfActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  StaticOnDialogueEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2914596393905505180}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: showSelectUI
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6338778403532422320}
-        m_TargetAssemblyTypeName: InterogationManager, Assembly-CSharp
-        m_MethodName: SetInterogationState
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Idle
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 9094628381166600741}
-        m_TargetAssemblyTypeName: CameraFocusControl, Assembly-CSharp
-        m_MethodName: FocusTo
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Idle
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &8513717610250444146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4649,11 +4590,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3059699305842669621, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 20
+      value: 680.01
       objectReference: {fileID: 0}
     - target: {fileID: 3059699305842669621, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20
+      value: 100.01
       objectReference: {fileID: 0}
     - target: {fileID: 3059699305842669621, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -4769,7 +4710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4257809975380470604, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 790.01
       objectReference: {fileID: 0}
     - target: {fileID: 4257809975380470604, guid: a07d4af1bba57964ebae9dc3b136cd37, type: 3}
       propertyPath: m_AnchoredPosition.x

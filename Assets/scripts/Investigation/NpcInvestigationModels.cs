@@ -22,19 +22,55 @@ public class InvestigationSceneStatePayload
 }
 
 [Serializable]
-public class BioSignalPayload
+public class InterrogationAffectPayload
 {
-    public float stress;
-    public float distortion;
-    public float focus;
+    public float interest;
+    public float attitude;
 
-    public static BioSignalPayload Default()
+    public static InterrogationAffectPayload Default()
     {
-        return new BioSignalPayload
+        return new InterrogationAffectPayload
         {
-            stress = 0.1f,
-            distortion = 0.05f,
-            focus = 0.8f
+            interest = 0f,
+            attitude = 0f
+        };
+    }
+}
+
+[Serializable]
+public class ConversationStatePayload
+{
+    public InterrogationAffectPayload affect = InterrogationAffectPayload.Default();
+    public int patience = 100;
+
+    public static ConversationStatePayload Default()
+    {
+        return new ConversationStatePayload
+        {
+            affect = InterrogationAffectPayload.Default(),
+            patience = 100
+        };
+    }
+}
+
+[Serializable]
+public class TellResultPayload
+{
+    public string turnId;
+    public float tell;
+    public string band;
+    public string primaryAction;
+    public string reason;
+
+    public static TellResultPayload Default()
+    {
+        return new TellResultPayload
+        {
+            turnId = string.Empty,
+            tell = 0f,
+            band = "Stable",
+            primaryAction = "unknown",
+            reason = string.Empty
         };
     }
 }
@@ -45,7 +81,8 @@ public class InvestigationNpcLocalStatePayload
     public bool hasIntroduced;
     public int conversationCount;
     public List<string> knownTopicsUnlocked = new();
-    public BioSignalPayload lastKnownSignal = BioSignalPayload.Default();
+    public InterrogationAffectPayload lastKnownAffect = InterrogationAffectPayload.Default();
+    public int lastKnownPatience = 100;
     public string lastInteractionTime;
     public List<InvestigationStatementRecord> cachedRecentStatements = new();
 }
@@ -64,8 +101,66 @@ public class InvestigationConversationContextPayload
 }
 
 [Serializable]
+public class InterrogationActionWeightPayload
+{
+    public string actionType;
+    public float tellDelta;
+    public float interestDelta;
+    public float attitudeDelta;
+    public int patienceCost;
+}
+
+[Serializable]
+public class InterrogationKeywordRulePayload
+{
+    public string pattern;
+    public float tellDelta;
+    public float interestDelta;
+    public float attitudeDelta;
+    public int patienceCost;
+}
+
+[Serializable]
+public class InterrogationTopicRulePayload
+{
+    public string topicId;
+    public float knownTellDelta;
+    public float knownInterestDelta;
+    public float knownAttitudeDelta;
+    public float unknownTellDelta;
+    public float unknownInterestDelta;
+    public float unknownAttitudeDelta;
+}
+
+[Serializable]
+public class InterrogationEvidenceRulePayload
+{
+    public string evidenceId;
+    public float discoveredTellDelta;
+    public float discoveredInterestDelta;
+    public float discoveredAttitudeDelta;
+    public float undiscoveredTellDelta;
+    public float undiscoveredInterestDelta;
+    public float undiscoveredAttitudeDelta;
+}
+
+[Serializable]
+public class NpcInterrogationProfilePayload
+{
+    public float baseInterest;
+    public float baseAttitude;
+    public int basePatience = 100;
+    public List<InterrogationActionWeightPayload> actionWeights = new();
+    public List<InterrogationKeywordRulePayload> pressureKeywordRules = new();
+    public List<InterrogationKeywordRulePayload> sensitiveKeywordRules = new();
+    public List<InterrogationTopicRulePayload> topicRules = new();
+    public List<InterrogationEvidenceRulePayload> evidenceRules = new();
+}
+
+[Serializable]
 public class NpcInvestigationRequest
 {
+    public string turnId;
     public string sceneId;
     public string phase;
     public string playerId;
@@ -75,6 +170,17 @@ public class NpcInvestigationRequest
     public InvestigationSceneStatePayload sceneState;
     public InvestigationNpcLocalStatePayload npcLocalState;
     public InvestigationConversationContextPayload conversationContext;
+    public NpcInterrogationProfilePayload interrogationProfile;
+}
+
+[Serializable]
+public class NpcTellRequest
+{
+    public string turnId;
+    public string playerId;
+    public string npcId;
+    public string personaKey;
+    public string questionText;
 }
 
 [Serializable]
@@ -100,24 +206,34 @@ public class InvestigationPresentationHintsPayload
 }
 
 [Serializable]
-public class NpcInvestigationResponse
+public class NpcInvestigationReplyResponse
 {
     public bool ok = true;
+    public string turnId;
     public string replyText;
-    public BioSignalPayload signal = BioSignalPayload.Default();
+    public ConversationStatePayload conversationState = ConversationStatePayload.Default();
     public InvestigationStateDeltaPayload stateDelta = new();
     public InvestigationPresentationHintsPayload presentationHints = new();
     public string error;
 }
 
 [Serializable]
-public class NpcInvestigationStreamChunk
+public class NpcTellResponse
+{
+    public bool ok = true;
+    public string turnId;
+    public TellResultPayload tellResult = TellResultPayload.Default();
+    public string error;
+}
+
+[Serializable]
+public class NpcInvestigationReplyStreamChunk
 {
     public string type;
     public string messageId;
     public string npcDisplayName;
     public string text;
     public string error;
-    public BioSignalPayload signal;
-    public NpcInvestigationResponse response;
+    public ConversationStatePayload conversationState;
+    public NpcInvestigationReplyResponse response;
 }

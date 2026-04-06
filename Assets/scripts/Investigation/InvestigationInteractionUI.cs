@@ -15,7 +15,6 @@ public class InvestigationInteractionUI : MonoBehaviour
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text transcriptText;
     [SerializeField] private TMP_Text statusText;
-    [SerializeField] private TMP_Text signalText;
     [SerializeField] private TMP_InputField intentInput;
     [SerializeField] private TMP_InputField topicInput;
     [SerializeField] private TMP_InputField evidenceInput;
@@ -25,7 +24,13 @@ public class InvestigationInteractionUI : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private NpcDialoguePresenter dialoguePresenter;
-    [SerializeField] private BioSignalPresenter signalPresenter;
+    [SerializeField] private TellMeterPresenter tellMeterPresenter;
+    [SerializeField] private AffectPlanePresenter affectPlanePresenter;
+
+    [Header("Tell Meter")]
+    [SerializeField] private float minimumPulseBpm = 48f;
+    [SerializeField] private float maximumPulseBpm = 132f;
+    [SerializeField] private float pulseDurationSeconds = 0.26f;
 
     public event Action<InvestigationInteractionPayload> ActionRequested;
     public event Action CloseRequested;
@@ -73,15 +78,6 @@ public class InvestigationInteractionUI : MonoBehaviour
             }
         }
 
-        if (signalPresenter == null)
-        {
-            signalPresenter = gameObject.GetComponent<BioSignalPresenter>();
-            if (signalPresenter == null)
-            {
-                signalPresenter = gameObject.AddComponent<BioSignalPresenter>();
-            }
-        }
-
         if (!HasMinimumReferences(out string missingReferences))
         {
             Debug.LogError($"NpcInvestigationUI prefab references are incomplete. Missing: {missingReferences}", this);
@@ -89,7 +85,8 @@ public class InvestigationInteractionUI : MonoBehaviour
         }
 
         dialoguePresenter.Configure(titleText, transcriptText, statusText, scrollRect);
-        signalPresenter.SetDebugSignalText(signalText);
+        tellMeterPresenter.EnsureBuilt(minimumPulseBpm, maximumPulseBpm, pulseDurationSeconds);
+        affectPlanePresenter?.EnsureBuilt();
 
         talkButton.onClick.AddListener(() => SubmitAction("Talk"));
         askTopicButton.onClick.AddListener(() => SubmitAction("AskTopic"));
@@ -129,6 +126,43 @@ public class InvestigationInteractionUI : MonoBehaviour
     public void SetStatus(string message)
     {
         dialoguePresenter.SetStatus(message);
+    }
+
+    public void SetTellValue(float tell)
+    {
+        EnsureBuilt();
+        tellMeterPresenter?.SetTell(tell);
+    }
+
+    public void ResetTellValue(float tell = 0f)
+    {
+        EnsureBuilt();
+        tellMeterPresenter?.ResetTell(tell);
+    }
+
+    public void SetAffectValue(float interest, float attitude)
+    {
+        EnsureBuilt();
+        affectPlanePresenter?.SetAffect(interest, attitude);
+    }
+
+    public void ResetAffectValue(float interest = 0f, float attitude = 0f)
+    {
+        EnsureBuilt();
+        affectPlanePresenter?.ResetAffect(interest, attitude);
+    }
+
+    public void SetPatienceValue(int patience)
+    {
+        EnsureBuilt();
+        // Future hook for a progress bar:
+        // patienceFill.fillAmount = Mathf.Clamp01(patience / 100f);
+    }
+
+    public void SetTellPending(bool pending)
+    {
+        EnsureBuilt();
+        tellMeterPresenter?.SetPendingState(pending);
     }
 
     public void ClearConversation()
@@ -178,12 +212,6 @@ public class InvestigationInteractionUI : MonoBehaviour
     {
         EnsureBuilt();
         dialoguePresenter.AppendSystemMessage(text);
-    }
-
-    public void PresentSignal(BioSignalPayload signal)
-    {
-        EnsureBuilt();
-        signalPresenter.Present(signal);
     }
 
     private void SubmitAction(string actionType)
@@ -266,7 +294,6 @@ public class InvestigationInteractionUI : MonoBehaviour
         panelRoot ??= FindNamedRectTransform("Panel");
         titleText ??= FindNamedComponent<TMP_Text>("TitleText");
         statusText ??= FindNamedComponent<TMP_Text>("StatusText");
-        signalText ??= FindNamedComponent<TMP_Text>("SignalText");
         transcriptText ??= FindNamedComponent<TMP_Text>("TranscriptText");
         intentInput ??= FindNamedComponent<TMP_InputField>("IntentInput");
         topicInput ??= FindNamedComponent<TMP_InputField>("TopicInput");
@@ -277,7 +304,13 @@ public class InvestigationInteractionUI : MonoBehaviour
         closeButton ??= FindNamedComponent<Button>("CloseButton");
         scrollRect ??= FindNamedComponent<ScrollRect>("ScrollView");
         dialoguePresenter ??= GetComponent<NpcDialoguePresenter>();
-        signalPresenter ??= GetComponent<BioSignalPresenter>();
+        tellMeterPresenter ??= GetComponent<TellMeterPresenter>();
+        affectPlanePresenter ??= GetComponent<AffectPlanePresenter>();
+
+        if (tellMeterPresenter == null)
+        {
+            tellMeterPresenter = gameObject.AddComponent<TellMeterPresenter>();
+        }
 
         ResolveButtonsFromComponentScan();
         EnsureButtonComponents();
@@ -324,7 +357,6 @@ public class InvestigationInteractionUI : MonoBehaviour
         if (titleText == null) missing.Add(nameof(titleText));
         if (transcriptText == null) missing.Add(nameof(transcriptText));
         if (statusText == null) missing.Add(nameof(statusText));
-        if (signalText == null) missing.Add(nameof(signalText));
         if (intentInput == null) missing.Add(nameof(intentInput));
         if (talkButton == null) missing.Add(nameof(talkButton));
         if (askTopicButton == null) missing.Add(nameof(askTopicButton));
@@ -332,7 +364,7 @@ public class InvestigationInteractionUI : MonoBehaviour
         if (closeButton == null) missing.Add(nameof(closeButton));
         if (scrollRect == null) missing.Add(nameof(scrollRect));
         if (dialoguePresenter == null) missing.Add(nameof(dialoguePresenter));
-        if (signalPresenter == null) missing.Add(nameof(signalPresenter));
+        if (affectPlanePresenter == null) missing.Add(nameof(affectPlanePresenter));
 
         missingReferences = missing.Count == 0 ? string.Empty : string.Join(", ", missing);
         return missing.Count == 0;

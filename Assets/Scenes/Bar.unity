@@ -289,16 +289,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcId: rebecca
-  npcDisplayName: Rebecca
+  npcDisplayName: "\uB9AC\uBCA0\uCE74"
   sceneId: bar_murder_case_01
   playerId: player
   personaKey: rebecca
-  firstFixedLine: "\uC5B4\uC11C \uC640. \uC624\uB298\uC740 \uD3C9\uC18C\uBCF4\uB2E4
-    \uC9C8\uBB38\uC774 \uB9CE\uACA0\uB124. \uB2E4\uB4E4 \uB178\uC774\uC988 \uC598\uAE30\uB9CC
-    \uD558\uACE0 \uC788\uC5B4."
+  firstFixedLine: "\uC5B4\uC11C\uC624\uC138\uC694 \uC190\uB2D8... \uBB3C\uC5B4\uBCF4\uACE0
+    \uC2F6\uC740 \uAC83\uC774 \uB9CE\uACA0\uAD70\uC694. \uC77C\uB2E8 \uC549\uC544\uC11C
+    \uC598\uAE30\uD558\uC2DC\uC8E0."
   contextBuilder: {fileID: 0}
   apiClient: {fileID: 0}
   interactionUI: {fileID: 0}
+  profileComponent: {fileID: 0}
 --- !u!1 &352458403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1709,6 +1710,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1344677682239290417, guid: 3c0740b11ae78d742b8104310554a74b, type: 3}
+      propertyPath: bgmMute
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1344677682239290417, guid: 3c0740b11ae78d742b8104310554a74b, type: 3}
       propertyPath: masterVolume
       value: 0.2

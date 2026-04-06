@@ -86,12 +86,22 @@
 - 조사 클라이언트를 NDJSON 기반 스트리밍 수신 준비 구조로 확장하고, NPC 답변을 부분 갱신할 수 있도록 채팅 UI 프레젠터 보강
 - 스트리밍 API 명세 문서를 프로젝트 루트에 작성하고, 바탕화면 전달본 생성 준비
 - `ask-stream` 패턴을 참고한 `/investigation/npc` 스트리밍 지원용 코드 블록을 별도 [codeBlock.py](/C:/Users/user/Documents/GitHub/ProjectCRT/codeBlock.py) 로 분리 작성
+- 클라이언트 상태 모델을 `stress/distortion/focus`에서 `tell/affect/patience` 기준으로 전환 시작
+- 임시 생체징후 표시 UI와 `BioSignalPresenter` 제거, 조사 상태는 데이터 흐름 중심으로만 유지
+- 서버 수정용 `server.py` 템플릿을 프로젝트의 [tools/server_updated.py](/C:/Users/user/Documents/GitHub/ProjectCRT/tools/server_updated.py) 로 준비
+- NPC별 심문 규칙을 인스펙터에서 관리할 수 있도록 [NpcProfileComponent.cs](/C:/Users/user/Documents/GitHub/ProjectCRT/Assets/scripts/Investigation/NpcProfileComponent.cs) 추가
+- `NpcInvestigationRequest`에 NPC 프로필 데이터를 포함하도록 컨트롤러/컨텍스트 빌더 확장
+- 외부 서버 경로 문제 해결용 스크립트 [fix_external_server_paths.ps1](/C:/Users/user/Documents/GitHub/ProjectCRT/tools/fix_external_server_paths.ps1) 추가
+- 한글 깨짐을 피하기 위해 외부 서버 파일 직접 수정 대신 수동 복사/붙여넣기용 임시 파일 [server_path_fix_temp.py](/C:/Users/user/Documents/GitHub/ProjectCRT/server_path_fix_temp.py) 생성
+- `server.py` 전체를 그대로 덮어쓸 수 있도록 경로 수정 반영본 [server_path_fixed_full_copy.py](/C:/Users/user/Documents/GitHub/ProjectCRT/server_path_fixed_full_copy.py) 생성
+- 오늘 반영한 `tell/affect/patience`, `interrogationProfile`, 경로 수정까지 포함한 전체 서버 복붙용 파일 [server_today_full_copy.py](/C:/Users/user/Documents/GitHub/ProjectCRT/server_today_full_copy.py) 생성
 - Unity `NpcInvestigationController` 및 `NPC_script` 연동 추가 완료
 - `Bar` 씬의 `Bartender` 오브젝트에 조사 컨트롤러 연결 완료
 - 실제 플레이 검증은 아직 진행 전
+- 빠른 구현을 위해 서버에 남겨둔 일부 하드코딩(`_extract_unlock_topics`의 키워드 매핑, 엔진 기본 임계값/가중치)은 프로젝트 종료 전 반드시 클라이언트 데이터/NpcProfileComponent 쪽으로 이관 예정
 
 ## Next Step
-- 스트리밍 API 명세 확정 및 서버 쪽 응답 형식 정렬
+- 클라이언트 컴파일 정리 및 새 상태 스키마 기준으로 서버 계약 정렬
 - 프리팹 레이아웃 미세 조정 및 폰트/컬러 스타일 보정
 - `Bar` 씬에서 바텐더 상호작용 기준 실제 채팅 루프 검증
 
@@ -108,3 +118,6 @@
 - `Assets/resources/prefab/NpcInvestigationUI.prefab`
 - `C:\Users\user\Documents\GitHub\Local-LLM-AI\virtualEnv\RAG_model\app\server.py`
 - `C:\Users\user\Documents\GitHub\Local-LLM-AI\virtualEnv\RAG_model\app\data\personas\rebecca.json`
+- `server_today_full_copy.py`에서 로그/요약 키를 `user_id` 기준이 아니라 `personaKey` 우선 기준으로 변경해, 현재 대화 중인 페르소나의 기록과 컨텍스트만 읽고 쓰도록 조정.
+- 로그 구조 방향 수정: 파일은 플레이어 기준 단일 JSONL을 유지하고, 각 레코드에 `personaKey`를 함께 저장한 뒤 현재 대화 중인 `personaKey`로만 필터링해서 기록/컨텍스트/요약을 읽도록 `server_today_full_copy.py`를 재조정.
+- `server_today_full_copy.py`에서 규칙 기반 `tell` 보정(`actionWeights.tellDelta`, keyword/topic/evidence의 tellDelta`)을 제거하고, `tell`은 LLM 분류기 `_derive_tell_llm(...)` 결과만 쓰도록 정리.

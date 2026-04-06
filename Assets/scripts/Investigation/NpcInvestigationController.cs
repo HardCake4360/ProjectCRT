@@ -22,9 +22,11 @@ public class NpcInvestigationController : MonoBehaviour
     [SerializeField] private InvestigationContextBuilder contextBuilder;
     [SerializeField] private NpcInvestigationClient apiClient;
     [SerializeField] private InvestigationInteractionUI interactionUI;
+    [SerializeField] private NpcProfileComponent profileComponent;
 
     private NpcConversationState conversationState;
     private bool isBusy;
+    private string activeTurnId;
 
     private void Awake()
     {
@@ -60,12 +62,26 @@ public class NpcInvestigationController : MonoBehaviour
             interactionUI = InvestigationInteractionUI.GetOrCreateInstance();
         }
 
+        if (profileComponent == null)
+        {
+            profileComponent = GetComponent<NpcProfileComponent>();
+        }
+
         Debug.Log(
             $"[NpcInvestigationController] Bound dependencies for npcId={npcId}\n" +
             $"controllerObject={name}\n" +
             $"apiClientObject={(apiClient != null ? apiClient.name : "null")}\n" +
-            $"uiObject={(interactionUI != null ? interactionUI.name : "null")}",
+            $"uiObject={(interactionUI != null ? interactionUI.name : "null")}\n" +
+            $"profileComponent={(profileComponent != null ? profileComponent.name : "null")}",
             this);
+
+        if (profileComponent == null)
+        {
+            Debug.LogWarning(
+                $"[NpcInvestigationController] No NpcProfileComponent found on '{name}'. " +
+                "NPC-specific interrogation rules will not be included in the request.",
+                this);
+        }
     }
 
     private void OnEnable()
@@ -100,7 +116,11 @@ public class NpcInvestigationController : MonoBehaviour
         ActiveController = this;
         interactionUI.Open(npcDisplayName);
         interactionUI.ClearConversation();
-        interactionUI.PresentSignal(conversationState.lastKnownSignal);
+        interactionUI.ResetTellValue(conversationState.lastKnownTell);
+        interactionUI.ResetAffectValue(
+            conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.interest : 0f,
+            conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.attitude : 0f);
+        interactionUI.SetPatienceValue(conversationState.lastKnownPatience);
         interactionUI.AppendSystemMessage("대화형 조사 UI가 열렸습니다.");
 
         foreach (var exchange in conversationState.recentExchanges)
@@ -151,21 +171,39 @@ public class NpcInvestigationController : MonoBehaviour
         conversationState.conversationCount++;
         conversationState.RegisterExchange("player", playerLine);
         interactionUI.AppendPlayerMessage(playerLine);
-        interactionUI.SetStatus("리베카의 반응을 분석 중입니다...");
+        interactionUI.SetStatus("리베카의 반응과 tell 값을 병렬로 분석 중입니다...");
+        interactionUI.SetTellPending(true);
+
+        string turnId = System.Guid.NewGuid().ToString("N");
+        activeTurnId = turnId;
 
         NpcInvestigationRequest request = contextBuilder.BuildRequest(
+            turnId,
             sceneId,
             playerId,
             npcId,
             personaKey,
             payload,
-            conversationState);
+            conversationState,
+            profileComponent != null ? profileComponent.ToPayload() : null);
 
-        bool completed = false;
+        NpcTellRequest tellRequest = new NpcTellRequest
+        {
+            turnId = turnId,
+            playerId = playerId,
+            npcId = npcId,
+            personaKey = personaKey,
+            questionText = playerLine
+        };
+
+        bool replyCompleted = false;
+        bool tellCompleted = false;
         bool streamStarted = false;
-        BioSignalPayload streamedSignal = conversationState.lastKnownSignal;
+        ConversationStatePayload streamedConversationState = null;
+        string pendingTellError = null;
+        string pendingReplyError = null;
 
-        yield return apiClient.SendRequest(
+        StartCoroutine(apiClient.SendReplyRequest(
             request,
             () =>
             {
@@ -177,24 +215,38 @@ public class NpcInvestigationController : MonoBehaviour
             {
                 interactionUI.UpdateNpcStreamingMessage(npcDisplayName, partialText);
             },
-            signal =>
+            conversationPayload =>
             {
-                streamedSignal = signal ?? BioSignalPayload.Default();
-                interactionUI.PresentSignal(streamedSignal);
+                streamedConversationState = conversationPayload ?? ConversationStatePayload.Default();
+                interactionUI.SetAffectValue(
+                    streamedConversationState.affect != null ? streamedConversationState.affect.interest : 0f,
+                    streamedConversationState.affect != null ? streamedConversationState.affect.attitude : 0f);
+                interactionUI.SetPatienceValue(streamedConversationState.patience);
             },
             response =>
             {
+                if (response == null)
+                {
+                    pendingReplyError = "빈 응답이 반환되었습니다.";
+                    replyCompleted = true;
+                    return;
+                }
+
+                if (response.conversationState == null)
+                {
+                    response.conversationState = streamedConversationState ?? ConversationStatePayload.Default();
+                }
+
                 string reply = string.IsNullOrWhiteSpace(response.replyText)
                     ? "..."
                     : response.replyText.Trim();
 
-                if (response.signal == null)
-                {
-                    response.signal = streamedSignal ?? BioSignalPayload.Default();
-                }
-
                 conversationState.RegisterExchange("npc", reply);
-                conversationState.ApplyResponse(response);
+                conversationState.ApplyReplyResponse(response);
+                interactionUI.SetAffectValue(
+                    response.conversationState.affect != null ? response.conversationState.affect.interest : 0f,
+                    response.conversationState.affect != null ? response.conversationState.affect.attitude : 0f);
+                interactionUI.SetPatienceValue(response.conversationState.patience);
 
                 if (streamStarted)
                 {
@@ -205,9 +257,6 @@ public class NpcInvestigationController : MonoBehaviour
                     interactionUI.AppendNpcMessage(npcDisplayName, reply);
                 }
 
-                interactionUI.PresentSignal(conversationState.lastKnownSignal);
-                interactionUI.SetStatus("새 조사 액션을 선택할 수 있습니다.");
-
                 if (response.stateDelta != null && response.stateDelta.unlockTopicIds != null && response.stateDelta.unlockTopicIds.Count > 0)
                 {
                     foreach (string topicId in response.stateDelta.unlockTopicIds)
@@ -217,7 +266,11 @@ public class NpcInvestigationController : MonoBehaviour
                     interactionUI.AppendSystemMessage($"Unlocked topics: {string.Join(", ", response.stateDelta.unlockTopicIds)}");
                 }
 
-                completed = true;
+                replyCompleted = true;
+                if (!tellCompleted)
+                {
+                    interactionUI.SetStatus("답변 도착. tell 값을 마무리 분석 중입니다...");
+                }
             },
             error =>
             {
@@ -226,14 +279,55 @@ public class NpcInvestigationController : MonoBehaviour
                     interactionUI.CancelNpcStreamingMessage();
                 }
 
-                interactionUI.AppendSystemMessage($"서버 오류: {error}");
-                interactionUI.SetStatus("연결 실패. 서버 상태를 확인하세요.");
-                completed = true;
-            });
+                pendingReplyError = error;
+                replyCompleted = true;
+            }));
 
-        while (!completed)
+        StartCoroutine(apiClient.SendTellRequest(
+            tellRequest,
+            tellResult =>
+            {
+                if (tellResult != null && tellResult.turnId == activeTurnId)
+                {
+                    conversationState.ApplyTellResult(tellResult);
+                    interactionUI.SetTellValue(tellResult.tell);
+                }
+                else
+                {
+                    interactionUI.SetTellPending(false);
+                }
+
+                tellCompleted = true;
+                if (replyCompleted && string.IsNullOrWhiteSpace(pendingReplyError))
+                {
+                    interactionUI.SetStatus("새 조사 액션을 선택할 수 있습니다.");
+                }
+            },
+            error =>
+            {
+                interactionUI.SetTellPending(false);
+                pendingTellError = error;
+                tellCompleted = true;
+            }));
+
+        while (!replyCompleted || !tellCompleted)
         {
             yield return null;
+        }
+
+        if (!string.IsNullOrWhiteSpace(pendingReplyError))
+        {
+            interactionUI.AppendSystemMessage($"서버 오류: {pendingReplyError}");
+            interactionUI.SetStatus("연결 실패. 서버 상태를 확인하세요.");
+        }
+        else if (!string.IsNullOrWhiteSpace(pendingTellError))
+        {
+            interactionUI.AppendSystemMessage($"tell 계산 지연/실패: {pendingTellError}");
+            interactionUI.SetStatus("응답은 완료됐지만 tell 값을 가져오지 못했습니다.");
+        }
+        else
+        {
+            interactionUI.SetStatus("새 조사 액션을 선택할 수 있습니다.");
         }
 
         isBusy = false;

@@ -10,17 +10,20 @@ public class InvestigationContextBuilder : MonoBehaviour
     [SerializeField] private List<string> interactableObjectIds = new();
 
     public NpcInvestigationRequest BuildRequest(
+        string turnId,
         string sceneId,
         string playerId,
         string npcId,
         string personaKey,
         InvestigationInteractionPayload interaction,
-        NpcConversationState conversationState)
+        NpcConversationState conversationState,
+        NpcInterrogationProfilePayload interrogationProfile)
     {
         conversationState ??= new NpcConversationState();
 
         return new NpcInvestigationRequest
         {
+            turnId = turnId,
             sceneId = sceneId,
             phase = phase,
             playerId = playerId,
@@ -35,7 +38,8 @@ public class InvestigationContextBuilder : MonoBehaviour
                 interactableObjectIds = new List<string>(interactableObjectIds)
             },
             npcLocalState = conversationState.ToPayload(),
-            conversationContext = conversationState.ToConversationContext()
+            conversationContext = conversationState.ToConversationContext(),
+            interrogationProfile = interrogationProfile
         };
     }
 
