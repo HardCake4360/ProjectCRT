@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CanvasRenderer))]
+[ExecuteAlways]
 public class AffectPulseGraphic : MaskableGraphic
 {
     [SerializeField, Range(-1f, 1f)] private float interest;
@@ -16,14 +17,78 @@ public class AffectPulseGraphic : MaskableGraphic
     [SerializeField] private float updateFlashDuration = 0.45f;
     [SerializeField] private float updateFlashThickness = 3.5f;
     [SerializeField] private float updateFlashEndRadius = 58f;
+    [SerializeField] private float colorReturnDuration = 0.45f;
+    [SerializeField] private float minimumPendingSeconds = 1f;
+    [SerializeField] private Color pendingColor = new Color(0.22f, 0.24f, 0.26f, 1f);
 
     private float updateFlashStartedAt = -1f;
+    private float colorFlashTimer;
+    private float lastUpdateTime;
+    private float pendingStartedAt = -1f;
+    private float queuedInterest;
+    private float queuedAttitude;
+    private bool pending;
     private bool hasInitialValue;
+    private bool hasQueuedArrival;
 
     public void SetAffect(float nextInterest, float nextAttitude)
     {
+        ApplyAffect(nextInterest, nextAttitude, true, true);
+    }
+
+    public void ResetAffect(float nextInterest, float nextAttitude)
+    {
+        ApplyAffect(nextInterest, nextAttitude, false, false);
+    }
+
+    public void SetPendingState(bool enabled)
+    {
+        pending = enabled;
+        if (pending)
+        {
+            pendingStartedAt = GetClockSeconds();
+            hasQueuedArrival = false;
+            colorFlashTimer = 0f;
+            updateFlashStartedAt = -1f;
+        }
+        else
+        {
+            pendingStartedAt = -1f;
+            hasQueuedArrival = false;
+        }
+
+        SetVerticesDirty();
+    }
+
+    public void PreviewPendingState()
+    {
+        SetPendingState(true);
+    }
+
+    public void PreviewArrivalFlash()
+    {
+        ApplyAffect(interest, attitude, true, true);
+    }
+
+    public void PreviewResetState()
+    {
+        ResetAffect(interest, attitude);
+    }
+
+    private void ApplyAffect(float nextInterest, float nextAttitude, bool playArrivalFlash, bool respectMinimumPendingTime)
+    {
         float clampedInterest = Mathf.Clamp(nextInterest, -1f, 1f);
         float clampedAttitude = Mathf.Clamp(nextAttitude, -1f, 1f);
+
+        if (respectMinimumPendingTime && pending && playArrivalFlash && !HasMetMinimumPendingTime())
+        {
+            queuedInterest = clampedInterest;
+            queuedAttitude = clampedAttitude;
+            hasQueuedArrival = true;
+            SetVerticesDirty();
+            return;
+        }
+
         bool changed = !hasInitialValue
             || !Mathf.Approximately(interest, clampedInterest)
             || !Mathf.Approximately(attitude, clampedAttitude);
@@ -31,10 +96,22 @@ public class AffectPulseGraphic : MaskableGraphic
         interest = clampedInterest;
         attitude = clampedAttitude;
         hasInitialValue = true;
+        pending = false;
+        pendingStartedAt = -1f;
+        hasQueuedArrival = false;
 
-        if (changed)
+        if (playArrivalFlash)
         {
-            updateFlashStartedAt = Time.unscaledTime;
+            colorFlashTimer = Mathf.Max(0.01f, colorReturnDuration);
+        }
+        else
+        {
+            colorFlashTimer = 0f;
+        }
+
+        if (changed && playArrivalFlash)
+        {
+            updateFlashStartedAt = GetClockSeconds();
         }
 
         SetVerticesDirty();
@@ -51,12 +128,30 @@ public class AffectPulseGraphic : MaskableGraphic
         updateFlashDuration = Mathf.Max(0.05f, updateFlashDuration);
         updateFlashThickness = Mathf.Max(0.5f, updateFlashThickness);
         updateFlashEndRadius = Mathf.Max(ringStartRadius + 4f, updateFlashEndRadius);
+        colorReturnDuration = Mathf.Max(0.05f, colorReturnDuration);
+        minimumPendingSeconds = Mathf.Max(0f, minimumPendingSeconds);
         circleSegments = Mathf.Max(12, circleSegments);
         SetVerticesDirty();
     }
 
     private void Update()
     {
+        float currentTime = GetClockSeconds();
+        float deltaTime = lastUpdateTime > 0f
+            ? Mathf.Max(0f, currentTime - lastUpdateTime)
+            : Time.unscaledDeltaTime;
+        lastUpdateTime = currentTime;
+
+        if (pending && hasQueuedArrival && HasMetMinimumPendingTime())
+        {
+            ApplyAffect(queuedInterest, queuedAttitude, true, false);
+        }
+
+        if (colorFlashTimer > 0f)
+        {
+            colorFlashTimer = Mathf.Max(0f, colorFlashTimer - deltaTime);
+        }
+
         SetVerticesDirty();
     }
 
@@ -75,21 +170,21 @@ public class AffectPulseGraphic : MaskableGraphic
 
         AddFilledCircle(vh, center, markerRadius, signalColor);
 
-        float cycleT = Mathf.Repeat(Time.unscaledTime / ringCycleSeconds, 1f);
-        AddRing(vh, center, Mathf.Lerp(ringStartRadius, ringEndRadius, cycleT), ringThickness, new Color(signalColor.r, signalColor.g, signalColor.b, Mathf.Lerp(0.45f, 0f, cycleT)));
+        float currentTime = GetClockSeconds();
+        float cycleT = Mathf.Repeat(currentTime / ringCycleSeconds, 1f);
+        AddRing(vh, center, Mathf.Lerp(ringStartRadius, ringEndRadius, cycleT), ringThickness, WithExistingAlpha(signalColor));
 
-        float cycleT2 = Mathf.Repeat((Time.unscaledTime / ringCycleSeconds) + 0.5f, 1f);
-        AddRing(vh, center, Mathf.Lerp(ringStartRadius, ringEndRadius, cycleT2), ringThickness, new Color(signalColor.r, signalColor.g, signalColor.b, Mathf.Lerp(0.28f, 0f, cycleT2)));
+        float cycleT2 = Mathf.Repeat((currentTime / ringCycleSeconds) + 0.5f, 1f);
+        AddRing(vh, center, Mathf.Lerp(ringStartRadius, ringEndRadius, cycleT2), ringThickness, WithExistingAlpha(signalColor));
 
         if (updateFlashStartedAt >= 0f)
         {
-            float flashT = Mathf.Clamp01((Time.unscaledTime - updateFlashStartedAt) / updateFlashDuration);
+            float flashT = Mathf.Clamp01((currentTime - updateFlashStartedAt) / updateFlashDuration);
             if (flashT < 1f)
             {
                 float easedT = 1f - Mathf.Pow(1f - flashT, 3f);
                 float flashRadius = Mathf.Lerp(markerRadius + 2f, updateFlashEndRadius, easedT);
-                float flashAlpha = Mathf.Lerp(0.95f, 0f, flashT);
-                AddRing(vh, center, flashRadius, updateFlashThickness, new Color(1f, 1f, 1f, flashAlpha));
+                AddRing(vh, center, flashRadius, updateFlashThickness, WithExistingAlpha(Color.white));
             }
             else
             {
@@ -107,8 +202,44 @@ public class AffectPulseGraphic : MaskableGraphic
 
     private Color EvaluateSignalColor()
     {
+        if (pending)
+        {
+            return WithExistingAlpha(pendingColor);
+        }
+
         float energy = Mathf.Clamp01((Mathf.Abs(interest) + Mathf.Abs(attitude)) * 0.5f);
-        return Color.Lerp(new Color(0.45f, 0.88f, 0.83f, 1f), new Color(1f, 0.78f, 0.32f, 1f), energy);
+        Color signalColor = Color.Lerp(new Color(0.45f, 0.88f, 0.83f), new Color(1f, 0.78f, 0.32f), energy);
+
+        if (colorFlashTimer > 0f)
+        {
+            float flashLerp = colorReturnDuration <= 0f
+                ? 1f
+                : 1f - (colorFlashTimer / colorReturnDuration);
+            signalColor = Color.Lerp(Color.white, signalColor, Mathf.Clamp01(flashLerp));
+        }
+
+        return WithExistingAlpha(signalColor);
+    }
+
+    private Color WithExistingAlpha(Color sourceRgb)
+    {
+        sourceRgb.a = color.a;
+        return sourceRgb;
+    }
+
+    private float GetClockSeconds()
+    {
+        return Time.realtimeSinceStartup;
+    }
+
+    private bool HasMetMinimumPendingTime()
+    {
+        if (minimumPendingSeconds <= 0f || pendingStartedAt < 0f)
+        {
+            return true;
+        }
+
+        return GetClockSeconds() - pendingStartedAt >= minimumPendingSeconds;
     }
 
     private void AddFilledCircle(VertexHelper vh, Vector2 center, float radius, Color drawColor)

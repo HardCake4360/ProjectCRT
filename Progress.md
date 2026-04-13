@@ -2,6 +2,36 @@
 
 ## Updated
 - 2026-03-27
+- 2026-04-12: Added NPC investigation animation clip flow and controller timing hooks.
+- 2026-04-13: Split NPC thinking animation into startThinking one-shot followed by Thinking loop.
+- 2026-04-13: Fixed investigation UI button recovery when prefab button objects contain invalid Selectable components.
+- 2026-04-13: Changed incomplete investigation UI reference logs from errors to warnings.
+- 2026-04-13: Made optional investigation UI elements non-blocking so missing StatusText/ScrollRect/AffectPlanePresenter does not prevent Talk button binding.
+- 2026-04-13: Made investigation log/title text optional and allowed tell/affect signal UI to run with remaining graphic-only bindings.
+- 2026-04-13: Investigated UnityEditor GameObjectInspector stale target warning after UI prefab/runtime object changes; no gameplay script change required.
+- 2026-04-13: Updated investigation UI color handling so scripts preserve prefab/component alpha while only changing RGB values.
+- 2026-04-13: Added affect pending/arrival visual feedback: affect graphic darkens while waiting, flashes white on value arrival, then fades back to the normal signal color.
+- 2026-04-13: Added an editor inspector preview for `AffectPulseGraphic` with Pending Dark, Arrival Flash, and Reset buttons for checking the affect effect without entering play mode.
+- 2026-04-13: Added inspector-configurable minimum affect pending time so fast affect responses remain dark for at least the configured duration before the arrival flash is applied.
+- 2026-04-13: Added NPC conversation camera look-at IK support through `NPC_script` settings and an animator-side `NpcLookAtIKDriver`, enabled during investigation interaction and disabled on close.
+- 2026-04-13: Reworked investigation message input flow: Enter sends, Shift+Enter allows new lines, Ask Topic/Present Evidence moved behind a speed-dial style action menu, and selected topic/evidence attachments are included in the outgoing payload.
+- 2026-04-13: Added `NpcInvestigationUIPrefabUpdater` editor utility to update the actual `NpcInvestigationUI.prefab` with attachment bar, floating action button, speed dial root, and selection list bindings.
+- 2026-04-13: Tried to run the prefab updater through Unity batchmode, but Unity blocked it because the project was already open in another editor instance; the updater is set to run from the active editor on script reload.
+- 2026-04-13: Synchronized `NpcInvestigationUI.prefab` with the code-generated investigation UI structure and updated the prefab updater to enforce layout/color/active-state values even when nodes already exist.
+- 2026-04-13: Stopped runtime investigation UI from reapplying speed-dial button RectTransform values when prefab bindings already exist, and changed the prefab updater to manual menu execution only so authored prefab layout is not overwritten on editor reload.
+- 2026-04-13: Replaced the investigation UI `TalkButton` concept with `SendButton/sendButton`, keeping only migration compatibility for old prefab objects while the outgoing action protocol still uses `Talk` for normal message requests.
+- 2026-04-13: Removed runtime-created fixed investigation UI layout fallbacks. Fixed UI elements such as send/action buttons, speed dial root, selection list root, and attachment bar must now come from `NpcInvestigationUI.prefab`; runtime code only fills dynamic selection-list contents.
+- 2026-04-13: Changed the NPC investigation prefab updater menu to update serialized references and labels only, without applying RectTransform/layout values to the authored prefab.
+- 2026-04-13: Fixed `NpcInvestigationUI.prefab` button bindings: `AskTopicButton` and `PresentEvidenceButton` were still serialized as TMP input fields, so they were converted back to `Button` components and re-linked to `InvestigationInteractionUI`.
+- 2026-04-13: Added the first prop/inventory implementation pass: investigation item definitions/database, minimal JSON unlock save data, `InspectableProp` information unlocks, Tab inventory controller, Q/E category cycling, and prefab-loaded `InvestigationInventoryUI` support.
+- 2026-04-13: Added an editor-only inventory UI prefab creator that creates `Assets/resources/prefab/InvestigationInventoryUI.prefab` only when missing, so authored prefab layout is preserved after the first creation.
+- 2026-04-13: Extended investigation context and NPC attachment selection so unlocked prop information is stored as `information`, shown in the inventory information tab, and can also be attached through the existing Present Evidence flow for server compatibility.
+- 2026-04-13: Reverted the reference-image inventory UI prefab creator attempt and restored the previous panel-style `InvestigationInventoryUI` prefab creator. The generated prefab file remains deleted until Unity recompiles and recreates it from the restored creator.
+- 2026-04-13: Recreated `Assets/resources/prefab/InvestigationInventoryUI.prefab` from scratch without using the reference image. Unity batchmode creation was blocked because the project was already open, so a minimal prefab asset was restored with the required runtime bindings and the panel-style creator remains available for editor-side regeneration.
+- 2026-04-13: Continued prop/inventory implementation pass: `InspectableProp` unlocks prop data as the `information` category, inventory save JSON stores only category id lists, Tab toggles prefab-loaded inventory UI, and Q/E cycles topic/evidence/information tabs while main player control is paused.
+- 2026-04-13: Added a Resources database fallback path for investigation item definitions so runtime-created inventory managers can resolve ScriptableObject item details from `Resources/Investigation/InvestigationItemDatabase` when configured.
+- 2026-04-13: Confirmed `InvestigationInventoryUI.prefab` is currently missing on disk; the editor prefab creator is set to recreate it from the active Unity editor after script reload because batchmode cannot safely run while the project is already open.
+- 2026-04-13: Tried to execute the inventory prefab creator through Unity batchmode, but Unity exited abnormally in the current multi-editor/open-project state before writing a log or prefab. Use `Tools/Investigation/Create Inventory UI Prefab` in the active editor if automatic script-reload creation does not run.
 
 ## Current Goal
 - 조사 파트 중심 구현
@@ -121,3 +151,6 @@
 - `server_today_full_copy.py`에서 로그/요약 키를 `user_id` 기준이 아니라 `personaKey` 우선 기준으로 변경해, 현재 대화 중인 페르소나의 기록과 컨텍스트만 읽고 쓰도록 조정.
 - 로그 구조 방향 수정: 파일은 플레이어 기준 단일 JSONL을 유지하고, 각 레코드에 `personaKey`를 함께 저장한 뒤 현재 대화 중인 `personaKey`로만 필터링해서 기록/컨텍스트/요약을 읽도록 `server_today_full_copy.py`를 재조정.
 - `server_today_full_copy.py`에서 규칙 기반 `tell` 보정(`actionWeights.tellDelta`, keyword/topic/evidence의 tellDelta`)을 제거하고, `tell`은 LLM 분류기 `_derive_tell_llm(...)` 결과만 쓰도록 정리.
+- `Interactable`의 클로즈업 카메라는 상호작용 중일 때만 활성화되도록 조정: `Awake()`에서 기본 비활성화, `EnterCloseup()`에서 활성화, `ExitCloseup()`에서 비활성화.
+- 플레이어 기본 시네머신 카메라가 없는 경우를 대비해 `Interactable`이 상호작용 직전 `Main Camera` 위치/회전을 저장하고, `ExitCloseup()` 시 직접 복원하도록 보강.
+- Added affect diagnostics: `NpcInvestigationController` now logs reset, streaming, and final affect values, and `AffectPlanePresenter` warns when affect values arrive without a bound `pulseGraphic`.

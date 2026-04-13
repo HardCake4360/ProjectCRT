@@ -167,7 +167,7 @@ public class TellPulseGraphic : MaskableGraphic
             return;
         }
 
-        Color glowColor = color * new Color(1f, 1f, 1f, 0.2f);
+        Color glowColor = color;
         DrawPolyline(vh, glowThickness, glowColor);
         DrawPolyline(vh, lineThickness, color);
     }

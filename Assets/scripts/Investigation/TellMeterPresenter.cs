@@ -35,7 +35,7 @@ public class TellMeterPresenter : MonoBehaviour
         }
 
         ApplyTellVisuals(0f);
-        isBuilt = valueText != null && pulseGraphic != null;
+        isBuilt = valueText != null || pulseGraphic != null || panelBackground != null;
     }
 
     public void SetTell(float tell)
@@ -48,7 +48,7 @@ public class TellMeterPresenter : MonoBehaviour
         float clamped = Mathf.Clamp01(tell);
         currentTell = clamped;
         colorFlashTimer = Mathf.Max(0.01f, colorReturnDuration);
-        pulseGraphic.SetPendingNoise(false);
+        pulseGraphic?.SetPendingNoise(false);
         ApplyTellVisuals(clamped);
     }
 
@@ -62,7 +62,7 @@ public class TellMeterPresenter : MonoBehaviour
         float clamped = Mathf.Clamp01(tell);
         currentTell = clamped;
         colorFlashTimer = 0f;
-        pulseGraphic.ResetSignal(clamped);
+        pulseGraphic?.ResetSignal(clamped);
         ApplyTellVisuals(clamped);
     }
 
@@ -78,17 +78,17 @@ public class TellMeterPresenter : MonoBehaviour
             if (valueText != null)
             {
                 valueText.text = "TELL\n...";
-                valueText.color = new Color(0.34f, 0.36f, 0.39f, 1f);
+                valueText.color = WithAlpha(new Color(0.34f, 0.36f, 0.39f), valueText.color);
             }
 
             if (panelBackground != null)
             {
-                panelBackground.color = new Color(0.05f, 0.06f, 0.07f, 0.92f);
+                panelBackground.color = WithAlpha(new Color(0.05f, 0.06f, 0.07f), panelBackground.color);
             }
 
             if (pulseGraphic != null)
             {
-                pulseGraphic.color = new Color(0.22f, 0.24f, 0.26f, 1f);
+                pulseGraphic.color = WithAlpha(new Color(0.22f, 0.24f, 0.26f), pulseGraphic.color);
                 pulseGraphic.SetPendingNoise(true);
             }
 
@@ -120,24 +120,24 @@ public class TellMeterPresenter : MonoBehaviour
 
         Color flashedValueColor = Color.Lerp(Color.white, signalColor, flashLerp);
         Color flashedPanelColor = Color.Lerp(
-            new Color(1f, 1f, 1f, 0.92f),
-            new Color(signalColor.r * 0.13f, signalColor.g * 0.13f, signalColor.b * 0.13f, 0.88f),
+            Color.white,
+            new Color(signalColor.r * 0.13f, signalColor.g * 0.13f, signalColor.b * 0.13f),
             flashLerp);
 
         if (valueText != null)
         {
             valueText.text = string.Format("TELL\n{0:0.00}", tell);
-            valueText.color = flashedValueColor;
+            valueText.color = WithAlpha(flashedValueColor, valueText.color);
         }
 
         if (panelBackground != null)
         {
-            panelBackground.color = flashedPanelColor;
+            panelBackground.color = WithAlpha(flashedPanelColor, panelBackground.color);
         }
 
         if (pulseGraphic != null)
         {
-            pulseGraphic.color = flashedValueColor;
+            pulseGraphic.color = WithAlpha(flashedValueColor, pulseGraphic.color);
             pulseGraphic.SetTellNormalized(tell);
             pulseGraphic.SetVerticesDirty();
         }
@@ -151,5 +151,11 @@ public class TellMeterPresenter : MonoBehaviour
         }
 
         return Color.Lerp(new Color(1f, 0.87f, 0.20f), new Color(0.98f, 0.20f, 0.18f), (tell - 0.5f) / 0.5f);
+    }
+
+    private static Color WithAlpha(Color sourceRgb, Color alphaSource)
+    {
+        sourceRgb.a = alphaSource.a;
+        return sourceRgb;
     }
 }

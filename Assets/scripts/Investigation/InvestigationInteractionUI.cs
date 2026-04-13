@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class InvestigationInteractionUI : MonoBehaviour
@@ -18,10 +19,16 @@ public class InvestigationInteractionUI : MonoBehaviour
     [SerializeField] private TMP_InputField intentInput;
     [SerializeField] private TMP_InputField topicInput;
     [SerializeField] private TMP_InputField evidenceInput;
-    [SerializeField] private Button talkButton;
+    [FormerlySerializedAs("talkButton")]
+    [SerializeField] private Button sendButton;
     [SerializeField] private Button askTopicButton;
     [SerializeField] private Button presentEvidenceButton;
     [SerializeField] private Button closeButton;
+    [SerializeField] private Button floatingActionButton;
+    [SerializeField] private RectTransform speedDialRoot;
+    [SerializeField] private RectTransform selectionListRoot;
+    [SerializeField] private RectTransform attachmentBarRoot;
+    [SerializeField] private TMP_Text attachmentSummaryText;
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private NpcDialoguePresenter dialoguePresenter;
     [SerializeField] private TellMeterPresenter tellMeterPresenter;
@@ -35,7 +42,16 @@ public class InvestigationInteractionUI : MonoBehaviour
     public event Action<InvestigationInteractionPayload> ActionRequested;
     public event Action CloseRequested;
 
+    private const int MaxSelectedEvidenceCount = 3;
+    private readonly List<string> availableTopicIds = new();
+    private readonly List<string> availableEvidenceIds = new();
+    private readonly List<string> availableInformationIds = new();
+    private readonly List<string> selectedEvidenceIds = new();
+    private readonly List<string> selectedInformationIds = new();
+    private string selectedTopicId;
     private bool uiBuilt;
+    private bool isBusy;
+    private bool speedDialOpen;
 
     private void Awake()
     {
@@ -55,6 +71,21 @@ public class InvestigationInteractionUI : MonoBehaviour
         SetVisible(false);
     }
 
+    private void Update()
+    {
+        if (!uiBuilt || isBusy || intentInput == null || !intentInput.isFocused)
+        {
+            return;
+        }
+
+        bool pressedEnter = Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter);
+        bool wantsNewLine = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        if (pressedEnter && !wantsNewLine)
+        {
+            SubmitAction("Talk");
+        }
+    }
+
     public void EnsureBuilt()
     {
         if (uiBuilt)
@@ -62,11 +93,7 @@ public class InvestigationInteractionUI : MonoBehaviour
             return;
         }
 
-        if (rootCanvas == null)
-        {
-            rootCanvas = GetComponent<Canvas>();
-        }
-
+        rootCanvas ??= GetComponent<Canvas>();
         TryResolveReferencesFromHierarchy();
 
         if (dialoguePresenter == null)
@@ -80,19 +107,25 @@ public class InvestigationInteractionUI : MonoBehaviour
 
         if (!HasMinimumReferences(out string missingReferences))
         {
-            Debug.LogError($"NpcInvestigationUI prefab references are incomplete. Missing: {missingReferences}", this);
+            Debug.LogWarning($"NpcInvestigationUI prefab references are incomplete. Missing: {missingReferences}", this);
             return;
         }
 
+        intentInput.lineType = TMP_InputField.LineType.MultiLineNewline;
         dialoguePresenter.Configure(titleText, transcriptText, statusText, scrollRect);
-        tellMeterPresenter.EnsureBuilt(minimumPulseBpm, maximumPulseBpm, pulseDurationSeconds);
+        tellMeterPresenter?.EnsureBuilt(minimumPulseBpm, maximumPulseBpm, pulseDurationSeconds);
         affectPlanePresenter?.EnsureBuilt();
+        EnsureInvestigationActionUI();
 
-        talkButton.onClick.AddListener(() => SubmitAction("Talk"));
-        askTopicButton.onClick.AddListener(() => SubmitAction("AskTopic"));
-        presentEvidenceButton.onClick.AddListener(() => SubmitAction("PresentEvidence"));
+        sendButton.onClick.AddListener(() => SubmitAction("Talk"));
+        askTopicButton.onClick.AddListener(ShowTopicSelection);
+        presentEvidenceButton.onClick.AddListener(ShowEvidenceSelection);
+        floatingActionButton?.onClick.AddListener(ToggleSpeedDial);
         closeButton.onClick.AddListener(() => CloseRequested?.Invoke());
 
+        SetSpeedDialOpen(false);
+        SetSelectionListVisible(false);
+        RefreshAttachmentSummary();
         uiBuilt = true;
     }
 
@@ -100,9 +133,11 @@ public class InvestigationInteractionUI : MonoBehaviour
     {
         EnsureBuilt();
         SetVisible(true);
-        dialoguePresenter.SetTitle($"{npcDisplayName} 조사 대화");
-        SetStatus("Action을 선택해 질문을 진행하세요.");
+        dialoguePresenter.SetTitle($"{npcDisplayName} Investigation");
+        SetStatus("Type a message, attach a topic or evidence if needed, then send.");
         ResetInputs();
+        SetSpeedDialOpen(false);
+        SetSelectionListVisible(false);
     }
 
     public void SetVisible(bool visible)
@@ -115,12 +150,33 @@ public class InvestigationInteractionUI : MonoBehaviour
 
     public void SetBusy(bool busy)
     {
-        if (talkButton != null) talkButton.interactable = !busy;
+        isBusy = busy;
+        if (sendButton != null) sendButton.interactable = !busy;
         if (askTopicButton != null) askTopicButton.interactable = !busy;
         if (presentEvidenceButton != null) presentEvidenceButton.interactable = !busy;
+        if (floatingActionButton != null) floatingActionButton.interactable = !busy;
         if (intentInput != null) intentInput.interactable = !busy;
         if (topicInput != null) topicInput.interactable = !busy;
         if (evidenceInput != null) evidenceInput.interactable = !busy;
+
+        if (busy)
+        {
+            SetSpeedDialOpen(false);
+            SetSelectionListVisible(false);
+        }
+    }
+
+    public void ConfigureSelectionOptions(IReadOnlyList<string> topicIds, IReadOnlyList<string> evidenceIds, IReadOnlyList<string> informationIds = null)
+    {
+        EnsureBuilt();
+        availableTopicIds.Clear();
+        availableEvidenceIds.Clear();
+        availableInformationIds.Clear();
+
+        AddUniqueOptions(availableTopicIds, topicIds);
+        AddUniqueOptions(availableEvidenceIds, evidenceIds);
+        AddUniqueOptions(availableInformationIds, informationIds);
+        AddUniqueOptions(availableEvidenceIds, informationIds);
     }
 
     public void SetStatus(string message)
@@ -152,11 +208,15 @@ public class InvestigationInteractionUI : MonoBehaviour
         affectPlanePresenter?.ResetAffect(interest, attitude);
     }
 
+    public void SetAffectPending(bool pending)
+    {
+        EnsureBuilt();
+        affectPlanePresenter?.SetPendingState(pending);
+    }
+
     public void SetPatienceValue(int patience)
     {
         EnsureBuilt();
-        // Future hook for a progress bar:
-        // patienceFill.fillAmount = Mathf.Clamp01(patience / 100f);
     }
 
     public void SetTellPending(bool pending)
@@ -217,22 +277,55 @@ public class InvestigationInteractionUI : MonoBehaviour
     private void SubmitAction(string actionType)
     {
         string intent = intentInput != null ? intentInput.text.Trim() : string.Empty;
-        string topicId = topicInput != null ? topicInput.text.Trim() : string.Empty;
-        string evidenceId = evidenceInput != null ? evidenceInput.text.Trim() : string.Empty;
+        string topicId = !string.IsNullOrWhiteSpace(selectedTopicId)
+            ? selectedTopicId
+            : topicInput != null ? topicInput.text.Trim() : string.Empty;
+        List<string> evidenceIds = new(selectedEvidenceIds);
+        string evidenceId = evidenceIds.Count > 0
+            ? evidenceIds[0]
+            : evidenceInput != null ? evidenceInput.text.Trim() : string.Empty;
 
+        if (!string.IsNullOrWhiteSpace(evidenceId) && !evidenceIds.Contains(evidenceId))
+        {
+            evidenceIds.Add(evidenceId);
+        }
+
+        string resolvedActionType = ResolveActionType(actionType, topicId, evidenceIds);
         var payload = new InvestigationInteractionPayload
         {
-            actionType = actionType,
-            playerIntentText = BuildIntentText(actionType, intent, topicId, evidenceId),
+            actionType = resolvedActionType,
+            playerIntentText = BuildIntentText(resolvedActionType, intent, topicId, evidenceIds),
             topicId = string.IsNullOrWhiteSpace(topicId) ? null : topicId,
-            evidenceId = string.IsNullOrWhiteSpace(evidenceId) ? null : evidenceId
+            evidenceId = string.IsNullOrWhiteSpace(evidenceId) ? null : evidenceId,
+            evidenceIds = evidenceIds,
+            informationIds = new List<string>(selectedInformationIds)
         };
 
         ActionRequested?.Invoke(payload);
         ResetInputs(clearIntentOnly: false);
     }
 
-    private string BuildIntentText(string actionType, string intent, string topicId, string evidenceId)
+    private string ResolveActionType(string actionType, string topicId, IReadOnlyList<string> evidenceIds)
+    {
+        if (actionType != "Talk")
+        {
+            return actionType;
+        }
+
+        if (evidenceIds != null && evidenceIds.Count > 0)
+        {
+            return "PresentEvidence";
+        }
+
+        if (!string.IsNullOrWhiteSpace(topicId))
+        {
+            return "AskTopic";
+        }
+
+        return "Talk";
+    }
+
+    private string BuildIntentText(string actionType, string intent, string topicId, IReadOnlyList<string> evidenceIds)
     {
         if (!string.IsNullOrWhiteSpace(intent))
         {
@@ -241,10 +334,186 @@ public class InvestigationInteractionUI : MonoBehaviour
 
         return actionType switch
         {
-            "AskTopic" => string.IsNullOrWhiteSpace(topicId) ? "새 주제를 물어본다." : $"{topicId}에 대해 묻는다.",
-            "PresentEvidence" => string.IsNullOrWhiteSpace(evidenceId) ? "증거를 제시하며 반응을 본다." : $"{evidenceId} 증거를 제시하며 설명을 요구한다.",
-            _ => "현재 상황에 대해 다시 묻는다."
+            "AskTopic" => string.IsNullOrWhiteSpace(topicId) ? "Ask about an unlocked topic." : $"Ask about topic: {topicId}.",
+            "PresentEvidence" => evidenceIds == null || evidenceIds.Count == 0 ? "Present evidence." : $"Present evidence: {string.Join(", ", evidenceIds)}.",
+            _ => "Ask about the current situation."
         };
+    }
+
+    private void ShowTopicSelection()
+    {
+        SetSpeedDialOpen(false);
+        RebuildSelectionList("Unlocked Topics", availableTopicIds, false);
+    }
+
+    private void ShowEvidenceSelection()
+    {
+        SetSpeedDialOpen(false);
+        RebuildSelectionList("Evidence", availableEvidenceIds, true);
+    }
+
+    private void ToggleSpeedDial()
+    {
+        SetSelectionListVisible(false);
+        SetSpeedDialOpen(!speedDialOpen);
+    }
+
+    private void SelectTopic(string topicId)
+    {
+        selectedTopicId = selectedTopicId == topicId ? null : topicId;
+        if (topicInput != null)
+        {
+            topicInput.text = selectedTopicId ?? string.Empty;
+        }
+
+        RefreshAttachmentSummary();
+        SetSelectionListVisible(false);
+    }
+
+    private void ToggleEvidence(string evidenceId)
+    {
+        if (selectedEvidenceIds.Contains(evidenceId))
+        {
+            selectedEvidenceIds.Remove(evidenceId);
+            selectedInformationIds.Remove(evidenceId);
+        }
+        else if (selectedEvidenceIds.Count >= MaxSelectedEvidenceCount)
+        {
+            SetStatus($"Evidence limit reached ({MaxSelectedEvidenceCount}).");
+            return;
+        }
+        else
+        {
+            selectedEvidenceIds.Add(evidenceId);
+            if (availableInformationIds.Contains(evidenceId) && !selectedInformationIds.Contains(evidenceId))
+            {
+                selectedInformationIds.Add(evidenceId);
+            }
+        }
+
+        if (evidenceInput != null)
+        {
+            evidenceInput.text = string.Join(", ", selectedEvidenceIds);
+        }
+
+        RefreshAttachmentSummary();
+        RebuildSelectionList("Evidence", availableEvidenceIds, true);
+    }
+
+    private void RebuildSelectionList(string title, IReadOnlyList<string> items, bool evidenceMode)
+    {
+        if (selectionListRoot == null)
+        {
+            Debug.LogWarning("SelectionListRoot is missing from NpcInvestigationUI prefab. Cannot show attachment choices.", this);
+            return;
+        }
+
+        ClearChildren(selectionListRoot);
+        SetSelectionListVisible(true);
+
+        CreateSelectionLabel(title, true);
+        if (items == null || items.Count == 0)
+        {
+            CreateSelectionLabel(evidenceMode ? "No discovered evidence." : "No unlocked topics.", false);
+            return;
+        }
+
+        foreach (string itemId in items)
+        {
+            if (string.IsNullOrWhiteSpace(itemId))
+            {
+                continue;
+            }
+
+            bool selected = evidenceMode ? selectedEvidenceIds.Contains(itemId) : selectedTopicId == itemId;
+            Button optionButton = CreateTextButton(selectionListRoot, selected ? $"* {itemId}" : itemId, new Vector2(280f, 34f));
+            string capturedId = itemId;
+            optionButton.onClick.AddListener(() =>
+            {
+                if (evidenceMode)
+                {
+                    ToggleEvidence(capturedId);
+                }
+                else
+                {
+                    SelectTopic(capturedId);
+                }
+            });
+        }
+    }
+
+    private void CreateSelectionLabel(string text, bool header)
+    {
+        GameObject labelObject = new GameObject(header ? "SelectionHeader" : "SelectionEmpty", typeof(RectTransform), typeof(TextMeshProUGUI));
+        labelObject.transform.SetParent(selectionListRoot, false);
+        TMP_Text label = labelObject.GetComponent<TMP_Text>();
+        label.text = text;
+        label.font = titleText != null ? titleText.font : TMP_Settings.defaultFontAsset;
+        label.fontSize = header ? 16f : 13f;
+        label.fontStyle = header ? FontStyles.Bold : FontStyles.Normal;
+        label.color = new Color(0.92f, 0.95f, 0.98f, 1f);
+    }
+
+    private void SetSpeedDialOpen(bool open)
+    {
+        speedDialOpen = open;
+        if (speedDialRoot != null)
+        {
+            speedDialRoot.gameObject.SetActive(open);
+        }
+    }
+
+    private void SetSelectionListVisible(bool visible)
+    {
+        if (selectionListRoot != null)
+        {
+            selectionListRoot.gameObject.SetActive(visible);
+        }
+    }
+
+    private void RefreshAttachmentSummary()
+    {
+        if (attachmentSummaryText == null)
+        {
+            return;
+        }
+
+        List<string> parts = new();
+        if (!string.IsNullOrWhiteSpace(selectedTopicId))
+        {
+            parts.Add($"Topic: {selectedTopicId}");
+        }
+
+        if (selectedEvidenceIds.Count > 0)
+        {
+            List<string> evidenceOnly = new();
+            List<string> informationOnly = new();
+            foreach (string id in selectedEvidenceIds)
+            {
+                if (selectedInformationIds.Contains(id))
+                {
+                    informationOnly.Add(id);
+                }
+                else
+                {
+                    evidenceOnly.Add(id);
+                }
+            }
+
+            if (evidenceOnly.Count > 0)
+            {
+                parts.Add($"Evidence: {string.Join(", ", evidenceOnly)}");
+            }
+
+            if (informationOnly.Count > 0)
+            {
+                parts.Add($"Information: {string.Join(", ", informationOnly)}");
+            }
+        }
+
+        attachmentSummaryText.text = parts.Count == 0
+            ? "No attachments"
+            : string.Join("   |   ", parts);
     }
 
     private void ResetInputs(bool clearIntentOnly = false)
@@ -259,6 +528,9 @@ public class InvestigationInteractionUI : MonoBehaviour
             return;
         }
 
+        selectedTopicId = null;
+        selectedEvidenceIds.Clear();
+        selectedInformationIds.Clear();
         if (topicInput != null)
         {
             topicInput.text = string.Empty;
@@ -268,6 +540,10 @@ public class InvestigationInteractionUI : MonoBehaviour
         {
             evidenceInput.text = string.Empty;
         }
+
+        RefreshAttachmentSummary();
+        SetSpeedDialOpen(false);
+        SetSelectionListVisible(false);
     }
 
     public static InvestigationInteractionUI GetOrCreateInstance()
@@ -298,10 +574,16 @@ public class InvestigationInteractionUI : MonoBehaviour
         intentInput ??= FindNamedComponent<TMP_InputField>("IntentInput");
         topicInput ??= FindNamedComponent<TMP_InputField>("TopicInput");
         evidenceInput ??= FindNamedComponent<TMP_InputField>("EvidenceInput");
-        talkButton ??= FindNamedComponent<Button>("TalkButton");
+        sendButton ??= FindNamedComponent<Button>("SendButton") ?? FindNamedComponent<Button>("TalkButton");
+        RenameLegacySendButton();
         askTopicButton ??= FindNamedComponent<Button>("AskTopicButton");
         presentEvidenceButton ??= FindNamedComponent<Button>("PresentEvidenceButton");
         closeButton ??= FindNamedComponent<Button>("CloseButton");
+        floatingActionButton ??= FindNamedComponent<Button>("FloatingActionButton");
+        speedDialRoot ??= FindNamedRectTransform("SpeedDialRoot");
+        selectionListRoot ??= FindNamedRectTransform("SelectionListRoot");
+        attachmentBarRoot ??= FindNamedRectTransform("AttachmentBar");
+        attachmentSummaryText ??= FindNamedComponent<TMP_Text>("AttachmentSummaryText");
         scrollRect ??= FindNamedComponent<ScrollRect>("ScrollView");
         dialoguePresenter ??= GetComponent<NpcDialoguePresenter>();
         tellMeterPresenter ??= GetComponent<TellMeterPresenter>();
@@ -351,20 +633,13 @@ public class InvestigationInteractionUI : MonoBehaviour
     private bool HasMinimumReferences(out string missingReferences)
     {
         List<string> missing = new();
-
         if (rootCanvas == null) missing.Add(nameof(rootCanvas));
         if (panelRoot == null) missing.Add(nameof(panelRoot));
-        if (titleText == null) missing.Add(nameof(titleText));
-        if (transcriptText == null) missing.Add(nameof(transcriptText));
-        if (statusText == null) missing.Add(nameof(statusText));
         if (intentInput == null) missing.Add(nameof(intentInput));
-        if (talkButton == null) missing.Add(nameof(talkButton));
+        if (sendButton == null) missing.Add(nameof(sendButton));
         if (askTopicButton == null) missing.Add(nameof(askTopicButton));
         if (presentEvidenceButton == null) missing.Add(nameof(presentEvidenceButton));
         if (closeButton == null) missing.Add(nameof(closeButton));
-        if (scrollRect == null) missing.Add(nameof(scrollRect));
-        if (dialoguePresenter == null) missing.Add(nameof(dialoguePresenter));
-        if (affectPlanePresenter == null) missing.Add(nameof(affectPlanePresenter));
 
         missingReferences = missing.Count == 0 ? string.Empty : string.Join(", ", missing);
         return missing.Count == 0;
@@ -377,8 +652,9 @@ public class InvestigationInteractionUI : MonoBehaviour
         {
             switch (button.gameObject.name)
             {
+                case "SendButton":
                 case "TalkButton":
-                    talkButton ??= button;
+                    sendButton ??= button;
                     break;
                 case "AskTopicButton":
                     askTopicButton ??= button;
@@ -389,110 +665,49 @@ public class InvestigationInteractionUI : MonoBehaviour
                 case "CloseButton":
                     closeButton ??= button;
                     break;
+                case "FloatingActionButton":
+                    floatingActionButton ??= button;
+                    break;
             }
+        }
+
+        RenameLegacySendButton();
+    }
+
+    private void RenameLegacySendButton()
+    {
+        if (sendButton != null && sendButton.gameObject.name == "TalkButton")
+        {
+            sendButton.gameObject.name = "SendButton";
         }
     }
 
     private void EnsureButtonComponents()
     {
-        talkButton ??= EnsureButtonComponent("TalkButton");
-        askTopicButton ??= EnsureButtonComponent("AskTopicButton");
-        presentEvidenceButton ??= EnsureButtonComponent("PresentEvidenceButton");
-        closeButton ??= EnsureButtonComponent("CloseButton");
+        sendButton ??= FindNamedComponent<Button>("SendButton") ?? FindNamedComponent<Button>("TalkButton");
+        RenameLegacySendButton();
+        sendButton ??= FindNamedComponent<Button>("SendButton");
+        askTopicButton ??= FindNamedComponent<Button>("AskTopicButton");
+        presentEvidenceButton ??= FindNamedComponent<Button>("PresentEvidenceButton");
+        closeButton ??= FindNamedComponent<Button>("CloseButton");
     }
 
-    private Button EnsureButtonComponent(string objectName)
+    private void EnsureInvestigationActionUI()
     {
-        Transform[] children = GetComponentsInChildren<Transform>(true);
-        foreach (Transform child in children)
-        {
-            if (child.name != objectName)
-            {
-                continue;
-            }
-
-            Button button = child.GetComponent<Button>();
-            if (button == null)
-            {
-                // Skip corrupted nodes that are already using another Selectable.
-                Selectable existingSelectable = child.GetComponent<Selectable>();
-                if (existingSelectable != null)
-                {
-                    continue;
-                }
-
-                Image image = child.GetComponent<Image>();
-                if (image == null)
-                {
-                    image = child.gameObject.AddComponent<Image>();
-                    image.color = new Color(0.18f, 0.24f, 0.34f, 1f);
-                }
-
-                button = child.gameObject.AddComponent<Button>();
-                button.targetGraphic = image;
-                Debug.LogWarning($"Missing Button component on '{objectName}' was restored at runtime.", child.gameObject);
-            }
-
-            return button;
-        }
-
-        return CreateFallbackButton(objectName);
+        SetButtonLabel(askTopicButton, "Ask Topic");
+        SetButtonLabel(presentEvidenceButton, "Present Evidence");
+        SetButtonLabel(sendButton, "Send");
+        SetButtonLabel(floatingActionButton, "+");
     }
 
-    private Button CreateFallbackButton(string objectName)
+    private Button CreateTextButton(RectTransform parent, string labelText, Vector2 size)
     {
-        if (panelRoot == null)
-        {
-            return null;
-        }
-
-        GameObject buttonObject = new GameObject(objectName, typeof(RectTransform), typeof(Image), typeof(Button));
-        buttonObject.transform.SetParent(panelRoot, false);
-
+        GameObject buttonObject = new GameObject("Button", typeof(RectTransform), typeof(Image), typeof(Button));
+        buttonObject.transform.SetParent(parent, false);
         RectTransform rectTransform = buttonObject.GetComponent<RectTransform>();
-        rectTransform.anchorMin = Vector2.zero;
-        rectTransform.anchorMax = Vector2.zero;
-        rectTransform.pivot = new Vector2(0.5f, 0f);
-        rectTransform.sizeDelta = new Vector2(160f, 52f);
-
-        switch (objectName)
-        {
-            case "TalkButton":
-                rectTransform.anchorMin = new Vector2(0f, 0f);
-                rectTransform.anchorMax = new Vector2(0.333f, 0f);
-                rectTransform.anchoredPosition = new Vector2(0f, 24f);
-                rectTransform.sizeDelta = new Vector2(-12f, 58f);
-                break;
-            case "AskTopicButton":
-                rectTransform.anchorMin = new Vector2(0.333f, 0f);
-                rectTransform.anchorMax = new Vector2(0.666f, 0f);
-                rectTransform.anchoredPosition = new Vector2(0f, 24f);
-                rectTransform.sizeDelta = new Vector2(-12f, 58f);
-                break;
-            case "PresentEvidenceButton":
-                rectTransform.anchorMin = new Vector2(0.666f, 0f);
-                rectTransform.anchorMax = new Vector2(1f, 0f);
-                rectTransform.anchoredPosition = new Vector2(0f, 24f);
-                rectTransform.sizeDelta = new Vector2(-12f, 58f);
-                break;
-            case "CloseButton":
-                rectTransform.anchorMin = new Vector2(1f, 1f);
-                rectTransform.anchorMax = new Vector2(1f, 1f);
-                rectTransform.pivot = new Vector2(1f, 1f);
-                rectTransform.anchoredPosition = new Vector2(-18f, -18f);
-                rectTransform.sizeDelta = new Vector2(34f, 34f);
-                break;
-        }
-
+        rectTransform.sizeDelta = size;
         Image image = buttonObject.GetComponent<Image>();
-        image.color = objectName switch
-        {
-            "AskTopicButton" => new Color(0.27f, 0.24f, 0.11f, 1f),
-            "PresentEvidenceButton" => new Color(0.31f, 0.17f, 0.17f, 1f),
-            "CloseButton" => new Color(0.18f, 0.22f, 0.28f, 1f),
-            _ => new Color(0.18f, 0.24f, 0.34f, 1f)
-        };
-
+        image.color = new Color(0.16f, 0.22f, 0.3f, 1f);
         Button button = buttonObject.GetComponent<Button>();
         button.targetGraphic = image;
 
@@ -503,22 +718,57 @@ public class InvestigationInteractionUI : MonoBehaviour
         labelRect.anchorMax = Vector2.one;
         labelRect.offsetMin = Vector2.zero;
         labelRect.offsetMax = Vector2.zero;
-
-        TextMeshProUGUI label = labelObject.GetComponent<TextMeshProUGUI>();
-        label.text = objectName switch
-        {
-            "AskTopicButton" => "Ask Topic",
-            "PresentEvidenceButton" => "Present Evidence",
-            "CloseButton" => "X",
-            _ => "Talk"
-        };
+        TMP_Text label = labelObject.GetComponent<TMP_Text>();
+        label.text = labelText;
         label.font = titleText != null ? titleText.font : TMP_Settings.defaultFontAsset;
-        label.fontSize = objectName == "CloseButton" ? 18f : 18f;
+        label.fontSize = 16f;
         label.fontStyle = FontStyles.Bold;
         label.alignment = TextAlignmentOptions.Center;
         label.color = Color.white;
-
-        Debug.LogWarning($"Created fallback runtime button for '{objectName}' because prefab binding was invalid.", buttonObject);
         return button;
     }
+
+    private void SetButtonLabel(Button button, string text)
+    {
+        if (button == null)
+        {
+            return;
+        }
+
+        TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+        if (label != null)
+        {
+            label.text = text;
+        }
+    }
+
+    private void AddUniqueOptions(List<string> destination, IReadOnlyList<string> source)
+    {
+        if (source == null)
+        {
+            return;
+        }
+
+        foreach (string item in source)
+        {
+            if (!string.IsNullOrWhiteSpace(item) && !destination.Contains(item))
+            {
+                destination.Add(item);
+            }
+        }
+    }
+
+    private void ClearChildren(RectTransform root)
+    {
+        if (root == null)
+        {
+            return;
+        }
+
+        for (int i = root.childCount - 1; i >= 0; i--)
+        {
+            Destroy(root.GetChild(i).gameObject);
+        }
+    }
+
 }

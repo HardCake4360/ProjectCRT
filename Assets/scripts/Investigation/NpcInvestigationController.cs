@@ -25,6 +25,8 @@ public class NpcInvestigationController : MonoBehaviour
     [SerializeField] private NpcProfileComponent profileComponent;
 
     private NpcConversationState conversationState;
+    private Interactable ownerInteractable;
+    private NPC_script npcAnimation;
     private bool isBusy;
     private string activeTurnId;
 
@@ -65,6 +67,16 @@ public class NpcInvestigationController : MonoBehaviour
         if (profileComponent == null)
         {
             profileComponent = GetComponent<NpcProfileComponent>();
+        }
+
+        if (ownerInteractable == null)
+        {
+            ownerInteractable = GetComponent<Interactable>();
+        }
+
+        if (npcAnimation == null)
+        {
+            npcAnimation = GetComponent<NPC_script>();
         }
 
         Debug.Log(
@@ -114,12 +126,17 @@ public class NpcInvestigationController : MonoBehaviour
         }
 
         ActiveController = this;
+        ownerInteractable?.EnterCloseup();
+        npcAnimation?.SetLookAtCamera(true);
+        npcAnimation?.PlayInteractionStart();
         interactionUI.Open(npcDisplayName);
+        RefreshInteractionChoices();
         interactionUI.ClearConversation();
         interactionUI.ResetTellValue(conversationState.lastKnownTell);
-        interactionUI.ResetAffectValue(
-            conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.interest : 0f,
-            conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.attitude : 0f);
+        float cachedInterest = conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.interest : 0f;
+        float cachedAttitude = conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.attitude : 0f;
+        Debug.Log($"[NpcInvestigationController] Reset affect npc={npcId} interest={cachedInterest:F3} attitude={cachedAttitude:F3}", this);
+        interactionUI.ResetAffectValue(cachedInterest, cachedAttitude);
         interactionUI.SetPatienceValue(conversationState.lastKnownPatience);
         interactionUI.AppendSystemMessage("대화형 조사 UI가 열렸습니다.");
 
@@ -173,6 +190,8 @@ public class NpcInvestigationController : MonoBehaviour
         interactionUI.AppendPlayerMessage(playerLine);
         interactionUI.SetStatus("리베카의 반응과 tell 값을 병렬로 분석 중입니다...");
         interactionUI.SetTellPending(true);
+        interactionUI.SetAffectPending(true);
+        npcAnimation?.PlayThinking();
 
         string turnId = System.Guid.NewGuid().ToString("N");
         activeTurnId = turnId;
@@ -199,6 +218,7 @@ public class NpcInvestigationController : MonoBehaviour
         bool replyCompleted = false;
         bool tellCompleted = false;
         bool streamStarted = false;
+        bool answerAnimationStarted = false;
         ConversationStatePayload streamedConversationState = null;
         string pendingTellError = null;
         string pendingReplyError = null;
@@ -213,20 +233,29 @@ public class NpcInvestigationController : MonoBehaviour
             },
             partialText =>
             {
+                if (!answerAnimationStarted && !string.IsNullOrEmpty(partialText))
+                {
+                    answerAnimationStarted = true;
+                    npcAnimation?.PlayAnswerStart();
+                }
+
                 interactionUI.UpdateNpcStreamingMessage(npcDisplayName, partialText);
             },
             conversationPayload =>
             {
                 streamedConversationState = conversationPayload ?? ConversationStatePayload.Default();
-                interactionUI.SetAffectValue(
-                    streamedConversationState.affect != null ? streamedConversationState.affect.interest : 0f,
-                    streamedConversationState.affect != null ? streamedConversationState.affect.attitude : 0f);
+                float streamedInterest = streamedConversationState.affect != null ? streamedConversationState.affect.interest : 0f;
+                float streamedAttitude = streamedConversationState.affect != null ? streamedConversationState.affect.attitude : 0f;
+                Debug.Log($"[NpcInvestigationController] Stream affect update npc={npcId} interest={streamedInterest:F3} attitude={streamedAttitude:F3} patience={streamedConversationState.patience}", this);
+                interactionUI.SetAffectValue(streamedInterest, streamedAttitude);
                 interactionUI.SetPatienceValue(streamedConversationState.patience);
             },
             response =>
             {
                 if (response == null)
                 {
+                    npcAnimation?.PlayInteractionIdle();
+                    interactionUI.SetAffectPending(false);
                     pendingReplyError = "빈 응답이 반환되었습니다.";
                     replyCompleted = true;
                     return;
@@ -241,11 +270,18 @@ public class NpcInvestigationController : MonoBehaviour
                     ? "..."
                     : response.replyText.Trim();
 
+                if (!answerAnimationStarted)
+                {
+                    answerAnimationStarted = true;
+                    npcAnimation?.PlayAnswerStart();
+                }
+
                 conversationState.RegisterExchange("npc", reply);
                 conversationState.ApplyReplyResponse(response);
-                interactionUI.SetAffectValue(
-                    response.conversationState.affect != null ? response.conversationState.affect.interest : 0f,
-                    response.conversationState.affect != null ? response.conversationState.affect.attitude : 0f);
+                float finalInterest = response.conversationState.affect != null ? response.conversationState.affect.interest : 0f;
+                float finalAttitude = response.conversationState.affect != null ? response.conversationState.affect.attitude : 0f;
+                Debug.Log($"[NpcInvestigationController] Final affect update npc={npcId} interest={finalInterest:F3} attitude={finalAttitude:F3} patience={response.conversationState.patience}", this);
+                interactionUI.SetAffectValue(finalInterest, finalAttitude);
                 interactionUI.SetPatienceValue(response.conversationState.patience);
 
                 if (streamStarted)
@@ -263,6 +299,7 @@ public class NpcInvestigationController : MonoBehaviour
                     {
                         contextBuilder.RegisterTopic(topicId);
                     }
+                    RefreshInteractionChoices();
                     interactionUI.AppendSystemMessage($"Unlocked topics: {string.Join(", ", response.stateDelta.unlockTopicIds)}");
                 }
 
@@ -280,6 +317,8 @@ public class NpcInvestigationController : MonoBehaviour
                 }
 
                 pendingReplyError = error;
+                interactionUI.SetAffectPending(false);
+                npcAnimation?.PlayInteractionIdle();
                 replyCompleted = true;
             }));
 
@@ -347,6 +386,10 @@ public class NpcInvestigationController : MonoBehaviour
             interactionUI.SetVisible(false);
         }
 
+        npcAnimation?.PlayIdle();
+        npcAnimation?.SetLookAtCamera(false);
+        ownerInteractable?.ExitCloseup();
+
         if (MainLoop.Instance != null)
         {
             MainLoop.Instance.SetMainLoopState_Main();
@@ -369,5 +412,29 @@ public class NpcInvestigationController : MonoBehaviour
         interactionUI.CloseRequested -= HandleCloseRequested;
         interactionUI.ActionRequested += HandleActionRequested;
         interactionUI.CloseRequested += HandleCloseRequested;
+    }
+
+    private void RefreshInteractionChoices()
+    {
+        if (interactionUI == null || contextBuilder == null)
+        {
+            return;
+        }
+
+        List<string> evidenceIds = contextBuilder.GetDiscoveredEvidenceIds();
+        List<string> informationIds = contextBuilder.GetDiscoveredInformationIds();
+        List<string> attachmentIds = new(evidenceIds);
+        foreach (string informationId in informationIds)
+        {
+            if (!string.IsNullOrWhiteSpace(informationId) && !attachmentIds.Contains(informationId))
+            {
+                attachmentIds.Add(informationId);
+            }
+        }
+
+        interactionUI.ConfigureSelectionOptions(
+            contextBuilder.GetUnlockedTopicIds(conversationState),
+            attachmentIds,
+            informationIds);
     }
 }

@@ -8,6 +8,8 @@ public class InvestigationInteractionPayload
     public string playerIntentText;
     public string topicId;
     public string evidenceId;
+    public List<string> evidenceIds = new();
+    public List<string> informationIds = new();
     public string objectId;
     public List<string> statementRefIds = new();
 }
@@ -16,6 +18,7 @@ public class InvestigationInteractionPayload
 public class InvestigationSceneStatePayload
 {
     public List<string> discoveredEvidenceIds = new();
+    public List<string> discoveredInformationIds = new();
     public List<string> unlockedTopicIds = new();
     public List<string> activeHypothesisIds = new();
     public List<string> interactableObjectIds = new();
