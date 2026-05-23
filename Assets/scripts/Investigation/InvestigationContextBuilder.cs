@@ -45,11 +45,11 @@ public class InvestigationContextBuilder : MonoBehaviour
         };
     }
 
-    public void RegisterEvidence(string evidenceId)
+    public bool RegisterEvidence(string evidenceId)
     {
         if (string.IsNullOrWhiteSpace(evidenceId))
         {
-            return;
+            return false;
         }
 
         if (!discoveredEvidenceIds.Contains(evidenceId))
@@ -57,14 +57,14 @@ public class InvestigationContextBuilder : MonoBehaviour
             discoveredEvidenceIds.Add(evidenceId);
         }
 
-        InvestigationInventoryManager.GetOrCreateInstance().UnlockEvidence(evidenceId);
+        return InvestigationInventoryManager.GetOrCreateInstance().UnlockEvidence(evidenceId);
     }
 
-    public void RegisterTopic(string topicId)
+    public bool RegisterTopic(string topicId)
     {
         if (string.IsNullOrWhiteSpace(topicId))
         {
-            return;
+            return false;
         }
 
         if (!unlockedTopicIds.Contains(topicId))
@@ -72,14 +72,14 @@ public class InvestigationContextBuilder : MonoBehaviour
             unlockedTopicIds.Add(topicId);
         }
 
-        InvestigationInventoryManager.GetOrCreateInstance().UnlockTopic(topicId);
+        return InvestigationInventoryManager.GetOrCreateInstance().UnlockTopic(topicId);
     }
 
-    public void RegisterInformation(string informationId)
+    public bool RegisterInformation(string informationId)
     {
         if (string.IsNullOrWhiteSpace(informationId))
         {
-            return;
+            return false;
         }
 
         if (!discoveredInformationIds.Contains(informationId))
@@ -87,7 +87,7 @@ public class InvestigationContextBuilder : MonoBehaviour
             discoveredInformationIds.Add(informationId);
         }
 
-        InvestigationInventoryManager.GetOrCreateInstance().UnlockInformation(informationId);
+        return InvestigationInventoryManager.GetOrCreateInstance().UnlockInformation(informationId);
     }
 
     public List<string> GetDiscoveredEvidenceIds()

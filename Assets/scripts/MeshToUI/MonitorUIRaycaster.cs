@@ -17,7 +17,9 @@ public class MonitorUIRaycaster : MonoBehaviour
     public LayerMask TargetLayer;
 
     private GameObject currentHovering;
+    private GameObject currentPressing;
     private GameObject currentDragging;
+    private bool beganDrag;
     private Vector2? prevLocalPoint = null;
 
     private bool interacting;
@@ -112,6 +114,7 @@ public class MonitorUIRaycaster : MonoBehaviour
         }
 
         UpdateHoverState(results.Count > 0 ? results[0].gameObject : null, eventData);
+        HandleScrollState(eventData);
         HandleDragState(eventData);
     }
 
@@ -137,24 +140,120 @@ public class MonitorUIRaycaster : MonoBehaviour
         currentHovering = newHovering;
     }
 
+    private void HandleScrollState(PointerEventData eventData)
+    {
+        Vector2 scrollDelta = Input.mouseScrollDelta;
+        if (scrollDelta == Vector2.zero || currentHovering == null)
+        {
+            return;
+        }
+
+        GameObject scrollTarget = ExecuteEvents.GetEventHandler<IScrollHandler>(currentHovering);
+        if (scrollTarget == null)
+        {
+            return;
+        }
+
+        eventData.scrollDelta = scrollDelta;
+        ExecuteEvents.Execute<IScrollHandler>(scrollTarget, eventData, ExecuteEvents.scrollHandler);
+    }
+
     private void HandleDragState(PointerEventData eventData)
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            FocusWindowAtPointer(eventData.position);
+        }
+
         if (Input.GetMouseButtonDown(0) && currentHovering != null)
         {
-            currentDragging = currentHovering;
-            ExecuteEvents.Execute<IPointerDownHandler>(currentDragging, eventData, ExecuteEvents.pointerDownHandler);
+            currentPressing = ExecuteEvents.GetEventHandler<IPointerDownHandler>(currentHovering);
+            currentDragging = ExecuteEvents.GetEventHandler<IDragHandler>(currentHovering);
+            beganDrag = false;
+
+            if (currentPressing != null)
+            {
+                ExecuteEvents.Execute<IPointerDownHandler>(currentPressing, eventData, ExecuteEvents.pointerDownHandler);
+            }
+
+            if (currentDragging != null)
+            {
+                ExecuteEvents.Execute<IInitializePotentialDragHandler>(currentDragging, eventData, ExecuteEvents.initializePotentialDrag);
+            }
         }
 
         if (Input.GetMouseButton(0) && currentDragging != null)
         {
+            if (!beganDrag)
+            {
+                ExecuteEvents.Execute<IBeginDragHandler>(currentDragging, eventData, ExecuteEvents.beginDragHandler);
+                beganDrag = true;
+            }
+
             ExecuteEvents.Execute<IDragHandler>(currentDragging, eventData, ExecuteEvents.dragHandler);
         }
 
-        if (Input.GetMouseButtonUp(0) && currentDragging != null)
+        if (Input.GetMouseButtonUp(0))
         {
-            ExecuteEvents.Execute<IPointerUpHandler>(currentDragging, eventData, ExecuteEvents.pointerUpHandler);
+            if (currentPressing != null)
+            {
+                ExecuteEvents.Execute<IPointerUpHandler>(currentPressing, eventData, ExecuteEvents.pointerUpHandler);
+            }
+
+            if (currentDragging != null && beganDrag)
+            {
+                ExecuteEvents.Execute<IEndDragHandler>(currentDragging, eventData, ExecuteEvents.endDragHandler);
+            }
+
+            currentPressing = null;
             currentDragging = null;
+            beganDrag = false;
         }
+    }
+
+    private void FocusWindowAtPointer(Vector2 pointerPosition)
+    {
+        WindowFocusTarget topmostTarget = null;
+        int topmostSiblingIndex = int.MinValue;
+        WindowFocusTarget[] focusTargets = uiCanvasRect.GetComponentsInChildren<WindowFocusTarget>(false);
+
+        foreach (WindowFocusTarget focusTarget in focusTargets)
+        {
+            RectTransform windowRect = focusTarget.WindowRect;
+            if (windowRect == null || !windowRect.gameObject.activeInHierarchy)
+            {
+                continue;
+            }
+
+            if (!IsPointerInsideWindow(windowRect, pointerPosition))
+            {
+                continue;
+            }
+
+            int siblingIndex = windowRect.GetSiblingIndex();
+            if (siblingIndex >= topmostSiblingIndex)
+            {
+                topmostTarget = focusTarget;
+                topmostSiblingIndex = siblingIndex;
+            }
+        }
+
+        if (topmostTarget != null)
+        {
+            topmostTarget.Focus();
+        }
+    }
+
+    private bool IsPointerInsideWindow(RectTransform windowRect, Vector2 pointerPosition)
+    {
+        Vector2 canvasLocalPoint = new Vector2(
+            uiCanvasRect.rect.xMin + pointerPosition.x,
+            uiCanvasRect.rect.yMin + pointerPosition.y
+        );
+
+        Vector3 worldPoint = uiCanvasRect.TransformPoint(canvasLocalPoint);
+        Vector2 windowLocalPoint = windowRect.InverseTransformPoint(worldPoint);
+        return windowRect.rect.Contains(windowLocalPoint);
     }
 
     private void ClearHoverState()
@@ -167,7 +266,9 @@ public class MonitorUIRaycaster : MonoBehaviour
         PointerEventData eventData = new PointerEventData(EventSystem.current);
         ExecuteEvents.Execute<IPointerExitHandler>(currentHovering, eventData, ExecuteEvents.pointerExitHandler);
         currentHovering = null;
+        currentPressing = null;
         currentDragging = null;
+        beganDrag = false;
         prevLocalPoint = null;
     }
 }

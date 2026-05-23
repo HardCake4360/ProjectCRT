@@ -138,6 +138,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HintName: "\uC120\uBC18"
   canInteract: 1
+  useCloseupCamera: 0
+  closeupCameraBehaviour: {fileID: 0}
+  closeupPriority: 100
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -153,6 +156,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  investigationController: {fileID: 0}
+  npcAnimator: {fileID: 0}
+  idleClip: {fileID: 0}
+  onInteractionClip: {fileID: 0}
+  onInteractionIdleClip: {fileID: 0}
+  startThinkingClip: {fileID: 0}
+  thinkingClip: {fileID: 0}
+  onAnswerClip: {fileID: 0}
+  lookAtCameraDuringInteraction: 1
+  lookAtTargetOverride: {fileID: 0}
+  lookAtWeight: 1
+  lookAtBodyWeight: 0.15
+  lookAtHeadWeight: 0.85
+  lookAtEyesWeight: 0.4
+  lookAtClampWeight: 0.7
+  lookAtBlendSpeed: 6
+  lookAtTargetOffset: {x: 0, y: -0.05, z: 0}
 --- !u!65 &335487955
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -525,6 +545,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HintName: "\uB3CC\uC544\uAC00\uAE30"
   canInteract: 1
+  useCloseupCamera: 0
+  closeupCameraBehaviour: {fileID: 0}
+  closeupPriority: 100
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -540,6 +563,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  investigationController: {fileID: 0}
+  npcAnimator: {fileID: 0}
+  idleClip: {fileID: 0}
+  onInteractionClip: {fileID: 0}
+  onInteractionIdleClip: {fileID: 0}
+  startThinkingClip: {fileID: 0}
+  thinkingClip: {fileID: 0}
+  onAnswerClip: {fileID: 0}
+  lookAtCameraDuringInteraction: 1
+  lookAtTargetOverride: {fileID: 0}
+  lookAtWeight: 1
+  lookAtBodyWeight: 0.15
+  lookAtHeadWeight: 0.85
+  lookAtEyesWeight: 0.4
+  lookAtClampWeight: 0.7
+  lookAtBlendSpeed: 6
+  lookAtTargetOffset: {x: 0, y: -0.05, z: 0}
 --- !u!65 &914591744
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -717,6 +757,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HintName: "\uC0C1\uC790"
   canInteract: 1
+  useCloseupCamera: 0
+  closeupCameraBehaviour: {fileID: 0}
+  closeupPriority: 100
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -732,6 +775,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  investigationController: {fileID: 0}
+  npcAnimator: {fileID: 0}
+  idleClip: {fileID: 0}
+  onInteractionClip: {fileID: 0}
+  onInteractionIdleClip: {fileID: 0}
+  startThinkingClip: {fileID: 0}
+  thinkingClip: {fileID: 0}
+  onAnswerClip: {fileID: 0}
+  lookAtCameraDuringInteraction: 1
+  lookAtTargetOverride: {fileID: 0}
+  lookAtWeight: 1
+  lookAtBodyWeight: 0.15
+  lookAtHeadWeight: 0.85
+  lookAtEyesWeight: 0.4
+  lookAtClampWeight: 0.7
+  lookAtBlendSpeed: 6
+  lookAtTargetOffset: {x: 0, y: -0.05, z: 0}
 --- !u!65 &1182889512
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1067,6 +1127,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HintName: "\uBB38"
   canInteract: 1
+  useCloseupCamera: 0
+  closeupCameraBehaviour: {fileID: 0}
+  closeupPriority: 100
   IsOpened: 0
   openTime: 5
   animationDuration: 0.3
@@ -1208,6 +1271,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HintName: "\uC811\uC218\uC6D0"
   canInteract: 1
+  useCloseupCamera: 0
+  closeupCameraBehaviour: {fileID: 0}
+  closeupPriority: 100
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -1223,6 +1289,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  investigationController: {fileID: 0}
+  npcAnimator: {fileID: 0}
+  idleClip: {fileID: 0}
+  onInteractionClip: {fileID: 0}
+  onInteractionIdleClip: {fileID: 0}
+  startThinkingClip: {fileID: 0}
+  thinkingClip: {fileID: 0}
+  onAnswerClip: {fileID: 0}
+  lookAtCameraDuringInteraction: 1
+  lookAtTargetOverride: {fileID: 0}
+  lookAtWeight: 1
+  lookAtBodyWeight: 0.15
+  lookAtHeadWeight: 0.85
+  lookAtEyesWeight: 0.4
+  lookAtClampWeight: 0.7
+  lookAtBlendSpeed: 6
+  lookAtTargetOffset: {x: 0, y: -0.05, z: 0}
 --- !u!65 &1690682101
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1326,6 +1409,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HintName: "\uC11C\uC7A5"
   canInteract: 1
+  useCloseupCamera: 0
+  closeupCameraBehaviour: {fileID: 0}
+  closeupPriority: 100
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -1341,6 +1427,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  investigationController: {fileID: 0}
+  npcAnimator: {fileID: 0}
+  idleClip: {fileID: 0}
+  onInteractionClip: {fileID: 0}
+  onInteractionIdleClip: {fileID: 0}
+  startThinkingClip: {fileID: 0}
+  thinkingClip: {fileID: 0}
+  onAnswerClip: {fileID: 0}
+  lookAtCameraDuringInteraction: 1
+  lookAtTargetOverride: {fileID: 0}
+  lookAtWeight: 1
+  lookAtBodyWeight: 0.15
+  lookAtHeadWeight: 0.85
+  lookAtEyesWeight: 0.4
+  lookAtClampWeight: 0.7
+  lookAtBlendSpeed: 6
+  lookAtTargetOffset: {x: 0, y: -0.05, z: 0}
 --- !u!136 &1706034788
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1936,6 +2039,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HintName: "\uBB38"
   canInteract: 1
+  useCloseupCamera: 0
+  closeupCameraBehaviour: {fileID: 0}
+  closeupPriority: 100
   IsOpened: 0
   openTime: 5
   animationDuration: 0.3

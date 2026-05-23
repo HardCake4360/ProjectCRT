@@ -12,6 +12,23 @@ public class InvestigationInteractionPayload
     public List<string> informationIds = new();
     public string objectId;
     public List<string> statementRefIds = new();
+    public InvestigationAttachedItemDirectivePayload attachedItemDirective;
+}
+
+[Serializable]
+public class InvestigationAttachedItemDirectivePayload
+{
+    public string itemId;
+    public string itemCategory;
+    public string itemDisplayName;
+    public string itemPrompt;
+    public float attitudeThreshold;
+    public float currentAttitude;
+    public bool thresholdSatisfied;
+    public string responseDirectivePrompt;
+    public bool bypassWorldContextRag;
+    public string followingItemId;
+    public string followingItemCategory;
 }
 
 [Serializable]
@@ -239,4 +256,27 @@ public class NpcInvestigationReplyStreamChunk
     public string error;
     public ConversationStatePayload conversationState;
     public NpcInvestigationReplyResponse response;
+}
+
+[Serializable]
+public class NpcConversationSaveEntry
+{
+    public string stateKey;
+    public string npcId;
+    public bool hasIntroduced;
+    public int conversationCount;
+    public List<string> knownTopicsUnlocked = new();
+    public InterrogationAffectPayload lastKnownAffect = InterrogationAffectPayload.Default();
+    public float lastKnownTell;
+    public int lastKnownPatience = 100;
+    public string lastInteractionTime;
+    public List<InvestigationStatementRecord> cachedRecentStatements = new();
+    public List<InvestigationExchange> recentExchanges = new();
+}
+
+[Serializable]
+public class NpcConversationSaveData
+{
+    public int version = 1;
+    public List<NpcConversationSaveEntry> entries = new();
 }

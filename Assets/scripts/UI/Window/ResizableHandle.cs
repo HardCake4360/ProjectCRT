@@ -6,9 +6,19 @@ public class ResizableHandle : MeshRayReciver
     [SerializeField] private ResizableHandleState handleSetting;
     [SerializeField] private ResizablePanel targetPanel;
 
+    public void Configure(ResizableHandleState handle, ResizablePanel panel)
+    {
+        handleSetting = handle;
+        targetPanel = panel;
+    }
+
     public override void OnPointerDown(PointerEventData eventData)
     {
-        base.OnPointerDown(eventData);
+        if (targetPanel == null)
+        {
+            return;
+        }
+
         targetPanel.SetHandleTrigger(handleSetting);
         targetPanel.SetOriginalTransform();
         targetPanel.StartPos = eventData.position;
@@ -16,14 +26,21 @@ public class ResizableHandle : MeshRayReciver
 
     public override void OnDrag(PointerEventData eventData)
     {
-        base.OnDrag(eventData);
+        if (targetPanel == null)
+        {
+            return;
+        }
+
         targetPanel.DragDelta = eventData.position - targetPanel.StartPos;
-        Debug.Log("pointer pos: " + eventData.position);
     }
 
     public override void OnPointerUp(PointerEventData eventData)
     {
-        base.OnPointerUp(eventData);
+        if (targetPanel == null)
+        {
+            return;
+        }
+
         targetPanel.ResetHandleTrigger();
     }
 }

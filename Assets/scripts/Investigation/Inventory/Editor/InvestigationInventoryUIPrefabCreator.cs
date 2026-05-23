@@ -126,6 +126,8 @@ public static class InvestigationInventoryUIPrefabCreator
         detailRect.offsetMin = new Vector2(18f, 18f);
         detailRect.offsetMax = new Vector2(-18f, -18f);
 
+        ConfigureWindowChrome(panelRect, headerRect);
+
         SerializedObject serializedObject = new SerializedObject(root.GetComponent<InvestigationInventoryUI>());
         serializedObject.FindProperty("rootCanvas").objectReferenceValue = canvas;
         serializedObject.FindProperty("titleText").objectReferenceValue = title;
@@ -177,6 +179,107 @@ public static class InvestigationInventoryUIPrefabCreator
         labelRect.offsetMin = Vector2.zero;
         labelRect.offsetMax = Vector2.zero;
         return button;
+    }
+
+    private static void ConfigureWindowChrome(RectTransform panelRect, RectTransform headerRect)
+    {
+        RectTransform dragHitAreaRect = CreateHeaderDragHitArea(headerRect);
+        DraggablePanel draggablePanel = dragHitAreaRect.gameObject.AddComponent<DraggablePanel>();
+        draggablePanel.Configure(panelRect);
+
+        ResizablePanel resizablePanel = panelRect.gameObject.AddComponent<ResizablePanel>();
+        resizablePanel.targetPanel = panelRect;
+        resizablePanel.MinSize = new Vector2(480f, 320f);
+
+        GameObject resizeRoot = new GameObject("ResizeHandles", typeof(RectTransform));
+        resizeRoot.transform.SetParent(panelRect, false);
+
+        RectTransform resizeRootRect = resizeRoot.GetComponent<RectTransform>();
+        resizeRootRect.anchorMin = Vector2.zero;
+        resizeRootRect.anchorMax = Vector2.one;
+        resizeRootRect.offsetMin = Vector2.zero;
+        resizeRootRect.offsetMax = Vector2.zero;
+        resizeRootRect.SetAsLastSibling();
+
+        CreateResizeHandle(resizeRoot.transform, "Left", ResizableHandleState.left, resizablePanel, new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(-5f, 0f), new Vector2(10f, 0f));
+        CreateResizeHandle(resizeRoot.transform, "Right", ResizableHandleState.right, resizablePanel, new Vector2(1f, 0f), new Vector2(1f, 1f), new Vector2(5f, 0f), new Vector2(10f, 0f));
+        CreateResizeHandle(resizeRoot.transform, "Top", ResizableHandleState.top, resizablePanel, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(0f, 5f), new Vector2(0f, 10f));
+        CreateResizeHandle(resizeRoot.transform, "Bottom", ResizableHandleState.bottom, resizablePanel, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0f, -5f), new Vector2(0f, 10f));
+        CreateResizeHandle(resizeRoot.transform, "TopLeft", ResizableHandleState.top_left, resizablePanel, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(-5f, 5f), new Vector2(16f, 16f));
+        CreateResizeHandle(resizeRoot.transform, "TopRight", ResizableHandleState.top_right, resizablePanel, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(5f, 5f), new Vector2(16f, 16f));
+        CreateResizeHandle(resizeRoot.transform, "BottomLeft", ResizableHandleState.bottom_left, resizablePanel, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(-5f, -5f), new Vector2(16f, 16f));
+        CreateResizeHandle(resizeRoot.transform, "BottomRight", ResizableHandleState.bottom_right, resizablePanel, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(5f, -5f), new Vector2(16f, 16f));
+    }
+
+    private static RectTransform CreateHeaderDragHitArea(RectTransform headerRect)
+    {
+        GameObject dragHitArea = new GameObject("HeaderDragHitArea", typeof(RectTransform), typeof(Image));
+        dragHitArea.transform.SetParent(headerRect, false);
+
+        RectTransform dragHitAreaRect = dragHitArea.GetComponent<RectTransform>();
+        dragHitAreaRect.anchorMin = Vector2.zero;
+        dragHitAreaRect.anchorMax = Vector2.one;
+        dragHitAreaRect.offsetMin = Vector2.zero;
+        dragHitAreaRect.offsetMax = new Vector2(-58f, 0f);
+        dragHitAreaRect.SetAsLastSibling();
+
+        Image image = dragHitArea.GetComponent<Image>();
+        image.color = new Color(1f, 1f, 1f, 0f);
+        image.raycastTarget = true;
+
+        Transform closeButton = headerRect.Find("CloseButton");
+        if (closeButton != null)
+        {
+            closeButton.SetAsLastSibling();
+        }
+
+        return dragHitAreaRect;
+    }
+
+    private static void CreateResizeHandle(
+        Transform parent,
+        string name,
+        ResizableHandleState handleState,
+        ResizablePanel resizablePanel,
+        Vector2 anchorMin,
+        Vector2 anchorMax,
+        Vector2 anchoredPosition,
+        Vector2 sizeDelta)
+    {
+        GameObject handleObject = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(ResizableHandle));
+        handleObject.transform.SetParent(parent, false);
+
+        RectTransform handleRect = handleObject.GetComponent<RectTransform>();
+        handleRect.anchorMin = anchorMin;
+        handleRect.anchorMax = anchorMax;
+        handleRect.anchoredPosition = anchoredPosition;
+        handleRect.sizeDelta = sizeDelta;
+
+        Image image = handleObject.GetComponent<Image>();
+        image.color = new Color(1f, 1f, 1f, 0f);
+        image.raycastTarget = true;
+
+        ResizableHandle handle = handleObject.GetComponent<ResizableHandle>();
+        handle.Configure(handleState, resizablePanel);
+
+        CursorZone cursorZone = handleObject.AddComponent<CursorZone>();
+        cursorZone.OnHover = GetCursorState(handleState);
+    }
+
+    private static CursorState GetCursorState(ResizableHandleState handleState)
+    {
+        return handleState switch
+        {
+            ResizableHandleState.left => CursorState.ResizeHorizontal,
+            ResizableHandleState.right => CursorState.ResizeHorizontal,
+            ResizableHandleState.top => CursorState.ResizeVertical,
+            ResizableHandleState.bottom => CursorState.ResizeVertical,
+            ResizableHandleState.top_left => CursorState.ResizeMainDiagonal,
+            ResizableHandleState.bottom_right => CursorState.ResizeMainDiagonal,
+            ResizableHandleState.top_right => CursorState.ResizeAntiDiagonal,
+            ResizableHandleState.bottom_left => CursorState.ResizeAntiDiagonal,
+            _ => CursorState.Default
+        };
     }
 }
 #endif

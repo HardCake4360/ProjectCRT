@@ -7,12 +7,18 @@ public class CursorZone : MeshRayReciver
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
-        CustomCursor.Instance.SetCursorSprite(OnHover);
+        if (CustomCursor.Instance != null)
+        {
+            CustomCursor.Instance.SetCursorSprite(OnHover);
+        }
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
-        base.OnPointerEnter(eventData);
-        CustomCursor.Instance.SetCursorDefault();
+        base.OnPointerExit(eventData);
+        if (CustomCursor.Instance != null)
+        {
+            CustomCursor.Instance.SetCursorDefault();
+        }
     }
 }

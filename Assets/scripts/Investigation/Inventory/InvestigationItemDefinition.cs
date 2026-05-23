@@ -11,6 +11,10 @@ public class InvestigationItemDefinition : ScriptableObject
     [TextArea(4, 8)]
     [SerializeField] private string detail;
     [SerializeField] private Sprite icon;
+    [TextArea(4, 10)]
+    [SerializeField] private string prompt;
+    [SerializeField] private float attitudeThreshold;
+    [SerializeField] private InvestigationItemDefinition followingItem;
 
     public string Id => id;
     public InvestigationItemCategory Category => category;
@@ -18,4 +22,7 @@ public class InvestigationItemDefinition : ScriptableObject
     public string Summary => summary;
     public string Detail => detail;
     public Sprite Icon => icon;
+    public string Prompt => prompt;
+    public float AttitudeThreshold => attitudeThreshold;
+    public InvestigationItemDefinition FollowingItem => followingItem;
 }

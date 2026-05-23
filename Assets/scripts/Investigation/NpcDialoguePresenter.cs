@@ -20,14 +20,6 @@ public class NpcDialoguePresenter : MonoBehaviour
         scrollRect = targetScrollRect;
     }
 
-    public void SetTitle(string value)
-    {
-        if (titleText != null)
-        {
-            titleText.text = value;
-        }
-    }
-
     public void SetStatus(string value)
     {
         if (statusText != null)

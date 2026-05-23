@@ -52,6 +52,7 @@ public class InvestigationInteractionUI : MonoBehaviour
     private bool uiBuilt;
     private bool isBusy;
     private bool speedDialOpen;
+    private float selectionListCursorY;
 
     private void Awake()
     {
@@ -129,11 +130,10 @@ public class InvestigationInteractionUI : MonoBehaviour
         uiBuilt = true;
     }
 
-    public void Open(string npcDisplayName)
+    public void Open()
     {
         EnsureBuilt();
         SetVisible(true);
-        dialoguePresenter.SetTitle($"{npcDisplayName} Investigation");
         SetStatus("Type a message, attach a topic or evidence if needed, then send.");
         ResetInputs();
         SetSpeedDialOpen(false);
@@ -372,10 +372,12 @@ public class InvestigationInteractionUI : MonoBehaviour
 
     private void ToggleEvidence(string evidenceId)
     {
+        bool selectedAfterToggle;
         if (selectedEvidenceIds.Contains(evidenceId))
         {
             selectedEvidenceIds.Remove(evidenceId);
             selectedInformationIds.Remove(evidenceId);
+            selectedAfterToggle = false;
         }
         else if (selectedEvidenceIds.Count >= MaxSelectedEvidenceCount)
         {
@@ -389,12 +391,19 @@ public class InvestigationInteractionUI : MonoBehaviour
             {
                 selectedInformationIds.Add(evidenceId);
             }
+
+            selectedAfterToggle = true;
         }
 
         if (evidenceInput != null)
         {
             evidenceInput.text = string.Join(", ", selectedEvidenceIds);
         }
+
+        Debug.Log(
+            $"[InvestigationInteractionUI] Evidence attachment {(selectedAfterToggle ? "selected" : "removed")}: {evidenceId}. " +
+            $"selected=[{string.Join(", ", selectedEvidenceIds)}], information=[{string.Join(", ", selectedInformationIds)}]",
+            this);
 
         RefreshAttachmentSummary();
         RebuildSelectionList("Evidence", availableEvidenceIds, true);
@@ -409,6 +418,7 @@ public class InvestigationInteractionUI : MonoBehaviour
         }
 
         ClearChildren(selectionListRoot);
+        selectionListCursorY = 0f;
         SetSelectionListVisible(true);
 
         CreateSelectionLabel(title, true);
@@ -446,12 +456,14 @@ public class InvestigationInteractionUI : MonoBehaviour
     {
         GameObject labelObject = new GameObject(header ? "SelectionHeader" : "SelectionEmpty", typeof(RectTransform), typeof(TextMeshProUGUI));
         labelObject.transform.SetParent(selectionListRoot, false);
+        PlaceSelectionRow(labelObject.GetComponent<RectTransform>(), header ? 28f : 24f);
         TMP_Text label = labelObject.GetComponent<TMP_Text>();
         label.text = text;
         label.font = titleText != null ? titleText.font : TMP_Settings.defaultFontAsset;
         label.fontSize = header ? 16f : 13f;
         label.fontStyle = header ? FontStyles.Bold : FontStyles.Normal;
         label.color = new Color(0.92f, 0.95f, 0.98f, 1f);
+        label.raycastTarget = false;
     }
 
     private void SetSpeedDialOpen(bool open)
@@ -706,6 +718,11 @@ public class InvestigationInteractionUI : MonoBehaviour
         buttonObject.transform.SetParent(parent, false);
         RectTransform rectTransform = buttonObject.GetComponent<RectTransform>();
         rectTransform.sizeDelta = size;
+        PlaceSelectionRow(rectTransform, size.y);
+        LayoutElement layoutElement = buttonObject.AddComponent<LayoutElement>();
+        layoutElement.preferredWidth = size.x;
+        layoutElement.preferredHeight = size.y;
+
         Image image = buttonObject.GetComponent<Image>();
         image.color = new Color(0.16f, 0.22f, 0.3f, 1f);
         Button button = buttonObject.GetComponent<Button>();
@@ -725,7 +742,27 @@ public class InvestigationInteractionUI : MonoBehaviour
         label.fontStyle = FontStyles.Bold;
         label.alignment = TextAlignmentOptions.Center;
         label.color = Color.white;
+        label.raycastTarget = false;
         return button;
+    }
+
+    private void PlaceSelectionRow(RectTransform rectTransform, float height)
+    {
+        if (rectTransform == null)
+        {
+            return;
+        }
+
+        float width = selectionListRoot != null && selectionListRoot.rect.width > 1f
+            ? selectionListRoot.rect.width
+            : 280f;
+
+        rectTransform.anchorMin = new Vector2(0f, 1f);
+        rectTransform.anchorMax = new Vector2(0f, 1f);
+        rectTransform.pivot = new Vector2(0f, 1f);
+        rectTransform.anchoredPosition = new Vector2(0f, -selectionListCursorY);
+        rectTransform.sizeDelta = new Vector2(width, height);
+        selectionListCursorY += height + 6f;
     }
 
     private void SetButtonLabel(Button button, string text)

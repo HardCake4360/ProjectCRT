@@ -16,6 +16,51 @@ public class NpcConversationState
     public List<InvestigationStatementRecord> cachedRecentStatements = new();
     public List<InvestigationExchange> recentExchanges = new();
 
+    public NpcConversationSaveEntry ToSaveEntry(string stateKey, int exchangeLimit, int statementLimit)
+    {
+        TrimToLimits(exchangeLimit, statementLimit);
+
+        return new NpcConversationSaveEntry
+        {
+            stateKey = stateKey,
+            npcId = npcId,
+            hasIntroduced = hasIntroduced,
+            conversationCount = conversationCount,
+            knownTopicsUnlocked = new List<string>(knownTopicsUnlocked),
+            lastKnownAffect = CloneAffect(lastKnownAffect),
+            lastKnownTell = lastKnownTell,
+            lastKnownPatience = lastKnownPatience,
+            lastInteractionTime = lastInteractionTime,
+            cachedRecentStatements = CloneStatements(cachedRecentStatements),
+            recentExchanges = CloneExchanges(recentExchanges)
+        };
+    }
+
+    public static NpcConversationState FromSaveEntry(NpcConversationSaveEntry entry, int exchangeLimit, int statementLimit)
+    {
+        if (entry == null)
+        {
+            return new NpcConversationState();
+        }
+
+        var state = new NpcConversationState
+        {
+            npcId = entry.npcId,
+            hasIntroduced = entry.hasIntroduced,
+            conversationCount = entry.conversationCount,
+            knownTopicsUnlocked = entry.knownTopicsUnlocked != null ? new List<string>(entry.knownTopicsUnlocked) : new List<string>(),
+            lastKnownAffect = CloneAffect(entry.lastKnownAffect),
+            lastKnownTell = entry.lastKnownTell,
+            lastKnownPatience = entry.lastKnownPatience,
+            lastInteractionTime = entry.lastInteractionTime,
+            cachedRecentStatements = CloneStatements(entry.cachedRecentStatements),
+            recentExchanges = CloneExchanges(entry.recentExchanges)
+        };
+
+        state.TrimToLimits(exchangeLimit, statementLimit);
+        return state;
+    }
+
     public InvestigationNpcLocalStatePayload ToPayload()
     {
         return new InvestigationNpcLocalStatePayload
@@ -43,7 +88,7 @@ public class NpcConversationState
         return payload;
     }
 
-    public void RegisterExchange(string speaker, string text)
+    public void RegisterExchange(string speaker, string text, int maxHistory = 20)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
@@ -56,14 +101,10 @@ public class NpcConversationState
             text = text.Trim()
         });
 
-        const int maxHistory = 20;
-        if (recentExchanges.Count > maxHistory)
-        {
-            recentExchanges.RemoveAt(0);
-        }
+        TrimExchangeHistory(maxHistory);
     }
 
-    public void ApplyReplyResponse(NpcInvestigationReplyResponse response)
+    public void ApplyReplyResponse(NpcInvestigationReplyResponse response, int maxStatements = 12)
     {
         if (response == null)
         {
@@ -81,17 +122,6 @@ public class NpcConversationState
         if (response.stateDelta == null)
         {
             return;
-        }
-
-        if (response.stateDelta.unlockTopicIds != null)
-        {
-            foreach (string topicId in response.stateDelta.unlockTopicIds)
-            {
-                if (!string.IsNullOrWhiteSpace(topicId) && !knownTopicsUnlocked.Contains(topicId))
-                {
-                    knownTopicsUnlocked.Add(topicId);
-                }
-            }
         }
 
         if (response.stateDelta.markStatements != null)
@@ -120,11 +150,7 @@ public class NpcConversationState
             }
         }
 
-        const int maxStatements = 12;
-        while (cachedRecentStatements.Count > maxStatements)
-        {
-            cachedRecentStatements.RemoveAt(0);
-        }
+        TrimStatementHistory(maxStatements);
     }
 
     public void ApplyTellResult(TellResultPayload tellResult)
@@ -137,6 +163,30 @@ public class NpcConversationState
         lastKnownTell = tellResult.tell;
     }
 
+    public void TrimToLimits(int exchangeLimit, int statementLimit)
+    {
+        TrimExchangeHistory(exchangeLimit);
+        TrimStatementHistory(statementLimit);
+    }
+
+    private void TrimExchangeHistory(int maxHistory)
+    {
+        int limit = Mathf.Max(1, maxHistory);
+        while (recentExchanges.Count > limit)
+        {
+            recentExchanges.RemoveAt(0);
+        }
+    }
+
+    private void TrimStatementHistory(int maxStatements)
+    {
+        int limit = Mathf.Max(1, maxStatements);
+        while (cachedRecentStatements.Count > limit)
+        {
+            cachedRecentStatements.RemoveAt(0);
+        }
+    }
+
     private static InterrogationAffectPayload CloneAffect(InterrogationAffectPayload affect)
     {
         affect ??= InterrogationAffectPayload.Default();
@@ -145,5 +195,55 @@ public class NpcConversationState
             interest = affect.interest,
             attitude = affect.attitude
         };
+    }
+
+    private static List<InvestigationStatementRecord> CloneStatements(List<InvestigationStatementRecord> source)
+    {
+        var clone = new List<InvestigationStatementRecord>();
+        if (source == null)
+        {
+            return clone;
+        }
+
+        foreach (InvestigationStatementRecord item in source)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            clone.Add(new InvestigationStatementRecord
+            {
+                statementId = item.statementId,
+                text = item.text
+            });
+        }
+
+        return clone;
+    }
+
+    private static List<InvestigationExchange> CloneExchanges(List<InvestigationExchange> source)
+    {
+        var clone = new List<InvestigationExchange>();
+        if (source == null)
+        {
+            return clone;
+        }
+
+        foreach (InvestigationExchange item in source)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            clone.Add(new InvestigationExchange
+            {
+                speaker = item.speaker,
+                text = item.text
+            });
+        }
+
+        return clone;
     }
 }

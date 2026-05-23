@@ -3969,7 +3969,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Slum
+  m_text: Bar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9675,6 +9675,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HintName: "\uC804\uD654"
   canInteract: 1
+  useCloseupCamera: 0
+  closeupCameraBehaviour: {fileID: 0}
+  closeupPriority: 100
   OnInteract:
     m_PersistentCalls:
       m_Calls:
@@ -9703,6 +9706,22 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   investigationController: {fileID: 0}
+  npcAnimator: {fileID: 0}
+  idleClip: {fileID: 0}
+  onInteractionClip: {fileID: 0}
+  onInteractionIdleClip: {fileID: 0}
+  startThinkingClip: {fileID: 0}
+  thinkingClip: {fileID: 0}
+  onAnswerClip: {fileID: 0}
+  lookAtCameraDuringInteraction: 1
+  lookAtTargetOverride: {fileID: 0}
+  lookAtWeight: 1
+  lookAtBodyWeight: 0.15
+  lookAtHeadWeight: 0.85
+  lookAtEyesWeight: 0.4
+  lookAtClampWeight: 0.7
+  lookAtBlendSpeed: 6
+  lookAtTargetOffset: {x: 0, y: -0.05, z: 0}
 --- !u!114 &2136848240
 MonoBehaviour:
   m_ObjectHideFlags: 0

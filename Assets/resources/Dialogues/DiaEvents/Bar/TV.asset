@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d658cf42b1373c145acd1368fb2dd23f, type: 3}
+  m_Name: TV
+  m_EditorClassIdentifier: 
+  IsStart: 0
+  lines:
+  - characterName: null
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uB0A1\uACE0 \uC624\uB798\uB41C TV\uC774\uB2E4"
+  - characterName: null
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: "\uC624\uB798\uB418\uC11C \uADF8\uB7F0\uC9C0 \uC9C0\uC9C1\uAC70\uB9AC\uB294
+      \uB178\uC774\uC988\uAC00 \uB4E4\uB9B0\uB2E4..."
+  - characterName: end
+    Portrait: 0
+    CamNumber: 0
+    CharInterval: 0
+    QuestionDia: {fileID: 0}
+    OnLineStart:
+      m_PersistentCalls:
+        m_Calls: []
+    text: 
+  TailDia: {fileID: 0}
+  Choices: {fileID: 0}
+  continueIdx: 0
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []

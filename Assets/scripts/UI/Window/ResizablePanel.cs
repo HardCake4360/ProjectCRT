@@ -74,12 +74,22 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
 
     public void SetOriginalTransform()
     {
+        if (targetPanel == null)
+        {
+            return;
+        }
+
         originalSize = targetPanel.sizeDelta;
         originalPos = targetPanel.anchoredPosition;
     }
 
     public void RecordLastTransform()
     {
+        if (targetPanel == null)
+        {
+            return;
+        }
+
         lastPos = targetPanel.anchoredPosition;
         lastSize = targetPanel.sizeDelta;
     }
@@ -98,7 +108,7 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
 
     private void Update()
     {
-        if (!(resizeLeft || resizeRight || resizeTop || resizeBottom)) return;
+        if (targetPanel == null || !(resizeLeft || resizeRight || resizeTop || resizeBottom)) return;
 
         Vector2 delta = DragDelta;
         Vector2 newSize = originalSize;
@@ -107,29 +117,23 @@ public class ResizablePanel : MeshRayReciver, IPointerDownHandler, IDragHandler
         if (resizeLeft)
         {
             newSize.x = Mathf.Max(MinSize.x, originalSize.x - delta.x);
-            if (newSize.x != MinSize.x)
-                newPos.x = originalPos.x + delta.x * 0.5f;
+            newPos.x = originalPos.x + (originalSize.x - newSize.x) * 0.5f;
         }
         if (resizeRight)
         {
             newSize.x = Mathf.Max(MinSize.x, originalSize.x + delta.x);
-            if (newSize.x != MinSize.x)
-                newPos.x = originalPos.x + delta.x * 0.5f;
+            newPos.x = originalPos.x + (newSize.x - originalSize.x) * 0.5f;
         }
         if (resizeTop)
         {
             newSize.y = Mathf.Max(MinSize.y, originalSize.y + delta.y);
-            if (newSize.y != MinSize.y)
-                newPos.y = originalPos.y + delta.y * 0.5f;
+            newPos.y = originalPos.y + (newSize.y - originalSize.y) * 0.5f;
         }
         if (resizeBottom)
         {
             newSize.y = Mathf.Max(MinSize.y, originalSize.y - delta.y);
-            if (newSize.y != MinSize.y)
-                newPos.y = originalPos.y + delta.y * 0.5f;
+            newPos.y = originalPos.y + (originalSize.y - newSize.y) * 0.5f;
         }
-
-        Debug.Log("Drag delta: " + DragDelta);
 
         targetPanel.sizeDelta = newSize;
         targetPanel.anchoredPosition = newPos;

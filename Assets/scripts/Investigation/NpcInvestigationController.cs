@@ -17,6 +17,7 @@ public class NpcInvestigationController : MonoBehaviour
     [Header("First Fixed Dialogue")]
     [TextArea(3, 5)]
     [SerializeField] private string firstFixedLine = "어서 와. 오늘은 평소보다 질문이 많겠네. 다들 노이즈 얘기만 하고 있어.";
+    [SerializeField] private DialogueObject initialDialogue;
 
     [Header("Dependencies")]
     [SerializeField] private InvestigationContextBuilder contextBuilder;
@@ -24,22 +25,43 @@ public class NpcInvestigationController : MonoBehaviour
     [SerializeField] private InvestigationInteractionUI interactionUI;
     [SerializeField] private NpcProfileComponent profileComponent;
 
+    [Header("Conversation Save")]
+    [SerializeField] private bool saveConversationHistory = true;
+    [SerializeField, Min(1)] private int savedExchangeLimit = 20;
+    [SerializeField, Min(1)] private int savedStatementLimit = 12;
+
+    [Header("Response Timing")]
+    [SerializeField, Min(0f)] private float minimumReplyDelaySeconds = 0.8f;
+
     private NpcConversationState conversationState;
     private Interactable ownerInteractable;
     private NPC_script npcAnimation;
     private bool isBusy;
+    private bool awaitingInitialDialogue;
     private string activeTurnId;
+    private string stateKey;
+    private Coroutine initialDialogueCoroutine;
 
     private void Awake()
     {
-        if (!RuntimeStates.TryGetValue(npcId, out conversationState))
+        NormalizeIdentityFields();
+        stateKey = BuildStateKey();
+
+        if (!RuntimeStates.TryGetValue(stateKey, out conversationState))
         {
-            conversationState = new NpcConversationState
+            if (!NpcConversationSaveManager.TryLoadState(stateKey, savedExchangeLimit, savedStatementLimit, out conversationState))
             {
-                npcId = npcId
-            };
-            RuntimeStates.Add(npcId, conversationState);
+                conversationState = new NpcConversationState
+                {
+                    npcId = npcId
+                };
+            }
+
+            RuntimeStates.Add(stateKey, conversationState);
         }
+
+        conversationState.npcId = npcId;
+        conversationState.TrimToLimits(savedExchangeLimit, savedStatementLimit);
 
         if (contextBuilder == null)
         {
@@ -80,7 +102,7 @@ public class NpcInvestigationController : MonoBehaviour
         }
 
         Debug.Log(
-            $"[NpcInvestigationController] Bound dependencies for npcId={npcId}\n" +
+            $"[NpcInvestigationController] Bound dependencies for npcId={npcId}, stateKey={stateKey}\n" +
             $"controllerObject={name}\n" +
             $"apiClientObject={(apiClient != null ? apiClient.name : "null")}\n" +
             $"uiObject={(interactionUI != null ? interactionUI.name : "null")}\n" +
@@ -103,6 +125,8 @@ public class NpcInvestigationController : MonoBehaviour
 
     private void OnDisable()
     {
+        StopInitialDialogueCoroutine();
+
         if (interactionUI != null)
         {
             interactionUI.ActionRequested -= HandleActionRequested;
@@ -125,45 +149,36 @@ public class NpcInvestigationController : MonoBehaviour
             return;
         }
 
+        if (ActiveController != null && ActiveController != this)
+        {
+            ActiveController.CloseInteractionInternal(restoreMainState: false);
+        }
+
         ActiveController = this;
         ownerInteractable?.EnterCloseup();
         npcAnimation?.SetLookAtCamera(true);
         npcAnimation?.PlayInteractionStart();
-        interactionUI.Open(npcDisplayName);
-        RefreshInteractionChoices();
-        interactionUI.ClearConversation();
-        interactionUI.ResetTellValue(conversationState.lastKnownTell);
-        float cachedInterest = conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.interest : 0f;
-        float cachedAttitude = conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.attitude : 0f;
-        Debug.Log($"[NpcInvestigationController] Reset affect npc={npcId} interest={cachedInterest:F3} attitude={cachedAttitude:F3}", this);
-        interactionUI.ResetAffectValue(cachedInterest, cachedAttitude);
-        interactionUI.SetPatienceValue(conversationState.lastKnownPatience);
-        interactionUI.AppendSystemMessage("대화형 조사 UI가 열렸습니다.");
 
-        foreach (var exchange in conversationState.recentExchanges)
+        if (!HasSavedConversationData() && TryStartInitialDialogue())
         {
-            if (exchange.speaker == "player")
-            {
-                interactionUI.AppendPlayerMessage(exchange.text);
-            }
-            else if (exchange.speaker == "npc")
-            {
-                interactionUI.AppendNpcMessage(npcDisplayName, exchange.text);
-            }
+            return;
         }
 
-        if (!conversationState.hasIntroduced)
+        OpenInvestigationUi();
+
+        if (!HasSavedConversationData())
         {
             conversationState.hasIntroduced = true;
             conversationState.conversationCount++;
-            conversationState.RegisterExchange("npc", firstFixedLine);
+            conversationState.RegisterExchange("npc", firstFixedLine, savedExchangeLimit);
             interactionUI.AppendNpcMessage(npcDisplayName, firstFixedLine);
             interactionUI.SetStatus("첫 인트로 대화가 출력되었습니다. 아래 버튼으로 조사 흐름을 이어가세요.");
+            SaveConversationState();
+            return;
         }
-        else
-        {
-            interactionUI.SetStatus("조사 액션을 선택해 리베카의 반응을 확인하세요.");
-        }
+
+        conversationState.hasIntroduced = true;
+        interactionUI.SetStatus("이전에 나눈 대화를 불러왔습니다. 조사 액션을 선택해 대화를 이어가세요.");
     }
 
     private void HandleActionRequested(InvestigationInteractionPayload payload)
@@ -186,7 +201,8 @@ public class NpcInvestigationController : MonoBehaviour
             : payload.playerIntentText;
 
         conversationState.conversationCount++;
-        conversationState.RegisterExchange("player", playerLine);
+        conversationState.RegisterExchange("player", playerLine, savedExchangeLimit);
+        SaveConversationState();
         interactionUI.AppendPlayerMessage(playerLine);
         interactionUI.SetStatus("리베카의 반응과 tell 값을 병렬로 분석 중입니다...");
         interactionUI.SetTellPending(true);
@@ -195,6 +211,8 @@ public class NpcInvestigationController : MonoBehaviour
 
         string turnId = System.Guid.NewGuid().ToString("N");
         activeTurnId = turnId;
+        InvestigationInteractionPayload resolvedPayload = BuildResolvedPayload(payload);
+        InvestigationAttachedItemDirectivePayload attachedDirective = resolvedPayload.attachedItemDirective;
 
         NpcInvestigationRequest request = contextBuilder.BuildRequest(
             turnId,
@@ -202,7 +220,7 @@ public class NpcInvestigationController : MonoBehaviour
             playerId,
             npcId,
             personaKey,
-            payload,
+            resolvedPayload,
             conversationState,
             profileComponent != null ? profileComponent.ToPayload() : null);
 
@@ -218,28 +236,26 @@ public class NpcInvestigationController : MonoBehaviour
         bool replyCompleted = false;
         bool tellCompleted = false;
         bool streamStarted = false;
+        bool pendingStreamStart = false;
         bool answerAnimationStarted = false;
+        bool finalReplyReady = false;
+        bool finalReplyDisplayed = false;
+        string finalReplyText = string.Empty;
         ConversationStatePayload streamedConversationState = null;
         string pendingTellError = null;
         string pendingReplyError = null;
+        string bufferedStreamText = string.Empty;
+        float replyVisibleAt = Time.unscaledTime + Mathf.Max(0f, minimumReplyDelaySeconds);
 
         StartCoroutine(apiClient.SendReplyRequest(
             request,
             () =>
             {
-                streamStarted = true;
-                interactionUI.BeginNpcStreamingMessage(npcDisplayName);
-                interactionUI.SetStatus("리베카가 답하고 있습니다...");
+                pendingStreamStart = true;
             },
             partialText =>
             {
-                if (!answerAnimationStarted && !string.IsNullOrEmpty(partialText))
-                {
-                    answerAnimationStarted = true;
-                    npcAnimation?.PlayAnswerStart();
-                }
-
-                interactionUI.UpdateNpcStreamingMessage(npcDisplayName, partialText);
+                bufferedStreamText = partialText ?? string.Empty;
             },
             conversationPayload =>
             {
@@ -270,37 +286,29 @@ public class NpcInvestigationController : MonoBehaviour
                     ? "..."
                     : response.replyText.Trim();
 
-                if (!answerAnimationStarted)
-                {
-                    answerAnimationStarted = true;
-                    npcAnimation?.PlayAnswerStart();
-                }
-
-                conversationState.RegisterExchange("npc", reply);
-                conversationState.ApplyReplyResponse(response);
+                conversationState.RegisterExchange("npc", reply, savedExchangeLimit);
+                conversationState.ApplyReplyResponse(response, savedStatementLimit);
+                SaveConversationState();
+                finalReplyText = reply;
+                finalReplyReady = true;
+                bufferedStreamText = reply;
                 float finalInterest = response.conversationState.affect != null ? response.conversationState.affect.interest : 0f;
                 float finalAttitude = response.conversationState.affect != null ? response.conversationState.affect.attitude : 0f;
                 Debug.Log($"[NpcInvestigationController] Final affect update npc={npcId} interest={finalInterest:F3} attitude={finalAttitude:F3} patience={response.conversationState.patience}", this);
                 interactionUI.SetAffectValue(finalInterest, finalAttitude);
                 interactionUI.SetPatienceValue(response.conversationState.patience);
 
-                if (streamStarted)
+                if (TryUnlockFollowingItem(attachedDirective))
                 {
-                    interactionUI.CommitNpcStreamingMessage(npcDisplayName, reply);
-                }
-                else
-                {
-                    interactionUI.AppendNpcMessage(npcDisplayName, reply);
+                    RefreshInteractionChoices();
                 }
 
                 if (response.stateDelta != null && response.stateDelta.unlockTopicIds != null && response.stateDelta.unlockTopicIds.Count > 0)
                 {
-                    foreach (string topicId in response.stateDelta.unlockTopicIds)
-                    {
-                        contextBuilder.RegisterTopic(topicId);
-                    }
-                    RefreshInteractionChoices();
-                    interactionUI.AppendSystemMessage($"Unlocked topics: {string.Join(", ", response.stateDelta.unlockTopicIds)}");
+                    Debug.LogWarning(
+                        $"[NpcInvestigationController] Ignoring server-supplied unlockTopicIds for npc={npcId}. " +
+                        "Topic unlocks are now expected to be resolved from client-authored investigation item data.",
+                        this);
                 }
 
                 replyCompleted = true;
@@ -329,6 +337,7 @@ public class NpcInvestigationController : MonoBehaviour
                 if (tellResult != null && tellResult.turnId == activeTurnId)
                 {
                     conversationState.ApplyTellResult(tellResult);
+                    SaveConversationState();
                     interactionUI.SetTellValue(tellResult.tell);
                 }
                 else
@@ -351,8 +360,28 @@ public class NpcInvestigationController : MonoBehaviour
 
         while (!replyCompleted || !tellCompleted)
         {
+            TryFlushBufferedReply(
+                ref streamStarted,
+                ref pendingStreamStart,
+                ref answerAnimationStarted,
+                ref finalReplyDisplayed,
+                replyVisibleAt,
+                bufferedStreamText,
+                finalReplyReady,
+                finalReplyText);
+
             yield return null;
         }
+
+        TryFlushBufferedReply(
+            ref streamStarted,
+            ref pendingStreamStart,
+            ref answerAnimationStarted,
+            ref finalReplyDisplayed,
+            replyVisibleAt,
+            bufferedStreamText,
+            finalReplyReady,
+            finalReplyText);
 
         if (!string.IsNullOrWhiteSpace(pendingReplyError))
         {
@@ -380,20 +409,7 @@ public class NpcInvestigationController : MonoBehaviour
             return;
         }
 
-        ActiveController = null;
-        if (interactionUI != null)
-        {
-            interactionUI.SetVisible(false);
-        }
-
-        npcAnimation?.PlayIdle();
-        npcAnimation?.SetLookAtCamera(false);
-        ownerInteractable?.ExitCloseup();
-
-        if (MainLoop.Instance != null)
-        {
-            MainLoop.Instance.SetMainLoopState_Main();
-        }
+        CloseInteractionInternal(restoreMainState: true);
     }
 
     private void BindUiEvents()
@@ -436,5 +452,367 @@ public class NpcInvestigationController : MonoBehaviour
             contextBuilder.GetUnlockedTopicIds(conversationState),
             attachmentIds,
             informationIds);
+    }
+
+    private InvestigationInteractionPayload BuildResolvedPayload(InvestigationInteractionPayload source)
+    {
+        source ??= new InvestigationInteractionPayload();
+
+        var resolved = new InvestigationInteractionPayload
+        {
+            actionType = source.actionType,
+            playerIntentText = source.playerIntentText,
+            topicId = source.topicId,
+            evidenceId = source.evidenceId,
+            evidenceIds = source.evidenceIds != null ? new List<string>(source.evidenceIds) : new List<string>(),
+            informationIds = source.informationIds != null ? new List<string>(source.informationIds) : new List<string>(),
+            objectId = source.objectId,
+            statementRefIds = source.statementRefIds != null ? new List<string>(source.statementRefIds) : new List<string>()
+        };
+
+        resolved.attachedItemDirective = BuildAttachedItemDirective(resolved);
+        return resolved;
+    }
+
+    private InvestigationAttachedItemDirectivePayload BuildAttachedItemDirective(InvestigationInteractionPayload payload)
+    {
+        if (payload == null || payload.informationIds == null || payload.informationIds.Count == 0)
+        {
+            return null;
+        }
+
+        InvestigationInventoryManager inventory = InvestigationInventoryManager.GetOrCreateInstance();
+        if (inventory == null)
+        {
+            return null;
+        }
+
+        string primaryInformationId = payload.informationIds[0];
+        if (payload.informationIds.Count > 1)
+        {
+            Debug.LogWarning(
+                $"[NpcInvestigationController] Multiple information attachments detected for npc={npcId}. " +
+                $"Using the first attached information item as the prompt directive source: {primaryInformationId}",
+                this);
+        }
+
+        if (!inventory.TryGetDefinition(primaryInformationId, out InvestigationItemDefinition definition) || definition == null)
+        {
+            Debug.LogWarning(
+                $"[NpcInvestigationController] Could not resolve attached information definition for id='{primaryInformationId}'. " +
+                "Attached item prompt routing will be skipped for this request.",
+                this);
+            return null;
+        }
+
+        float currentAttitude = conversationState?.lastKnownAffect != null
+            ? conversationState.lastKnownAffect.attitude
+            : 0f;
+        bool thresholdSatisfied = currentAttitude >= definition.AttitudeThreshold;
+        string resolvedPrompt = thresholdSatisfied
+            ? definition.Prompt
+            : BuildFalsePrompt(definition);
+
+        if (string.IsNullOrWhiteSpace(resolvedPrompt))
+        {
+            return null;
+        }
+
+        InvestigationItemDefinition followingItem = definition.FollowingItem;
+        var directive = new InvestigationAttachedItemDirectivePayload
+        {
+            itemId = definition.Id,
+            itemCategory = definition.Category.ToString(),
+            itemDisplayName = definition.DisplayName,
+            itemPrompt = definition.Prompt,
+            attitudeThreshold = definition.AttitudeThreshold,
+            currentAttitude = currentAttitude,
+            thresholdSatisfied = thresholdSatisfied,
+            responseDirectivePrompt = resolvedPrompt,
+            bypassWorldContextRag = thresholdSatisfied,
+            followingItemId = followingItem != null ? followingItem.Id : null,
+            followingItemCategory = followingItem != null ? followingItem.Category.ToString() : null
+        };
+
+        Debug.Log(
+            $"[NpcInvestigationController] Attached item directive prepared for npc={npcId} item={directive.itemId} " +
+            $"attitude={directive.currentAttitude:F3} threshold={directive.attitudeThreshold:F3} " +
+            $"thresholdSatisfied={directive.thresholdSatisfied} bypassWorldContextRag={directive.bypassWorldContextRag}",
+            this);
+
+        return directive;
+    }
+
+    private string BuildFalsePrompt(InvestigationItemDefinition definition)
+    {
+        return "해당 주제에 대해선 답변하지 말고 페르소나의 회피 로직에 맞춰 정보 제공을 거부하십시오";
+    }
+
+    private bool TryUnlockFollowingItem(InvestigationAttachedItemDirectivePayload directive)
+    {
+        if (directive == null || !directive.thresholdSatisfied || string.IsNullOrWhiteSpace(directive.followingItemId))
+        {
+            return false;
+        }
+
+        bool unlocked = false;
+        switch (directive.followingItemCategory)
+        {
+            case nameof(InvestigationItemCategory.Topic):
+                unlocked = contextBuilder != null && contextBuilder.RegisterTopic(directive.followingItemId);
+                if (unlocked && !conversationState.knownTopicsUnlocked.Contains(directive.followingItemId))
+                {
+                    conversationState.knownTopicsUnlocked.Add(directive.followingItemId);
+                }
+                break;
+            case nameof(InvestigationItemCategory.Evidence):
+                unlocked = contextBuilder != null && contextBuilder.RegisterEvidence(directive.followingItemId);
+                break;
+            case nameof(InvestigationItemCategory.Information):
+                unlocked = contextBuilder != null && contextBuilder.RegisterInformation(directive.followingItemId);
+                break;
+            default:
+                Debug.LogWarning(
+                    $"[NpcInvestigationController] Unsupported following item category '{directive.followingItemCategory}' " +
+                    $"for item '{directive.followingItemId}'.",
+                    this);
+                return false;
+        }
+
+        if (unlocked)
+        {
+            SaveConversationState();
+            interactionUI.AppendSystemMessage($"Unlocked {directive.followingItemCategory}: {directive.followingItemId}");
+        }
+
+        return unlocked;
+    }
+
+    private bool TryStartInitialDialogue()
+    {
+        if (initialDialogue == null || DialogueManager.Instance == null)
+        {
+            return false;
+        }
+
+        bool started = DialogueManager.Instance.TryStartDialogue(
+            initialDialogue,
+            DialogueManager.Instance.DialogueUI,
+            DialogueManager.Instance.ChoiceUI,
+            0,
+            null,
+            MainState.Interact);
+
+        if (!started)
+        {
+            return false;
+        }
+
+        awaitingInitialDialogue = true;
+        StopInitialDialogueCoroutine();
+        initialDialogueCoroutine = StartCoroutine(WaitForInitialDialogueThenOpenUi());
+        return true;
+    }
+
+    private IEnumerator WaitForInitialDialogueThenOpenUi()
+    {
+        while (DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueRunning)
+        {
+            yield return null;
+        }
+
+        initialDialogueCoroutine = null;
+
+        if (ActiveController != this)
+        {
+            awaitingInitialDialogue = false;
+            yield break;
+        }
+
+        awaitingInitialDialogue = false;
+        conversationState.hasIntroduced = true;
+        SaveConversationState();
+        OpenInvestigationUi();
+        interactionUI.SetStatus("초기 대화가 종료되었습니다. 조사 액션을 선택해 대화를 이어가세요.");
+    }
+
+    private void OpenInvestigationUi()
+    {
+        interactionUI.Open();
+        RefreshInteractionChoices();
+        RefreshUiFromConversationState();
+    }
+
+    private void RefreshUiFromConversationState()
+    {
+        interactionUI.ClearConversation();
+        interactionUI.ResetTellValue(conversationState.lastKnownTell);
+
+        float cachedInterest = conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.interest : 0f;
+        float cachedAttitude = conversationState.lastKnownAffect != null ? conversationState.lastKnownAffect.attitude : 0f;
+        Debug.Log(
+            $"[NpcInvestigationController] Refresh UI from state npc={npcId} stateKey={stateKey} exchanges={conversationState.recentExchanges.Count} " +
+            $"interest={cachedInterest:F3} attitude={cachedAttitude:F3} tell={conversationState.lastKnownTell:F3}",
+            this);
+
+        interactionUI.ResetAffectValue(cachedInterest, cachedAttitude);
+        interactionUI.SetPatienceValue(conversationState.lastKnownPatience);
+        interactionUI.AppendSystemMessage("대화형 조사 UI가 열렸습니다.");
+
+        foreach (var exchange in conversationState.recentExchanges)
+        {
+            if (exchange.speaker == "player")
+            {
+                interactionUI.AppendPlayerMessage(exchange.text);
+            }
+            else if (exchange.speaker == "npc")
+            {
+                interactionUI.AppendNpcMessage(npcDisplayName, exchange.text);
+            }
+        }
+    }
+
+    private bool HasSavedConversationData()
+    {
+        return conversationState != null
+            && (
+                conversationState.recentExchanges.Count > 0
+                || conversationState.cachedRecentStatements.Count > 0
+                || conversationState.conversationCount > 0
+                || conversationState.hasIntroduced);
+    }
+
+    private void CloseInteractionInternal(bool restoreMainState)
+    {
+        if (ActiveController == this)
+        {
+            ActiveController = null;
+        }
+
+        awaitingInitialDialogue = false;
+        StopInitialDialogueCoroutine();
+
+        SaveConversationState();
+
+        if (interactionUI != null)
+        {
+            interactionUI.SetVisible(false);
+        }
+
+        npcAnimation?.PlayIdle();
+        npcAnimation?.SetLookAtCamera(false);
+        ownerInteractable?.ExitCloseup();
+
+        if (restoreMainState && MainLoop.Instance != null)
+        {
+            MainLoop.Instance.SetMainLoopState_Main();
+        }
+    }
+
+    private void NormalizeIdentityFields()
+    {
+        if (string.IsNullOrWhiteSpace(npcId))
+        {
+            npcId = !string.IsNullOrWhiteSpace(personaKey) ? personaKey : name;
+        }
+
+        if (string.IsNullOrWhiteSpace(personaKey))
+        {
+            personaKey = npcId;
+        }
+
+        if (string.IsNullOrWhiteSpace(npcDisplayName))
+        {
+            npcDisplayName = name;
+        }
+    }
+
+    private string BuildStateKey()
+    {
+        string resolvedNpcId = string.IsNullOrWhiteSpace(npcId) ? name : npcId.Trim();
+        return resolvedNpcId;
+    }
+
+    private void SaveConversationState()
+    {
+        if (!saveConversationHistory || conversationState == null || string.IsNullOrWhiteSpace(stateKey))
+        {
+            return;
+        }
+
+        conversationState.TrimToLimits(savedExchangeLimit, savedStatementLimit);
+        NpcConversationSaveManager.SaveState(stateKey, conversationState, savedExchangeLimit, savedStatementLimit);
+    }
+
+    private void StopInitialDialogueCoroutine()
+    {
+        if (initialDialogueCoroutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(initialDialogueCoroutine);
+        initialDialogueCoroutine = null;
+    }
+
+    private void TryFlushBufferedReply(
+        ref bool streamStarted,
+        ref bool pendingStreamStart,
+        ref bool answerAnimationStarted,
+        ref bool finalReplyDisplayed,
+        float replyVisibleAt,
+        string bufferedStreamText,
+        bool finalReplyReady,
+        string finalReplyText)
+    {
+        if (Time.unscaledTime < replyVisibleAt)
+        {
+            return;
+        }
+
+        if (pendingStreamStart && !streamStarted)
+        {
+            streamStarted = true;
+            pendingStreamStart = false;
+            interactionUI.BeginNpcStreamingMessage(npcDisplayName);
+            interactionUI.SetStatus("리베카가 답하고 있습니다...");
+        }
+
+        if (!streamStarted && finalReplyReady && !finalReplyDisplayed)
+        {
+            if (!answerAnimationStarted)
+            {
+                answerAnimationStarted = true;
+                npcAnimation?.PlayAnswerStart();
+            }
+
+            interactionUI.AppendNpcMessage(npcDisplayName, finalReplyText);
+            finalReplyDisplayed = true;
+            return;
+        }
+
+        if (!streamStarted || (string.IsNullOrEmpty(bufferedStreamText) && !finalReplyReady))
+        {
+            return;
+        }
+
+        if (!answerAnimationStarted)
+        {
+            answerAnimationStarted = true;
+            npcAnimation?.PlayAnswerStart();
+        }
+
+        if (finalReplyReady)
+        {
+            if (!finalReplyDisplayed)
+            {
+                interactionUI.CommitNpcStreamingMessage(npcDisplayName, finalReplyText);
+                finalReplyDisplayed = true;
+            }
+
+            return;
+        }
+
+        interactionUI.UpdateNpcStreamingMessage(npcDisplayName, bufferedStreamText);
     }
 }

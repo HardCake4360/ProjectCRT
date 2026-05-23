@@ -1,12 +1,18 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InspectableProp : Interactable
 {
+    public UnityEvent OnInteract = new();
+
     [Header("Investigation Information")]
     [SerializeField] private string informationId;
     [SerializeField] private InvestigationItemDefinition informationDefinition;
     [SerializeField] private InvestigationContextBuilder contextBuilder;
     [SerializeField] private bool returnToMainStateAfterInspect = true;
+
+    [Header("Dialogue")]
+    [SerializeField] private DialogueObject onInteractDialogue;
 
     public override void Interact()
     {
@@ -14,7 +20,8 @@ public class InspectableProp : Interactable
         if (string.IsNullOrWhiteSpace(resolvedId))
         {
             Debug.LogWarning($"InspectableProp '{name}' has no information id.", this);
-            ReturnToMainStateIfNeeded();
+            bool keepInteractionState = InvokeDialogueOrEvents();
+            ReturnToMainStateIfNeeded(keepInteractionState);
             return;
         }
 
@@ -34,7 +41,16 @@ public class InspectableProp : Interactable
                 : $"[InspectableProp] Investigated '{name}' but information was already unlocked: {resolvedId}",
             this);
 
-        ReturnToMainStateIfNeeded();
+        bool startedDialogue = InvokeDialogueOrEvents();
+        ReturnToMainStateIfNeeded(startedDialogue);
+    }
+
+    public void StaticDiaEventTrigger(DialogueObject data)
+    {
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.DialogueEventTrigger(data);
+        }
     }
 
     private string ResolveInformationId()
@@ -47,9 +63,20 @@ public class InspectableProp : Interactable
         return informationDefinition != null ? informationDefinition.Id : string.Empty;
     }
 
-    private void ReturnToMainStateIfNeeded()
+    private bool InvokeDialogueOrEvents()
     {
-        if (returnToMainStateAfterInspect && MainLoop.Instance != null)
+        if (onInteractDialogue != null && DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.TryStartDialogue(onInteractDialogue);
+        }
+
+        OnInteract?.Invoke();
+        return DialogueManager.Instance != null && DialogueManager.Instance.IsDialogueRunning;
+    }
+
+    private void ReturnToMainStateIfNeeded(bool keepInteractionState = false)
+    {
+        if (returnToMainStateAfterInspect && !keepInteractionState && MainLoop.Instance != null)
         {
             MainLoop.Instance.SetMainLoopState_Main();
         }
