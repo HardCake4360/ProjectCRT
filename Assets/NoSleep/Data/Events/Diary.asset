@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2415e7db2db7e4d961b1864ffc3b4d, type: 3}
+  m_Name: Diary
+  m_EditorClassIdentifier: 
+  definitionId: 23d1a266c7df4611bd7fe6ca0d80bdcf
+  displayName: "\uD3BC\uCCD0\uC9C4 \uC77C\uAE30"
+  prefab: {fileID: 0}
+  fallbackColor: {r: 0.4, g: 0.55, b: 0.8, a: 1}
+  pages:
+  - pageId: 2290abd127c84f7a9d65df8fb37e7573
+    legacyPageIndex: 0
+    name: Page
+    conditions: []
+    trigger: 0
+    runOnce: 0
+    visible: 1
+    blocksMovement: 1
+    commands:
+    - commandId: cdad839385794acaa8d988c6a6841fe0
+      type: 0
+      speaker: "\uC77C\uAE30"
+      text: "\uCCAB \uBC88\uC9F8 \uBC24. \uBB38\uC740 \uC5F4\uB9AC\uC9C0\uB9CC, \uCD9C\uAD6C\uB294
+        \uC544\uC9C1 \uBCF4\uC774\uC9C0 \uC54A\uB294\uB2E4.\n\uC774 \uB9F5\uACFC
+        \uB300\uC0AC\uB294 No Sleep \uC81C\uC791 \uB3C4\uAD6C\uC5D0\uC11C \uC218\uC815\uD560
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25

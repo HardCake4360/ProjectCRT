@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c376f8054ad36104896625fd34e7f304, type: 3}
+  m_Name: Apartment
+  m_EditorClassIdentifier: 
+  mapId: horror_apartment
+  displayName: "\uB274\uC2A4\uAC00 \uCF1C\uC9C4 \uBC29"
+  width: 12
+  height: 10
+  cellSize: 1
+  spawnCell: {x: 2, y: 3}
+  palette:
+  - {fileID: 11400000, guid: 04d23c85d1dacc14d81b33421b00e8ed, type: 2}
+  - {fileID: 11400000, guid: ebba869f19c98e244b36ab29a3040fa6, type: 2}
+  - {fileID: 11400000, guid: 855880f9e2bcae0428ae55b40ac03790, type: 2}
+  events:
+  - id: news
+    cell: {x: 1, y: 1}
+    definition: {fileID: 11400000, guid: b4f9e8e1d1d166244af732b8f0ccd906, type: 2}
+    yaw: 0
+  - id: hospital_door
+    cell: {x: 9, y: 6}
+    definition: {fileID: 11400000, guid: 20e94ed12167a8046a73992d3902b549, type: 2}
+    yaw: 0
+  storedWidth: 12
+  storedHeight: 10
+  groundTiles: 010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  decorationTiles: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff020000000200000002000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  indexedPalette:
+  - {fileID: 11400000, guid: 04d23c85d1dacc14d81b33421b00e8ed, type: 2}
+  - {fileID: 11400000, guid: ebba869f19c98e244b36ab29a3040fa6, type: 2}
+  - {fileID: 11400000, guid: 855880f9e2bcae0428ae55b40ac03790, type: 2}

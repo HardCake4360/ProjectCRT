@@ -2452,7 +2452,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  tellNormalized: 0.98
+  tellNormalized: 0.218
   minPulseBpm: 48
   maxPulseBpm: 148
   vertexCount: 12

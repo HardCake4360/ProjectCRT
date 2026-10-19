@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3de593fbda2487189fbc1ccb4a64d28, type: 3}
+  m_Name: CrossA
+  m_EditorClassIdentifier: 
+  npcId: 960ed6b5a60f42fcb250105783373c94
+  displayName: "\uAD50\uCC28 \uB2F4\uB2F9 A"
+  prefab: {fileID: 0}
+  fallbackColor: {r: 0.35, g: 0.7, b: 0.7, a: 1}
+  speed: 1.5
+  blocksMovement: 1
+  route: {fileID: 11400000, guid: db0a16b30ac0e684cb1aa1bbe2bff045, type: 2}
+  schedules: []
+  enemy: {fileID: 0}
+  approachPlayer: 1
+  detectionRadius: 5
+  leashRadius: 8
+  contactRadius: 1.05
+  requireLineOfSight: 1
+  maxBlockedRetries: 4
+  retryInterval: 0.25
+  pathNodeBudget: 2048

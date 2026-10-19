@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d2cd45cbfd8f7449932039548fc664, type: 3}
+  m_Name: Greeting
+  m_EditorClassIdentifier: 
+  commonId: 3f6b4019ebdc4e7e8079e453510a7b7c
+  displayName: "\uC6C0\uC9C1\uC774\uB294 \uB2F4\uB2F9\uC790\uC758 \uACF5\uD1B5 \uC778\uC0AC"
+  parameters:
+  - name: actor
+    type: 2
+    intValue: 0
+    boolValue: 0
+    stringValue: "\uB2F4\uB2F9\uC790"
+  commands:
+  - commandId: 4ba8f334ad7f4908b98dac9cbd2c2aa2
+    type: 0
+    speaker: '{param:actor}'
+    text: "\uB300\uD654\uD558\uB294 \uB3D9\uC548 \uC6C0\uC9C1\uC784\uC744 \uBA48\uCD98\uB2E4.
+      \uB0B4 \uC778\uC0AC \uAE30\uB85D\uC740 \uB2E4\uB978 \uB2F4\uB2F9\uC790\uC640
+      \uB530\uB85C \uB0A8\uAE34\uB2E4."
+    key: 
+    label: 
+    targetLabel: 
+    intValue: 0
+    boolValue: 1
+    seconds: 0
+    condition:
+      kind: 0
+      key: 
+      expected: 1
+      comparison: 3
+      value: 1
+    map: {fileID: 0}
+    cell: {x: 0, y: 0}
+    choices: []
+    item: {fileID: 0}
+    nightActivity: {fileID: 0}
+    enemy: {fileID: 0}
+    commonEvent: {fileID: 0}
+    arguments: []
+    foregroundEvent: {fileID: 0}
+    mutations: []
+    intParameter: 
+    boolParameter: 
+    useLocalCondition: 0
+    localCondition:
+      parameter: 
+      type: 0
+      comparison: 0
+      intValue: 0
+      boolValue: 1
+      stringValue: 
+  - commandId: b8fd84a27a3647269e4860b98efea716
+    type: 5
+    speaker: 
+    text: 
+    key: greeted
+    label: 
+    targetLabel: 
+    intValue: 0
+    boolValue: 1
+    seconds: 0
+    condition:
+      kind: 0
+      key: 
+      expected: 1
+      comparison: 3
+      value: 1
+    map: {fileID: 0}
+    cell: {x: 0, y: 0}
+    choices: []
+    item: {fileID: 0}
+    nightActivity: {fileID: 0}
+    enemy: {fileID: 0}
+    commonEvent: {fileID: 0}
+    arguments: []
+    foregroundEvent: {fileID: 0}
+    mutations: []
+    intParameter: 
+    boolParameter: 
+    useLocalCondition: 0
+    localCondition:
+      parameter: 
+      type: 0
+      comparison: 0
+      intValue: 0
+      boolValue: 1
+      stringValue: 
+  - commandId: 147e531153bf4ad5bdbe65a210958c6b
+    type: 13
+    speaker: 
+    text: 
+    key: 
+    label: 
+    targetLabel: 
+    intValue: 0
+    boolValue: 1
+    seconds: 0
+    condition:
+      kind: 0
+      key: 
+      expected: 1
+      comparison: 3
+      value: 1
+    map: {fileID: 0}
+    cell: {x: 0, y: 0}
+    choices: []
+    item: {fileID: 0}
+    nightActivity: {fileID: 0}
+    enemy: {fileID: 0}
+    commonEvent: {fileID: 0}
+    arguments: []
+    foregroundEvent: {fileID: 0}
+    mutations: []
+    intParameter: 
+    boolParameter: 
+    useLocalCondition: 0
+    localCondition:
+      parameter: 
+      type: 0
+      comparison: 0
+      intValue: 0
+      boolValue: 1
+      stringValue: 

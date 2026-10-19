@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7610b31ccad60ac4fbeccfadf3b199e5, type: 3}
+  m_Name: PatrolEnemy
+  m_EditorClassIdentifier: 
+  enemyId: npc_lab_patrol_enemy
+  displayName: "\uC5F0\uC2B5\uC6A9 \uADF8\uB9BC\uC790"
+  baseHealth: 18
+  baseAttack: 3
+  retreatAllowed: 1

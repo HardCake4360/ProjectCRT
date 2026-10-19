@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5415428425c4f38a277265fb7a9419e, type: 3}
+  m_Name: StayAwake
+  m_EditorClassIdentifier: 
+  displayName: "\uBC24\uC0D8 \uD65C\uB3D9"
+  description: "\uC5F0\uACB0\uD55C \uBC24\uC0D8 \uD65C\uB3D9\uC744 \uC2DC\uB3C4\uD569\uB2C8\uB2E4.
+    \uB3D9\uB8CC/\uC2DC\uAC04 \uC870\uAC74\uC774 \uC2E4\uD328\uD558\uBA74 \uD6C4\uC18D
+    \uB300\uC0AC\uC640 \uC644\uB8CC\uB97C \uC9C4\uD589\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+  pages:
+  - pageId: 11cea2e7b5ef4fef98f032af12bd0530
+    legacyPageIndex: -1
+    name: "\uBC24\uC0D8"
+    conditions: []
+    trigger: 0
+    runOnce: 0
+    visible: 1
+    blocksMovement: 1
+    commands:
+    - commandId: cf06ec3155b24ea88a4dc3ce7e33bb73
+      type: 22
+      speaker: 
+      text: 
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 11400000, guid: 101da9a64ed894347a23c469b8a93e4b, type: 2}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: a964861281ea42169e21bb2bead7bcdc
+      type: 0
+      speaker: "\uBCF4\uAD00\uC778"
+      text: "\uC900\uBE44\uD55C \uD45C\uC2DD\uC744 \uD655\uC778\uD588\uB2E4."
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: 1ef6909f28c04180a1ee578ae9f77338
+      type: 13
+      speaker: 
+      text: 
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25

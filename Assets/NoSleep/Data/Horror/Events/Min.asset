@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2415e7db2db7e4d961b1864ffc3b4d, type: 3}
+  m_Name: Min
+  m_EditorClassIdentifier: 
+  definitionId: d24ed3882bc640eeb22ee0a3514d9d90
+  displayName: "\uBBFC"
+  prefab: {fileID: 0}
+  fallbackColor: {r: 0.37, g: 0.68, b: 0.62, a: 1}
+  pages:
+  - pageId: dc0991b74ddb464f8fa75c1b48786a55
+    legacyPageIndex: 0
+    name: "\uBBFC\uACFC \uB3D9\uD589"
+    conditions: []
+    trigger: 0
+    runOnce: 0
+    visible: 1
+    blocksMovement: 1
+    commands:
+    - commandId: 908da1cbddde41659cc31a5b5503548c
+      type: 0
+      speaker: "\uBBFC"
+      text: "\uB098\uB3C4 \uC5EC\uAE30\uC11C \uACC4\uC18D \uBC84\uD2F8 \uC218\uB294
+        \uC5C6\uC5B4. \uAC19\uC774 \uAC00\uC790. \uBB34\uC11C\uC6CC\uB3C4, \uAE09\uD558\uAC8C
+        \uBC00\uC5B4\uBD99\uC5EC\uC57C \uD560 \uB54C\uB294 \uB0B4\uAC00 \uC606\uC5D0
+        \uC788\uC744\uAC8C."
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: 09fda8b98ce24356b0a936a32088f1c5
+      type: 17
+      speaker: 
+      text: 
+      key: min
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: c03a4a47f1d34ef19fd921a3c37c9035
+      type: 20
+      speaker: 
+      text: 
+      key: aggressive
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: 572d3190cbb24f999c06651cfee1690d
+      type: 5
+      speaker: 
+      text: 
+      key: A
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25
+  - pageId: 2b0039bbde50434f9d2e69fb95127f42
+    legacyPageIndex: 1
+    name: "\uBBFC\uACFC \uC774\uC57C\uAE30"
+    conditions:
+    - kind: 3
+      key: A
+      expected: 1
+      comparison: 3
+      value: 1
+    trigger: 0
+    runOnce: 0
+    visible: 1
+    blocksMovement: 1
+    commands:
+    - commandId: dbf758f26894464b8c8a65d2b342fca7
+      type: 0
+      speaker: "\uBBFC"
+      text: "\uC545\uAE30\uB294 \uBABB \uB2E4\uB8E8\uB294\uB370, \uC18C\uB9AC \uD06C\uAC8C
+        \uB0B4\uB294 \uAC74 \uC790\uC2E0 \uC788\uC5B4."
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25

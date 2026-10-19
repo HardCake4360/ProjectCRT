@@ -1,0 +1,11 @@
+{
+    "name": "NoSleep.PlayMode.Tests",
+    "rootNamespace": "NoSleep.Tests",
+    "references": [
+        "NoSleep.Runtime",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "optionalUnityReferences": ["TestAssemblies"],
+    "autoReferenced": false
+}

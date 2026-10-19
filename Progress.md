@@ -169,3 +169,14 @@
 - `Interactable`의 클로즈업 카메라는 상호작용 중일 때만 활성화되도록 조정: `Awake()`에서 기본 비활성화, `EnterCloseup()`에서 활성화, `ExitCloseup()`에서 비활성화.
 - 플레이어 기본 시네머신 카메라가 없는 경우를 대비해 `Interactable`이 상호작용 직전 `Main Camera` 위치/회전을 저장하고, `ExitCloseup()` 시 직접 복원하도록 보강.
 - Added affect diagnostics: `NpcInvestigationController` now logs reset, streaming, and final affect values, and `AffectPlanePresenter` warns when affect values arrive without a bound `pulseGraphic`.
+
+## 2026-10-09 — projectNoSleep RPG 시스템 이식
+
+- 사용자 선택(1번)에 따라 기존 씬을 유지하고 시스템·제작 도구와 별도 RPG 시작 씬을 추가했다.
+- `projectNoSleep/Assets/NoSleep`의 Runtime/Editor/Data/Scenes/Tests를 `.meta`와 함께 이식했다. 원본 에셋 488개와 문서 12개의 SHA-256 일치, GUID 충돌 없음을 확인했고 원본 프로젝트는 변경하지 않았다.
+- `Assets/NoSleep/Scenes/ProjectCRT_RPG.unity`와 사무실/골목 맵, 목격자 대화·선택지, 영수증 단서, 조사 조건·맵 왕복·자체 타이틀·슬롯 저장을 추가했다. CRT 씬은 생존/피로 시스템을 활성화하지 않는다.
+- `NoSleepBootstrap`/`GameUI`에 프로젝트별 제목·소개·안내·저장 폴더 설정을 추가했다. CRT RPG 저장은 `ProjectCRT_RPG/Saves`에 분리한다. 기존 조사 인벤토리·NPC 대화 저장 형식과 경로는 유지했다.
+- `Project CRT > RPG` 메뉴에서 시작 씬 열기/맵·이벤트 편집/콘텐츠 브라우저/연결/디버거/검사를 사용할 수 있다. 기존 빌드 씬 순서를 유지하고 새 씬만 마지막에 추가했다.
+- Unity 6000.0.32f1 실제 임포트·컴파일·전체 콘텐츠 검사 통과. EditMode 273/273, PlayMode 96/96, 총 369개 통과(실패·건너뜀 0). 신규 CRT 통합 검사 6개 포함. 원본 497개 파일 보존, 문서화된 코드 변경 3개, GUID 중복·미해결 직렬화 참조·메타 누락 없음.
+- 가이드: `Docs/RPG_MIGRATION.md`. 검증 및 XML 보고서: `Docs/RPG_VERIFICATION.md`, `Docs/Validation/RpgEditMode.xml`, `RpgPlayMode.xml`. 원본 문서는 `Docs/NoSleep`에 과거 기록으로 보관했다.
+- 후속: 기존 LLM 조사 UI/API·조사 인벤토리·스토리/오디오/타이틀 연결, 기존 플레이 씬의 RPG 전환. 이번에는 사람의 수동 플레이·화면 평가·독립 실행 빌드를 수행하지 않았다.

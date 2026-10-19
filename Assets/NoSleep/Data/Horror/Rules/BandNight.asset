@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0e9313a958a6b479b3cbbd5fbe7faf, type: 3}
+  m_Name: BandNight
+  m_EditorClassIdentifier: 
+  activityId: band_night
+  displayName: "\uC5C9\uB9DD\uC9C4\uCC3D \uBC24\uC0D8 \uC5F0\uC8FC"
+  description: "\uBC15\uC790\uB3C4 \uC74C\uC815\uB3C4 \uC81C\uAC01\uAC01\uC778 \uC5F0\uC8FC\uB97C
+    \uACC4\uC18D\uD588\uB2E4. \uB204\uAD6C\uB3C4 \uC7A0\uB4E4\uC9C0 \uC54A\uC558\uACE0,
+    \uB2E4 \uAC19\uC774 \uC6C3\uC5C8\uB2E4."
+  dawnHour: 6
+  fatigueMultiplier: 0.2
+  healthRestore: 8
+  sanityRestore: 15
+  requiresCompanion: 1
+  memoryTitle: "\uC6B0\uB9AC\uAC00 \uB9CC\uB4E0 \uC18C\uC74C"
+  memoryText: "\uC545\uAE30\uB97C \uB2E4\uB8F0 \uC904 \uC544\uB294 \uC0AC\uB78C\uC740
+    \uC5C6\uC5C8\uB2E4. \uADF8\uB798\uB3C4 \uADF8 \uBC24\uC758 \uC18C\uB9AC\uB294
+    \uC624\uB798 \uAE30\uC5B5\uD560 \uAC83 \uAC19\uB2E4."

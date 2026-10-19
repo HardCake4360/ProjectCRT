@@ -1,0 +1,604 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c376f8054ad36104896625fd34e7f304, type: 3}
+  m_Name: Annex
+  m_EditorClassIdentifier: 
+  mapId: npc_lab_annex
+  displayName: "\uC606 \uC791\uC5C5\uC2E4"
+  width: 14
+  height: 10
+  cellSize: 1
+  spawnCell: {x: 2, y: 2}
+  palette:
+  - {fileID: 11400000, guid: 614111c307d79ed4292c1f516bd82d23, type: 2}
+  - {fileID: 11400000, guid: 65fca6c493908e940902b93d6d235981, type: 2}
+  events:
+  - id: keeper
+    cell: {x: 8, y: 5}
+    definition: {fileID: 11400000, guid: fc6cec1a68c2d114bb0b733f789cdffc, type: 2}
+    npc: {fileID: 11400000, guid: 838964b81e861ec4faf1d6d2059754c7, type: 2}
+    yaw: 0
+  - id: return
+    cell: {x: 3, y: 6}
+    definition: {fileID: 11400000, guid: d0fee4bc35ed95844b6440a6a5140991, type: 2}
+    npc: {fileID: 0}
+    yaw: 0
+  storedWidth: 14
+  storedHeight: 10
+  groundTiles: 0100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  decorationTiles: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  indexedPalette:
+  - {fileID: 11400000, guid: 614111c307d79ed4292c1f516bd82d23, type: 2}
+  - {fileID: 11400000, guid: 65fca6c493908e940902b93d6d235981, type: 2}
+  groundVisuals:
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  decorationVisuals:
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  - quarterTurns: 0
+    heightOffset: 0
+  regionIds: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

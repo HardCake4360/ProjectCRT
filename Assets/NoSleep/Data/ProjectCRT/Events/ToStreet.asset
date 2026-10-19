@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2415e7db2db7e4d961b1864ffc3b4d, type: 3}
+  m_Name: ToStreet
+  m_EditorClassIdentifier: 
+  definitionId: 7c9c0f1f51e6450bbc3677af4ff85211
+  displayName: "\uACE8\uBAA9\uC73C\uB85C \uB098\uAC00\uB294 \uBB38"
+  prefab: {fileID: 0}
+  fallbackColor: {r: 0.34, g: 0.65, b: 0.61, a: 1}
+  pages:
+  - pageId: 0b5f3c03d0d3469f9870365701071a53
+    legacyPageIndex: 0
+    name: "\uACE8\uBAA9\uC73C\uB85C"
+    conditions: []
+    trigger: 0
+    runOnce: 0
+    visible: 1
+    blocksMovement: 0
+    commands:
+    - commandId: e9c6b9cf33a045f893086548de255c20
+      type: 9
+      speaker: 
+      text: 
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 11400000, guid: 5d83204417a2000418db12947c1c37c6, type: 2}
+      cell: {x: 3, y: 3}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25

@@ -1,0 +1,6 @@
+{
+  "name": "NoSleep.Runtime",
+  "rootNamespace": "NoSleep",
+  "references": ["Unity.InputSystem", "UnityEngine.UI"],
+  "autoReferenced": true
+}

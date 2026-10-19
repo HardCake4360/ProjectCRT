@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2415e7db2db7e4d961b1864ffc3b4d, type: 3}
+  m_Name: Whisper
+  m_EditorClassIdentifier: 
+  definitionId: 6f992582f3ae4341bc3b91f7dfff1548
+  displayName: "\uB204\uAD70\uAC00\uC758 \uBAA9\uC18C\uB9AC"
+  prefab: {fileID: 0}
+  fallbackColor: {r: 1, g: 1, b: 1, a: 1}
+  pages:
+  - pageId: a241bb25b2ff455ab9a91483bc9aa3a7
+    legacyPageIndex: 0
+    name: "\uBC1C\uAC78\uC74C\uC5D0 \uBC18\uC751"
+    conditions: []
+    trigger: 1
+    runOnce: 1
+    visible: 0
+    blocksMovement: 0
+    commands:
+    - commandId: 845949374e4c4ab88d6af1c270605727
+      type: 0
+      speaker: ???
+      text: "\uC544\uC9C1 \uC7A0\uB4E4\uBA74 \uC548 \uB3FC."
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: f4cf26a6e86b483b83e774d2e5906a51
+      type: 4
+      speaker: 
+      text: 
+      key: heard_whispers
+      label: 
+      targetLabel: 
+      intValue: 1
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25

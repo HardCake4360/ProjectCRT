@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0e9313a958a6b479b3cbbd5fbe7faf, type: 3}
+  m_Name: RollerCoasterNight
+  m_EditorClassIdentifier: 
+  activityId: roller_coaster_night
+  displayName: "\uD574 \uB730 \uB54C\uAE4C\uC9C0 \uB864\uB7EC\uCF54\uC2A4\uD130"
+  description: "\uD145 \uBE48 \uB180\uC774\uACF5\uC6D0\uC5D0\uC11C \uAC19\uC740 \uCF54\uC2A4\uB97C
+    \uBA87 \uBC88\uC774\uACE0 \uB3CC\uC558\uB2E4. \uC544\uCE68\uC774 \uC62C \uB54C\uAE4C\uC9C0
+    \uD568\uAED8 \uC18C\uB9AC\uB97C \uC9C8\uB800\uB2E4."
+  dawnHour: 6
+  fatigueMultiplier: 0.2
+  healthRestore: 8
+  sanityRestore: 15
+  requiresCompanion: 1
+  memoryTitle: "\uB05D\uC5C6\uC774 \uB3CC\uB358 \uBC24"
+  memoryText: "\uCC98\uC74C\uC5D4 \uBB34\uC11C\uC6E0\uACE0, \uB098\uC911\uC5D4 \uC6B0\uC2A4\uC6E0\uB2E4.
+    \uBAA8\uB450 \uD568\uAED8 \uD574\uAC00 \uB728\uB294 \uAC83\uC744 \uBCF4\uC558\uB2E4."

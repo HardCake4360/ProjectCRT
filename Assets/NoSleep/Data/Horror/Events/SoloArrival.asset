@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2415e7db2db7e4d961b1864ffc3b4d, type: 3}
+  m_Name: SoloArrival
+  m_EditorClassIdentifier: 
+  definitionId: 626a9f6f04c845c59c1126c1cb100548
+  displayName: "\uD63C\uC790 \uB0A8\uC740 \uBC1C\uAC78\uC74C"
+  prefab: {fileID: 0}
+  fallbackColor: {r: 1, g: 1, b: 1, a: 1}
+  pages:
+  - pageId: f6b97cec78bc4845ae564e19ce3ed2c9
+    legacyPageIndex: 0
+    name: "\uB9C8\uC9C0\uB9C9 \uAD6C\uAC04"
+    conditions: []
+    trigger: 2
+    runOnce: 1
+    visible: 0
+    blocksMovement: 0
+    commands:
+    - commandId: 4d92fcbd0bb6445f83b7a99262dc2903
+      type: 0
+      speaker: 
+      text: "\uBAB8\uC740 \uC804\uBCF4\uB2E4 \uC57D\uD574\uC84C\uB2E4. \uADF8\uB798\uB3C4
+        \uD568\uAED8 \uC775\uD78C \uD589\uB3D9\uACFC \uB4E4\uC5C8\uB358 \uC774\uC57C\uAE30\uB294
+        \uC78A\uC9C0 \uC54A\uC558\uB2E4."
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c376f8054ad36104896625fd34e7f304, type: 3}
+  m_Name: Hospital
+  m_EditorClassIdentifier: 
+  mapId: horror_hospital
+  displayName: "\uBCD1\uC6D0 \uB300\uAE30 \uAD6C\uC5ED"
+  width: 18
+  height: 12
+  cellSize: 1
+  spawnCell: {x: 2, y: 3}
+  palette:
+  - {fileID: 11400000, guid: b9114f3bc9c91df4997a7fc19d36a1c9, type: 2}
+  - {fileID: 11400000, guid: ebba869f19c98e244b36ab29a3040fa6, type: 2}
+  - {fileID: 11400000, guid: 855880f9e2bcae0428ae55b40ac03790, type: 2}
+  events:
+  - id: medicine
+    cell: {x: 5, y: 3}
+    definition: {fileID: 11400000, guid: 933d3876babe32b45ad2144a636db2ca, type: 2}
+    yaw: 0
+  - id: doctor
+    cell: {x: 5, y: 7}
+    definition: {fileID: 11400000, guid: 0d2040f1381a14b43b63c9ab118491ee, type: 2}
+    yaw: 0
+  - id: min
+    cell: {x: 11, y: 3}
+    definition: {fileID: 11400000, guid: 65b9bc93dcdf88941b6f1681add19108, type: 2}
+    yaw: 0
+  - id: hallway_monster
+    cell: {x: 13, y: 6}
+    definition: {fileID: 11400000, guid: 70f7ce4c91433b644b8ab6b0a8b3538b, type: 2}
+    yaw: 0
+  - id: transit_door
+    cell: {x: 15, y: 9}
+    definition: {fileID: 11400000, guid: 6fa646ab94b30764695b5418a560cafc, type: 2}
+    yaw: 0
+  storedWidth: 18
+  storedHeight: 12
+  groundTiles: 010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  decorationTiles: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff020000000200000002000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  indexedPalette:
+  - {fileID: 11400000, guid: b9114f3bc9c91df4997a7fc19d36a1c9, type: 2}
+  - {fileID: 11400000, guid: ebba869f19c98e244b36ab29a3040fa6, type: 2}
+  - {fileID: 11400000, guid: 855880f9e2bcae0428ae55b40ac03790, type: 2}

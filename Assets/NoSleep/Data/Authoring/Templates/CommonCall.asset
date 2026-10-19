@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5415428425c4f38a277265fb7a9419e, type: 3}
+  m_Name: CommonCall
+  m_EditorClassIdentifier: 
+  displayName: "\uACF5\uD1B5 \uC774\uBCA4\uD2B8 \uD638\uCD9C"
+  description: "\uACF5\uD1B5 \uC5D0\uC14B\uC758 \uB9E4\uAC1C\uBCC0\uC218 \uAE30\uBCF8\uAC12\uC73C\uB85C
+    \uD0C0\uC785 \uC778\uC790\uB97C \uC0DD\uC131\uD569\uB2C8\uB2E4. \uC5D0\uC14B\uC744
+    \uC5F0\uACB0\uD55C \uB4A4 \uC2E4\uC81C \uAC12\uC744 \uD3B8\uC9D1\uD558\uC138\uC694."
+  pages:
+  - pageId: c0ca3cf822544a3abb382dfca02e98ab
+    legacyPageIndex: -1
+    name: "\uACF5\uD1B5 \uD638\uCD9C"
+    conditions: []
+    trigger: 0
+    runOnce: 0
+    visible: 1
+    blocksMovement: 1
+    commands:
+    - commandId: 08a5a08e6088444bbbbb8681979f3d8f
+      type: 25
+      speaker: 
+      text: 
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 11400000, guid: 2ab02ad2c51114e418ce3ef64c8dc7d3, type: 2}
+      arguments:
+      - name: visitor
+        type: 2
+        intValue: 0
+        boolValue: 0
+        stringValue: "\uBCF4\uAD00\uC778"
+        fromParameter: 
+      - name: number
+        type: 0
+        intValue: 1
+        boolValue: 0
+        stringValue: 
+        fromParameter: 
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: c9318d1ad225404d99209d59d526742d
+      type: 13
+      speaker: 
+      text: 
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25

@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="96" result="Passed" total="96" passed="96" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-08 16:20:29Z" end-time="2026-10-08 16:20:32Z" duration="3.3507476">
+  <test-suite type="TestSuite" id="1119" name="project CRT" fullname="project CRT" runstate="Runnable" testcasecount="96" result="Passed" start-time="2026-10-08 16:20:29Z" end-time="2026-10-08 16:20:32Z" duration="3.350748" total="96" passed="96" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1113" name="NoSleep.PlayMode.Tests.dll" fullname="C:/Users/user/Documents/GitHub/ProjectCRT/Library/ScriptAssemblies/NoSleep.PlayMode.Tests.dll" runstate="Runnable" testcasecount="96" result="Passed" start-time="2026-10-08 16:20:29Z" end-time="2026-10-08 16:20:32Z" duration="3.345347" total="96" passed="96" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="50604" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1114" name="NoSleep" fullname="NoSleep" runstate="Runnable" testcasecount="96" result="Passed" start-time="2026-10-08 16:20:29Z" end-time="2026-10-08 16:20:32Z" duration="3.344121" total="96" passed="96" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1115" name="Tests" fullname="NoSleep.Tests" runstate="Runnable" testcasecount="96" result="Passed" start-time="2026-10-08 16:20:29Z" end-time="2026-10-08 16:20:32Z" duration="3.343127" total="96" passed="96" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="BootstrapTests" fullname="NoSleep.Tests.BootstrapTests" classname="NoSleep.Tests.BootstrapTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-08 16:20:29Z" end-time="2026-10-08 16:20:30Z" duration="1.152445" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1002" name="Bootstrap_CreatesReadySessionPlayerUIAndQuarterViewCamera" fullname="NoSleep.Tests.BootstrapTests.Bootstrap_CreatesReadySessionPlayerUIAndQuarterViewCamera" methodname="Bootstrap_CreatesReadySessionPlayerUIAndQuarterViewCamera" classname="NoSleep.Tests.BootstrapTests" runstate="Runnable" seed="1967119462" result="Passed" start-time="2026-10-08 16:20:29Z" end-time="2026-10-08 16:20:29Z" duration="0.396686" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="KeyboardMovement_ApproachesBlockedTileWithoutCrossing_AndMovesThroughClearTerrain" fullname="NoSleep.Tests.BootstrapTests.KeyboardMovement_ApproachesBlockedTileWithoutCrossing_AndMovesThroughClearTerrain" methodname="KeyboardMovement_ApproachesBlockedTileWithoutCrossing_AndMovesThroughClearTerrain" classname="NoSleep.Tests.BootstrapTests" runstate="Runnable" seed="1925392876" result="Passed" start-time="2026-10-08 16:20:29Z" end-time="2026-10-08 16:20:30Z" duration="0.550738" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1006" name="LiveSessionSnapshot_RoundTripsMapPositionAndStateWithoutWritingUserSaves" fullname="NoSleep.Tests.BootstrapTests.LiveSessionSnapshot_RoundTripsMapPositionAndStateWithoutWritingUserSaves" methodname="LiveSessionSnapshot_RoundTripsMapPositionAndStateWithoutWritingUserSaves" classname="NoSleep.Tests.BootstrapTests" runstate="Runnable" seed="1772785647" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.011839" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1004" name="Transfer_DuringRunningEvent_ReplacesMapWithoutLeavingOldGeometryActive" fullname="NoSleep.Tests.BootstrapTests.Transfer_DuringRunningEvent_ReplacesMapWithoutLeavingOldGeometryActive" methodname="Transfer_DuringRunningEvent_ReplacesMapWithoutLeavingOldGeometryActive" classname="NoSleep.Tests.BootstrapTests" runstate="Runnable" seed="1108410415" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.171114" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1005" name="Transfer_ToMapWhoseEventsBlockEveryCell_RestoresPreviousMapAndPlayer" fullname="NoSleep.Tests.BootstrapTests.Transfer_ToMapWhoseEventsBlockEveryCell_RestoresPreviousMapAndPlayer" methodname="Transfer_ToMapWhoseEventsBlockEveryCell_RestoresPreviousMapAndPlayer" classname="NoSleep.Tests.BootstrapTests" runstate="Runnable" seed="2099452859" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.011166" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1007" name="CombatRunnerTests" fullname="NoSleep.Tests.CombatRunnerTests" classname="NoSleep.Tests.CombatRunnerTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.016618" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1010" name="DefeatReportsAfterFinalDialogueAndReleasesInput" fullname="NoSleep.Tests.CombatRunnerTests.DefeatReportsAfterFinalDialogueAndReleasesInput" methodname="DefeatReportsAfterFinalDialogueAndReleasesInput" classname="NoSleep.Tests.CombatRunnerTests" runstate="Runnable" seed="1400565633" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.007685" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1013" name="EventCancellationDisposesPendingCombatChoiceAndReleasesBothRunners" fullname="NoSleep.Tests.CombatRunnerTests.EventCancellationDisposesPendingCombatChoiceAndReleasesBothRunners" methodname="EventCancellationDisposesPendingCombatChoiceAndReleasesBothRunners" classname="NoSleep.Tests.CombatRunnerTests" runstate="Runnable" seed="313991538" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001816" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1012" name="EventEscapeDoesNotCompleteRunOncePageOrExecutePostCombatReward" fullname="NoSleep.Tests.CombatRunnerTests.EventEscapeDoesNotCompleteRunOncePageOrExecutePostCombatReward" methodname="EventEscapeDoesNotCompleteRunOncePageOrExecutePostCombatReward" classname="NoSleep.Tests.CombatRunnerTests" runstate="Runnable" seed="1938695407" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001375" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="EventVictoryPersistsPlacementDefeatAfterEncounterFinishes" fullname="NoSleep.Tests.CombatRunnerTests.EventVictoryPersistsPlacementDefeatAfterEncounterFinishes" methodname="EventVictoryPersistsPlacementDefeatAfterEncounterFinishes" classname="NoSleep.Tests.CombatRunnerTests" runstate="Runnable" seed="1129161507" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001951" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1009" name="FleeReportsEscapeAndDoesNotGrantRewardOrDefeatFlag" fullname="NoSleep.Tests.CombatRunnerTests.FleeReportsEscapeAndDoesNotGrantRewardOrDefeatFlag" methodname="FleeReportsEscapeAndDoesNotGrantRewardOrDefeatFlag" classname="NoSleep.Tests.CombatRunnerTests" runstate="Runnable" seed="1085006010" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001439" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1008" name="VictoryEndsAfterDialogueAndChargesOneTurnWithoutGrantingRewards" fullname="NoSleep.Tests.CombatRunnerTests.VictoryEndsAfterDialogueAndChargesOneTurnWithoutGrantingRewards" methodname="VictoryEndsAfterDialogueAndChargesOneTurnWithoutGrantingRewards" classname="NoSleep.Tests.CombatRunnerTests" runstate="Runnable" seed="622707028" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001265" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1014" name="EventCommonTests" fullname="NoSleep.Tests.EventCommonTests" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.035063" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1023" name="CallDepthCountsTheRootFrameAndRejectsTheSeventeenthFrame" fullname="NoSleep.Tests.EventCommonTests.CallDepthCountsTheRootFrameAndRejectsTheSeventeenthFrame" methodname="CallDepthCountsTheRootFrameAndRejectsTheSeventeenthFrame" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="110912415" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.005643" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1028" name="CancellingCommonDialogueDisposesNestedPresentationAndLeavesRunOnceReplayable" fullname="NoSleep.Tests.EventCommonTests.CancellingCommonDialogueDisposesNestedPresentationAndLeavesRunOnceReplayable" methodname="CancellingCommonDialogueDisposesNestedPresentationAndLeavesRunOnceReplayable" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="90054018" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001593" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1021" name="CancellingDuringAtomicGrantNotificationCannotRunFollowingCommands" fullname="NoSleep.Tests.EventCommonTests.CancellingDuringAtomicGrantNotificationCannotRunFollowingCommands" methodname="CancellingDuringAtomicGrantNotificationCannotRunFollowingCommands" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="1976324871" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001784" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1029" name="CompiledSnapshotCannotBeChangedByEditingSourceCommandsMidExecution" fullname="NoSleep.Tests.EventCommonTests.CompiledSnapshotCannotBeChangedByEditingSourceCommandsMidExecution" methodname="CompiledSnapshotCannotBeChangedByEditingSourceCommandsMidExecution" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="1237051505" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.000680" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1025" name="ExplicitCheckpointResumesAfterMarkerAndInvalidSavedCommandIsRejected" fullname="NoSleep.Tests.EventCommonTests.ExplicitCheckpointResumesAfterMarkerAndInvalidSavedCommandIsRejected" methodname="ExplicitCheckpointResumesAfterMarkerAndInvalidSavedCommandIsRejected" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="2057436857" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001180" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1018" name="GrantOnceCommitsOneBatchAndDistinguishesCallsitesAndCallers" fullname="NoSleep.Tests.EventCommonTests.GrantOnceCommitsOneBatchAndDistinguishesCallsitesAndCallers" methodname="GrantOnceCommitsOneBatchAndDistinguishesCallsitesAndCallers" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="215422092" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001079" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1016" name="IndependentBackgroundContextsKeepCallerLocalsAndSelfSwitchesSeparate" fullname="NoSleep.Tests.EventCommonTests.IndependentBackgroundContextsKeepCallerLocalsAndSelfSwitchesSeparate" methodname="IndependentBackgroundContextsKeepCallerLocalsAndSelfSwitchesSeparate" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="213462977" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.003718" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1020" name="NestedCallForwardsTypedParametersAndRejectsWrongArgumentTypes" fullname="NoSleep.Tests.EventCommonTests.NestedCallForwardsTypedParametersAndRejectsWrongArgumentTypes" methodname="NestedCallForwardsTypedParametersAndRejectsWrongArgumentTypes" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="1645259454" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001069" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1027" name="NestedLoopSharesInstructionBudgetAndLeavesDiagnosticCallStack" fullname="NoSleep.Tests.EventCommonTests.NestedLoopSharesInstructionBudgetAndLeavesDiagnosticCallStack" methodname="NestedLoopSharesInstructionBudgetAndLeavesDiagnosticCallStack" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="890046207" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.009120" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1026" name="PauseAndStepExecuteOneCommandAcrossCommonCallBoundaries" fullname="NoSleep.Tests.EventCommonTests.PauseAndStepExecuteOneCommandAcrossCommonCallBoundaries" methodname="PauseAndStepExecuteOneCommandAcrossCommonCallBoundaries" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="1045388255" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001111" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1017" name="RecursiveAndUnsafeCommonProgramsAreRejectedBeforeAnyStateMutation" fullname="NoSleep.Tests.EventCommonTests.RecursiveAndUnsafeCommonProgramsAreRejectedBeforeAnyStateMutation" methodname="RecursiveAndUnsafeCommonProgramsAreRejectedBeforeAnyStateMutation" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="2117049631" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.000944" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1022" name="RejectedForegroundRequestLeavesRunOncePageIncompleteAndSkipsLaterCommands" fullname="NoSleep.Tests.EventCommonTests.RejectedForegroundRequestLeavesRunOncePageIncompleteAndSkipsLaterCommands" methodname="RejectedForegroundRequestLeavesRunOncePageIncompleteAndSkipsLaterCommands" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="1717975244" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.000641" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1019" name="ReplacingCommonAssetAtTheSameCallsiteUsesItsOwnGrantNamespace" fullname="NoSleep.Tests.EventCommonTests.ReplacingCommonAssetAtTheSameCallsiteUsesItsOwnGrantNamespace" methodname="ReplacingCommonAssetAtTheSameCallsiteUsesItsOwnGrantNamespace" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="403559042" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.000803" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1024" name="SavedGameMinuteWaitResumesExistingDeadlineWithoutRepeatingRewards" fullname="NoSleep.Tests.EventCommonTests.SavedGameMinuteWaitResumesExistingDeadlineWithoutRepeatingRewards" methodname="SavedGameMinuteWaitResumesExistingDeadlineWithoutRepeatingRewards" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="963229699" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.000812" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1015" name="TypedArgumentsDialogueConditionAndCommonEndReturnToTheCaller" fullname="NoSleep.Tests.EventCommonTests.TypedArgumentsDialogueConditionAndCommonEndReturnToTheCaller" methodname="TypedArgumentsDialogueConditionAndCommonEndReturnToTheCaller" classname="NoSleep.Tests.EventCommonTests" runstate="Runnable" seed="610746103" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.002650" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1030" name="EventProgressionTests" fullname="NoSleep.Tests.EventProgressionTests" classname="NoSleep.Tests.EventProgressionTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.032520" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1031" name="FailedItemUseLeavesPageReplayableAndSuccessfulUseCompletesOnlyOnce" fullname="NoSleep.Tests.EventProgressionTests.FailedItemUseLeavesPageReplayableAndSuccessfulUseCompletesOnlyOnce" methodname="FailedItemUseLeavesPageReplayableAndSuccessfulUseCompletesOnlyOnce" classname="NoSleep.Tests.EventProgressionTests" runstate="Runnable" seed="474752319" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.004057" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[아이템을 사용할 수 없습니다. 소지품과 체력을 확인하세요.
+]]></output>
+            </test-case>
+            <test-case id="1032" name="MissingCompanionLeavesNightActivityReplayableAndSuccessRecordsOneMemory" fullname="NoSleep.Tests.EventProgressionTests.MissingCompanionLeavesNightActivityReplayableAndSuccessRecordsOneMemory" methodname="MissingCompanionLeavesNightActivityReplayableAndSuccessRecordsOneMemory" classname="NoSleep.Tests.EventProgressionTests" runstate="Runnable" seed="288326471" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.002883" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[밤을 지샐 동료와 진행 시간을 확인하세요.
+]]></output>
+            </test-case>
+            <test-case id="1033" name="TopModalDisablesCoveredButtonsAndClosingItRestoresKeyboardFocus" fullname="NoSleep.Tests.EventProgressionTests.TopModalDisablesCoveredButtonsAndClosingItRestoresKeyboardFocus" methodname="TopModalDisablesCoveredButtonsAndClosingItRestoresKeyboardFocus" classname="NoSleep.Tests.EventProgressionTests" runstate="Runnable" seed="788822530" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.024857" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1034" name="EventRunnerTests" fullname="NoSleep.Tests.EventRunnerTests" classname="NoSleep.Tests.EventRunnerTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.032033" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1041" name="ActionPageEntryDoesNotQueueTouchWhenPageChangesInsideTrigger" fullname="NoSleep.Tests.EventRunnerTests.ActionPageEntryDoesNotQueueTouchWhenPageChangesInsideTrigger" methodname="ActionPageEntryDoesNotQueueTouchWhenPageChangesInsideTrigger" classname="NoSleep.Tests.EventRunnerTests" runstate="Runnable" seed="325396603" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.003950" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1037" name="CancelWhileWaitingDisposesPresentationAndDoesNotComplete" fullname="NoSleep.Tests.EventRunnerTests.CancelWhileWaitingDisposesPresentationAndDoesNotComplete" methodname="CancelWhileWaitingDisposesPresentationAndDoesNotComplete" classname="NoSleep.Tests.EventRunnerTests" runstate="Runnable" seed="330539605" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001245" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1035" name="ExecutesStateChangesFalseBranchAndSelectedChoice" fullname="NoSleep.Tests.EventRunnerTests.ExecutesStateChangesFalseBranchAndSelectedChoice" methodname="ExecutesStateChangesFalseBranchAndSelectedChoice" classname="NoSleep.Tests.EventRunnerTests" runstate="Runnable" seed="1386149545" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.002438" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1039" name="InfiniteJumpFailsWithinEightyFramesAndReleasesRunner" fullname="NoSleep.Tests.EventRunnerTests.InfiniteJumpFailsWithinEightyFramesAndReleasesRunner" methodname="InfiniteJumpFailsWithinEightyFramesAndReleasesRunner" classname="NoSleep.Tests.EventRunnerTests" runstate="Runnable" seed="83547154" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.018967" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[InvalidOperationException: Event exceeded its instruction budget; check for a jump loop.
+NoSleep.EventExecutionContext.BeginCommand (NoSleep.CompiledEventProgram program, System.Int32 index) (at Assets/NoSleep/Runtime/Events/EventExecutionContext.cs:164)
+NoSleep.EventExecutionContext+<RunProgram>d__114.MoveNext () (at Assets/NoSleep/Runtime/Events/EventExecutionContext.cs:202)
+NoSleep.EventExecutionContext.MoveNext (System.Object& yielded) (at Assets/NoSleep/Runtime/Events/EventExecutionContext.cs:109)
+UnityEngine.Debug:LogException(Exception, Object)
+NoSleep.EventRunner:ReportFailure(Exception) (at Assets/NoSleep/Runtime/Events/EventRunner.cs:107)
+NoSleep.<Drive>d__35:MoveNext() (at Assets/NoSleep/Runtime/Events/EventRunner.cs:102)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+
+이벤트 실행 오류: Event exceeded its instruction budget; check for a jump loop.
+]]></output>
+            </test-case>
+            <test-case id="1038" name="PresentationFailureReleasesRunnerAndDoesNotMarkCompletion" fullname="NoSleep.Tests.EventRunnerTests.PresentationFailureReleasesRunnerAndDoesNotMarkCompletion" methodname="PresentationFailureReleasesRunnerAndDoesNotMarkCompletion" classname="NoSleep.Tests.EventRunnerTests" runstate="Runnable" seed="300526090" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001596" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[InvalidOperationException: presentation fault
+NoSleep.Tests.EventRunnerTests+FakePresentation+<ShowDialogue>d__6.MoveNext () (at Assets/NoSleep/Tests/PlayMode/EventRunnerTests.cs:249)
+NoSleep.EventExecutionContext.MoveNext (System.Object& yielded) (at Assets/NoSleep/Runtime/Events/EventExecutionContext.cs:109)
+UnityEngine.Debug:LogException(Exception, Object)
+NoSleep.EventRunner:ReportFailure(Exception) (at Assets/NoSleep/Runtime/Events/EventRunner.cs:107)
+NoSleep.<Drive>d__35:MoveNext() (at Assets/NoSleep/Runtime/Events/EventRunner.cs:102)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+
+이벤트 실행 오류: presentation fault
+]]></output>
+            </test-case>
+            <test-case id="1036" name="RunOnceCompletionPersistsThroughStateSerializationAndRejectsReplay" fullname="NoSleep.Tests.EventRunnerTests.RunOnceCompletionPersistsThroughStateSerializationAndRejectsReplay" methodname="RunOnceCompletionPersistsThroughStateSerializationAndRejectsReplay" classname="NoSleep.Tests.EventRunnerTests" runstate="Runnable" seed="1302028456" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.000993" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1040" name="TouchEnteredDuringAnotherEventRetriesOnceAndRearmsAfterFullExit" fullname="NoSleep.Tests.EventRunnerTests.TouchEnteredDuringAnotherEventRetriesOnceAndRearmsAfterFullExit" methodname="TouchEnteredDuringAnotherEventRetriesOnceAndRearmsAfterFullExit" classname="NoSleep.Tests.EventRunnerTests" runstate="Runnable" seed="978657771" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.001720" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1042" name="EventSchedulerTests" fullname="NoSleep.Tests.EventSchedulerTests" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:31Z" duration="0.173574" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1043" name="BackgroundWaitLeavesInputAndSaveAvailableAndResumesOriginalDeadline" fullname="NoSleep.Tests.EventSchedulerTests.BackgroundWaitLeavesInputAndSaveAvailableAndResumesOriginalDeadline" methodname="BackgroundWaitLeavesInputAndSaveAvailableAndResumesOriginalDeadline" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="433217905" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.043874" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1051" name="FailedNewGameRebuildsPagesUsingTheOriginalState" fullname="NoSleep.Tests.EventSchedulerTests.FailedNewGameRebuildsPagesUsingTheOriginalState" methodname="FailedNewGameRebuildsPagesUsingTheOriginalState" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="193080990" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.014688" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[New game failed: Destination has no safe player cell.
+]]></output>
+            </test-case>
+            <test-case id="1050" name="FailedTransferRestoresTheOriginalRequestQueueAndMap" fullname="NoSleep.Tests.EventSchedulerTests.FailedTransferRestoresTheOriginalRequestQueueAndMap" methodname="FailedTransferRestoresTheOriginalRequestQueueAndMap" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="70797565" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.025714" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1044" name="ForegroundRequestWaitsForMenuAndRevalidatesSourcePage" fullname="NoSleep.Tests.EventSchedulerTests.ForegroundRequestWaitsForMenuAndRevalidatesSourcePage" methodname="ForegroundRequestWaitsForMenuAndRevalidatesSourcePage" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="698580332" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.013381" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1045" name="MapTransferCancelsOldJobsAndQueueButForegroundKeepsCallerKey" fullname="NoSleep.Tests.EventSchedulerTests.MapTransferCancelsOldJobsAndQueueButForegroundKeepsCallerKey" methodname="MapTransferCancelsOldJobsAndQueueButForegroundKeepsCallerKey" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="864832367" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.015036" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1048" name="NewGameInvalidatesOldExecutionAndResetsAtomicCompletion" fullname="NoSleep.Tests.EventSchedulerTests.NewGameInvalidatesOldExecutionAndResetsAtomicCompletion" methodname="NewGameInvalidatesOldExecutionAndResetsAtomicCompletion" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="1445807693" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.013957" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1046" name="PauseStepAndCancelReleaseInputWithoutCompletingCancelledProgram" fullname="NoSleep.Tests.EventSchedulerTests.PauseStepAndCancelReleaseInputWithoutCompletingCancelledProgram" methodname="PauseStepAndCancelReleaseInputWithoutCompletingCancelledProgram" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="548815031" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:30Z" duration="0.012078" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1049" name="PendingRequestBlocksSaveUntilItIsDelivered" fullname="NoSleep.Tests.EventSchedulerTests.PendingRequestBlocksSaveUntilItIsDelivered" methodname="PendingRequestBlocksSaveUntilItIsDelivered" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="1933979296" result="Passed" start-time="2026-10-08 16:20:30Z" end-time="2026-10-08 16:20:31Z" duration="0.019444" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1047" name="RepeatingProgramsShareFrameBudgetAndNeverBlockMovement" fullname="NoSleep.Tests.EventSchedulerTests.RepeatingProgramsShareFrameBudgetAndNeverBlockMovement" methodname="RepeatingProgramsShareFrameBudgetAndNeverBlockMovement" classname="NoSleep.Tests.EventSchedulerTests" runstate="Runnable" seed="1531217950" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.013793" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1052" name="HorrorJourneyTests" fullname="NoSleep.Tests.HorrorJourneyTests" classname="NoSleep.Tests.HorrorJourneyTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.282361" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1054" name="AuthoredGatesRequireMedicineTwoAccountsAndACompanionNight" fullname="NoSleep.Tests.HorrorJourneyTests.AuthoredGatesRequireMedicineTwoAccountsAndACompanionNight" methodname="AuthoredGatesRequireMedicineTwoAccountsAndACompanionNight" classname="NoSleep.Tests.HorrorJourneyTests" runstate="Runnable" seed="980412240" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.099785" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1053" name="AuthoredJourneyResumesMidwayAndReachesDayFourteenAloneWithMemories" fullname="NoSleep.Tests.HorrorJourneyTests.AuthoredJourneyResumesMidwayAndReachesDayFourteenAloneWithMemories" methodname="AuthoredJourneyResumesMidwayAndReachesDayFourteenAloneWithMemories" classname="NoSleep.Tests.HorrorJourneyTests" runstate="Runnable" seed="1690885644" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.116499" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1055" name="RollerCoasterChoiceCreatesItsOwnMemoryAndSurvivesCompanionSeparation" fullname="NoSleep.Tests.HorrorJourneyTests.RollerCoasterChoiceCreatesItsOwnMemoryAndSurvivesCompanionSeparation" methodname="RollerCoasterChoiceCreatesItsOwnMemoryAndSurvivesCompanionSeparation" classname="NoSleep.Tests.HorrorJourneyTests" runstate="Runnable" seed="1253616282" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.065248" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1056" name="MapVisualTests" fullname="NoSleep.Tests.MapVisualTests" classname="NoSleep.Tests.MapVisualTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.009195" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1057" name="CubeVisualOffsetsAndQuarterTurnsDoNotChangeFloorCollisionOrGridOccupancy" fullname="NoSleep.Tests.MapVisualTests.CubeVisualOffsetsAndQuarterTurnsDoNotChangeFloorCollisionOrGridOccupancy" methodname="CubeVisualOffsetsAndQuarterTurnsDoNotChangeFloorCollisionOrGridOccupancy" classname="NoSleep.Tests.MapVisualTests" runstate="Runnable" seed="2007888692" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.004394" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1058" name="PrefabTransformsComposeWithCellVisualsWhileImportedCollisionAndSourceStayUntouched" fullname="NoSleep.Tests.MapVisualTests.PrefabTransformsComposeWithCellVisualsWhileImportedCollisionAndSourceStayUntouched" methodname="PrefabTransformsComposeWithCellVisualsWhileImportedCollisionAndSourceStayUntouched" classname="NoSleep.Tests.MapVisualTests" runstate="Runnable" seed="648850667" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.004213" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1059" name="NpcContactEdgeTests" fullname="NoSleep.Tests.NpcContactEdgeTests" classname="NoSleep.Tests.NpcContactEdgeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003570" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1061" name="BusyEntryWaitsOnceAndCancelledForegroundDoesNotLoseTheContact" fullname="NoSleep.Tests.NpcContactEdgeTests.BusyEntryWaitsOnceAndCancelledForegroundDoesNotLoseTheContact" methodname="BusyEntryWaitsOnceAndCancelledForegroundDoesNotLoseTheContact" classname="NoSleep.Tests.NpcContactEdgeTests" runstate="Runnable" seed="2075439219" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.002019" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1060" name="PhysicsAndMovingNpcProximityShareOneEntryUntilBothExit" fullname="NoSleep.Tests.NpcContactEdgeTests.PhysicsAndMovingNpcProximityShareOneEntryUntilBothExit" methodname="PhysicsAndMovingNpcProximityShareOneEntryUntilBothExit" classname="NoSleep.Tests.NpcContactEdgeTests" runstate="Runnable" seed="578449470" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.000997" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1062" name="NpcEventRuntimeTests" fullname="NoSleep.Tests.NpcEventRuntimeTests" classname="NoSleep.Tests.NpcEventRuntimeTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.118543" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1069" name="ApproachingEnemyVictoryRemainsDormantAfterSaveAndLoad" fullname="NoSleep.Tests.NpcEventRuntimeTests.ApproachingEnemyVictoryRemainsDormantAfterSaveAndLoad" methodname="ApproachingEnemyVictoryRemainsDormantAfterSaveAndLoad" classname="NoSleep.Tests.NpcEventRuntimeTests" runstate="Runnable" seed="336940703" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.041418" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1064" name="BlockedMoveCannotCompleteOncePageOrGiveFollowingGold" fullname="NoSleep.Tests.NpcEventRuntimeTests.BlockedMoveCannotCompleteOncePageOrGiveFollowingGold" methodname="BlockedMoveCannotCompleteOncePageOrGiveFollowingGold" classname="NoSleep.Tests.NpcEventRuntimeTests" runstate="Runnable" seed="747181829" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.012381" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[InvalidOperationException: NPC movement failed: npc_commands/guide: Invalid
+NoSleep.EventExecutionContext+<RunProgram>d__114.MoveNext () (at Assets/NoSleep/Runtime/Events/EventExecutionContext.cs:252)
+NoSleep.EventExecutionContext.MoveNext (System.Object& yielded) (at Assets/NoSleep/Runtime/Events/EventExecutionContext.cs:109)
+UnityEngine.Debug:LogException(Exception, Object)
+NoSleep.EventRunner:ReportFailure(Exception) (at Assets/NoSleep/Runtime/Events/EventRunner.cs:107)
+NoSleep.<Drive>d__35:MoveNext() (at Assets/NoSleep/Runtime/Events/EventRunner.cs:102)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+NoSleep.EventRunner:TryRun(EventDefinition, String, Int32) (at Assets/NoSleep/Runtime/Events/EventRunner.cs:47)
+NoSleep.EventObject:TryInteract() (at Assets/NoSleep/Runtime/Events/EventObject.cs:59)
+NoSleep.Tests.<BlockedMoveCannotCompleteOncePageOrGiveFollowingGold>d__12:MoveNext() (at Assets/NoSleep/Tests/PlayMode/NpcEventRuntimeTests.cs:66)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+
+]]></output>
+            </test-case>
+            <test-case id="1065" name="CancelledExplicitMovementReleasesReservationsAndAllowsRetry" fullname="NoSleep.Tests.NpcEventRuntimeTests.CancelledExplicitMovementReleasesReservationsAndAllowsRetry" methodname="CancelledExplicitMovementReleasesReservationsAndAllowsRetry" classname="NoSleep.Tests.NpcEventRuntimeTests" runstate="Runnable" seed="1500530582" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.012293" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1067" name="DebuggerStepFinishesOnlyOwnedNpcCommandBeforeNextReward" fullname="NoSleep.Tests.NpcEventRuntimeTests.DebuggerStepFinishesOnlyOwnedNpcCommandBeforeNextReward" methodname="DebuggerStepFinishesOnlyOwnedNpcCommandBeforeNextReward" classname="NoSleep.Tests.NpcEventRuntimeTests" runstate="Runnable" seed="1862455396" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.014567" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1063" name="NestedCommonMovesAndFacesItsCallerBeforePayingReward" fullname="NoSleep.Tests.NpcEventRuntimeTests.NestedCommonMovesAndFacesItsCallerBeforePayingReward" methodname="NestedCommonMovesAndFacesItsCallerBeforePayingReward" classname="NoSleep.Tests.NpcEventRuntimeTests" runstate="Runnable" seed="443735104" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.011950" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1066" name="StopAndResumeTogglePermanentOverrideForExplicitPlacementTarget" fullname="NoSleep.Tests.NpcEventRuntimeTests.StopAndResumeTogglePermanentOverrideForExplicitPlacementTarget" methodname="StopAndResumeTogglePermanentOverrideForExplicitPlacementTarget" classname="NoSleep.Tests.NpcEventRuntimeTests" runstate="Runnable" seed="800516089" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.010947" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1068" name="TemporaryFacingFinishesCurrentCellAndRestoresAutomaticMovement" fullname="NoSleep.Tests.NpcEventRuntimeTests.TemporaryFacingFinishesCurrentCellAndRestoresAutomaticMovement" methodname="TemporaryFacingFinishesCurrentCellAndRestoresAutomaticMovement" classname="NoSleep.Tests.NpcEventRuntimeTests" runstate="Runnable" seed="1644580664" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.013722" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1070" name="NpcMovementRuntimeTests" fullname="NoSleep.Tests.NpcMovementRuntimeTests" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.053128" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1084" name="BlockedStationResumeSurvivesSavedCloneAndReturnsAfterObstacleLeaves" fullname="NoSleep.Tests.NpcMovementRuntimeTests.BlockedStationResumeSurvivesSavedCloneAndReturnsAfterObstacleLeaves" methodname="BlockedStationResumeSurvivesSavedCloneAndReturnsAfterObstacleLeaves" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="432180631" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.008787" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1079" name="DebuggerStepCompletesOnlyItsOwnedMoveAndDoesNotRunFollowingReward" fullname="NoSleep.Tests.NpcMovementRuntimeTests.DebuggerStepCompletesOnlyItsOwnedMoveAndDoesNotRunFollowingReward" methodname="DebuggerStepCompletesOnlyItsOwnedMoveAndDoesNotRunFollowingReward" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1473026918" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003825" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1081" name="DestinationPageChangingDuringSegmentRollsBackAndFailsExplicitMove" fullname="NoSleep.Tests.NpcMovementRuntimeTests.DestinationPageChangingDuringSegmentRollsBackAndFailsExplicitMove" methodname="DestinationPageChangingDuringSegmentRollsBackAndFailsExplicitMove" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1027504874" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003404" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1083" name="DestroyingOnlyMapCancelsServiceAndPendingOperation" fullname="NoSleep.Tests.NpcMovementRuntimeTests.DestroyingOnlyMapCancelsServiceAndPendingOperation" methodname="DestroyingOnlyMapCancelsServiceAndPendingOperation" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="510788438" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003366" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1077" name="LineOfSightIsBlockedByWallsAndTouchingDiagonalCorners" fullname="NoSleep.Tests.NpcMovementRuntimeTests.LineOfSightIsBlockedByWallsAndTouchingDiagonalCorners" methodname="LineOfSightIsBlockedByWallsAndTouchingDiagonalCorners" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1994886253" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.002604" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1078" name="MapChangeCancelsOldOperationWithoutWritingOldNpcIntoNewState" fullname="NoSleep.Tests.NpcMovementRuntimeTests.MapChangeCancelsOldOperationWithoutWritingOldNpcIntoNewState" methodname="MapChangeCancelsOldOperationWithoutWritingOldNpcIntoNewState" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="941409957" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.002855" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1082" name="ModalPausesRouteButSaveDrainFinishesCurrentSegment" fullname="NoSleep.Tests.NpcMovementRuntimeTests.ModalPausesRouteButSaveDrainFinishesCurrentSegment" methodname="ModalPausesRouteButSaveDrainFinishesCurrentSegment" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1928536524" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003359" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1076" name="OccupiedTimeJumpKeepsSourceAndStopsAfterRetryBudget" fullname="NoSleep.Tests.NpcMovementRuntimeTests.OccupiedTimeJumpKeepsSourceAndStopsAfterRetryBudget" methodname="OccupiedTimeJumpKeepsSourceAndStopsAfterRetryBudget" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1135190536" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003139" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1075" name="PersistentMoveWinsOverScheduleAndResumeRestoresAutomaticRoute" fullname="NoSleep.Tests.NpcMovementRuntimeTests.PersistentMoveWinsOverScheduleAndResumeRestoresAutomaticRoute" methodname="PersistentMoveWinsOverScheduleAndResumeRestoresAutomaticRoute" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="165946981" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003439" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1074" name="RuntimeRollbackRestoresSegmentPoseReservationsAndDetachedSavedRecords" fullname="NoSleep.Tests.NpcMovementRuntimeTests.RuntimeRollbackRestoresSegmentPoseReservationsAndDetachedSavedRecords" methodname="RuntimeRollbackRestoresSegmentPoseReservationsAndDetachedSavedRecords" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1217984609" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.005058" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1073" name="SaveDrainCompletesCurrentSegmentAndFreezesNewRouteSteps" fullname="NoSleep.Tests.NpcMovementRuntimeTests.SaveDrainCompletesCurrentSegmentAndFreezesNewRouteSteps" methodname="SaveDrainCompletesCurrentSegmentAndFreezesNewRouteSteps" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="303565178" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003139" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1071" name="SegmentReservesBothCellsAndSelfExclusionPreservesWalkability" fullname="NoSleep.Tests.NpcMovementRuntimeTests.SegmentReservesBothCellsAndSelfExclusionPreservesWalkability" methodname="SegmentReservesBothCellsAndSelfExclusionPreservesWalkability" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1104842606" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.002803" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1080" name="SteppedFaceFinishesExistingSegmentAndRestoresAutomaticRoute" fullname="NoSleep.Tests.NpcMovementRuntimeTests.SteppedFaceFinishesExistingSegmentAndRestoresAutomaticRoute" methodname="SteppedFaceFinishesExistingSegmentAndRestoresAutomaticRoute" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1201285438" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.003182" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1072" name="TwoNpcSwapCannotOverlapAndReturnsBoundedFailure" fullname="NoSleep.Tests.NpcMovementRuntimeTests.TwoNpcSwapCannotOverlapAndReturnsBoundedFailure" methodname="TwoNpcSwapCannotOverlapAndReturnsBoundedFailure" classname="NoSleep.Tests.NpcMovementRuntimeTests" runstate="Runnable" seed="1696179403" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.001999" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1085" name="NpcSessionTests" fullname="NoSleep.Tests.NpcSessionTests" classname="NoSleep.Tests.NpcSessionTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.136097" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1092" name="DisablingSessionCancelsPendingSaveAndReactivationBindsOnlyFreshReservations" fullname="NoSleep.Tests.NpcSessionTests.DisablingSessionCancelsPendingSaveAndReactivationBindsOnlyFreshReservations" methodname="DisablingSessionCancelsPendingSaveAndReactivationBindsOnlyFreshReservations" classname="NoSleep.Tests.NpcSessionTests" runstate="Runnable" seed="1434822597" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.015883" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1090" name="FailedSavePreservesFileAndLiveNpcCheckpointAndNewGameCancelsQueuedSave" fullname="NoSleep.Tests.NpcSessionTests.FailedSavePreservesFileAndLiveNpcCheckpointAndNewGameCancelsQueuedSave" methodname="FailedSavePreservesFileAndLiveNpcCheckpointAndNewGameCancelsQueuedSave" classname="NoSleep.Tests.NpcSessionTests" runstate="Runnable" seed="1592350262" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.019647" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Save failed: NPC route point is outside walkable terrain: npc_session_main/walker_route
+]]></output>
+            </test-case>
+            <test-case id="1087" name="InvalidLoadAndBlockedTransferPreserveStateMotionPendingSaveAndRequestQueue" fullname="NoSleep.Tests.NpcSessionTests.InvalidLoadAndBlockedTransferPreserveStateMotionPendingSaveAndRequestQueue" methodname="InvalidLoadAndBlockedTransferPreserveStateMotionPendingSaveAndRequestQueue" classname="NoSleep.Tests.NpcSessionTests" runstate="Runnable" seed="2096611114" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.018087" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Load failed: Removed NPC route or invalid waypoint checkpoint: removed_route
+]]></output>
+            </test-case>
+            <test-case id="1091" name="LateCommitFailureRestoresNpcInterpolationQueueAndPendingSave" fullname="NoSleep.Tests.NpcSessionTests.LateCommitFailureRestoresNpcInterpolationQueueAndPendingSave" methodname="LateCommitFailureRestoresNpcInterpolationQueueAndPendingSave" classname="NoSleep.Tests.NpcSessionTests" runstate="Runnable" seed="543013860" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.021680" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Load failed: Injected late commit failure
+]]></output>
+            </test-case>
+            <test-case id="1088" name="MapRoundTripAndLoadKeepFacingOverridesAndSeparateSharedDefinitionPlacements" fullname="NoSleep.Tests.NpcSessionTests.MapRoundTripAndLoadKeepFacingOverridesAndSeparateSharedDefinitionPlacements" methodname="MapRoundTripAndLoadKeepFacingOverridesAndSeparateSharedDefinitionPlacements" classname="NoSleep.Tests.NpcSessionTests" runstate="Runnable" seed="1585921089" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.023144" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1086" name="MovingSaveDrainsCurrentSegmentThroughModalAndWritesOnlyCommittedCell" fullname="NoSleep.Tests.NpcSessionTests.MovingSaveDrainsCurrentSegmentThroughModalAndWritesOnlyCommittedCell" methodname="MovingSaveDrainsCurrentSegmentThroughModalAndWritesOnlyCommittedCell" classname="NoSleep.Tests.NpcSessionTests" runstate="Runnable" seed="1591044296" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.021243" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1089" name="TransferInsideForegroundProgramKeepsCapturedStateForFollowingCommands" fullname="NoSleep.Tests.NpcSessionTests.TransferInsideForegroundProgramKeepsCapturedStateForFollowingCommands" methodname="TransferInsideForegroundProgramKeepsCapturedStateForFollowingCommands" classname="NoSleep.Tests.NpcSessionTests" runstate="Runnable" seed="1708097480" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.015099" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1093" name="ProjectCrtRpgTests" fullname="NoSleep.Tests.ProjectCrtRpgTests" classname="NoSleep.Tests.ProjectCrtRpgTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.155958" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1095" name="ClueAndNpcStateSurviveSaveMapRoundTripAndNewGameReset" fullname="NoSleep.Tests.ProjectCrtRpgTests.ClueAndNpcStateSurviveSaveMapRoundTripAndNewGameReset" methodname="ClueAndNpcStateSurviveSaveMapRoundTripAndNewGameReset" classname="NoSleep.Tests.ProjectCrtRpgTests" runstate="Runnable" seed="1254193473" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.077413" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1096" name="DeclinedWitnessChoiceAndMissingTestimonyDoNotCompleteInvestigation" fullname="NoSleep.Tests.ProjectCrtRpgTests.DeclinedWitnessChoiceAndMissingTestimonyDoNotCompleteInvestigation" methodname="DeclinedWitnessChoiceAndMissingTestimonyDoNotCompleteInvestigation" classname="NoSleep.Tests.ProjectCrtRpgTests" runstate="Runnable" seed="618986721" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.052252" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1094" name="TitleAndNewGameUseCrtPresentationAndKeepSurvivalDisabled" fullname="NoSleep.Tests.ProjectCrtRpgTests.TitleAndNewGameUseCrtPresentationAndKeepSurvivalDisabled" methodname="TitleAndNewGameUseCrtPresentationAndKeepSurvivalDisabled" classname="NoSleep.Tests.ProjectCrtRpgTests" runstate="Runnable" seed="692909188" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.025145" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1097" name="SaveSchedulerIntegrationTests" fullname="NoSleep.Tests.SaveSchedulerIntegrationTests" classname="NoSleep.Tests.SaveSchedulerIntegrationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.109865" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1100" name="CheckpointAndCompletionMigrationFailuresDoNotReplaceExistingSaveOrBackup" fullname="NoSleep.Tests.SaveSchedulerIntegrationTests.CheckpointAndCompletionMigrationFailuresDoNotReplaceExistingSaveOrBackup" methodname="CheckpointAndCompletionMigrationFailuresDoNotReplaceExistingSaveOrBackup" classname="NoSleep.Tests.SaveSchedulerIntegrationTests" runstate="Runnable" seed="212867924" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.026479" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Save failed: Unknown event checkpoint scope: removed/npc/definition/page
+Save failed: Unknown completed event placement: removed/npc
+]]></output>
+            </test-case>
+            <test-case id="1098" name="FailedContentAndCheckpointLoadsKeepCurrentContextAndQueuedRequests" fullname="NoSleep.Tests.SaveSchedulerIntegrationTests.FailedContentAndCheckpointLoadsKeepCurrentContextAndQueuedRequests" methodname="FailedContentAndCheckpointLoadsKeepCurrentContextAndQueuedRequests" classname="NoSleep.Tests.SaveSchedulerIntegrationTests" runstate="Runnable" seed="1361243869" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.044400" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Load failed: Unknown event checkpoint scope: removed/npc/definition/page
+Load failed: Unknown completed event placement: removed/npc
+]]></output>
+            </test-case>
+            <test-case id="1101" name="SaveAndLoadInsideParallelChangedCallbackAreBlockedUntilTheSafeBoundary" fullname="NoSleep.Tests.SaveSchedulerIntegrationTests.SaveAndLoadInsideParallelChangedCallbackAreBlockedUntilTheSafeBoundary" methodname="SaveAndLoadInsideParallelChangedCallbackAreBlockedUntilTheSafeBoundary" classname="NoSleep.Tests.SaveSchedulerIntegrationTests" runstate="Runnable" seed="158284860" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.020095" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1099" name="SavingLegacyCompletionMigratesOnlyTheDetachedCandidate" fullname="NoSleep.Tests.SaveSchedulerIntegrationTests.SavingLegacyCompletionMigratesOnlyTheDetachedCandidate" methodname="SavingLegacyCompletionMigratesOnlyTheDetachedCandidate" classname="NoSleep.Tests.SaveSchedulerIntegrationTests" runstate="Runnable" seed="456149769" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.017821" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1102" name="SessionProgressTests" fullname="NoSleep.Tests.SessionProgressTests" classname="NoSleep.Tests.SessionProgressTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:32Z" duration="0.898165" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1106" name="ActiveEventDialogueAndCombatEachBlockSaveAndLoad" fullname="NoSleep.Tests.SessionProgressTests.ActiveEventDialogueAndCombatEachBlockSaveAndLoad" methodname="ActiveEventDialogueAndCombatEachBlockSaveAndLoad" classname="NoSleep.Tests.SessionProgressTests" runstate="Runnable" seed="853783268" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.024966" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1105" name="BackupLoadRestoresPreviousStateWithoutOverwritingSavedFiles" fullname="NoSleep.Tests.SessionProgressTests.BackupLoadRestoresPreviousStateWithoutOverwritingSavedFiles" methodname="BackupLoadRestoresPreviousStateWithoutOverwritingSavedFiles" classname="NoSleep.Tests.SessionProgressTests" runstate="Runnable" seed="914979402" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.026467" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1104" name="CorruptAndUnknownMapLoadsKeepCurrentStateMapAndPlayer" fullname="NoSleep.Tests.SessionProgressTests.CorruptAndUnknownMapLoadsKeepCurrentStateMapAndPlayer" methodname="CorruptAndUnknownMapLoadsKeepCurrentStateMapAndPlayer" classname="NoSleep.Tests.SessionProgressTests" runstate="Runnable" seed="2098203236" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.018342" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Load failed: Save JSON must contain one root object.
+Load failed: Unknown map: missing-map
+]]></output>
+            </test-case>
+            <test-case id="1108" name="NewGameResetsProgressAndBaselineAndReturnsToStartingMap" fullname="NoSleep.Tests.SessionProgressTests.NewGameResetsProgressAndBaselineAndReturnsToStartingMap" methodname="NewGameResetsProgressAndBaselineAndReturnsToStartingMap" classname="NoSleep.Tests.SessionProgressTests" runstate="Runnable" seed="1953497161" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:31Z" duration="0.020613" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1109" name="RealtimeClockPausesForMenusAndEventsAndNewGameDiscardsPartialMinute" fullname="NoSleep.Tests.SessionProgressTests.RealtimeClockPausesForMenusAndEventsAndNewGameDiscardsPartialMinute" methodname="RealtimeClockPausesForMenusAndEventsAndNewGameDiscardsPartialMinute" classname="NoSleep.Tests.SessionProgressTests" runstate="Runnable" seed="1577467571" result="Passed" start-time="2026-10-08 16:20:31Z" end-time="2026-10-08 16:20:32Z" duration="0.739690" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1103" name="SessionSaveAndLoadRestoresEntireJourneyAndSpatialSnapshot" fullname="NoSleep.Tests.SessionProgressTests.SessionSaveAndLoadRestoresEntireJourneyAndSpatialSnapshot" methodname="SessionSaveAndLoadRestoresEntireJourneyAndSpatialSnapshot" classname="NoSleep.Tests.SessionProgressTests" runstate="Runnable" seed="254372011" result="Passed" start-time="2026-10-08 16:20:32Z" end-time="2026-10-08 16:20:32Z" duration="0.022240" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1107" name="StatusAndSlotMenusPermitPersistenceAndTitlePermitsContinue" fullname="NoSleep.Tests.SessionProgressTests.StatusAndSlotMenusPermitPersistenceAndTitlePermitsContinue" methodname="StatusAndSlotMenusPermitPersistenceAndTitlePermitsContinue" classname="NoSleep.Tests.SessionProgressTests" runstate="Runnable" seed="1414297666" result="Passed" start-time="2026-10-08 16:20:32Z" end-time="2026-10-08 16:20:32Z" duration="0.044215" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1110" name="SystemsLabPlayTests" fullname="NoSleep.Tests.SystemsLabPlayTests" classname="NoSleep.Tests.SystemsLabPlayTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-08 16:20:32Z" end-time="2026-10-08 16:20:32Z" duration="0.131217" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1111" name="CommonKeepersStayIndependentAndWaitingObserversResumeWithoutDuplicateRewardsOrNotices" fullname="NoSleep.Tests.SystemsLabPlayTests.CommonKeepersStayIndependentAndWaitingObserversResumeWithoutDuplicateRewardsOrNotices" methodname="CommonKeepersStayIndependentAndWaitingObserversResumeWithoutDuplicateRewardsOrNotices" classname="NoSleep.Tests.SystemsLabPlayTests" runstate="Runnable" seed="419737594" result="Passed" start-time="2026-10-08 16:20:32Z" end-time="2026-10-08 16:20:32Z" duration="0.080260" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1112" name="LeavingTheLabCancelsRuntimeObserversAndReturningResumesSavedDeadlines" fullname="NoSleep.Tests.SystemsLabPlayTests.LeavingTheLabCancelsRuntimeObserversAndReturningResumesSavedDeadlines" methodname="LeavingTheLabCancelsRuntimeObserversAndReturningResumesSavedDeadlines" classname="NoSleep.Tests.SystemsLabPlayTests" runstate="Runnable" seed="561444348" result="Passed" start-time="2026-10-08 16:20:32Z" end-time="2026-10-08 16:20:32Z" duration="0.050157" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/user/AppData/LocalLow/DefaultCompany/project CRT\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

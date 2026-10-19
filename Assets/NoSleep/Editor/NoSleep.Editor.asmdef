@@ -1,0 +1,7 @@
+{
+  "name": "NoSleep.Editor",
+  "rootNamespace": "NoSleep.Editor",
+  "references": ["NoSleep.Runtime"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

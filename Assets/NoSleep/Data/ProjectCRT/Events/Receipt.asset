@@ -1,0 +1,201 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2415e7db2db7e4d961b1864ffc3b4d, type: 3}
+  m_Name: Receipt
+  m_EditorClassIdentifier: 
+  definitionId: 6bcba37466ef447c872663228d78ef44
+  displayName: "\uBC14\uB2E5\uC758 \uC601\uC218\uC99D"
+  prefab: {fileID: 0}
+  fallbackColor: {r: 0.85, g: 0.73, b: 0.43, a: 1}
+  pages:
+  - pageId: baf2e96d8cc147839698bf4187366cd4
+    legacyPageIndex: 0
+    name: "\uB2E8\uC11C \uC870\uC0AC"
+    conditions: []
+    trigger: 0
+    runOnce: 0
+    visible: 1
+    blocksMovement: 1
+    commands:
+    - commandId: 6f2d6d64d70a41678893d12346bdee76
+      type: 0
+      speaker: 
+      text: "\uC816\uC740 \uC601\uC218\uC99D\uC5D0 \uBC29\uBB38 \uC2DC\uAC04\uC774
+        \uB0A8\uC544 \uC788\uB2E4. \uB2E8\uC11C\uB85C \uBCF4\uAD00\uD55C\uB2E4."
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: 10b301f05bfe406fb6f6ca1bc4936a10
+      type: 27
+      speaker: 
+      text: 
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations:
+      - kind: 4
+        key: crt_rpg_receipt
+        intValue: 1
+        boolValue: 1
+      - kind: 2
+        key: A
+        intValue: 0
+        boolValue: 1
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    - commandId: f183cefd33944157b77d3e3a98b5f3e8
+      type: 16
+      speaker: "\uC601\uC218\uC99D"
+      text: "\uACE8\uBAA9\uC5D0\uC11C \uCC3E\uC740 \uC601\uC218\uC99D. \uBC29\uBB38
+        \uC2DC\uAC04\uC774 \uAE30\uB85D\uB418\uC5B4 \uC788\uB2E4."
+      key: crt_rpg_receipt
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25
+  - pageId: 514ad30ad2cb4677986cc69ca6163336
+    legacyPageIndex: 1
+    name: "\uC870\uC0AC \uC644\uB8CC"
+    conditions:
+    - kind: 3
+      key: A
+      expected: 1
+      comparison: 3
+      value: 1
+    trigger: 0
+    runOnce: 0
+    visible: 1
+    blocksMovement: 1
+    commands:
+    - commandId: eb7807f57f454102a820711757b833de
+      type: 0
+      speaker: 
+      text: "\uC601\uC218\uC99D\uC740 \uC774\uBBF8 \uBCF4\uAD00\uD588\uB2E4. J\uC5D0\uC11C
+        \uAE30\uB85D\uC744 \uD655\uC778\uD560 \uC218 \uC788\uB2E4."
+      key: 
+      label: 
+      targetLabel: 
+      intValue: 0
+      boolValue: 1
+      seconds: 0
+      condition:
+        kind: 0
+        key: 
+        expected: 1
+        comparison: 3
+        value: 1
+      map: {fileID: 0}
+      cell: {x: 0, y: 0}
+      choices: []
+      item: {fileID: 0}
+      nightActivity: {fileID: 0}
+      enemy: {fileID: 0}
+      commonEvent: {fileID: 0}
+      arguments: []
+      foregroundEvent: {fileID: 0}
+      mutations: []
+      intParameter: 
+      boolParameter: 
+      useLocalCondition: 0
+      localCondition:
+        parameter: 
+        type: 0
+        comparison: 0
+        intValue: 0
+        boolValue: 1
+        stringValue: 
+    parallelRepeat: 0
+    parallelIntervalSeconds: 0.25

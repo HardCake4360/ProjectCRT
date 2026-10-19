@@ -1,0 +1,2008 @@
+{
+  "source": "C:\\Users\\user\\Documents\\GitHub\\projectNoSleep",
+  "importedOn": "2026-10-09 (Asia/Seoul)",
+  "unityVersion": "6000.0.32f1",
+  "note": "Hashes describe the imported baseline before ProjectCRT adaptations.",
+  "files": [
+    {
+      "path": "Assets/NoSleep/Data/Authoring/StateKeys.asset",
+      "sha256": "572fba151e242278cc8f29afadae07eab2bebf94a5defda41378460dd029cbbc"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/StateKeys.asset.meta",
+      "sha256": "da4d16518b996b02f7f11ba66593eaf7d9e6d715862315eb8a6863216ed22974"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/CommonCall.asset",
+      "sha256": "889e1ed0584177015fba997b85bb194e659e9e5e7bdd233c3725bfa4b33395ee"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/CommonCall.asset.meta",
+      "sha256": "de1c590ca0a11cd5c564734895f4f38f21afadb384139da0cb65d4a2cdc44853"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/ConditionalBranch.asset",
+      "sha256": "ed958c8ad90c7dbdeaebf5608175a37389a713de6789051fc5ea2d77d81b8dc2"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/ConditionalBranch.asset.meta",
+      "sha256": "702f4518e69603f3d8ff61e30218adc0a72196686207ee23a55aff12c747cfc8"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/ContactCombat.asset",
+      "sha256": "be9d09c1f458944ce268bf1cf37a57d6ae9b3b00560eb638724dbcccc9570026"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/ContactCombat.asset.meta",
+      "sha256": "f7a5a3b0937cce8f9ee86ae5b169403002e7b32fb0ccc40f13283837d0897869"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/NpcDialogue.asset",
+      "sha256": "4cbc872b614a3b5c2055a642fd4ae6e96dd68c5c3cddfa2418ef14a50a967280"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/NpcDialogue.asset.meta",
+      "sha256": "88e59177d06f375f361c0d4190f021be9acf44d5b7d0b74a0a3dcf7102dfdbc9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/OneTimeReward.asset",
+      "sha256": "f117b65ef5f19f01486c66bb628852e19107541d3619c38e129bf141e2c2b920"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/OneTimeReward.asset.meta",
+      "sha256": "2d6808ea76fb1cdd1d0d3a79a5f251b71af9ef274cb03d4de27ba88e7d041ee1"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/StayAwake.asset",
+      "sha256": "ec19a9894a53509aa2518ba0d1e35c64ed26abfcd12f08a73d398f6ec16bf6ea"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates/StayAwake.asset.meta",
+      "sha256": "cd49d58c01df959b2af0e4f8ce0f29dd26de42716b3d2bacaf6878462851c841"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring/Templates.meta",
+      "sha256": "1ab61e36f960dc8b89e2a0b2fef9cd755ad4fd7e20ea8a743986dd6cd11ed9d9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Authoring.meta",
+      "sha256": "58a7b652ebd018f6322542d41d016ce9ff56ebdcb37c2cf95224801b7971e0fb"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/Diary.asset",
+      "sha256": "b1f3a4ad50e04b91f601c36793ea9bbe4ee8e8eb1292e1f102cb16f0fa4a5055"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/Diary.asset.meta",
+      "sha256": "24d895687313e62a37a3c30711df1523673ab7122863ebb014f4f751cade3578"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/Guide.asset",
+      "sha256": "e6a886f044450c20129820cc855ade4ce834312f32b6ec4feb969eeeecb36166"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/Guide.asset.meta",
+      "sha256": "dca5abd9e6abc21bc0c2058a4e07865a32cbfffbcfb3b0505c31c57dae185c2e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/Introduction.asset",
+      "sha256": "eee55d1b1ae476e1b92cd3b726c9367aed3a34f3b43c74920ef541a849d012e3"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/Introduction.asset.meta",
+      "sha256": "7aebd4199f9458da7a7bbd9c810e29b7fbcc521be2d6feeb7f54e951afe73df8"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/LockedDoor.asset",
+      "sha256": "91bc872ae239a6eb01e08c6ba1abfbb3789a9874a7254dc0a87e930e61d41111"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/LockedDoor.asset.meta",
+      "sha256": "c8b0f7ecd5254ebc7b6f94e62bf99c7e0cd1beac8b0f3a3015e00c75c7a1f29b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/ReturnDoor.asset",
+      "sha256": "e50129b65ceeb2aa10d9d0081d53d1a98f6633a11014d01d55d55b0c2926697b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/ReturnDoor.asset.meta",
+      "sha256": "5acf50be05b98299f48060056b3fa79631917e9c5e2a443e81ffe6c2513f1e48"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/SupplyBox.asset",
+      "sha256": "11d7e15e5b240632b0841d92154f09a9d5ea145c5f8f0f12af2bb951b53bbff1"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/SupplyBox.asset.meta",
+      "sha256": "166e0f79ce6c439cf3b277e9076f2126cf58514ce950dd48f26d2f1c7cbd3919"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/Whisper.asset",
+      "sha256": "dfb0ae715b2003bf545a7ab718115b1ec244bc7bcc330ab64f7ebe774ddd1fe7"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events/Whisper.asset.meta",
+      "sha256": "e321efc32b2dd0762ffce71bfb4261a13ec0dd91074bb1a3c04a171c878b9ab8"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Events.meta",
+      "sha256": "429b16758babac9e1007663936483acc2edaf969d91351637f947f769193ad9a"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Companions/Jun.asset",
+      "sha256": "d2b8f1bc4903dd96ffdec1fb50cba3f8cb0a09d127dbf0684bbc6c22888adc77"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Companions/Jun.asset.meta",
+      "sha256": "d7310b913df6e2a5c5d9a3bb85bf784c3c6e99edf96e0cc2d010c1c11e5f6f1a"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Companions/Min.asset",
+      "sha256": "8e60f135d1bad4a7aa51f0871dabae361d3fcdbda8c56b8ecdbf3a53fda6b545"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Companions/Min.asset.meta",
+      "sha256": "97553ef3a0dc149783d759f4a1ef09c741e47f310e7adfedf41ee5263062b3a7"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Companions.meta",
+      "sha256": "34cd8bfbc7c7fea9b30a20491b23fdcdaced0fc8c44e28fe783b8e7782683504"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Enemies/FadingPresence.asset",
+      "sha256": "ef809d21b610fe00e6e864173e6aad6587c1049aecc82d42998fbff0dcbe5c5c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Enemies/FadingPresence.asset.meta",
+      "sha256": "49bcbfcb4716d2d20be4dad14c2c21a065dd5e66a1cdc3eca7f5bfcff6018d0e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Enemies/HallwayPresence.asset",
+      "sha256": "90f8303c7618e56f66fae3d1809583e98e21e3284af4bdaa63e0140ecf680b57"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Enemies/HallwayPresence.asset.meta",
+      "sha256": "9b7d3dd996d9095b24906285a7719ee9f9a66e70fed4bfb3c366bd5b1a3f3287"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Enemies.meta",
+      "sha256": "a0b96264921bca983de0ba67bb381cc3cabfd0242ffa6c9a773253bdd9212ebb"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/ApartmentExit.asset",
+      "sha256": "007f1034d714e4c21c2e31d173cc903d1c6e24d00511a165faf4a780bf1f3fb8"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/ApartmentExit.asset.meta",
+      "sha256": "731895abd494437283c5e9d355f9e2183e046e9d83bb139f192c34dad6a0515e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/ApproachMonster.asset",
+      "sha256": "3a73e8aef4c98f211fb028eedbcb12ab4df1dcf4998e718dca29bb7d06af9369"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/ApproachMonster.asset.meta",
+      "sha256": "1127bafcbc34fdbfa42d774396b303d9941687c83f29243c7875ed2f93a707d0"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/Destination.asset",
+      "sha256": "0cb7c2303249e61f88e7709f4d70b5c210a6eac535a5ade586bf3d96c5466e6c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/Destination.asset.meta",
+      "sha256": "fc81f2141935136385f0146ca79f4de041d5b67c76fab6d398eedc1661a08850"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/Doctor.asset",
+      "sha256": "7158bf63324793d1dd2685beedc36a8f191270decf01aca7907f9df6ba99caa5"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/Doctor.asset.meta",
+      "sha256": "8a7236a465c95ef4de91965e17017f79976e8dcfc353ef8eeb7b0e5892200560"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/HospitalExit.asset",
+      "sha256": "0d4227efef68b3b6c38486f2cecd36ff9b2668bf9460572af7b3ea9ec67af662"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/HospitalExit.asset.meta",
+      "sha256": "a9d8d47f14615c39542a37c8efaf155df341b649baedd713410ebdb9aba9fc52"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/HospitalMonster.asset",
+      "sha256": "ea59e563444274e9cce58c7a731358cff5342cd41514916ce6d4bba8ac55c5a3"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/HospitalMonster.asset.meta",
+      "sha256": "5dc180a0e9b1a9924ed2f09e3d4f3c9e066edb336790c95cdeb9dfb25f4b0c58"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/Jun.asset",
+      "sha256": "b0587e79541c2d7712e943bf5193b55cc7659ecc4d2267173398e99e899fc01d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/Jun.asset.meta",
+      "sha256": "02c40c007b1e3f98d188aedd76584ba48df25a784dd6b9640287a34c2ec4f2ba"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/MedicineCabinet.asset",
+      "sha256": "596f3b22cddb2263b7eefbf0475bb70d9a1161175118644cee334f74c0dc0a67"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/MedicineCabinet.asset.meta",
+      "sha256": "18eb9efbb80c71369493d5d1068188c3f660491bc8edb982e6febbd4751b33aa"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/Min.asset",
+      "sha256": "2f69caf8b95c6e72e1ede6af126ae0683f4eefb3f3197fb8b71d9dafa67a6045"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/Min.asset.meta",
+      "sha256": "4a8c3a701b19c1bd06d2b1066cea74f74e089779454bbdb5ce857589330b2441"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/News.asset",
+      "sha256": "ba952c59630192c1b09f4b83210106c4ea73bba7cc8e369b555124552919b06d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/News.asset.meta",
+      "sha256": "ac1d15456de9fbe00a2fa503d50246d4bb4264c69d0ddf39cb33f722cf8ac155"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/NightGathering.asset",
+      "sha256": "41fe37406d29d4e1af7ec1485bd91e8baeedd2fac5f7c805264c21e8c4f3181b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/NightGathering.asset.meta",
+      "sha256": "28808e1c5696f62e34258bf8857f2105a1c2a92c4d18965ffe9f0f435019cf2e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/SoloArrival.asset",
+      "sha256": "18008d57588232e80dee9eaef03ccceaad30ef95898b2f974c1535bbd5149e69"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/SoloArrival.asset.meta",
+      "sha256": "62441c18ca3ff9276fd55a80a8b675d230fbe64bfb7141b5f5da8b8f74afc9d3"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/TransitExit.asset",
+      "sha256": "f05a9de06cc635a1666406220e2bbed49bcd7623d3133666eb2a24946132b766"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/TransitExit.asset.meta",
+      "sha256": "a3ffa554af43108cabef05595516491219eaff4b99df469b2b750aab21be1bd2"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/TransitMonster.asset",
+      "sha256": "30dd907f7d3c41399b9d20c1d836775582139619c74c1042b167be2c8c9cee8f"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/TransitMonster.asset.meta",
+      "sha256": "4ab259827f26ebb7a58e7340f3bca27407ee0a8dc8b7843e063f6c9aa937c2fa"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/TransitReturn.asset",
+      "sha256": "f212665ccba1ac41b6f2bf7415734e351cfdebd1f809ed2dc956d0c6539cf44f"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events/TransitReturn.asset.meta",
+      "sha256": "a9a5232199993cc31fd6e72f482107df913053893c6507860e432a274cf0181c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Events.meta",
+      "sha256": "e105647e71e3c2b05e4c20eedc46020b865193122aac98fa159a88f28ea0fc86"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps/Apartment.asset",
+      "sha256": "a0258e9810102ab77eec9691ce86ae808671bb6437721624389e9cba9aab5ac9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps/Apartment.asset.meta",
+      "sha256": "bd6c1ed81a64443bba84b8cfd518bc1246510a23d43a63b30b1ddf1bbab1e6f7"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps/Approach.asset",
+      "sha256": "609be60f282c9b8354cc5c18d6211649d7fbf3d04853cf1df1280c91810e2da8"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps/Approach.asset.meta",
+      "sha256": "8948eb33918bd102c8b21d80b77e7d709553807a7c2844079504cbaef1cdeca5"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps/Hospital.asset",
+      "sha256": "8ee33ff5a849591f88560a76a75be878e2a9ccdbed785f5d6df9ee2283948f3b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps/Hospital.asset.meta",
+      "sha256": "3be1ccbf02bc6932a0a2b26e5ea293eb5130da07b5de429033ee21c177cb1d0f"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps/Transit.asset",
+      "sha256": "e5b336a2bb8ab636a1b2be80b8b2c93c0743a309ee101539fdb99b10eab0ddaa"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps/Transit.asset.meta",
+      "sha256": "204d1daf17e599ddb3024047ca18435cddd7fc10cd111b6e40b09469bd4b027f"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Maps.meta",
+      "sha256": "7c62c9806311cb5121c0c2907c6bfd2be59d39258c27dcb275584ea07f298fd8"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/Accent.mat",
+      "sha256": "bd6d4822fd4fdb7316d8b6324f90729bfb95d68b2898030a746229c1356cd3ac"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/Accent.mat.meta",
+      "sha256": "3ee1501557054b87a4e1f7f4f0a4c3c4508cf72f46e75a6e2cc5c4c5bc80d9cb"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/Floor.mat",
+      "sha256": "e95ee9948f306cd93eda4abe036b106f408a73e80959a55666be101da5cc0d76"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/Floor.mat.meta",
+      "sha256": "fbfbf866617c04dfda9d94cc8095811abae499361019d5110ad39b94f192cd50"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/HospitalFloor.mat",
+      "sha256": "4a033c19e63b88da39bfc5d2e4e2102a719bdcda79583b60052d09f96a7a74d0"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/HospitalFloor.mat.meta",
+      "sha256": "aa956651c9527b9ca13ea7acfb57a2c7e1bb201c54c1f9fcbd2b27349c636c3d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/Player.mat",
+      "sha256": "fa6de27d0aeaf8634d69c44cdb7bf647e94a2983387f77ddb6ed8272aa6573b2"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/Player.mat.meta",
+      "sha256": "0b60656e37a8d59fb97444ed5455bcc10a0feb0296c792adb0aa3bc5e40a68cc"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/Wall.mat",
+      "sha256": "85fcc4d27a50a717c95e308b46e410c8b3fc12b30f75b20c24280aaa98f86b63"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials/Wall.mat.meta",
+      "sha256": "cd8c8411970a6129e1dd23ae0ae9cd39ddeab6901db10f34268032bbbcc79b6c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Materials.meta",
+      "sha256": "28cf1643204742639152e35508d8b2e589283b85919260cf0f32a35ee437b1c4"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules/BandNight.asset",
+      "sha256": "b9c1f608027ebe45730bc6b9bcf5e020c8e0374efc0ea1d15879c18036d9e198"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules/BandNight.asset.meta",
+      "sha256": "c4ee2174751e6a76addace5402061ac8b51dba231480c6d1baa8f70bd02c3662"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules/RollerCoasterNight.asset",
+      "sha256": "cd6f22fd63b6ed88f985838b63f0128e49075eba16c815889630f6f10e195811"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules/RollerCoasterNight.asset.meta",
+      "sha256": "b366b630ec7ef74f537e5ddf0d018318f0541d696007d788a014464a37c38933"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules/Stimulant.asset",
+      "sha256": "7f5e690a4f6c2bea6fe573a17fcc2de750ab56ce7869cd0a15bfc1dea3c78760"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules/Stimulant.asset.meta",
+      "sha256": "b1fb84f6446460902d4a6be8431e5f52f48cc1df1a7a2ae367b08cf5352ce74e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules/SurvivalSettings.asset",
+      "sha256": "eb3bc4bc18b6212a07f47ee20c838a398f854c90c9d9e2781e4960c45337d502"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules/SurvivalSettings.asset.meta",
+      "sha256": "b2c3e727262c45f6a80b938662866b4b4c8bead7356f4fa3fdc02d620150ad6f"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Rules.meta",
+      "sha256": "1c3d227a66632779cb00c1bf2bdcb3882fb4f02909ef9126dd94819c581b53b9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles/Accent.asset",
+      "sha256": "9ca9ad6151fec3e0f8f53a0ef60e6e8319a74431074090f3e2ce4bfac3be0e25"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles/Accent.asset.meta",
+      "sha256": "e2a9e207d14f35d8f91f91a419937ee62db5e8d52fe009663ac25661a1f6af72"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles/Floor.asset",
+      "sha256": "4f19f5c9cc4066991e23cf7f2867aac575fc2fdeeb3d7a87e5ec15c0c9a11f88"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles/Floor.asset.meta",
+      "sha256": "6acc6447af237f57444c58994e00d6df3a199a43eec2272d2efbc1c0f6e480c9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles/HospitalFloor.asset",
+      "sha256": "85132ee340b25da2c9a4253f303fdda0147505154729e40cc542b55797f09262"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles/HospitalFloor.asset.meta",
+      "sha256": "1c88875194b9d8fb053f75d2b46f8b23d568d52bef96e923fd68b2536d44c765"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles/Wall.asset",
+      "sha256": "184187baf040cb074423d15544bd92a36ebc9b2623b1f1d8ed8e46a7aa59d7d9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles/Wall.asset.meta",
+      "sha256": "b4bde02995c5770f660bd4bfd34c92d034a9d25640996174fe12389c20bb6542"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror/Tiles.meta",
+      "sha256": "82d14186ae28d748c0b51dfd9a5563aa064b3265413788944a957527ebe33918"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Horror.meta",
+      "sha256": "b581c18e6d63d795a95234d7a3de228b736a93057d63086eea12f5c5be46966e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Maps/Corridor.asset",
+      "sha256": "a5a136795c23100593826fbaa85cef44b66cf38b5db799f88d2b805f5bf0c179"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Maps/Corridor.asset.meta",
+      "sha256": "da87fc60f6f9e268592d9c3f27d8225a5b6d8d141100e6df60d104f0d23476b2"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Maps/QuietRoom.asset",
+      "sha256": "1458233fb03354d5fbdd18dcb30446041f9e398082f73dfaa368068409172a9e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Maps/QuietRoom.asset.meta",
+      "sha256": "4b5334cfce62c7ae91a94bc7154c7a8f86fc0e7aab9ab3d8d06c127598504b6c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Maps.meta",
+      "sha256": "dcc13b5dad1e251bf1aa3681f2ceb4ab7f43d13f62358da6703a5d1ad38695f0"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/Floor.mat",
+      "sha256": "ae15c6d67eeaf6feebb4235fe870b383e492c221d734b7d7cfaa439e3d082252"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/Floor.mat.meta",
+      "sha256": "74c400faed0077ef86909a6ede09454d4dad04c3d01b9b4df312a0b6f9e6f2c7"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/Player.mat",
+      "sha256": "a9c2b0214c1dcee792e90f68053ffd12bb9d2564e2b59c7edbb2b45a79cc3c07"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/Player.mat.meta",
+      "sha256": "20e5c8a60f04c63239c9dff8fbc356f7d1717799a7f20e8d1cc13eff0b4e3f36"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/RoomFloor.mat",
+      "sha256": "98144775fc15f589db9cc37c23ee22a341b091406a9dd2c220f7d0bf5faa5c30"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/RoomFloor.mat.meta",
+      "sha256": "fae9eb2908ea1e3e6f1e441fed7c82009d0b3fe6841cd8019f5e7b34e31daebd"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/Rug.mat",
+      "sha256": "2d03bd6544bc9d49b66037ae75c5d4f7b7b0d3db910f28cca3604992ec4f1296"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/Rug.mat.meta",
+      "sha256": "a13deb732e3ca6487affefaf40adb97f8d9079a25bb405c238b5167a9a94ee6b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/Wall.mat",
+      "sha256": "ba7d83c8eb860e68dec2e8082c2f23733123405722a538b9069efb9cb981c2f2"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials/Wall.mat.meta",
+      "sha256": "42487df247361fd74fa69edca20eea9fd840f4351549deaf81e1587ef6785a65"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Materials.meta",
+      "sha256": "a70ee93a371bb2416116d28afb06fdd7a10621b0f80fd022fe85e7a9246e8516"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Common/Greeting.asset",
+      "sha256": "1941c288ade5fa38166389ebf3493675f345045f03dfa6df25735bb438391368"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Common/Greeting.asset.meta",
+      "sha256": "6f0c6ef5e2718228343bbf72273453b1031f8a4fdf86f4e1854863b46cded985"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Common.meta",
+      "sha256": "691962cc8ea1da6aa93d43ad0e732d0fe8d6b5eb6aa16a86bebd60bff316ee02"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/AnnexKeeper.asset",
+      "sha256": "a90672b11e2da848a34c84092c9e9d474bad9d78dc9c0b00b57d9ec1a47f6e40"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/AnnexKeeper.asset.meta",
+      "sha256": "3b56507acde0791326d863f38a678ba9f3859d6bd76ed653dd3403c208a577c2"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/Blocker.asset",
+      "sha256": "9d417ba90f0186b5648d7da9872ce35ee7b3cb2910be32d46b89a2d8c67de32b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/Blocker.asset.meta",
+      "sha256": "7ad90a9c887724bdca5c53a2545d22394ee7a8ab4eed3253ef43704c58060616"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/ControlPanel.asset",
+      "sha256": "71ccddc9a40776dd35d0006cf9f7ec7ad3dfbfaff6d67fca64545f5965b8fd5f"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/ControlPanel.asset.meta",
+      "sha256": "f9486fb13cc1fd865b92f0a4b8e16dd0151ae2b6586ff340b6811169620c772d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/CrossA.asset",
+      "sha256": "4934542e61c414cfb7086bf5bcf450362c20fe030acc8a3f089d4c66bc2e5731"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/CrossA.asset.meta",
+      "sha256": "eaff7bb6d9a89c3e21b7ebd203144fa2f27d129fa0762f8a4777187bcb25f0da"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/CrossB.asset",
+      "sha256": "1ff2b609d71e12f81ca626a46a01079531592b77dd7e84febccf5463cab70353"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/CrossB.asset.meta",
+      "sha256": "7a8a344d90ff403829eaffef8559b8b04b00fc8c64db369807c76781d366b435"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/Exit.asset",
+      "sha256": "7056e72f5927dfafa9bb9ecd9a7b3933f95524605eb1548497c6de8113eab3f5"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/Exit.asset.meta",
+      "sha256": "46719aa83d192d7ed8271fd5898ac687fa1184a35ddd6e4e3604756e220ce354"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/Introduction.asset",
+      "sha256": "2936cb19d8643aecbff0343a006c550c2e3e2989bfb3ab50d4ba359193088e60"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/Introduction.asset.meta",
+      "sha256": "adccd95d4479bb0496f269ba0debd66bc637ea38e2baaeda9ff66be273d085f5"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/PatrolEnemy.asset",
+      "sha256": "7ab642cd449ab0beda208b45fb0e1642311facf8b4d43345002fa6c3d3dab08b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/PatrolEnemy.asset.meta",
+      "sha256": "1335ba933e11fd9f7ac40c480fd324adaff74778073ed898bce8c3aca85c5194"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/Return.asset",
+      "sha256": "759c5a2fc724762ad93d6e654c127cb24fdf0eac6e79715c3bc5c6c2fecf1189"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/Return.asset.meta",
+      "sha256": "96357ca2a4b531bc0a372f6fb77fadefe0e22dedf6a09298c1752553d57af99b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/ScheduleWorker.asset",
+      "sha256": "2fbdf05c84ad29d1473a836aa932503e82e1b16da56b1242adc93f52ab6ada5e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events/ScheduleWorker.asset.meta",
+      "sha256": "d021fecac4f91872bdef5db73a1421b6134ab00b62f965f3ea2e2496e12a699e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Events.meta",
+      "sha256": "42d76dcb3d77bb2f7c8891b16d1b07cfe5c46ae80ab964293785e82fade02256"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Maps/Annex.asset",
+      "sha256": "b23dd5bf861fc8ec45949e1f85100b95c10b164681ea387e19c217280d62c15b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Maps/Annex.asset.meta",
+      "sha256": "264ce0507fabde6fd286f5701febac40f6f000f1f0bb1708872a8dedc4a295d9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Maps/Main.asset",
+      "sha256": "70efa63a129d25d6d0d0f7b3fdaafa37c0556de2d539295b05dc69c4509f5055"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Maps/Main.asset.meta",
+      "sha256": "da3ef14ece1f780b7babf3a04db8aa8f4411085d0d70bdc144a1b86956230583"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Maps.meta",
+      "sha256": "ca76fcb7a945566b5ac05fe4bf04e5ea4d6cd196bfad06e6f6a619062db6a9b8"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Materials/Player.mat",
+      "sha256": "6aaebf33fed9a46d173b0586c4ed6b3b867d0c1420948aed495ebc0e593c08b0"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Materials/Player.mat.meta",
+      "sha256": "8150ca4f01fa14e1d05c8262b23095bf7869d2d0b2a4f03e7fc4c45bb50c19fb"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Materials.meta",
+      "sha256": "5f4254b06871cdd999cba5a582536e46f9ecad61e26750a45e7575384d9e5c38"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/AnnexKeeper.asset",
+      "sha256": "727d178e07568f19d1ea3f8247181dc5cf817df26c6e1f72fb73152593c018a6"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/AnnexKeeper.asset.meta",
+      "sha256": "dcd6cbbdb0072ea2499e292dc07ed51aa3bbb6aa99d47efcfef87dab1270860f"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/CrossA.asset",
+      "sha256": "3625d3e4fccc13a347222327daaa95d371ebc487fee8d0f910528ccc51d2b4ac"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/CrossA.asset.meta",
+      "sha256": "bf060fd0751298bc8e4626c55c101db03f1eb78eaf8b4a051fb973b835e2c73c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/CrossB.asset",
+      "sha256": "7bb08be7c926a33c53be8f5393197737d4da70bda0dc0060541bcbc9ad28df72"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/CrossB.asset.meta",
+      "sha256": "164adf0b23099ef26aaaa2fb11d947844497b94391dd1e1096120be0f0c6db1a"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/PatrolEnemy.asset",
+      "sha256": "e975aa8fcb6a5f15b1d04955bc33a84d4cc5e6e3b56801ab8a9528f757567f6d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/PatrolEnemy.asset.meta",
+      "sha256": "0b74f6c5749d7fa54f4cc44aa4d406e4e407fca2b700a129b8640aadce40ea9e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/ScheduleWorker.asset",
+      "sha256": "e42362a6c98d5caf46801e4910840d5f2b6e6d2e668a75e2aa9b2842e878cc22"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs/ScheduleWorker.asset.meta",
+      "sha256": "a29d6e3f8e6f27239dccbab6548eef10245b2aa6ec4997c310440fd8ddeadbb5"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Npcs.meta",
+      "sha256": "b638e9f55eca9a2950bbe14251ca3ab5329714099cb648e4959d5daa5089fc9b"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes/CrossA.asset",
+      "sha256": "68cb8a9a2fc4d39539a19690fefa94e614e88874ad0cac0aa0bdad969e980edd"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes/CrossA.asset.meta",
+      "sha256": "f0f9beb696be0e3246bf396483b8d643db639a9b1679f0976882badc56b91e9e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes/CrossB.asset",
+      "sha256": "15fa61705f42253ef431874559dcef0af2fbc9a395986cba1db4176e04aae348"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes/CrossB.asset.meta",
+      "sha256": "58df01653195b5efeb45cc2e971f617bca93adfd4acef7e0c53357ee2a2a5391"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes/DayPatrol.asset",
+      "sha256": "401856fddea442e8f695faf3a92bb21362a2365e4c52962b914fffca3ef10596"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes/DayPatrol.asset.meta",
+      "sha256": "ed069fd06159dbc301c3d07d1391a6f88f56d0e21864e626a72bb58deb2686e4"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes/EnemyPatrol.asset",
+      "sha256": "5e52450c053813c01f281bbc85927ff6040e7e1e2b217c35b2bc869e80c3bb84"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes/EnemyPatrol.asset.meta",
+      "sha256": "e8ac4b4e9e47f3ad93b54db652b0c03abe28370ef98e3a20ee41c7de8228e210"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Routes.meta",
+      "sha256": "09d26dfdaa4f2bd059f781fecb707513105797dd735006aec1a826877b36911e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Rules/PatrolEnemy.asset",
+      "sha256": "518af2a6c23bbc9a862d36f20df8ed9da1946c237ac2e41c31f7760137c1b812"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Rules/PatrolEnemy.asset.meta",
+      "sha256": "1983f4c89848665df222ed6ab40aec94cb2aa1c58d038126938f3e92804acd2a"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Rules/Settings.asset",
+      "sha256": "ac068c39ce85b55dcbb81749cea015df91e97aaf731e6d421141ff311b35eb83"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Rules/Settings.asset.meta",
+      "sha256": "40a7f6d62659e37329b5c984ae61b5db52834d43c3036a42f08533cf7ad7430a"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Rules/Stimulant.asset",
+      "sha256": "7251215c9552ed7ddd1ba65133de6345f8b7278e40cd301056c1adc0e31303e1"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Rules/Stimulant.asset.meta",
+      "sha256": "47c9193e622597cc357b53aeb74055c04a2fa9be4719c33c241c24657e62cd9c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Rules.meta",
+      "sha256": "66baeb77c9c97ca69a5a59d7ed5706833100a5db17eb2648a1f541421a5eecd5"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Tiles/Floor.asset",
+      "sha256": "577300d293c3668eb7b2943058f9102ee41556120eba9bffa1697df808abccc6"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Tiles/Floor.asset.meta",
+      "sha256": "0940139546b2ec25920bf9a432238b701dc87e84826a7d4652b67f8ef143a2cc"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Tiles/Wall.asset",
+      "sha256": "39480618424f5059ed9b59581ff7733fff19e8a5efd3789eec769cdc23e62eb9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Tiles/Wall.asset.meta",
+      "sha256": "8ef092e58ab0fc7967b491fe818713065a7c7af2c46aa6f456f799372481e0ad"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab/Tiles.meta",
+      "sha256": "39e34903a9d6f2a56871daaa87130b2f917e527f99a4feca94bdb9dc9114b0fe"
+    },
+    {
+      "path": "Assets/NoSleep/Data/NpcLab.meta",
+      "sha256": "a7e2fdc7b1fc2671e80d1bb5de09b46830a2ea7f881fcdc04bce4dea4143f87f"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Common/SharedWelcome.asset",
+      "sha256": "ebc1cf1381345eacbb81152bfa62c3ea76a5aaa392683812886ff199520a7381"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Common/SharedWelcome.asset.meta",
+      "sha256": "f59f636d9a38166d6729a5cd38934b8a9d8ef0934c8c742bf3e17b6ce6e22dae"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Common.meta",
+      "sha256": "838e04620422ea7db706e8fe94bcb6e1b498800d8ab25802b20e368b91bfa5bb"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/AnnexClock.asset",
+      "sha256": "13d1694a9bb0028a21b027cf22b3facfe40c471bbfaacdd1ccfa12c74914afdc"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/AnnexClock.asset.meta",
+      "sha256": "d33d2a4e84b111a4bd3635dbb3a21cebaa3fcd26f9fd73259a2bdb9896783fba"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/ControlPanel.asset",
+      "sha256": "a14fd882fd75a1bd50b4de806548715112d29cc4a356ade8464590143c239788"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/ControlPanel.asset.meta",
+      "sha256": "2353f89ca10e32dd324f5c06b58579dcdde61512149cb07c3e16d41853377850"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/Introduction.asset",
+      "sha256": "cd1a6f5e4601d9cf596823a640cfaed1228e084dabcc0630afef492ea30fafd8"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/Introduction.asset.meta",
+      "sha256": "710d8b742e35e970b504f6d6e5e3e557774c2d9203f5c92e68aff2aca77f2d13"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/KeeperA.asset",
+      "sha256": "7b45938ef620c32dbf9697bd49f24f3d451b1d8361b0ab4684ad92f06b830763"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/KeeperA.asset.meta",
+      "sha256": "cea01d56bff767b974e1b099f8b52998c40e6b97455a4b842f09e9f61ea1e2df"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/KeeperB.asset",
+      "sha256": "369d948a582dd68a07f0d989516e4ffed0c2148d9b96e45aee1368adcb92a793"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/KeeperB.asset.meta",
+      "sha256": "5c369b295d35b7b190179912cab8d6bae870ebe19b7ddf0cbcd35da981ff9bd7"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/NoticeA.asset",
+      "sha256": "a9ac2d6f9be4374e6cd6cf8c9cbf9acf152bed8173d1405d8b4b88804d282838"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/NoticeA.asset.meta",
+      "sha256": "f62c6e1c717d0def1463fd4b266d6344fec8b16d9f90647ed0e8e2c404a76746"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/NoticeB.asset",
+      "sha256": "697de1645a054e1bab82449e7858bf7adfff0745191c45dca9d34e43fcff2265"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/NoticeB.asset.meta",
+      "sha256": "ab22f97e3075f55d92b7e34cc1f6473e6a4fdb2a59af5e9e3f173c5892dfe90c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/ReturnDoor.asset",
+      "sha256": "9de6501b40ff99a8bc7c91f0dad122e511fab1b3070d4133eb63f70e78350835"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/ReturnDoor.asset.meta",
+      "sha256": "a591810ecd925be101a1e58a246d22326b8524bd3d6893ca184d458790cbe784"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/WatchA.asset",
+      "sha256": "e9ec6fdc526cb2bf48328c8b45e181e6abefbff95218da164321d8fa473ee01a"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/WatchA.asset.meta",
+      "sha256": "e38f9bcd2fcba67c7f943c9ec0f5f9a1cc345d35aa3fc2ca606d8e755efd85d5"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/WatchB.asset",
+      "sha256": "67c4c08a2c45a9003276312746b6809daa71e3855529b082338d94113d43dfe7"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events/WatchB.asset.meta",
+      "sha256": "81e58e4b59cd7b4383b26a2beb41b3f2a777e2446f605da0014fa38483b5a1f3"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Events.meta",
+      "sha256": "8d19ee0120f035dc59fa407773030f58167a99553cfb729ddc3914cf5558c201"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Maps/Annex.asset",
+      "sha256": "15cc1ee236dcd991626c5248dd016d08f848770550b3d7b0645cd24e0bd409f0"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Maps/Annex.asset.meta",
+      "sha256": "5f764ab9e9b1f5a153d3714bcc16acb4e45a9dccf300dc18bf5917ccb0139b1d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Maps/Main.asset",
+      "sha256": "dc0a422411ed98deb68dfd76d72cf6ded9a5b68f740c673f40e6f1e6bc1dbb4d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Maps/Main.asset.meta",
+      "sha256": "bd4d6ee8a9f3dcaeb7aed5cc549261cd2b4f8c302ef579d343cfec740f2963f3"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Maps.meta",
+      "sha256": "dd226fcb8ee360882f9c6501ed7246eb1cd4e1ca4c52214fd27ee1f5f55eec23"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Materials/Floor.mat",
+      "sha256": "07b9079931b4ed133e26e306495bb3db135718343873db4eb4a1511be78a47e7"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Materials/Floor.mat.meta",
+      "sha256": "cb022a417c996e5ab5e0a3da7444388ba5ae6ba2a936d66d0f68b141a249d942"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Materials/Player.mat",
+      "sha256": "26ad403dedbc8a6eb56992d29ad112124e8971c0d0d5ff1dc5d15d187b5be21d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Materials/Player.mat.meta",
+      "sha256": "99de39acf6c71e184d71c532cd3e1257b56b93825791b3b4c574a4840241aa4c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Materials/Wall.mat",
+      "sha256": "3ea7b534596d51760e96ced11d9ff0504f2662d0588285cb92ca863423a27d44"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Materials/Wall.mat.meta",
+      "sha256": "a159fb19baed8407abd31d547b8ded5d5577fb7413d64810ae4a288bcc0f03ed"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Materials.meta",
+      "sha256": "50b945e15bf2b339d749c61fcf2c1ce4174b2bc5320185d81fabe57f7917842c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Rules/Settings.asset",
+      "sha256": "0813651b72c89f085d51188458bf849da1e8c206a9644b811d3b932ea35e11dd"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Rules/Settings.asset.meta",
+      "sha256": "7356b87374a33e6d5d996570745f948ea669a9c86b2fedfed11e83edf0ad8319"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Rules/Stimulant.asset",
+      "sha256": "591af559f67e0056aed12b6a8817fc46e12e3f022e9d9bc6eaa367feb72ba020"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Rules/Stimulant.asset.meta",
+      "sha256": "38d275ef291f816763d83a43fd1935916e9f79e22e647a86124dd2fabf5bf216"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Rules.meta",
+      "sha256": "f5ea5dc060be5ff89af15cfd1cd558842dba562a7526bf41558048412b910b53"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Tiles/Floor.asset",
+      "sha256": "8bcb0fd90c961a6bc735cfaa73a9ce9ee647695258ec20c4675d8e506189b1ea"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Tiles/Floor.asset.meta",
+      "sha256": "b2e32eecae901a473d6d269a3a95affa5a6ff789918416e707dc4840f072cffe"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Tiles/Wall.asset",
+      "sha256": "c4c324d3836918070adde0843c00df7d070c48b0fc64908653e9d56fa87089cb"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Tiles/Wall.asset.meta",
+      "sha256": "a2291eb5004419955594cf7102212219aea1a5d6fdc854441baecc5f31f0207d"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab/Tiles.meta",
+      "sha256": "ef5b17659a91bd847b06b18ad454add2731f7b1dd30820adc4b4d6c276300408"
+    },
+    {
+      "path": "Assets/NoSleep/Data/SystemsLab.meta",
+      "sha256": "738668e56a8d9d43ae0983c303be6e8ef067f9bf98facf605149bc6de9f09308"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles/Floor.asset",
+      "sha256": "dd29a802219451984260cab10b8d3dbf8e8fbfaec2678fc651fcb4a823392496"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles/Floor.asset.meta",
+      "sha256": "f03f4030e5139ec90adebd77145f160ca89c30520bcbd3ef08d3c1412ef6d59e"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles/RoomFloor.asset",
+      "sha256": "64a4a6956981029d6b96513d87c69d1d3255004c0a424b319d0cbf5da721dda9"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles/RoomFloor.asset.meta",
+      "sha256": "23e2a6578f855f4cb0373438f550fb227b0c9c2861d1a2fc73f95154899930f3"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles/Rug.asset",
+      "sha256": "505deda77306e0b60eb695262b39f7c5a5a5389e3b566d279621510504716690"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles/Rug.asset.meta",
+      "sha256": "8b0ca6fdfdcddf97988d5b81718daf35e9bee37d0dcb31a94329fd3967bae1f7"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles/Wall.asset",
+      "sha256": "f675de5d38cc5029b94260d5c4550b5268134e1b0a5248933f3fba05d2fa174c"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles/Wall.asset.meta",
+      "sha256": "aa37dc935cb89fffb261a33af0edb5134cbbc0472240b2979cf366ac0a7e5f44"
+    },
+    {
+      "path": "Assets/NoSleep/Data/Tiles.meta",
+      "sha256": "6b90b4579c435094d82490fa00aff95adf4354df848e6dfc05a0ec19d4e3423c"
+    },
+    {
+      "path": "Assets/NoSleep/Data.meta",
+      "sha256": "5e231b5931b4fe8bd72426bbfe13a02fd43e1552ec73eb5b4a11230f12042aff"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/AuthoringSamplesBuilder.cs",
+      "sha256": "95a316653144bca602829e8671ca069ccf92bf30f9bac73bd4144fdf648c5836"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/AuthoringSamplesBuilder.cs.meta",
+      "sha256": "60c6e27693e76ee0ca53b650a03ee73730cf4a9754b97f309524b5f76f9587e9"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/CommonEventDefinitionEditor.cs",
+      "sha256": "9a7fb70b4c2686481b329946e20cbfaa5841e650ee16da3e052ccd53c144f378"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/CommonEventDefinitionEditor.cs.meta",
+      "sha256": "7ba854bcbd8bbff28b90b5cc5b01de8b7c8728dfb8517efc374798612c8303ba"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/ContentBrowserWindow.cs",
+      "sha256": "4005ec43b5a0aee163655d76874c3c7e8e366e4802eba4a879fe1afcad80388e"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/ContentBrowserWindow.cs.meta",
+      "sha256": "d62fc8e244f6a86b5f4209d8f8fc84b9b47870b10836a1a320f74c95475d5b7d"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/ContentReferenceIndex.cs",
+      "sha256": "3ee4ec5a441f00fe53457a832ac7aa645d5c6bc791d67682ea6c39845e862d87"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/ContentReferenceIndex.cs.meta",
+      "sha256": "01efe8da02a0cbdeac93370aeb164b3987b5a2db34bfafe79c643f34c515d3fc"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/DemoBuilder.cs",
+      "sha256": "7c2c614c4625588de97017a1847dab835aa100bd7e016a08cc57507574281336"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/DemoBuilder.cs.meta",
+      "sha256": "f2e85514628679efa93bd66afa580ec8988567416f4331a2705e05f63df1c95a"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventDebuggerWindow.cs",
+      "sha256": "66c7aead83b259bddced7b969a7a5ed7fc8d005908f38042b622ecef89b6ab1f"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventDebuggerWindow.cs.meta",
+      "sha256": "4e46ac63b599fbdaecc2fecb040b5fa9f94eb03ef87c6256221258b7e428f064"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventDefinitionEditor.cs",
+      "sha256": "5f239ed58b28f7d2c73e18540b63cde0c958bd5ac3fd9d65550446e775fed4f3"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventDefinitionEditor.cs.meta",
+      "sha256": "a07203dae4dec5256be1e33dc4da32580a10a05b0bb650a3694cb74e68bc5fb3"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventEditOperations.cs",
+      "sha256": "b86d02ecb735db7a8511bbc0f5a4f8b69609589d5526f817e861ff5b6729a919"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventEditOperations.cs.meta",
+      "sha256": "9dfbf346ca096a43a113ce62fac2e5c9ce989f8635c30ba53652d485ab83f258"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventEditorDiagnostics.cs",
+      "sha256": "e2f249945947f4d24afe78c0dab937da1fe8fc2e690eb2a682209cdaa8458d5c"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventEditorDiagnostics.cs.meta",
+      "sha256": "355cf9f7010ff4d9002b2ac0498e28abe7e2d382d780bff391edcc05faaa43a0"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventEditorWindow.cs",
+      "sha256": "5f8389745470cb6284a706863ac6ecc438101e76eec953acf3326d87becbe0e6"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventEditorWindow.cs.meta",
+      "sha256": "20ec923a829f8d23ab00011cc0b33f9e58013fc3ea23ca50a4da374fe516f09e"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventIdentityUpgrader.cs",
+      "sha256": "c4017037ae861b0ebbe001b7101d2aef1a260c630a1277aa80eda6d1b1fd8d3e"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventIdentityUpgrader.cs.meta",
+      "sha256": "701171aca8842751960655c2a824c7c6149ae3bc0aaf1cc952d7c91d6b455cd9"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventTemplateDefinition.cs",
+      "sha256": "d7045a8b2bfa2f82f10523965b56000e8b2faf3ea317542ee5d560351bef8d2f"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventTemplateDefinition.cs.meta",
+      "sha256": "baf3ea9a58b594d955d1dc62c95525306119f684fcd61d1be01711027c53348b"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventTemplateDefinitionEditor.cs",
+      "sha256": "a05588e95c43e47fd37b49d7bcab42ab34693a71abed791b954c58f5a76f926c"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventTemplateDefinitionEditor.cs.meta",
+      "sha256": "2f730e88632699652e28e18057400d0e8d92aff7ff08a35757ce34a17403f012"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventTemplates.cs",
+      "sha256": "4d4998a677f6d0e2810f36db6a708911beadb46edb29cf37ee650bd6ecdd0fa3"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/EventTemplates.cs.meta",
+      "sha256": "43a429d1da4b0db8a8e729b8afb9728a412b5f341eb072a702f70a93b121d1b6"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/HorrorContentValidator.cs",
+      "sha256": "554b000c0da8f6bd741c0a7e96b2f62323c4902642e63cf775c82a9d02578ba7"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/HorrorContentValidator.cs.meta",
+      "sha256": "d9d02d227c993b44479aab507d33f73b58caa3d36215b4fce82f8010e702d214"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/HorrorPrototypeBuilder.cs",
+      "sha256": "2060ad6f7e3943b544d5d878bfbce64cd8d8419479e8e2a7218c442918c35381"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/HorrorPrototypeBuilder.cs.meta",
+      "sha256": "3dc0f915002df1a04b0ef096950016e051e9cd748068cb69ed808c8ef0611530"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/MapConnectionAnalyzer.cs",
+      "sha256": "6db76708b4c60d5d7e2feb28c4d7210e90f8af73a4ecd2cbec5c42aea073c567"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/MapConnectionAnalyzer.cs.meta",
+      "sha256": "f81e831358675e0435c5d3ba7f904bdd20098f8bf2c6af78dbc30a543f55656c"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/MapConnectionsWindow.cs",
+      "sha256": "4f3cd3deefddeaa47ebcc5aedb99062b46211a99246ccde67db45e2acc6fa40a"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/MapConnectionsWindow.cs.meta",
+      "sha256": "5d968ecdbedf7908396e2ee8ca7de1ce84b2947b59299f1a5d3428dc31e0bd53"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/MapEditOperations.cs",
+      "sha256": "b55f9051065c9d0404e783337cd93ecffecebe249b23c7ada7188216465cc4bc"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/MapEditOperations.cs.meta",
+      "sha256": "0ba77a38abb695e89e8e9c33d8c72b52c48be77b500825015d247100a3f973c9"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/MapEditorWindow.cs",
+      "sha256": "03458b25579477d3b47be72b27dcaf7e56c2ea52b54752e16d62ade4f2afcee0"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/MapEditorWindow.cs.meta",
+      "sha256": "9257d6f46baf465fa594b155f9f6d382869b639acc6f83264f3e36ee20d533e3"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NoSleep.Editor.asmdef",
+      "sha256": "0a12870dfc8c227e12d4ffd574cc22b9866859465ce055fd371f7238b2997c06"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NoSleep.Editor.asmdef.meta",
+      "sha256": "65926220e69a7aaf6d133da3bb343fa258456e369c83ca79229aef274ab4bb92"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NpcContentValidator.cs",
+      "sha256": "1e13b2eef4148e667d48e99b6463ea0ef7eed2e8b5432fccf12d757acffee8e5"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NpcContentValidator.cs.meta",
+      "sha256": "2dc835063336d53be943cfae0f5f0fe165c02497f34414d8e74fc689cf85d209"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NpcDefinitionEditor.cs",
+      "sha256": "44016ffab74d6417dd7b0c07be9ff3e232cc1278b1f704aff18dd4ad65a7b979"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NpcDefinitionEditor.cs.meta",
+      "sha256": "129889f7f398291da6f73aa3d918fdf89d5ecabc89b548e9f5ba3f7463a9fdd4"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NpcLabBuilder.cs",
+      "sha256": "335bcc476e82c82b983663b0518b8d31d2508b8b0188a629d336c0b21caf4f23"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NpcLabBuilder.cs.meta",
+      "sha256": "193b0423b5ac8934f20923dadd0d8efc960f59d47b7eed788d01f3f6dbc311d6"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NpcRouteDefinitionEditor.cs",
+      "sha256": "df110a6234cf98aa7a4e933ef68ec4be839233c111aa441234ed657bc46ea855"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/NpcRouteDefinitionEditor.cs.meta",
+      "sha256": "af1df8f144efa8e624ed869142de6d8ed89f0f5f01b41eb0d5352f5527afb1e4"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/StateKeyRegistry.cs",
+      "sha256": "68a18f97083564adb6a6f1f88af47535dd912e73e410e70d4decb20f4d2b2ff8"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/StateKeyRegistry.cs.meta",
+      "sha256": "fe9a849bf3d2b8ee5b44712e9fdffe0f0b0926fa7078c891694dbc275ee9feb8"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/SystemsLabBuilder.cs",
+      "sha256": "cad98e2c1573dccbbab76091e708e18a758119f44d069232e8f02b0c113f95de"
+    },
+    {
+      "path": "Assets/NoSleep/Editor/SystemsLabBuilder.cs.meta",
+      "sha256": "bb3d26a9877de1b2ac96f59d27cbd309ffbe4d4567ab3d5268b04e9e05493937"
+    },
+    {
+      "path": "Assets/NoSleep/Editor.meta",
+      "sha256": "8de3def8dc5c384bf7ae2eee84465fb831cd1bd3740c34ada635bc31c9b0aeda"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Combat/CombatRules.cs",
+      "sha256": "f8556060e68bbf214f9495442f486ce687213d36fea3ce3f87f931079aad086c"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Combat/CombatRules.cs.meta",
+      "sha256": "f77ab3cec4aaf3a577d70570758d710130104312108acb8a00d2c30ee6a7e890"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Combat/CombatRunner.cs",
+      "sha256": "95970eec9fc54f4680bb66df90f05556ae3ba3ba81e6d00a73d32510ae3294b6"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Combat/CombatRunner.cs.meta",
+      "sha256": "89c9af85bd8a2c553b86713ea3052345567bb4bfdd56d5ff587b326916f4b85f"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Combat/EnemyDefinition.cs",
+      "sha256": "6d4612c419b0075afa5b363647cc1b51c06796d87e1e50992e8f77432a552d77"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Combat/EnemyDefinition.cs.meta",
+      "sha256": "7d2eedd211d063e767a219ad862b329d1a75a6f5d7cf6ae0cbeeef5d1a17eb32"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Combat.meta",
+      "sha256": "315395b63cea52e37df1119b0ae05f57a44190545cb06120acd0191cfc536240"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/EventSaveMigration.cs",
+      "sha256": "2a06dc7a281af0eb6966db00dc27872a38978840a95baa5ed13e44568eb07afc"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/EventSaveMigration.cs.meta",
+      "sha256": "c3770f2eb0b5daac48d844a9dcd51c30e08cd5823d34f1369e5ec80550800cc5"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/GameSession.cs",
+      "sha256": "d7d347b04d5750afe7d255a043f251859616cdec148d1bf32f836262129dd721"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/GameSession.cs.meta",
+      "sha256": "99ac4ccf79a088d987eb7056d47f5b023aaf2636dd9274d06eb39c9e2b88ba8c"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/GameState.cs",
+      "sha256": "776242c6998972e8620b101d99a9a08596e8dc10a1d8b87a433225afe7938b59"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/GameState.cs.meta",
+      "sha256": "b09b372a1f474116b463439bec23a84d126e136de6a60307b76b51b0fc0fa4fd"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/NoSleepBootstrap.cs",
+      "sha256": "93461eb5e9bb97f3eceab26fd8755c08a5ff8402414144771178212bcf652065"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/NoSleepBootstrap.cs.meta",
+      "sha256": "0a2a111d77fdf48c4674393c21b29719b18f8008ac6e38da4722cfed1424df71"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/SaveService.cs",
+      "sha256": "43b13c20839676565b6d4aef9ad431af2e4a675b9a3331fa74f9e4383866eb16"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/SaveService.cs.meta",
+      "sha256": "a7d08d0f510007b18e7da74fe18f90f2b8647e91e65be7bfa12168228965b534"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/SaveSlotRepository.cs",
+      "sha256": "a8b1cbfeae74c59ee7b89439190a2c4d71e546faf96f34cf2826d9fe0eb41c6d"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/SaveSlotRepository.cs.meta",
+      "sha256": "3e1f50920b19107f9c46e047986894950dcc25521ba5a45dfdcebd3eb77f853f"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/StateCondition.cs",
+      "sha256": "deb0108848210c7a7e302722a20953662158a6d62cb9f9e3aaa91e40a8a04836"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/StateCondition.cs.meta",
+      "sha256": "5c0eab0b6c2ffe2bd52d8735c701df721b62cb05a28bafd5acacf380718e3a23"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/StateMutation.cs",
+      "sha256": "3304986ef95cfa2ca75c9537c010459c06f592c79165b6706d42a251abdad7fb"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core/StateMutation.cs.meta",
+      "sha256": "78c52d93863f80071bb8f9c5d259ec898afa8caeca29e009ff63f146e081daec"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Core.meta",
+      "sha256": "6a6a2247ee6ee2e13fc32f521e302d0f829dcce3f0029b3ecb527a7c6c567699"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/CommonEventDefinition.cs",
+      "sha256": "7b4ea56cd3e7ed5981a972716b10f68bec26372f43cf9a78780570fd3b7d95f7"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/CommonEventDefinition.cs.meta",
+      "sha256": "9f9294c2a2bea948896af6f477b6d2216d0072c9784104e25daa8d04cf441402"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventDefinition.cs",
+      "sha256": "0f696c9a4ad6380c7470a2a09044c49e6b68aae9030b6d96ed7db1784b2623ce"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventDefinition.cs.meta",
+      "sha256": "b5e0b20e7686fdafd813ce28759ea362d6efd155462240f49b29d1a9059ea3ac"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventExecutionContext.cs",
+      "sha256": "e2e13e875c29ffe976e8d10b47f6e47e01fc33ce240e14016315fde91a15142e"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventExecutionContext.cs.meta",
+      "sha256": "be0e92a99c34a5384afcb8cddc93cb4dc1b435c9babc403e0e8dfb2493641b21"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventObject.cs",
+      "sha256": "96f90e0f135e55aafcf9323e995f2a13a0d5777558b4f85f3d8cb479d1bf4d40"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventObject.cs.meta",
+      "sha256": "8ee9c409d17a5ef094f20a113380c16d0987de26d8d290b6981f27ed3b223fd8"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventRunner.cs",
+      "sha256": "5d4527688426b4624435af55b4338ee68df1744e274e7e3b462d8a7b5c466901"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventRunner.cs.meta",
+      "sha256": "5456dd40fd40ac4605cb59085e66042fe48a76bdd6462764780ff0f1d2084b7f"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventScheduler.cs",
+      "sha256": "a0901117e1521e8d35592d957cb735e21ccbc8aca8c22cdd924f7a34d82459d8"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events/EventScheduler.cs.meta",
+      "sha256": "7001971ed3a3ce534a0e13065d6ed2d92000e33698a64d700d59af154ddcef63"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Events.meta",
+      "sha256": "0c62f50cb484efb9d957d4a68c9efb3860fff152fe1927a73b37353a7c1ac12c"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/NoSleep.Runtime.asmdef",
+      "sha256": "2a1107c25d217ecba045526543a340464ed3ba675815899a110dfa32dc021ee7"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/NoSleep.Runtime.asmdef.meta",
+      "sha256": "1fd839cf7544a5019f466aec0595e57c7e6a83999d751e9c5030cad286f793be"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcActor.cs",
+      "sha256": "634bebce53f87a83b667d97a0f4b39bb2ac1f22a4f5b6b95ddfcbf8ffedbd8a5"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcActor.cs.meta",
+      "sha256": "63ba0cb5f8dedd8039e3940effddf7f123488a1fd424631974efa8f050032e35"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcDefinition.cs",
+      "sha256": "80fca6c4b9b2cee0d60dc60e7882c7aeb1c97f24e6d7d58df90f77a1f4e68db1"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcDefinition.cs.meta",
+      "sha256": "e1802017b3ee0ed2ec206f53316383612d0e9bce12e46d7681c612b8a0d88ee7"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcMovementService.cs",
+      "sha256": "2be85ba575eb92276f7b070d2e88a09395325457a0249048f10bf52089d230dc"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcMovementService.cs.meta",
+      "sha256": "2f821d903fedb9b0c40559488c1720cefcc2edec148c58fdea286f1f84d80044"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcPathfinding.cs",
+      "sha256": "024b84df6a606498d45f7f7b41115a12e689ca5a5acf4491b0bf95906fa30b1b"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcPathfinding.cs.meta",
+      "sha256": "06fc8be57d12eb7daca9460e26ded971b7ab0a4a23bea4a928a7fe869cebc49d"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcRouteDefinition.cs",
+      "sha256": "d756aa1f7df0d5f752a796a234e575eaf900d4f03fc5be46341acf2ec5f60330"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcRouteDefinition.cs.meta",
+      "sha256": "40a796826beb0ed2233d12ab4d61b63f319693bef3a6599fe64f5f69cf77791e"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcSaveValidation.cs",
+      "sha256": "e24b1e5672370db14a04495a8c79c0c959dad95e24f76db954dd25b07f217499"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcSaveValidation.cs.meta",
+      "sha256": "cce49035960b0d6df29e6c81fb1365e7d8933c941922f0001cdb9c017de596c1"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcState.cs",
+      "sha256": "7b0c5261301c90231b3cae2c95da73fa04b9cd5467328c8de91c9be3fccd1281"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc/NpcState.cs.meta",
+      "sha256": "7bd4428ec1c3348fe0128d2cf28f32d3aba7a07a124089f718303a27a9855739"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Npc.meta",
+      "sha256": "898ee635a027ef6dd4bf9fc0393f6f5d7067fb5933238431c27749fd4aedbc2a"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player/GameInput.cs",
+      "sha256": "71e2457e31836a16ae71156dcb1e7e087fe5a5115d82c38d6e2e90cbd6732a2c"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player/GameInput.cs.meta",
+      "sha256": "a52950e739b432ce692cf1f26dad0b0ed6a55fa26b578adab4ea70ee4cc9a6bf"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player/PartyFollowers.cs",
+      "sha256": "18c8b60d121596ce6bbd2bcd76613fe41d78aee82ac304c976a979feb1c04bdb"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player/PartyFollowers.cs.meta",
+      "sha256": "f8488fbea8dd1c6e87734d69fb45607b9547c5395817fbd9ecb19d5e3e2c6f92"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player/PlayerController.cs",
+      "sha256": "532481e05c322a69221448cbafaffe47f689f6cdfd2e40b70e75f3537751aa3a"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player/PlayerController.cs.meta",
+      "sha256": "79551e8a31dc8a00a4c164dbe063fab9e6cadfc9fea8860e8a91447aad78e76d"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player/QuarterViewCamera.cs",
+      "sha256": "c46a4713fb3abb6bf3ba8bdb1b33a70f6811e49a85c743b35ed477ff450df29d"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player/QuarterViewCamera.cs.meta",
+      "sha256": "6aedc98fe29e99eea964ff475e6f9f62b58d5e3cb6c7de508b223a67f1b10e6a"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Player.meta",
+      "sha256": "1e1f23c1022e4540e369061a9100f306d472a73856a685c90896b740109916d8"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/CompanionDefinition.cs",
+      "sha256": "6f89bc688e9953bd36ec5f85f7b580a7648d312edb0834fb6d35ab8dd982acf9"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/CompanionDefinition.cs.meta",
+      "sha256": "4f7bd0f7a092d371a19827dfd6e2b9e077e2513238a0e955bedce3445322af18"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/ItemEffectDefinition.cs",
+      "sha256": "099cb4a26fe1dc0c0803228c8b2741f7802b7930e51a3fbb65e899992a068d89"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/ItemEffectDefinition.cs.meta",
+      "sha256": "3fc8f3139581874c633cb46b69ce1cd48658b7fb5262d824f904d159bd25dcee"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/JourneyState.cs",
+      "sha256": "a243dad7aad14e564615dda21b9d1831c3e066def6734fe609893f1a9aa137ff"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/JourneyState.cs.meta",
+      "sha256": "cf85d994c1e1cc6907d440e4b793bb24b5f3662c3642eee3461f3894631c9b9f"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/NightActivityDefinition.cs",
+      "sha256": "b1e67ff4cef3465b3b1f72464b245282b0f0f5d17942c2183921d3ec129848d4"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/NightActivityDefinition.cs.meta",
+      "sha256": "2766cace113d7e6c594bdb1e21f35cccc05bc7c5dd0b1fb946f1c1ea4adfad78"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/PartyState.cs",
+      "sha256": "313de869818a91d88ad93183808929d9fcc25dd44a4a7066667d1129a01afa77"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/PartyState.cs.meta",
+      "sha256": "4e413a1b98cb0c29cbbb3cdae2dd4ef36d9dbf3248e04268d94f969567b5e6d0"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/SurvivalRules.cs",
+      "sha256": "2d4f7f1d1c4f13b8ace7c1f089b67d36609d78a41fb43a01118cb3438415c879"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/SurvivalRules.cs.meta",
+      "sha256": "0eab4664c51313c031cc1a648da2313ffd8c4ac0316f6f9d11b0d2c4be80ad75"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/SurvivalSettings.cs",
+      "sha256": "104ad80ead5560c6914c46707de30cd3058749741dca5bbd672bbdcb3b2cebd7"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/SurvivalSettings.cs.meta",
+      "sha256": "664a91cf194c352fbc79427e196cb8581825310f9f95250e7630680943c61c3c"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/SurvivalState.cs",
+      "sha256": "4a042363449fdf94bba4a3919d75bf79597008a5d9d1e9f809f3c22572b37ffb"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival/SurvivalState.cs.meta",
+      "sha256": "88fac3c1effdc8c4209eb1b4a1a31d3d821e9fec9cf5df9d0c289e9ecd4c53f9"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/Survival.meta",
+      "sha256": "73dc88e3f5d31356e864ccc228b47add09f7edb4bdfa0c317387da4bbca8ce80"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/UI/GameUI.cs",
+      "sha256": "fbd412bd68afdc043daf9892bdb158e30968c2f6dd4339bc5f10210b1a1248ac"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/UI/GameUI.cs.meta",
+      "sha256": "4fb903a01363a2ee3c3c4c89289bcd6f29e5d42e3af063a65477d824c808068c"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/UI/GameUI.Progress.cs",
+      "sha256": "8f752958564370feabac3e7cc2ced72fe69b46918d1261df136a2035ab32b670"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/UI/GameUI.Progress.cs.meta",
+      "sha256": "f087f73b519449c2d7abfde3f32d1187789852a999e9ad2834bfdcc644f5506b"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/UI.meta",
+      "sha256": "e1d63895beb9001e12e14063efa2124906742e2583225aeea73033feff057883"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/World/MapDefinition.cs",
+      "sha256": "ec431f60972e4acc1573ee020992735c1eedcc1b1572ae362773f45f9a80c6d6"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/World/MapDefinition.cs.meta",
+      "sha256": "6c58add55750b6c500da956102b4a6f54c93af86e91f3be3b596ecb7fec60238"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/World/TileDefinition.cs",
+      "sha256": "51ce19cd4ab698e803a834a5a3e8eea32d4548a681106cad914ba447ea6c80de"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/World/TileDefinition.cs.meta",
+      "sha256": "d3bd977baa610bb7615d676393040e69bafaa7f92ae79ef79b9df46911374afa"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/World/TileMapRuntime.cs",
+      "sha256": "04a0692fe01a1dc0dfc5839e5aa0ab835fc86d5ee582a1171f021835c49944ed"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/World/TileMapRuntime.cs.meta",
+      "sha256": "0d29dcdb5467be04a3dc715c5dc389483e2bf6d099c7d49815a809a4613d4637"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime/World.meta",
+      "sha256": "492141342b302319749e1566da3a6079e38039f117554bb211292ce994d6740a"
+    },
+    {
+      "path": "Assets/NoSleep/Runtime.meta",
+      "sha256": "3b6ba43edeb615663f15ff4c923633b28b41811b65d9dc474bdcc184f8f77fc9"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes/NoSleepDemo.unity",
+      "sha256": "9065772baea42574bb4d3cf1110599c1dbddf032dff2cb1d6e69d46e0f7dfa29"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes/NoSleepDemo.unity.meta",
+      "sha256": "4dbe8ca23050bb9503b6385785ebaf8924913bc74ea05a7549df7097b6059ae7"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes/NoSleepHorrorPrototype.unity",
+      "sha256": "15c0714fdf7848ff54406d52b8164ad4e02acb36fc63080c8428abe5dc4c5294"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes/NoSleepHorrorPrototype.unity.meta",
+      "sha256": "7b3529376ad514d624e55c911e769d9217409f01954da5036f923104b8664230"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes/NoSleepNpcLab.unity",
+      "sha256": "a6910fc280926aa4a1d64c4dcba4dcf46d3a55e768eb80ac1748d27ab27c8706"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes/NoSleepNpcLab.unity.meta",
+      "sha256": "d033dd4c49db5ff1a3283badf6d483a08eedf9876da5ce13ad957200f96bd9d2"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes/NoSleepSystemsLab.unity",
+      "sha256": "1d97943624dbb7a092dc16cb4e049f15e53534898c19b58b3e7f1814521595dc"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes/NoSleepSystemsLab.unity.meta",
+      "sha256": "8a6b1ad65bcb37c4b59b07a07d1fda3a65722c05b9be71dffb80e88f0b20e8d7"
+    },
+    {
+      "path": "Assets/NoSleep/Scenes.meta",
+      "sha256": "df02c917bd715174639afbac70d63d21dcec31cccf2cad0945d0bb813a92d826"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/AuthoringDiagnosticsTests.cs",
+      "sha256": "96437749ceb5b446f2a241910258c6a908f3a0fc67428b6e75f4b94d8eadaaf8"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/AuthoringDiagnosticsTests.cs.meta",
+      "sha256": "045bff4996215a931503b4173e8eefe49b8bddda4b759993d6bd37ee8714445f"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/AuthoringRuntimeTests.cs",
+      "sha256": "f28e083c95c9ade774c867e92841189f18de9d4ca5d1654d36607ff354056bbd"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/AuthoringRuntimeTests.cs.meta",
+      "sha256": "3504734ed15c40fdd58d109dd7344d50ca0efb2375a8179b8dd5db10ab14ecdb"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/CombatRulesTests.cs",
+      "sha256": "858d6f26c69e52931616a410b4832bfbcea962f25571ff1d385039dfa3837ea6"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/CombatRulesTests.cs.meta",
+      "sha256": "8661d477144c0814074f9d19a46ef9d9a84e581e64ebbb1980b35090e688b789"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/ContentReferenceTests.cs",
+      "sha256": "112d76002fb5d14c3aa9ca1a8a1f7ceb07f3db7ffc3d0634889940eed5f39b37"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/ContentReferenceTests.cs.meta",
+      "sha256": "5e3d877500e9f466e96d33654d39caebbb1ec6ff66890c42ce65ab45d379b4c1"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/CoreTests.cs",
+      "sha256": "8a2083464bc74f35955cb70cf8383c345ae98460f8a46307c9b3a476ece6be2c"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/CoreTests.cs.meta",
+      "sha256": "16547cae25bcbd8f281db82470979bd9f8ac6465e9ff979fd166b5ceb1eb1247"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/EventEditOperationsTests.cs",
+      "sha256": "eda9625e485bac17ddcc906fded88da4b0782644d45399343c853e893c48d176"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/EventEditOperationsTests.cs.meta",
+      "sha256": "63d8da60bb9b08002240e9f51b1b784f28b835fae61ae4f757f989262bc27a9a"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/EventIdentityEditorTests.cs",
+      "sha256": "00f7993fae3db43e37c5c96bb0cbe816a7b4ef41efd21d8959ce8f5f2960fa84"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/EventIdentityEditorTests.cs.meta",
+      "sha256": "7e2052c24ccb63a7c3aa268bd0b421df723006489cdda93aef1f1e8336dec2bd"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/EventTests.cs",
+      "sha256": "fee5cc2269c660981bb64540c5ec313d52b9d5caa131d061d26aae79d8123d1a"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/EventTests.cs.meta",
+      "sha256": "63e7e4431066dd4d1c69b20b3658db7bca5f90c0e0ec5f50964229674f9af3a8"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/HorrorContentTests.cs",
+      "sha256": "da1269e2fd428b00e72271b9a56feb7f702d15069eac77651493e136e0beb37a"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/HorrorContentTests.cs.meta",
+      "sha256": "380a99b1a6b1c2f59b5a1875b03a2da944823ccd8db7741664794fdd460bf423"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/HorrorRulesTests.cs",
+      "sha256": "cf6857e764d7e7a9f3b63c7ec42b0ff9bd0cf48a5f51b4f6ac8935dc822cb7e1"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/HorrorRulesTests.cs.meta",
+      "sha256": "01aea75c9415e6dd6726ff718e0d7ad0ad7ec7bf7c6506f8f0735c6e1381f8ab"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/HorrorValidatorTests.cs",
+      "sha256": "aadc6636d51e27ed5997317af263a0630f0fb9f7e5e0f9739996ade9e2841048"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/HorrorValidatorTests.cs.meta",
+      "sha256": "aa49394549a17f4f1207a2e1c19b5049cdb60fd32e328d59550b7f9833ada9c3"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/MapAuthoringTests.cs",
+      "sha256": "9a95874b1677c9e9e03dc0632b5aa89b1f5a33bba34612f859b33dea065aa072"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/MapAuthoringTests.cs.meta",
+      "sha256": "65ceb42017d6752a58ac447814c074b53d657c7c497f89ef708252e0d7e4fda6"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/MapTests.cs",
+      "sha256": "812931aaebb44c726c15396f340dc8eff2fe0c1345718cd26d268482483c8ed4"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/MapTests.cs.meta",
+      "sha256": "3d6ef5ef0904d72524d6664f4061a2ff3a7c8fb5b904cdb0065dbfc1ad4524d3"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NoSleep.Tests.asmdef",
+      "sha256": "90de569a688a17f5c02c46c8c7268a1c8fcf04f4667232b4b150c20432645a50"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NoSleep.Tests.asmdef.meta",
+      "sha256": "fd3b50a95a69b2869554db06fdcf0f22218d2bf4fb3e7a31227cc453eba88a4e"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NpcAuthoringTests.cs",
+      "sha256": "267bc636d68dc630ce29f40b91fabbc182fb40e7610d4a2040ae1380f6485c4f"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NpcAuthoringTests.cs.meta",
+      "sha256": "934c22a88f3ab62d4e2e13a6e0fb9ef55c0c981e77137d0d5de1657abd38827c"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NpcEventProgramTests.cs",
+      "sha256": "a342922a1233e4d0903b8efebfc94fde2fa4df93d8153773ee0adfbcf8541212"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NpcEventProgramTests.cs.meta",
+      "sha256": "f6982c6de9a6b61fbd527bd7f65f202de5b1048cba640281ee46b1236f1503d2"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NpcMovementTests.cs",
+      "sha256": "e0591ed2cd49f941905a96d25da84bc515b94f06bde383e29edef589491a4656"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NpcMovementTests.cs.meta",
+      "sha256": "936aabdc764f7b18844198b87502095df73b2377a0a84821be189ac6cadf115f"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NpcSaveTests.cs",
+      "sha256": "5c4f3c67379f9ffffd4509e177d557fea289e8b74132c17a3a025700b157e31e"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/NpcSaveTests.cs.meta",
+      "sha256": "1e6e07495d701cc35d3dc12cdae642a93d34fd618a0604d79e6bc6bf56e083b8"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/SaveTests.cs",
+      "sha256": "9fa15cf61b77ad98b0f3f98f63d7527648f2c79fcd809406cf8bb673d4071ebd"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/SaveTests.cs.meta",
+      "sha256": "3a8ddc73e0945d0dde83f7021b1ee9fee669fae0c93fe2fb1e865acaa3a0a58e"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/SaveV2Tests.cs",
+      "sha256": "51d5ec7b820930fbbe90836fc1606fc5bb8fc57be2b9e515a6c1ac73325792f5"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/SaveV2Tests.cs.meta",
+      "sha256": "d7de09e505054ec2fc1ca6aa5426d03c651c87ffa86d29f2b2bf69e33664ab2e"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/SaveV3Tests.cs",
+      "sha256": "81fea23f90d1b7273d8c1dbf6d88a233040de8154a564ff869405d68f6975f6c"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/SaveV3Tests.cs.meta",
+      "sha256": "ead3a70dbd51a7f8eda9a7d936b71f0be6fbbdb4e137f8391f3b479d70f53061"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/StableEventTests.cs",
+      "sha256": "2586480d2a3ca4afe2c8eb1cec360dde36b74353724421e729c3a341b1eafdcd"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/StableEventTests.cs.meta",
+      "sha256": "d803604d56b5c04364dbc26d928d9ae422b2040c098852df9127d6c00b3e01b8"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/SystemsLabContentTests.cs",
+      "sha256": "8b4e6027be322d4ab385dd31123f2b755a049ae290f5bbeaa08bd6f715d72c52"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor/SystemsLabContentTests.cs.meta",
+      "sha256": "dd20890ac4ac51b454f8adb3ce760bbff5330ba4d7ba076c4aebe92b566e89dc"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/Editor.meta",
+      "sha256": "65f73eb9a63a3ed2c26abe9a99f253dc902e41156c8a2d1030db6d0690db1c70"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/BootstrapTests.cs",
+      "sha256": "2a0d54dc7e4ec1f435df4cbd8d7732a4129b875b8cdc1dbce1019b94911155cb"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/BootstrapTests.cs.meta",
+      "sha256": "9ac81df3f873d190e82b1cec4270b406da82a56d7d09fc17174816acebd21e3a"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/CombatRunnerTests.cs",
+      "sha256": "6e4bf4555628fff9d41fd4ca05dc8002fd8131fe2db8a0f82f34b8a97a1900e5"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/CombatRunnerTests.cs.meta",
+      "sha256": "3a322353fd2ecb8dd78027b17105137becf7b92c7ecefb5f5fd95e2620185aa3"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/EventCommonTests.cs",
+      "sha256": "77fb71fcd55d68f2949d6a9a0517110d7cabf77be1a424070f4dafc8fe910f4b"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/EventCommonTests.cs.meta",
+      "sha256": "58177da38234d52832ac0c43f10280e3e032b2604b8008902af6d63aeb15fff9"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/EventProgressionTests.cs",
+      "sha256": "475abb4cb3b90b6ecb7928f9e6b5671bf6affd9afd609996c53803f385a5c4b6"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/EventProgressionTests.cs.meta",
+      "sha256": "8748a881add7da4725a4bfdb700e7609990b8855d63f9440f0cf7e91d3f02b3f"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/EventRunnerTests.cs",
+      "sha256": "ab4b6331fd2cd0833da084e1bf2fdf8c2336e016fe4434c227b2a20298f4efa6"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/EventRunnerTests.cs.meta",
+      "sha256": "ada1eed7ca780c64185dab56675908e4899a33e6b2ddf9c8187e5cd59fbcffca"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/EventSchedulerTests.cs",
+      "sha256": "95ee4766b1761f2eacadfcf3727ca09a5e708289bb982ffcd1dcb8ac706bba1e"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/EventSchedulerTests.cs.meta",
+      "sha256": "72e02092b067cdf013b87d5ac0a0962e0d4841983c5edad71e650bdccc06bc4d"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/HorrorJourneyTests.cs",
+      "sha256": "02c0642a540fc16468e21cafd256b26b8bc384057939c9e560ddeb304fc4ab30"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/HorrorJourneyTests.cs.meta",
+      "sha256": "ab53a156ead6b6f671ba503514fbd04ba1e5c40bd99d8e0933d3bfc226f2a278"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/MapVisualTests.cs",
+      "sha256": "4828c8395c7a44b0aee8e0b8921c9be4bb50e706f08785314f20a4117ae7dec6"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/MapVisualTests.cs.meta",
+      "sha256": "7d7fc28ac529fd2711468f4481999a5f7c0fb3eab7924b102a45a613fa5bbeb4"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NoSleep.PlayMode.Tests.asmdef",
+      "sha256": "23ef33eff219366f67b54819cbe6f702e129b39401c3262cad0aafa16389f99e"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NoSleep.PlayMode.Tests.asmdef.meta",
+      "sha256": "8a3dc61a6238c498969c7138f49b87712b777dfc792133f596ce88e1c7bff407"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NpcContactEdgeTests.cs",
+      "sha256": "d525e083052b8e9d1114b6a12ff2eca5edaea6979fede784fa774eb19677d663"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NpcContactEdgeTests.cs.meta",
+      "sha256": "8e6bcb131c6dbbd6f42a309a99a6c9212b5727f93962e8415d9a92662c961520"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NpcEventRuntimeTests.cs",
+      "sha256": "40eec01e12e185cd8f65c33e199e5138d626de64cd0300fea3765dfee77e4b53"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NpcEventRuntimeTests.cs.meta",
+      "sha256": "a72e74cc1adcb132b2afbb8fe647ad36db31e6bc7e623373d41dbc223aeb6cf3"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NpcMovementRuntimeTests.cs",
+      "sha256": "f5dec4af1424dd8f1eaac11e46553f08102b152ab1d6c35dd792dc794416e31a"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NpcMovementRuntimeTests.cs.meta",
+      "sha256": "941ddc8968a53e2f1538a3e05cf3df8256ea1543ae4953b01dbd1332ebdd7666"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NpcSessionTests.cs",
+      "sha256": "54579fdcfc38c4959e4551882891e5ac82457b3098993d06652f35f5bb045a63"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/NpcSessionTests.cs.meta",
+      "sha256": "cdc9d7f6a320d1e3048233f051e0fd8c317900e9bd6d753a6b4f437a101f08fe"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/SaveSchedulerIntegrationTests.cs",
+      "sha256": "93e58b97ff80e8f0ec0be8667a49970a128aa7af40cb002d8664da501981015f"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/SaveSchedulerIntegrationTests.cs.meta",
+      "sha256": "92ea87244d5d1249ad05e8e1e0a21dc76344094d5d15068e7365d14a00cfcab5"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/SessionProgressTests.cs",
+      "sha256": "8f4592c81dca1443b67079dea9be740618f66676ac9501b0d706e59ef4380cfb"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/SessionProgressTests.cs.meta",
+      "sha256": "8162c859150e730e9451bef664248bb721a4b776139a712ea3c25381172c04f8"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/SystemsLabPlayTests.cs",
+      "sha256": "657edf815d57f81fde3f958328969169c6755eea95488244d2d474e5763e7db7"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode/SystemsLabPlayTests.cs.meta",
+      "sha256": "2b6a4a4784e35898280913b7c3794bc37417185aa5847d0be530ea1761b33b45"
+    },
+    {
+      "path": "Assets/NoSleep/Tests/PlayMode.meta",
+      "sha256": "85dc5619d5dc3df50ed46518fcc93fecfe2488908c26586c911719e40996b920"
+    },
+    {
+      "path": "Assets/NoSleep/Tests.meta",
+      "sha256": "7cb7302d1bf8edc1a242b7cd9b8f91848e06ba8898a011c0f6163929892d0e1a"
+    },
+    {
+      "path": "Assets/NoSleep.meta",
+      "sha256": "cfeff1e862bb08a7c03ca1dd171f10f92df415beae4c2e2ef2539338b084c181"
+    },
+    {
+      "path": "Docs/NoSleep/CREATOR_GUIDE.md",
+      "sha256": "178d93390c4ad81ed8f8664891e785066eee0a986315748c89334662834733b5"
+    },
+    {
+      "path": "Docs/NoSleep/EVENT_SYSTEM_GUIDE.md",
+      "sha256": "947f3d92839dcb8f5ccc1337d28288146112e49c01ace9b2f1bb9f7f049e8168"
+    },
+    {
+      "path": "Docs/NoSleep/HORROR_RPG_CREATOR_GUIDE.md",
+      "sha256": "0d3a28ca1237f4607b50f70bc4a5516929dbb0af70dfbfe05df5db39df3b10f8"
+    },
+    {
+      "path": "Docs/NoSleep/HORROR_RPG_IMPLEMENTATION_PLAN.md",
+      "sha256": "f30a437b4df445c87d3a03aa7439f11d2e4155116019cd39f167cec02bd96288"
+    },
+    {
+      "path": "Docs/NoSleep/IMPLEMENTATION_PLAN.md",
+      "sha256": "a254108bdc894ab3f6a41cc1df14abc0a4201be80f25877dadc453c83ee027a6"
+    },
+    {
+      "path": "Docs/NoSleep/M3_AUTHORING_GUIDE.md",
+      "sha256": "5e6c6d3e0f07427f0b08d3848de499fb5dfb4bcc9e34bded1f0597ca41aaa665"
+    },
+    {
+      "path": "Docs/NoSleep/M3_AUTHORING_PLAN.md",
+      "sha256": "49907650b430e289559871f8219716ac9eac49c389fdd512e6b7a181d11068fe"
+    },
+    {
+      "path": "Docs/NoSleep/M4_NPC_GUIDE.md",
+      "sha256": "6341177858d6527dfc17e824a745187431d05eb9743e911fbc338b1989faace7"
+    },
+    {
+      "path": "Docs/NoSleep/M4_NPC_PLAN.md",
+      "sha256": "fc1a6d201df4e197edeaef4ce56e637100ddf95fc202656c53fbfd9d2f99b6f6"
+    },
+    {
+      "path": "Docs/NoSleep/PROJECT_HISTORY.md",
+      "sha256": "bf23cdd3781156e1f20cece3119c605c4257f1807e13b5956717a3bc078f530a"
+    },
+    {
+      "path": "Docs/NoSleep/SYSTEM_EXPANSION_PLAN.md",
+      "sha256": "5a3efb840593e241b7a15116089735b68341cb85e90e344f2c74b430807e1234"
+    },
+    {
+      "path": "Docs/NoSleep/VERIFICATION.md",
+      "sha256": "d8d6ab71d2859a1a1fe06ca17fe6d4c388f6d526c172cd1c42b25a19ec86eec6"
+    }
+  ]
+}

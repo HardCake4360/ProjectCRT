@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c376f8054ad36104896625fd34e7f304, type: 3}
+  m_Name: Corridor
+  m_EditorClassIdentifier: 
+  mapId: corridor
+  displayName: "\uD55C\uBC24\uC911\uC758 \uBCF5\uB3C4"
+  width: 16
+  height: 12
+  cellSize: 1
+  spawnCell: {x: 3, y: 3}
+  palette:
+  - {fileID: 11400000, guid: 194aef1566807704f9e3ba8870316154, type: 2}
+  - {fileID: 11400000, guid: 09328ebf8b126cc43a4099182b112861, type: 2}
+  - {fileID: 11400000, guid: 75d7acd63ff4e6c4caae57010f9f5d00, type: 2}
+  events:
+  - id: intro
+    cell: {x: 1, y: 1}
+    definition: {fileID: 11400000, guid: 7868b1f07bfe5124b8fc5e025ceb1496, type: 2}
+    yaw: 0
+  - id: guide
+    cell: {x: 5, y: 3}
+    definition: {fileID: 11400000, guid: 74eb30bb1ca163243993c9bc8cbb4e8b, type: 2}
+    yaw: 0
+  - id: supply_box
+    cell: {x: 9, y: 3}
+    definition: {fileID: 11400000, guid: 04729d0031ab6cc4e8141e5ce4ae97d1, type: 2}
+    yaw: 0
+  - id: room_door
+    cell: {x: 13, y: 8}
+    definition: {fileID: 11400000, guid: 873296ee3baa9f24e999ac456caaab26, type: 2}
+    yaw: 0
+  storedWidth: 16
+  storedHeight: 12
+  groundTiles: 010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000001000000010000000100000001000000000000000100000001000000010000000100000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  decorationTiles: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0200000002000000020000000200000002000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0200000002000000020000000200000002000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0200000002000000020000000200000002000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  indexedPalette:
+  - {fileID: 11400000, guid: 194aef1566807704f9e3ba8870316154, type: 2}
+  - {fileID: 11400000, guid: 09328ebf8b126cc43a4099182b112861, type: 2}
+  - {fileID: 11400000, guid: 75d7acd63ff4e6c4caae57010f9f5d00, type: 2}

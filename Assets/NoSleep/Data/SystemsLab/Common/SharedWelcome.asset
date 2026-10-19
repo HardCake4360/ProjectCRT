@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d2cd45cbfd8f7449932039548fc664, type: 3}
+  m_Name: SharedWelcome
+  m_EditorClassIdentifier: 
+  commonId: c7aacdc862144f70b6b42450d51cd8ed
+  displayName: "\uBCF4\uAD00\uC778\uC758 \uACF5\uD1B5 \uC751\uB300"
+  parameters:
+  - name: visitor
+    type: 2
+    intValue: 0
+    boolValue: 0
+    stringValue: "\uBCF4\uAD00\uC778"
+  - name: number
+    type: 0
+    intValue: 1
+    boolValue: 0
+    stringValue: 
+  commands:
+  - commandId: 0738453e7b36438caa7f454124848399
+    type: 0
+    speaker: '{param:visitor}'
+    text: "\uB098\uB294 {param:number}\uBC88 \uBCF4\uAD00\uC778\uC774\uC57C. \uB0B4
+      \uD45C\uC2DD\uB3C4 \uD558\uB098 \uCC59\uACA8 \uAC00. \uC11C\uB85C\uC758 \uBCF4\uAD00\uD568\uC740
+      \uB530\uB85C \uAD00\uB9AC\uD558\uACE0 \uC788\uC5B4."
+    key: 
+    label: 
+    targetLabel: 
+    intValue: 0
+    boolValue: 1
+    seconds: 0
+    condition:
+      kind: 0
+      key: 
+      expected: 1
+      comparison: 3
+      value: 1
+    map: {fileID: 0}
+    cell: {x: 0, y: 0}
+    choices: []
+    item: {fileID: 0}
+    nightActivity: {fileID: 0}
+    enemy: {fileID: 0}
+    commonEvent: {fileID: 0}
+    arguments: []
+    foregroundEvent: {fileID: 0}
+    mutations: []
+    intParameter: 
+    boolParameter: 
+    useLocalCondition: 0
+    localCondition:
+      parameter: 
+      type: 0
+      comparison: 0
+      intValue: 0
+      boolValue: 1
+      stringValue: 
+  - commandId: 6b1167bdd3c54bc5a7df4582eb70ee40
+    type: 27
+    speaker: 
+    text: 
+    key: 
+    label: 
+    targetLabel: 
+    intValue: 0
+    boolValue: 1
+    seconds: 0
+    condition:
+      kind: 0
+      key: 
+      expected: 1
+      comparison: 3
+      value: 1
+    map: {fileID: 0}
+    cell: {x: 0, y: 0}
+    choices: []
+    item: {fileID: 0}
+    nightActivity: {fileID: 0}
+    enemy: {fileID: 0}
+    commonEvent: {fileID: 0}
+    arguments: []
+    foregroundEvent: {fileID: 0}
+    mutations:
+    - kind: 4
+      key: lab_token
+      intValue: 1
+      boolValue: 1
+    - kind: 2
+      key: A
+      intValue: 0
+      boolValue: 1
+    intParameter: 
+    boolParameter: 
+    useLocalCondition: 0
+    localCondition:
+      parameter: 
+      type: 0
+      comparison: 0
+      intValue: 0
+      boolValue: 1
+      stringValue: 
