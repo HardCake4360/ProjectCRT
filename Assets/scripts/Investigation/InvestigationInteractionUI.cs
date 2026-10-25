@@ -133,6 +133,9 @@ public class InvestigationInteractionUI : MonoBehaviour
     public void Open()
     {
         EnsureBuilt();
+        SetBusy(false);
+        SetTellPending(false);
+        SetAffectPending(false);
         SetVisible(true);
         SetStatus("Type a message, attach a topic or evidence if needed, then send.");
         ResetInputs();

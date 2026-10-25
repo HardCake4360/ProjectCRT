@@ -4,6 +4,7 @@ using System.Collections;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
+    public float EffectiveSfxVolume => (masterMute || sfxMute) ? 0f : Mathf.Clamp01(masterVolume * sfxVolume);
 
     [Header("Library (SO)")]
     public AudioLibrary library;

@@ -1,7 +1,14 @@
 {
   "name": "NoSleep.Editor",
   "rootNamespace": "NoSleep.Editor",
-  "references": ["NoSleep.Runtime"],
-  "includePlatforms": ["Editor"],
-  "autoReferenced": true
+  "references": [
+    "NoSleep.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true,
+  "defineConstraints": [
+    "PROJECTCRT_ENABLE_RPG"
+  ]
 }

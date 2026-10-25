@@ -180,6 +180,8 @@ public class NpcInterrogationProfilePayload
 [Serializable]
 public class NpcInvestigationRequest
 {
+    public string protocolVersion;
+    public string sessionId;
     public string turnId;
     public string sceneId;
     public string phase;
@@ -243,6 +245,20 @@ public class NpcTellResponse
     public bool ok = true;
     public string turnId;
     public TellResultPayload tellResult = TellResultPayload.Default();
+    public string error;
+}
+
+[Serializable]
+public class NpcJointTurnResponse
+{
+    public const string Protocol = "rebecca-joint-v1";
+    public bool ok;
+    public string protocolVersion;
+    public string sessionId;
+    public string turnId;
+    public NpcInvestigationReplyResponse reply;
+    public TellResultPayload tellResult;
+    public List<string> usedClaimIds;
     public string error;
 }
 

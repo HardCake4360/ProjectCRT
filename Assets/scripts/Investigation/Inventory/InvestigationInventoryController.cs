@@ -63,6 +63,7 @@ public class InvestigationInventoryController : MonoBehaviour
 
     public void ToggleInventory()
     {
+        if (ProjectCRT.Cutscenes.CutsceneDirector.IsActive) return;
         if (isOpen)
         {
             CloseInventory();
@@ -79,6 +80,7 @@ public class InvestigationInventoryController : MonoBehaviour
 
     public void OpenInventory()
     {
+        if (ProjectCRT.Cutscenes.CutsceneDirector.IsActive) return;
         EnsureUI();
         if (inventoryUI == null)
         {

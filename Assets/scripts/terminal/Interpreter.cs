@@ -48,13 +48,41 @@ public class Interpreter : MonoBehaviour
 
     public IEnumerator Interpret(string userInput, TextMeshProUGUI outputTarget, System.Action onComplete)
     {
+        IEnumerator command = InterpretCore(userInput, outputTarget);
+        try
+        {
+            while (true)
+            {
+                bool advanced;
+                object next;
+                try { advanced = command.MoveNext(); next = advanced ? command.Current : null; }
+                catch (System.Exception exception)
+                {
+                    Debug.LogWarning($"Terminal command failed: {exception.Message}", this);
+                    if (outputTarget != null) outputTarget.text = "ëª…ë ¹ì„ ì²˜ë¦¬í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.";
+                    break;
+                }
+                if (!advanced) break;
+                yield return next;
+            }
+        }
+        finally
+        {
+            (command as System.IDisposable)?.Dispose();
+            onComplete?.Invoke();
+        }
+    }
+
+    private IEnumerator InterpretCore(string userInput, TextMeshProUGUI outputTarget)
+    {
         response.Clear();
 
-        string[] args = userInput.Split();
+        string[] args = (userInput ?? string.Empty).Split((char[])null, System.StringSplitOptions.RemoveEmptyEntries);
+        if (args.Length == 0) yield break;
 
         if (args[0] == "/showVisual")
         {
-            outputTarget.text = ""; // ÃÊ±âÈ­
+            outputTarget.text = ""; // ì´ˆê¸°í™”
 
             var whool = WindowManager.Instance.InstantiateWhoolWindow(new WhoolWindow(windowPrefab, tabPrefab), "Simula Visual", content);
             ResizablePanel rp = whool.window.GetComponent<ResizablePanel>();
@@ -62,30 +90,32 @@ public class Interpreter : MonoBehaviour
             rp.targetPanel.anchoredPosition = InitialPos;
             rp.MinSize = InitialMinSize;
 
-            response.Add("ÀÚ¾Æ ÀÎ½Äµµ¸¦ ½Ã°¢È­ÇÏ¿´½À´Ï´Ù.");
+            response.Add("ìì•„ ì¸ì‹ë„ë¥¼ ì‹œê°í™”í•˜ì˜€ìŠµë‹ˆë‹¤.");
             yield return StartCoroutine(PrintSequentialy(outputTarget));
-            onComplete?.Invoke();
             yield break;
         }
-        if(args[0] == "/set_persona" && args[1] != null)
+        if (args[0] == "/set_persona")
         {
+            if (args.Length != 2)
+            {
+                outputTarget.text = "ì‚¬ìš©ë²•: /set_persona <ì´ë¦„>";
+                yield break;
+            }
             string personaKey = args[1];
-            outputTarget.text = ""; // ÃÊ±âÈ­
+            outputTarget.text = ""; // ì´ˆê¸°í™”
             if (IsValidEnumName<Persona>(personaKey))
             {
                 ragHandler.SetPersonaKey(personaKey);
-                response.Add("Æä¸£¼Ò³ª¸¦ º¯°æÇÏ¿´½À´Ï´Ù.");
-                response.Add("ÇöÀç Æä¸£¼Ò³ª: " + ragHandler.GetPersonaKey());
+                response.Add("í˜ë¥´ì†Œë‚˜ë¥¼ ë³€ê²½í•˜ì˜€ìŠµë‹ˆë‹¤.");
+                response.Add("í˜„ì¬ í˜ë¥´ì†Œë‚˜: " + ragHandler.GetPersonaKey());
                 yield return StartCoroutine(PrintSequentialy(outputTarget));
-                onComplete?.Invoke();
                 yield break;
             }
             else
             {
-                response.Add("À¯È¿ÇÏÁö ¾ÊÀº Æä¸£¼Ò³ªÀÔ´Ï´Ù.");
-                response.Add("ÇöÀç Æä¸£¼Ò³ª: " + ragHandler.GetPersonaKey());
+                response.Add("ìœ íš¨í•˜ì§€ ì•Šì€ í˜ë¥´ì†Œë‚˜ì…ë‹ˆë‹¤.");
+                response.Add("í˜„ì¬ í˜ë¥´ì†Œë‚˜: " + ragHandler.GetPersonaKey());
                 yield return StartCoroutine(PrintSequentialy(outputTarget));
-                onComplete?.Invoke();
                 yield break;
             }
 
@@ -93,49 +123,45 @@ public class Interpreter : MonoBehaviour
 
         if (args[0] == "/help")
         {
-            outputTarget.text = ""; // ÃÊ±âÈ­
+            outputTarget.text = ""; // ì´ˆê¸°í™”
 
-            response.Add("¸ğ¸£´Â °ÍÀÌ ÀÖÀ¸¸é ÅÍ¹Ì³Î¿¡°Ô ¹°¾îº¸¼¼¿ä.");
+            response.Add("ëª¨ë¥´ëŠ” ê²ƒì´ ìˆìœ¼ë©´ í„°ë¯¸ë„ì—ê²Œ ë¬¼ì–´ë³´ì„¸ìš”.");
             yield return StartCoroutine(PrintSequentialy(outputTarget));
-            onComplete?.Invoke();
             yield break;
         }
 
         else if (args[0] == "/ascii")
         {
-            outputTarget.text = ""; // ÃÊ±âÈ­
+            outputTarget.text = ""; // ì´ˆê¸°í™”
 
             LoadTitle("ascii.txt", "cyan", 2);
             yield return StartCoroutine(PrintSequentialyLine(outputTarget,0.1f));
-            onComplete?.Invoke();
             yield break;
         }
 
         else if (args[0] == "/selfDestroy")
         {
-            outputTarget.text = ""; // ÃÊ±âÈ­
+            outputTarget.text = ""; // ì´ˆê¸°í™”
 
-            response.Add("ÀÚÆø ½ÃÄö½º °¡µ¿");
-            ListEntry("3", "ÃÊÈÄ Æø¹ß...");
-            ListEntry("2", "ÃÊÈÄ Æø¹ß...");
-            ListEntry("1", "ÃÊÈÄ Æø¹ß...");
+            response.Add("ìí­ ì‹œí€€ìŠ¤ ê°€ë™");
+            ListEntry("3", "ì´ˆí›„ í­ë°œ...");
+            ListEntry("2", "ì´ˆí›„ í­ë°œ...");
+            ListEntry("1", "ì´ˆí›„ í­ë°œ...");
             response.Add("...");
-            response.Add(ColorString("ºÕ", colors["red"]));
-            StartCoroutine(PrintSequentialyLine(outputTarget,1f));
+            response.Add(ColorString("ë¶", colors["red"]));
+            yield return StartCoroutine(PrintSequentialyLine(outputTarget,1f));
             yield break;
         }
 
         else
         {
-            outputTarget.text = ""; // ÃÊ±âÈ­
+            outputTarget.text = ""; // ì´ˆê¸°í™”
 
             yield return StartCoroutine(ragHandler.AskServerStream(userInput, (chunk) =>
             {
-                Debug.Log("UI ¾÷µ¥ÀÌÆ®µÊ: " + outputTarget.text);
+                Debug.Log("UI ì—…ë°ì´íŠ¸ë¨: " + outputTarget.text);
                 outputTarget.text += chunk;
             }));
-
-            onComplete?.Invoke();
             yield break;
 
         }

@@ -1,11 +1,16 @@
 {
-    "name": "NoSleep.PlayMode.Tests",
-    "rootNamespace": "NoSleep.Tests",
-    "references": [
-        "NoSleep.Runtime",
-        "Unity.InputSystem",
-        "UnityEngine.UI"
-    ],
-    "optionalUnityReferences": ["TestAssemblies"],
-    "autoReferenced": false
+  "name": "NoSleep.PlayMode.Tests",
+  "rootNamespace": "NoSleep.Tests",
+  "references": [
+    "NoSleep.Runtime",
+    "Unity.InputSystem",
+    "UnityEngine.UI"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "PROJECTCRT_ENABLE_RPG"
+  ]
 }

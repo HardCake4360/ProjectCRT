@@ -29,9 +29,27 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Bar.unity
     guid: 5fcaeae2b2381d741a993657d9a8de29
-  - enabled: 1
+  - enabled: 0
     path: Assets/NoSleep/Scenes/ProjectCRT_RPG.unity
     guid: 5ef82bab1f41b3745ba544d44b2e316a
+  - enabled: 1
+    path: Assets/Scenes/Shangrila_CutsceneTest.unity
+    guid: a2731781d357f5f448f3dc17b38cf44f
+  - enabled: 1
+    path: Assets/Scenes/Outdoor_BarStreetTest.unity
+    guid: f4550b922ff9e9948bd9ddcef5434c2b
+  - enabled: 1
+    path: Assets/Scenes/Shangrila_CaseTest.unity
+    guid: d5cbd15c17b205b468336c00453244b3
+  - enabled: 1
+    path: Assets/Scenes/ProjectCRT_SC01_TaxiArrival.unity
+    guid: 6b82d440431f11a4cae1992c51fe9066
+  - enabled: 1
+    path: Assets/Scenes/ProjectCRT_SC02_SanRoom.unity
+    guid: b92f66c98471be144a97a621b3bb3c72
+  - enabled: 1
+    path: Assets/Scenes/ProjectCRT_SC03_ShangrilaReunion.unity
+    guid: 6971e3c33b01d004598c7a0e98fba674
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

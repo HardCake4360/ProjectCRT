@@ -12,6 +12,11 @@ CUSTOMIZED = {
     "Assets/NoSleep/Runtime/Core/NoSleepBootstrap.cs",
     "Assets/NoSleep/Runtime/UI/GameUI.cs",
     "Assets/NoSleep/Runtime/UI/GameUI.Progress.cs",
+    # RPG is disabled by an explicit opt-in compilation constraint (2026-10-21).
+    "Assets/NoSleep/Runtime/NoSleep.Runtime.asmdef",
+    "Assets/NoSleep/Editor/NoSleep.Editor.asmdef",
+    "Assets/NoSleep/Tests/Editor/NoSleep.Tests.asmdef",
+    "Assets/NoSleep/Tests/PlayMode/NoSleep.PlayMode.Tests.asmdef",
 }
 
 

@@ -1,5 +1,13 @@
 # Progress
 
+## Current status — 2026-10-21
+- Current planning authority is the user's two v1.0 PDFs: 샹그리아 살인사건 시나리오 and 세계관 설정집. See `Docs/PROJECT_DIRECTION.md` for confirmed/proposed/undecided distinctions. Reuse existing features and follow these sources for future work.
+- The old Park/cat case is excluded from project development. The new story starts before San's LSPD assignment, makes Jeremy the victim, and concludes through three evidence-backed final deductions.
+- `ProjectCRT_Demo` is discarded. RPG runtime/editor/test assemblies and the RPG build scene are disabled; source and data are preserved.
+- Investigation requests now cancel on close/scene changes, reject invalid replies, recover from timeouts, preserve the intended 1-second reply delay, and decode streaming Korean correctly.
+- Server error handling and ordered conversation-memory updates are applied to the external Local-LLM-AI source. Restart that server to load the changes.
+- Validation: 22 Unity checks and 7 offline server regression tests passed. Details: `Docs/INVESTIGATION_HARDENING.md`.
+
 ## Updated
 - 2026-03-27
 - 2026-04-12: Added NPC investigation animation clip flow and controller timing hooks.
@@ -180,3 +188,60 @@
 - Unity 6000.0.32f1 실제 임포트·컴파일·전체 콘텐츠 검사 통과. EditMode 273/273, PlayMode 96/96, 총 369개 통과(실패·건너뜀 0). 신규 CRT 통합 검사 6개 포함. 원본 497개 파일 보존, 문서화된 코드 변경 3개, GUID 중복·미해결 직렬화 참조·메타 누락 없음.
 - 가이드: `Docs/RPG_MIGRATION.md`. 검증 및 XML 보고서: `Docs/RPG_VERIFICATION.md`, `Docs/Validation/RpgEditMode.xml`, `RpgPlayMode.xml`. 원본 문서는 `Docs/NoSleep`에 과거 기록으로 보관했다.
 - 후속: 기존 LLM 조사 UI/API·조사 인벤토리·스토리/오디오/타이틀 연결, 기존 플레이 씬의 RPG 전환. 이번에는 사람의 수동 플레이·화면 평가·독립 실행 빌드를 수행하지 않았다.
+
+## 2026-10-23 — 샹그리아 첫 방문 사건 진행
+
+- `Shangrila_CaseTest` 씬에 거리 시작 → 실제 입구 진입 → 첫 입장 컷씬 1회 → NPC 대화 및 물건 조사 해금 흐름을 연결했다. 기존 Outdoor/Cutscene 제작 씬은 유지한다.
+- `ShangrilaCaseManager`가 완료 컷씬 ID와 두 진행 단계를 관리한다. 완료/스킵은 저장하며 취소/실패는 다시 입장할 때 재시도한다. 기존 대화 종료 쿨다운이 사건 잠금을 해제하지 않도록 별도 상호작용 권한을 추가했다.
+- 영업 안내문·메뉴판 두 임시 조사물을 기존 설명 대화와 정보 인벤토리에 연결했다. 상호작용 판정은 플레이어 몸과 비상호작용 트리거를 제외하며 기존 상호작용 볼륨과 실제 벽의 가림을 유지한다.
+- 단일 사건 JSON 슬롯에 컷씬 완료, 인벤토리, 위치·수평/수직 시점을 원자적으로 저장한다. F5 저장/F9 불러오기, 씬 시작 자동 로드, 완료/정보 획득 시 자동 저장을 지원한다. 과거 저장 복원 시 이후의 조사 캐시도 제거한다. 기존 NPC 대화 기록은 기존 저장 시스템을 사용한다.
+- 실제 Unity Play 두 세션에서 사건 흐름과 재시작 후 복원을 모두 검증했다. 정상 완료·스킵·취소·재입장·NPC 대화·물건 조사·저장 되돌리기·파일 손상/백업·상호작용 판정 호환성 통과. 자동 검증은 프로젝트 안의 임시 슬롯만 사용한다.
+- 사용 안내: `Docs/SHANGRILA_CASE_FLOW.md`. 보고서: `Logs/Cases/verification-first-session.txt`, `Logs/Cases/verification.txt`.
+
+## 2026-10-23 — 레베카 대사·TII 공동 생성 시제품
+
+- Python 게이트웨이를 유지하고 레베카만 `/investigation/npc/turn` 통합 요청을 사용한다. 한 번의 OpenAI Responses 구조화 출력에서 대사·감정 변화·이번 턴 tell을 함께 받고, 서버와 Unity에서 검증한다. 다른 NPC의 reply/tell과 터미널 경로는 유지한다.
+- 기존 UI와 최소 답변 표시 지연 1초를 유지한다. 검증된 결과도 1초가 지나기 전에는 대화 이력·TII·후속 정보에 반영하지 않는다. 성공 시 함께 반영하며 실패·취소·오래된 응답은 이전 상태를 보존한다.
+- 레베카 맥락은 기존 페르소나·짧은 현재 세계관·최근 확정 발언·이전 감정·첨부 공개 지시를 사용한다. 새 경로는 로컬 모델·구형 RAG·서버 요약/개인 대화 로그를 사용하지 않는다. NPC 전체 기억과 사건 슬롯 되감기 통합은 아직 후속 범위다.
+- 외부 `Local-LLM-AI/virtualEnv/RAG_model/app`에 `npc_joint_turn.py`와 세 서버 진입점의 경로 등록을 적용했다. 원본·설치 도구는 `tools/npc_gateway`, `tools/install_npc_joint_gateway.py`, 백업은 `Logs/NpcJointTurn/original`이다. 실행 중 서버는 강제 재시작하지 않았다.
+- 검증: Unity 실제 Play 37개, 새 Python/Flask/SDK 모의 전송 16개, 기존 서버 회귀 7개 통과. 최종 Unity 정상 종료 코드 0, 컴파일 오류·NullReference/MissingReference 0. 실제 API 3회 검증은 자동 승인 검토에서 외부 전송·과금의 구체적 승인 부족으로 거부되어 실행하지 않았고 사용자 승인 요청을 남겼다.
+- 사용·롤백·제한: `Docs/REBECCA_JOINT_TURN_PROTOTYPE.md`. 실제 모델의 자연스러움과 사건 사실 준수율은 아직 평가하지 않았다.
+
+### 레베카 실제 API 검증 후속
+
+- 사용자가 페르소나·합성 대화 전송과 과금을 포함한 실제 API 3회 검증을 명시적으로 승인했다. 승인 후 2회 시도했으며 성공한 생성 결과는 없다.
+- 첫 시도는 게이트웨이 502, 두 번째는 공급자 `429 / credit_balance_exhausted`를 확인했다. 동일 오류가 예상되는 세 번째 호출은 실행하지 않았다. 크레딧 문제가 해결되면 남은 승인 범위 1회에서 재개할 수 있다.
+- 검증 도구에 호출 전 시도 횟수 저장과 총 3회 제한, 키를 노출하지 않는 오류 진단을 추가했다. 기록은 `Logs/NpcJointTurn/live-smoke.json`이며 개인 플레이 기록·게임 저장은 사용하지 않았다. 실제 모델 대사/TII 품질은 아직 미검증이다.
+
+## 2026-10-24 — 레베카 Responses 로그 저장과 실제 생성 성공
+
+- 사용자 요청에 따라 `store=True`를 모듈 원본과 외부 서버에 적용했다. 기존 UI와 최소 표시 지연 1초는 유지한다. 실행 중 서버에는 재시작 후 반영된다.
+- 키가 서버의 `apiKey.env`와 일치하고 공식 `https://api.openai.com/v1/`을 사용하는지 확인했다. 조직/프로젝트 별도 지정은 없으며 실제 응답 헤더의 프로젝트는 `proj_dcRkxu1SwimRpmUuUclGG1WH`다. 키 원문은 출력·기록하지 않았다.
+- 남은 승인 1회로 17:27 KST 합성 기본 대화 검증에 성공했다. OpenAI HTTP 200 / completed, Flask 경로 HTTP 200, 대사·TII 검증 통과. 입력 1,412토큰·출력 123토큰, SDK 호출 5.015초. 총 3회 중 성공 1회·실패 2회, 남은 승인 0회.
+- 요청/응답 ID와 프로젝트 헤더를 `Logs/NpcJointTurn/live-smoke.json`에 기록했다. 오프라인 기존 16개·새 호출 예산/추적 2개 통과. 실제 대시보드 표시는 직접 확인하지 않았고 첨부/장기 대화 품질은 후속 검증 범위다.
+
+### Unity 실제 연결 확인 후속 (2026-10-24)
+
+- 기존 프로세스가 없어 최신 실제 서버를 localhost:5000에 기동하고 Unity의 실제 사건 씬/조사 UI/기본 UnityWebRequest로 합성 대화 1회를 전송했다. HTTP 200 및 대사·Tell 0.05·interest 0.2·attitude 0.1·patience 95 반환을 확인했다. 기존 플레이 기록 전송과 저장은 피했다.
+- 전송 대기 화면은 캡처했으나 검증 도구가 그래프 전용 Tell UI에 없는 숫자 텍스트를 읽으려다 실패했다. 검증 코드만 수정했으며 최종 완료 화면 검사는 Unity 창 활성화/스크립트 갱신 대기 상태다. 추가 API 호출은 하지 않았다. 상세 진행 상태와 산출물은 `Docs/REBECCA_JOINT_TURN_PROTOTYPE.md`에 기록했다.
+
+
+## 2026-10-25 — SC-02 / SC-03 컷씬 제작
+
+- SC-02: 고정 3인칭 산 조작, 이삿짐 5개 상호작용, 소파 착석·속마음 4개·기립, 맵 튜토리얼과 샹그리아 이동을 연결했다.
+- SC-03: 출입문 상호작용, 제레미 인사와 레베카 재회, 시간 경과, 충격음, 복도 추적, 2번 룸 발견과 최종 암전까지 원문 대사 76개를 연결했다. 입구·서비스 문·2번 룸 문과 병·술잔도 연출 큐로 제어한다.
+- 원본 캐릭터 3종과 샹그리아 FBX 4개, 기존 SC-01 씬·시퀀스를 보존했다. 제레미에는 이 테스트 전용 파생 메시·간이 뼈대를 추가했다.
+- 검증: Unity 전체 103개 턴 재구성과 상태 복원, 실제 Play 짐 정리→지도→바 입장→전체 컷씬→암전, 취소·재시작·건너뛰기를 통과했다. 원문 80개 대사 일치와 원본 해시·반영본 일치도 확인했다. 기록은 Logs/SC23, 사용법과 1차 연기·임시 음원의 범위는 Docs/SC02_SC03_CUTSCENES.md.
+
+## 2026-10-25 — SC-03 레베카 무료 애니메이션 적용
+
+- Quaternius UAL 1·2 Standard(CC0), Anderson Rohr Crowd Reactions·Cleaning 무료 팩을 공식 배포처에서 다운로드했다. Gumroad 두 팩은 사용자가 지정한 이메일로 각각 0원 수령했다. 전체 ZIP은 로컬 Logs에 보관하고, 프로젝트에는 원본·선택한 FBX와 이용 조건을 남겼다.
+- 기존 레베카 Avatar에 Humanoid 동작을 리타기팅하고 기존 컷씬 뼈대 경로를 사용하는 별도 클립 15개로 베이크했다. 서 있기·대화·기대기·걷기·복도 걷기·긍정·부정·짧은 웃음·목을 만지는 반응을 SC-03 대사에 연결했다. Cleaning은 후속 업무 연기 후보로 확보했다.
+- 기존 이동 위치·방향을 유지하고 경로 길이에 보행 반복 횟수를 맞췄다. 카운터 손 위치를 보정했다. 등장과 병을 내려놓기 전 말하기·듣기에 각각 대응하는 병 추적 트랙 3개를 추가했다. 문·발견·병 내려놓기 등 장면 전용 연기는 유지했다.
+- 검증: 96개 턴의 미리보기와 원래 포즈 복원, 베이크한 뼈 움직임·이동 경로·반응 큐·병 추적, 실제 Play SC-02→SC-03 입장→모든 76개 대사→암전·재생 반복·취소·건너뛰기를 통과했다. 검증한 97개 출력 파일을 반영했고 새 리소스 참조 18개가 정상 연결된다. SC-01·02, 원본 캐릭터·샹그리아 FBX 4개, 원래 SC23 애니메이션과 대사·카메라·다른 NPC 큐를 보존했다.
+- 사용법과 에셋별 이용 조건: Docs/REBECCA_SC03_ANIMATIONS.md. 원본 보존·미리보기·실제 재생·반영 보고서: Logs/RebeccaAnimationAssets.
+
+### SC-03 하이어라키 정리
+
+- 캐릭터·배경·소품·조명·카메라·컷씬 마커/경로·효과·UI·렌더링·기존 참조 오브젝트를 종류별 빈 부모 아래로 정리했다. 컷씬 실행기는 최상위 배치가 필요하므로 `00_SC03_Cutscene_System`으로 이름을 정리하고 루트에 유지했다.
+- 원래 오브젝트 695개의 월드 변환과 활성 상태, 모든 캐릭터의 상대 애니메이션 경로 및 컷씬 바인딩 보존을 확인했다. 기존 컴포넌트 데이터·시퀀스·동작 클립·SC-01/02는 유지했다. 씬만 반영했으며 원본 백업과 보고서는 Logs/SceneHierarchy에 보관했다.

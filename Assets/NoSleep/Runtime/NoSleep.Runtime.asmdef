@@ -1,6 +1,12 @@
 {
   "name": "NoSleep.Runtime",
   "rootNamespace": "NoSleep",
-  "references": ["Unity.InputSystem", "UnityEngine.UI"],
-  "autoReferenced": true
+  "references": [
+    "Unity.InputSystem",
+    "UnityEngine.UI"
+  ],
+  "autoReferenced": true,
+  "defineConstraints": [
+    "PROJECTCRT_ENABLE_RPG"
+  ]
 }

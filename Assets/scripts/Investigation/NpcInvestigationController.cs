@@ -6,6 +6,7 @@ public class NpcInvestigationController : MonoBehaviour
 {
     private static readonly Dictionary<string, NpcConversationState> RuntimeStates = new();
     private static NpcInvestigationController ActiveController;
+    public static NpcInvestigationController CurrentInteraction => ActiveController;
 
     [Header("Identity")]
     [SerializeField] private string npcId = "rebecca";
@@ -31,7 +32,7 @@ public class NpcInvestigationController : MonoBehaviour
     [SerializeField, Min(1)] private int savedStatementLimit = 12;
 
     [Header("Response Timing")]
-    [SerializeField, Min(0f)] private float minimumReplyDelaySeconds = 0.8f;
+    [SerializeField, Min(0f)] private float minimumReplyDelaySeconds = 1f;
 
     private NpcConversationState conversationState;
     private Interactable ownerInteractable;
@@ -41,6 +42,11 @@ public class NpcInvestigationController : MonoBehaviour
     private string activeTurnId;
     private string stateKey;
     private Coroutine initialDialogueCoroutine;
+    private Coroutine closeupPresentationCoroutine;
+    private Coroutine interactionCoroutine, replyCoroutine, tellCoroutine;
+    private int turnGeneration;
+    private readonly string jointSessionId = System.Guid.NewGuid().ToString("N");
+    [SerializeField, Min(0f)] private float tellGracePeriodSeconds = 5f;
 
     private void Awake()
     {
@@ -125,6 +131,10 @@ public class NpcInvestigationController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (ActiveController == this)
+            CloseInteractionInternal(MainLoop.Instance != null && MainLoop.Instance.MainLoopState != MainState.Freeze);
+        else
+            CancelActiveTurn();
         StopInitialDialogueCoroutine();
 
         if (interactionUI != null)
@@ -136,6 +146,8 @@ public class NpcInvestigationController : MonoBehaviour
 
     public void BeginInteraction()
     {
+        if (ProjectCRT.Cutscenes.CutsceneDirector.IsActive ||
+            (ownerInteractable != null && !ownerInteractable.IsInteractionAllowed)) return;
         if (interactionUI == null)
         {
             interactionUI = InvestigationInteractionUI.GetOrCreateInstance();
@@ -158,6 +170,25 @@ public class NpcInvestigationController : MonoBehaviour
         ownerInteractable?.EnterCloseup();
         npcAnimation?.SetLookAtCamera(true);
         npcAnimation?.PlayInteractionStart();
+
+        if (closeupPresentationCoroutine != null) StopCoroutine(closeupPresentationCoroutine);
+        if (ownerInteractable != null && ownerInteractable.IsCloseupEntering)
+        {
+            closeupPresentationCoroutine = StartCoroutine(WaitForCloseupThenPresent());
+            return;
+        }
+        PresentConversation();
+    }
+
+    private IEnumerator WaitForCloseupThenPresent()
+    {
+        while (ownerInteractable != null && ownerInteractable.IsCloseupEntering) yield return null;
+        closeupPresentationCoroutine = null;
+        if (ActiveController == this && isActiveAndEnabled) PresentConversation();
+    }
+
+    private void PresentConversation()
+    {
 
         if (!HasSavedConversationData() && TryStartInitialDialogue())
         {
@@ -188,10 +219,168 @@ public class NpcInvestigationController : MonoBehaviour
             return;
         }
 
-        StartCoroutine(RunInteraction(payload));
+        interactionCoroutine = StartCoroutine(RunInteraction(payload));
     }
 
     private IEnumerator RunInteraction(InvestigationInteractionPayload payload)
+    {
+        int generation = ++turnGeneration;
+        string turnId = System.Guid.NewGuid().ToString("N");
+        activeTurnId = turnId;
+        IEnumerator interaction = apiClient.UsesJointTurn(npcId, personaKey)
+            ? ExecuteJointInteraction(payload, turnId, generation)
+            : ExecuteInteraction(payload, turnId, generation);
+        try
+        {
+            while (IsCurrentTurn(turnId, generation))
+            {
+                bool advanced;
+                object next;
+                try { advanced = interaction.MoveNext(); next = advanced ? interaction.Current : null; }
+                catch (System.Exception exception)
+                {
+                    Debug.LogWarning($"NPC interaction failed: {exception.Message}", this);
+                    interactionUI.CancelNpcStreamingMessage();
+                    interactionUI.SetStatus("응답을 처리하지 못했습니다. 다시 질문할 수 있습니다.");
+                    break;
+                }
+                if (!advanced) break;
+                yield return next;
+            }
+        }
+        finally
+        {
+            (interaction as System.IDisposable)?.Dispose();
+            if (generation == turnGeneration)
+            {
+                apiClient?.CancelTurn(turnId);
+                StopRequestCoroutines();
+                activeTurnId = null;
+                interactionCoroutine = null;
+                isBusy = false;
+                if (ActiveController == this && interactionUI != null)
+                {
+                    interactionUI.SetBusy(false);
+                    interactionUI.SetTellPending(false);
+                    interactionUI.SetAffectPending(false);
+                    npcAnimation?.PlayInteractionIdle();
+                }
+            }
+        }
+    }
+
+    private bool IsCurrentTurn(string turnId, int generation) =>
+        this != null && isActiveAndEnabled && ActiveController == this && activeTurnId == turnId && turnGeneration == generation;
+
+    private void StopRequestCoroutines()
+    {
+        if (replyCoroutine != null) StopCoroutine(replyCoroutine);
+        if (tellCoroutine != null) StopCoroutine(tellCoroutine);
+        replyCoroutine = tellCoroutine = null;
+    }
+
+    private void CancelActiveTurn()
+    {
+        ++turnGeneration;
+        string cancelledTurn = activeTurnId;
+        activeTurnId = null;
+        apiClient?.CancelTurn(cancelledTurn);
+        StopRequestCoroutines();
+        if (interactionCoroutine != null) StopCoroutine(interactionCoroutine);
+        interactionCoroutine = null;
+        isBusy = false;
+        if (ActiveController == this && interactionUI != null)
+        {
+            interactionUI.CancelNpcStreamingMessage();
+            interactionUI.SetBusy(false);
+            interactionUI.SetTellPending(false);
+            interactionUI.SetAffectPending(false);
+        }
+    }
+
+    public void CloseInteraction() => CloseInteractionInternal(true);
+
+    private IEnumerator ExecuteJointInteraction(InvestigationInteractionPayload payload, string turnId, int generation)
+    {
+        isBusy = true;
+        interactionUI.SetBusy(true);
+        interactionUI.SetTellPending(true);
+        interactionUI.SetAffectPending(true);
+        interactionUI.SetStatus($"{npcDisplayName}의 답변과 반응을 준비 중입니다...");
+        npcAnimation?.PlayThinking();
+        string playerLine = string.IsNullOrWhiteSpace(payload.playerIntentText) ? "질문을 던진다." : payload.playerIntentText;
+        interactionUI.AppendPlayerMessage(playerLine);
+        var resolvedPayload = BuildResolvedPayload(payload);
+        resolvedPayload.playerIntentText = playerLine;
+        var request = contextBuilder.BuildRequest(turnId, sceneId, playerId, npcId, personaKey,
+            resolvedPayload, conversationState, profileComponent != null ? profileComponent.ToPayload() : null);
+        request.protocolVersion = NpcJointTurnResponse.Protocol;
+        request.sessionId = jointSessionId;
+        var caseManager = FindFirstObjectByType<ProjectCRT.Cases.ShangrilaCaseManager>();
+        if (caseManager != null && caseManager.Ready) request.phase = caseManager.Phase.ToString();
+
+        // Keep all candidate state private until both validation and the one-second presentation gate pass.
+        float visibleAt = Time.unscaledTime + Mathf.Max(1f, minimumReplyDelaySeconds);
+        float deadline = Time.realtimeSinceStartup + Mathf.Max(apiClient.RequestTimeoutSeconds + 5f, minimumReplyDelaySeconds + 5f);
+        bool completed = false;
+        NpcJointTurnResponse candidate = null;
+        string failure = null;
+        replyCoroutine = StartCoroutine(apiClient.SendJointTurnRequest(request,
+            response =>
+            {
+                if (!IsCurrentTurn(turnId, generation) || completed) return;
+                if (NpcInvestigationClient.TryValidateJointTurnResponse(response, request, out string error)) candidate = response;
+                else failure = error;
+                completed = true;
+            },
+            error =>
+            {
+                if (!IsCurrentTurn(turnId, generation) || completed) return;
+                failure = error;
+                completed = true;
+            }));
+
+        while (IsCurrentTurn(turnId, generation))
+        {
+            if (Time.realtimeSinceStartup >= deadline && !completed)
+            {
+                failure = "답변 대기 시간이 초과되었습니다. 다시 질문하세요.";
+                completed = true;
+                apiClient.CancelTurn(turnId);
+                StopRequestCoroutines();
+            }
+            if (completed && (candidate == null || Time.unscaledTime >= visibleAt)) break;
+            yield return null;
+        }
+        if (!IsCurrentTurn(turnId, generation)) yield break;
+        if (candidate == null)
+        {
+            // Restore the previous visuals; failed generation is not a zero/Stable reaction.
+            interactionUI.SetTellPending(false);
+            interactionUI.SetAffectPending(false);
+            interactionUI.AppendSystemMessage(failure ?? "대사와 반응을 함께 생성하지 못했습니다.");
+            interactionUI.SetStatus("응답 실패. 다시 질문할 수 있습니다.");
+            yield break;
+        }
+
+        conversationState.conversationCount++;
+        conversationState.RegisterExchange("player", playerLine, savedExchangeLimit);
+        conversationState.RegisterExchange("npc", candidate.reply.replyText.Trim(), savedExchangeLimit);
+        conversationState.ApplyReplyResponse(candidate.reply, savedStatementLimit);
+        conversationState.ApplyTellResult(candidate.tellResult);
+        SaveConversationState();
+        npcAnimation?.PlayAnswerStart();
+        interactionUI.AppendNpcMessage(npcDisplayName, candidate.reply.replyText.Trim());
+        interactionUI.SetAffectValue(candidate.reply.conversationState.affect.interest, candidate.reply.conversationState.affect.attitude);
+        interactionUI.SetPatienceValue(candidate.reply.conversationState.patience);
+        interactionUI.SetTellValue(candidate.tellResult.tell);
+        interactionUI.SetAffectPending(false);
+        interactionUI.SetTellPending(false);
+        if (TryUnlockFollowingItem(resolvedPayload.attachedItemDirective)) RefreshInteractionChoices();
+        interactionUI.SetStatus("새 조사 액션을 선택할 수 있습니다.");
+    }
+
+    private IEnumerator ExecuteInteraction(InvestigationInteractionPayload payload, string turnId, int generation)
     {
         isBusy = true;
         interactionUI.SetBusy(true);
@@ -201,16 +390,12 @@ public class NpcInvestigationController : MonoBehaviour
             : payload.playerIntentText;
 
         conversationState.conversationCount++;
-        conversationState.RegisterExchange("player", playerLine, savedExchangeLimit);
-        SaveConversationState();
         interactionUI.AppendPlayerMessage(playerLine);
-        interactionUI.SetStatus("리베카의 반응과 tell 값을 병렬로 분석 중입니다...");
+        interactionUI.SetStatus($"{npcDisplayName}의 반응과 tell 값을 분석 중입니다...");
         interactionUI.SetTellPending(true);
         interactionUI.SetAffectPending(true);
         npcAnimation?.PlayThinking();
 
-        string turnId = System.Guid.NewGuid().ToString("N");
-        activeTurnId = turnId;
         InvestigationInteractionPayload resolvedPayload = BuildResolvedPayload(payload);
         InvestigationAttachedItemDirectivePayload attachedDirective = resolvedPayload.attachedItemDirective;
 
@@ -223,6 +408,10 @@ public class NpcInvestigationController : MonoBehaviour
             resolvedPayload,
             conversationState,
             profileComponent != null ? profileComponent.ToPayload() : null);
+
+        // Build the request from prior exchanges, then record the current question locally.
+        conversationState.RegisterExchange("player", playerLine, savedExchangeLimit);
+        SaveConversationState();
 
         NpcTellRequest tellRequest = new NpcTellRequest
         {
@@ -247,18 +436,23 @@ public class NpcInvestigationController : MonoBehaviour
         string bufferedStreamText = string.Empty;
         float replyVisibleAt = Time.unscaledTime + Mathf.Max(0f, minimumReplyDelaySeconds);
 
-        StartCoroutine(apiClient.SendReplyRequest(
+        float replyFinishedAt = float.PositiveInfinity;
+        float deadline = Time.realtimeSinceStartup + Mathf.Max(apiClient.RequestTimeoutSeconds + 5f, minimumReplyDelaySeconds + 5f);
+        replyCoroutine = StartCoroutine(apiClient.SendReplyRequest(
             request,
             () =>
             {
+                if (!IsCurrentTurn(turnId, generation) || replyCompleted) return;
                 pendingStreamStart = true;
             },
             partialText =>
             {
+                if (!IsCurrentTurn(turnId, generation) || replyCompleted) return;
                 bufferedStreamText = partialText ?? string.Empty;
             },
             conversationPayload =>
             {
+                if (!IsCurrentTurn(turnId, generation) || replyCompleted) return;
                 streamedConversationState = conversationPayload ?? ConversationStatePayload.Default();
                 float streamedInterest = streamedConversationState.affect != null ? streamedConversationState.affect.interest : 0f;
                 float streamedAttitude = streamedConversationState.affect != null ? streamedConversationState.affect.attitude : 0f;
@@ -268,11 +462,13 @@ public class NpcInvestigationController : MonoBehaviour
             },
             response =>
             {
-                if (response == null)
+                if (!IsCurrentTurn(turnId, generation) || replyCompleted) return;
+                replyFinishedAt = Time.realtimeSinceStartup;
+                if (!NpcInvestigationClient.TryValidateReplyResponse(response, turnId, out string validationError))
                 {
                     npcAnimation?.PlayInteractionIdle();
                     interactionUI.SetAffectPending(false);
-                    pendingReplyError = "빈 응답이 반환되었습니다.";
+                    pendingReplyError = validationError;
                     replyCompleted = true;
                     return;
                 }
@@ -319,6 +515,8 @@ public class NpcInvestigationController : MonoBehaviour
             },
             error =>
             {
+                if (!IsCurrentTurn(turnId, generation) || replyCompleted) return;
+                replyFinishedAt = Time.realtimeSinceStartup;
                 if (streamStarted)
                 {
                     interactionUI.CancelNpcStreamingMessage();
@@ -330,11 +528,12 @@ public class NpcInvestigationController : MonoBehaviour
                 replyCompleted = true;
             }));
 
-        StartCoroutine(apiClient.SendTellRequest(
+        tellCoroutine = StartCoroutine(apiClient.SendTellRequest(
             tellRequest,
             tellResult =>
             {
-                if (tellResult != null && tellResult.turnId == activeTurnId)
+                if (!IsCurrentTurn(turnId, generation) || tellCompleted) return;
+                if (NpcInvestigationClient.TryValidateTellResult(tellResult, turnId, out string tellError))
                 {
                     conversationState.ApplyTellResult(tellResult);
                     SaveConversationState();
@@ -342,6 +541,7 @@ public class NpcInvestigationController : MonoBehaviour
                 }
                 else
                 {
+                    pendingTellError = tellError;
                     interactionUI.SetTellPending(false);
                 }
 
@@ -353,13 +553,23 @@ public class NpcInvestigationController : MonoBehaviour
             },
             error =>
             {
+                if (!IsCurrentTurn(turnId, generation) || tellCompleted) return;
                 interactionUI.SetTellPending(false);
                 pendingTellError = error;
                 tellCompleted = true;
             }));
 
-        while (!replyCompleted || !tellCompleted)
+        while (IsCurrentTurn(turnId, generation))
         {
+            if (Time.realtimeSinceStartup >= deadline && !replyCompleted)
+            {
+                pendingReplyError = "답변 대기 시간이 초과되었습니다. 다시 질문하세요.";
+                replyCompleted = true;
+                replyFinishedAt = Time.realtimeSinceStartup;
+                interactionUI.CancelNpcStreamingMessage();
+                apiClient.CancelTurn(turnId);
+                StopRequestCoroutines();
+            }
             TryFlushBufferedReply(
                 ref streamStarted,
                 ref pendingStreamStart,
@@ -370,7 +580,19 @@ public class NpcInvestigationController : MonoBehaviour
                 finalReplyReady,
                 finalReplyText);
 
+            bool replySettled = replyCompleted && (!finalReplyReady || finalReplyDisplayed);
+            if (replySettled && (tellCompleted || Time.realtimeSinceStartup >= replyFinishedAt + tellGracePeriodSeconds)) break;
             yield return null;
+        }
+
+        if (!IsCurrentTurn(turnId, generation)) yield break;
+        if (!tellCompleted)
+        {
+            pendingTellError = "tell 분석을 완료하지 못했습니다. 다음 질문을 보낼 수 있습니다.";
+            tellCompleted = true;
+            apiClient.CancelTurn(turnId);
+            StopRequestCoroutines();
+            interactionUI.SetTellPending(false);
         }
 
         TryFlushBufferedReply(
@@ -684,6 +906,12 @@ public class NpcInvestigationController : MonoBehaviour
 
     private void CloseInteractionInternal(bool restoreMainState)
     {
+        if (closeupPresentationCoroutine != null)
+        {
+            StopCoroutine(closeupPresentationCoroutine);
+            closeupPresentationCoroutine = null;
+        }
+        CancelActiveTurn();
         if (ActiveController == this)
         {
             ActiveController = null;
@@ -775,7 +1003,7 @@ public class NpcInvestigationController : MonoBehaviour
             streamStarted = true;
             pendingStreamStart = false;
             interactionUI.BeginNpcStreamingMessage(npcDisplayName);
-            interactionUI.SetStatus("리베카가 답하고 있습니다...");
+            interactionUI.SetStatus($"{npcDisplayName}의 답변입니다...");
         }
 
         if (!streamStarted && finalReplyReady && !finalReplyDisplayed)

@@ -10,8 +10,154 @@ public class NpcInvestigationClient : MonoBehaviour
     [SerializeField] private string serverBaseUrl = "http://localhost:5000";
     [SerializeField] private string replyEndpoint = "/investigation/npc/reply";
     [SerializeField] private string tellEndpoint = "/investigation/npc/tell";
+    [Header("Rebecca Joint Dialogue / TII Prototype")]
+    [SerializeField] private bool enableRebeccaJointTurn = true;
+    [SerializeField] private string jointTurnEndpoint = "/investigation/npc/turn";
+    [SerializeField, Min(1)] private int requestTimeoutSeconds = 90;
+    private readonly Dictionary<string, List<RequestRegistration>> activeRequests = new();
 
-    public IEnumerator SendReplyRequest(
+    public int RequestTimeoutSeconds => Mathf.Max(1, requestTimeoutSeconds);
+
+    public bool UsesJointTurn(string npcId, string personaKey) => enableRebeccaJointTurn &&
+        string.Equals(npcId?.Trim(), "rebecca", StringComparison.OrdinalIgnoreCase) &&
+        string.Equals(personaKey?.Trim(), "rebecca", StringComparison.OrdinalIgnoreCase);
+
+    private static bool InRange(float value, float min, float max) =>
+        !float.IsNaN(value) && !float.IsInfinity(value) && value >= min && value <= max;
+
+    public static bool TryValidateJointTurnResponse(NpcJointTurnResponse response, NpcInvestigationRequest request, out string error)
+    {
+        error = "레베카의 대사와 TII를 함께 확인하지 못했습니다. 다시 질문하세요.";
+        if (request == null || response == null || !response.ok || !string.IsNullOrWhiteSpace(response.error) ||
+            response.protocolVersion != NpcJointTurnResponse.Protocol || request.protocolVersion != NpcJointTurnResponse.Protocol ||
+            string.IsNullOrWhiteSpace(request.sessionId) || response.sessionId != request.sessionId || response.turnId != request.turnId ||
+            !TryValidateReplyResponse(response.reply, request.turnId, out _) ||
+            !TryValidateTellResult(response.tellResult, request.turnId, out _)) return false;
+        var state = response.reply.conversationState;
+        if (state?.affect == null || !InRange(state.affect.interest, -1f, 1f) || !InRange(state.affect.attitude, -1f, 1f) ||
+            state.patience < 0 || state.patience > 100 || response.usedClaimIds == null) return false;
+        var previous = request.npcLocalState;
+        float priorInterest = previous?.lastKnownAffect?.interest ?? 0f;
+        float priorAttitude = previous?.lastKnownAffect?.attitude ?? 0f;
+        int priorPatience = previous?.lastKnownPatience ?? 100;
+        if (Mathf.Abs(state.affect.interest - priorInterest) > 0.201f ||
+            Mathf.Abs(state.affect.attitude - priorAttitude) > 0.151f ||
+            state.patience - priorPatience < -10 || state.patience - priorPatience > 5) return false;
+        var directive = request.interaction?.attachedItemDirective;
+        bool expectsClaim = directive != null && directive.thresholdSatisfied && !string.IsNullOrWhiteSpace(directive.responseDirectivePrompt);
+        if (expectsClaim ? response.usedClaimIds.Count != 1 || response.usedClaimIds[0] != directive.itemId : response.usedClaimIds.Count != 0)
+            return false;
+        float tell = response.tellResult.tell;
+        string expectedBand = tell < .25f ? "Stable" : tell < .5f ? "Guarded" : tell < .75f ? "Shaken" : "Disturbed";
+        if (response.tellResult.band != expectedBand) return false;
+        error = null;
+        return true;
+    }
+
+    public virtual IEnumerator SendJointTurnRequest(NpcInvestigationRequest request,
+        Action<NpcJointTurnResponse> onSuccess, Action<string> onError)
+    {
+        if (request == null || string.IsNullOrWhiteSpace(request.turnId) || string.IsNullOrWhiteSpace(request.sessionId))
+        { onError?.Invoke("대화 턴 식별자가 없습니다."); yield break; }
+        string url = $"{serverBaseUrl}{jointTurnEndpoint}";
+        using var registration = TrackRequest(request.turnId, new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST));
+        var webRequest = registration.Request;
+        webRequest.timeout = RequestTimeoutSeconds;
+        webRequest.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonUtility.ToJson(request)));
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+        webRequest.SetRequestHeader("Content-Type", "application/json");
+        webRequest.SetRequestHeader("Accept", "application/json");
+        yield return webRequest.SendWebRequest();
+        if (registration.IsCancelled) yield break;
+        if (webRequest.result != UnityWebRequest.Result.Success)
+        {
+            onError?.Invoke($"레베카 통합 응답 요청 실패 (HTTP {webRequest.responseCode}). 서버를 확인하세요.");
+            yield break;
+        }
+        NpcJointTurnResponse response;
+        try { response = JsonUtility.FromJson<NpcJointTurnResponse>(webRequest.downloadHandler.text); }
+        catch (Exception) { onError?.Invoke("레베카 통합 응답 형식이 올바르지 않습니다."); yield break; }
+        if (TryValidateJointTurnResponse(response, request, out string error)) onSuccess?.Invoke(response);
+        else onError?.Invoke(error);
+    }
+
+    public void CancelTurn(string turnId)
+    {
+        if (string.IsNullOrEmpty(turnId) || !activeRequests.TryGetValue(turnId, out var requests)) return;
+        activeRequests.Remove(turnId);
+        foreach (var registration in requests) registration.Cancel();
+    }
+
+    private void OnDisable()
+    {
+        foreach (string turnId in new List<string>(activeRequests.Keys)) CancelTurn(turnId);
+    }
+
+    private RequestRegistration TrackRequest(string turnId, UnityWebRequest request)
+    {
+        var registration = new RequestRegistration(this, turnId, request);
+        if (!activeRequests.TryGetValue(turnId, out var requests))
+            activeRequests.Add(turnId, requests = new List<RequestRegistration>());
+        requests.Add(registration);
+        return registration;
+    }
+
+    private sealed class RequestRegistration : IDisposable
+    {
+        private readonly NpcInvestigationClient owner;
+        private readonly string turnId;
+        private bool disposed;
+        public UnityWebRequest Request { get; }
+        public bool IsCancelled { get; private set; }
+
+        public RequestRegistration(NpcInvestigationClient owner, string turnId, UnityWebRequest request)
+        { this.owner = owner; this.turnId = turnId; Request = request; }
+
+        public void Cancel()
+        {
+            if (disposed) return;
+            IsCancelled = true;
+            try { Request.Abort(); }
+            finally { Dispose(); }
+        }
+
+        public void Dispose()
+        {
+            if (disposed) return;
+            disposed = true;
+            if (owner.activeRequests.TryGetValue(turnId, out var requests))
+            {
+                requests.Remove(this);
+                if (requests.Count == 0) owner.activeRequests.Remove(turnId);
+            }
+            Request.Dispose();
+        }
+    }
+
+    public static bool TryValidateReplyResponse(NpcInvestigationReplyResponse response, string turnId, out string error)
+    {
+        error = "현재 질문에 대한 유효한 NPC 답변이 아닙니다. 다시 시도하세요.";
+        if (response == null || !response.ok || string.IsNullOrWhiteSpace(turnId) || response.turnId != turnId ||
+            !string.IsNullOrWhiteSpace(response.error)) return false;
+        string reply = response.replyText?.Trim();
+        if (string.IsNullOrWhiteSpace(reply) || reply == "..." || reply == "…" ||
+            reply.StartsWith("[ERROR]", StringComparison.OrdinalIgnoreCase) ||
+            reply.StartsWith("[SERVER ERROR]", StringComparison.OrdinalIgnoreCase)) return false;
+        error = null;
+        return true;
+    }
+
+    public static bool TryValidateTellResult(TellResultPayload result, string turnId, out string error)
+    {
+        error = "현재 질문에 대한 tell 분석을 가져오지 못했습니다.";
+        if (result == null || string.IsNullOrWhiteSpace(turnId) || result.turnId != turnId ||
+            float.IsNaN(result.tell) || float.IsInfinity(result.tell) || result.tell < 0f || result.tell > 1f ||
+            (result.reason ?? string.Empty).IndexOf("invalid JSON", StringComparison.OrdinalIgnoreCase) >= 0) return false;
+        error = null;
+        return true;
+    }
+
+    public virtual IEnumerator SendReplyRequest(
         NpcInvestigationRequest request,
         Action onStreamStarted,
         Action<string> onStreamDelta,
@@ -19,6 +165,8 @@ public class NpcInvestigationClient : MonoBehaviour
         Action<NpcInvestigationReplyResponse> onSuccess,
         Action<string> onError)
     {
+        if (request == null || string.IsNullOrWhiteSpace(request.turnId))
+        { onError?.Invoke("질문 식별자가 없습니다."); yield break; }
         string url = $"{serverBaseUrl}{replyEndpoint}";
         string json = JsonUtility.ToJson(request);
         string requestedPersonaKey = request != null ? request.personaKey : string.Empty;
@@ -31,7 +179,9 @@ public class NpcInvestigationClient : MonoBehaviour
             $"payload={json}",
             this);
 
-        using var webRequest = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
+        using var registration = TrackRequest(request.turnId, new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST));
+        UnityWebRequest webRequest = registration.Request;
+        webRequest.timeout = RequestTimeoutSeconds;
         byte[] body = Encoding.UTF8.GetBytes(json);
         webRequest.uploadHandler = new UploadHandlerRaw(body);
         webRequest.downloadHandler = downloadHandler;
@@ -44,7 +194,7 @@ public class NpcInvestigationClient : MonoBehaviour
         NpcInvestigationReplyResponse streamedCompletion = null;
         string streamedError = string.Empty;
 
-        while (!operation.isDone)
+        while (!registration.IsCancelled && !operation.isDone)
         {
             DrainReplyStreamEvents(
                 downloadHandler,
@@ -58,6 +208,8 @@ public class NpcInvestigationClient : MonoBehaviour
 
             yield return null;
         }
+
+        if (registration.IsCancelled) yield break;
 
         DrainReplyStreamEvents(
             downloadHandler,
@@ -93,7 +245,8 @@ public class NpcInvestigationClient : MonoBehaviour
 
         if (streamedCompletion != null)
         {
-            onSuccess?.Invoke(streamedCompletion);
+            if (TryValidateReplyResponse(streamedCompletion, request.turnId, out string error)) onSuccess?.Invoke(streamedCompletion);
+            else onError?.Invoke(error);
             yield break;
         }
 
@@ -127,14 +280,17 @@ public class NpcInvestigationClient : MonoBehaviour
             yield break;
         }
 
-        onSuccess?.Invoke(response);
+        if (TryValidateReplyResponse(response, request.turnId, out string validationError)) onSuccess?.Invoke(response);
+        else onError?.Invoke(validationError);
     }
 
-    public IEnumerator SendTellRequest(
+    public virtual IEnumerator SendTellRequest(
         NpcTellRequest request,
         Action<TellResultPayload> onSuccess,
         Action<string> onError)
     {
+        if (request == null || string.IsNullOrWhiteSpace(request.turnId))
+        { onError?.Invoke("질문 식별자가 없습니다."); yield break; }
         string url = $"{serverBaseUrl}{tellEndpoint}";
         string json = JsonUtility.ToJson(request);
         string requestedPersonaKey = request != null ? request.personaKey : string.Empty;
@@ -146,7 +302,9 @@ public class NpcInvestigationClient : MonoBehaviour
             $"payload={json}",
             this);
 
-        using var webRequest = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
+        using var registration = TrackRequest(request.turnId, new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST));
+        UnityWebRequest webRequest = registration.Request;
+        webRequest.timeout = RequestTimeoutSeconds;
         byte[] body = Encoding.UTF8.GetBytes(json);
         webRequest.uploadHandler = new UploadHandlerRaw(body);
         webRequest.downloadHandler = new DownloadHandlerBuffer();
@@ -154,6 +312,8 @@ public class NpcInvestigationClient : MonoBehaviour
         webRequest.SetRequestHeader("Accept", "application/json");
 
         yield return webRequest.SendWebRequest();
+
+        if (registration.IsCancelled) yield break;
 
         string responseBody = webRequest.downloadHandler.text;
         if (webRequest.result != UnityWebRequest.Result.Success)
@@ -194,7 +354,9 @@ public class NpcInvestigationClient : MonoBehaviour
             yield break;
         }
 
-        onSuccess?.Invoke(response.tellResult ?? TellResultPayload.Default());
+        if (response.turnId == request.turnId && TryValidateTellResult(response.tellResult, request.turnId, out _))
+            onSuccess?.Invoke(response.tellResult);
+        else onError?.Invoke("현재 질문에 대한 유효한 tell 응답이 아닙니다.");
     }
 
     private void DrainReplyStreamEvents(
@@ -241,7 +403,8 @@ public class NpcInvestigationClient : MonoBehaviour
                     streamedError = chunk.error;
                     break;
                 case "complete":
-                    streamedCompletion = chunk.response ?? BuildReplyCompletionFallback(streamedNpcText, chunk.conversationState);
+                    if (chunk.response == null) streamedError = "서버의 최종 답변이 누락되었습니다.";
+                    else streamedCompletion = chunk.response;
                     break;
             }
         }
@@ -308,24 +471,13 @@ public class NpcInvestigationClient : MonoBehaviour
         }
     }
 
-    private static NpcInvestigationReplyResponse BuildReplyCompletionFallback(string streamedNpcText, ConversationStatePayload conversationState)
-    {
-        return new NpcInvestigationReplyResponse
-        {
-            ok = true,
-            replyText = streamedNpcText ?? string.Empty,
-            conversationState = conversationState ?? ConversationStatePayload.Default(),
-            stateDelta = new InvestigationStateDeltaPayload(),
-            presentationHints = new InvestigationPresentationHintsPayload()
-        };
-    }
-
     private sealed class ReplyStreamDownloadHandler : DownloadHandlerScript
     {
         private readonly Queue<NpcInvestigationReplyStreamChunk> pendingChunks = new();
         private readonly StringBuilder rawText = new();
         private readonly StringBuilder lineBuffer = new();
         private readonly object gate = new();
+        private readonly Decoder decoder = Encoding.UTF8.GetDecoder();
 
         public ReplyStreamDownloadHandler() : base(new byte[4096])
         {
@@ -362,9 +514,11 @@ public class NpcInvestigationClient : MonoBehaviour
                 return false;
             }
 
-            string chunkText = Encoding.UTF8.GetString(data, 0, dataLength);
             lock (gate)
             {
+                char[] characters = new char[dataLength + 2];
+                int count = decoder.GetChars(data, 0, dataLength, characters, 0, false);
+                string chunkText = new string(characters, 0, count);
                 rawText.Append(chunkText);
                 lineBuffer.Append(chunkText);
                 ProcessBufferedLines_NoLock();
@@ -377,6 +531,10 @@ public class NpcInvestigationClient : MonoBehaviour
         {
             lock (gate)
             {
+                char[] remaining = new char[2];
+                int count = decoder.GetChars(Array.Empty<byte>(), 0, 0, remaining, 0, true);
+                rawText.Append(remaining, 0, count);
+                lineBuffer.Append(remaining, 0, count);
                 FlushRemainingLine_NoLock();
             }
         }

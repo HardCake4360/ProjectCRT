@@ -1,0 +1,920 @@
+--- /dev/null
++++ b/virtualEnv/RAG_model/app/conversation_memory.py
+@@ -0,0 +1,105 @@
++"""Ordered conversation memory for one running NPC server process."""
++import json
++import os
++import tempfile
++import threading
++import time
++
++
++class ConversationMemory:
++    def __init__(self, directory):
++        self.directory = directory
++        self._lock = threading.RLock()
++        self._revisions = {}
++
++    @staticmethod
++    def scope(persona):
++        return (persona or "assistant").strip() or "assistant"
++
++    def log_path(self, user):
++        return os.path.join(self.directory, f"{(user or 'anonymous').strip() or 'anonymous'}.jsonl")
++
++    def summary_path(self, user, persona):
++        user = (user or "anonymous").strip() or "anonymous"
++        return os.path.join(self.directory, f"{user}__{self.scope(persona)}.summary.json")
++
++    def _key(self, user, persona):
++        return (os.path.abspath(self.log_path(user)), self.scope(persona))
++
++    def _bump(self, user, persona):
++        key = self._key(user, persona)
++        self._revisions[key] = self._revisions.get(key, 0) + 1
++
++    def append(self, user, persona, speaker, text):
++        with self._lock:
++            record = {"ts": time.time(), "speaker": speaker, "text": text, "personaKey": self.scope(persona)}
++            with open(self.log_path(user), "a", encoding="utf-8") as stream:
++                stream.write(json.dumps(record, ensure_ascii=False) + "\n")
++            self._bump(user, persona)
++
++    def read(self, user, persona, max_items=200):
++        with self._lock:
++            path = self.log_path(user)
++            if not os.path.exists(path):
++                return []
++            records = []
++            with open(path, encoding="utf-8") as stream:
++                for line in stream:
++                    try:
++                        record = json.loads(line)
++                    except (ValueError, TypeError):
++                        continue
++                    if record.get("personaKey", "").strip() == self.scope(persona):
++                        records.append(record)
++            return records[-max_items:]
++
++    def snapshot(self, user, persona, max_items=60):
++        with self._lock:
++            return self._revisions.get(self._key(user, persona), 0), self.read(user, persona, max_items)
++
++    def _atomic_write(self, path, content):
++        temporary = None
++        try:
++            with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=self.directory, delete=False) as stream:
++                temporary = stream.name
++                stream.write(content)
++                stream.flush()
++                os.fsync(stream.fileno())
++            os.replace(temporary, path)
++        finally:
++            if temporary and os.path.exists(temporary):
++                os.remove(temporary)
++
++    def write_summary(self, user, persona, summary, expected_revision=None):
++        with self._lock:
++            if expected_revision is not None and expected_revision != self._revisions.get(self._key(user, persona), 0):
++                return False
++            self._atomic_write(self.summary_path(user, persona), json.dumps(summary, ensure_ascii=False))
++            return True
++
++    def read_summary(self, user, persona):
++        with self._lock:
++            try:
++                with open(self.summary_path(user, persona), encoding="utf-8") as stream:
++                    return json.load(stream)
++            except (OSError, ValueError):
++                return None
++
++    def reset(self, user, persona):
++        with self._lock:
++            self._bump(user, persona)
++            path = self.log_path(user)
++            if os.path.exists(path):
++                kept = []
++                with open(path, encoding="utf-8") as stream:
++                    for line in stream:
++                        try:
++                            record = json.loads(line)
++                        except (ValueError, TypeError):
++                            continue
++                        if record.get("personaKey", "").strip() != self.scope(persona):
++                            kept.append(record)
++                self._atomic_write(path, "".join(json.dumps(record, ensure_ascii=False) + "\n" for record in kept))
++            summary = self.summary_path(user, persona)
++            if os.path.exists(summary):
++                os.remove(summary)
+--- a/virtualEnv/RAG_model/app/llmClient.py
++++ b/virtualEnv/RAG_model/app/llmClient.py
+@@ -1,6 +1,10 @@
+ import requests
+ import re
+ import json
++import time
++
++LLM_TIMEOUT = (5, 75)
++STREAM_DEADLINE_SECONDS = 75
+ 
+ def build_prompt(chunks: list, query: str) -> str:
+     """검색된 문단들과 질문을 하나의 프롬프트로 구성"""
+@@ -51,13 +55,15 @@
+         "stream": False
+     }
+ 
+-    try:
+-        response = requests.post(url, json=payload)
++    with requests.post(url, json=payload, timeout=LLM_TIMEOUT) as response:
+         response.raise_for_status()
+-        raw_output = response.json().get("response", "").strip()
+-        return addEndMarkers(raw_output)  # <-- 후처리 적용
+-    except requests.RequestException as e:
+-        return f"[ERROR] Ollama 호출 실패: {e}"
++        data = response.json()
++        if data.get("error"):
++            raise RuntimeError(str(data["error"]))
++        raw_output = str(data.get("response") or "").strip()
++        if not raw_output:
++            raise RuntimeError("Ollama returned an empty response.")
++        return raw_output
+     
+ def query_ollama_stream(prompt: str, model: str = "mistral", host: str = "http://localhost:11434"):
+     url = f"{host}/api/generate"
+@@ -66,19 +72,27 @@
+         "prompt": prompt,
+         "stream": True
+     }
+-    try:
+-        with requests.post(url, json = payload, stream = True) as response:
+-            response.raise_for_status()
+-            for line in response.iter_lines():
+-                if line:
+-                    try:
+-                        chunk = line.decode("utf-8")
+-                        data = json.loads(chunk)
+-                        yield data.get("response", "")
+-                    except:
+-                        continue
+-    except requests.RequestException as e:
+-        yield f"[ERROR] Ollama 호출 실패: {e}"
++    started = time.monotonic()
++    completed = False
++    with requests.post(url, json=payload, stream=True, timeout=LLM_TIMEOUT) as response:
++        response.raise_for_status()
++        for line in response.iter_lines():
++            if time.monotonic() - started > STREAM_DEADLINE_SECONDS:
++                raise TimeoutError("Ollama generation deadline exceeded.")
++            if not line:
++                continue
++            data = json.loads(line.decode("utf-8"))
++            if data.get("error"):
++                raise RuntimeError(str(data["error"]))
++            chunk = data.get("response", "")
++            if chunk:
++                yield chunk
++            if data.get("done"):
++                completed = True
++                break
++    if not completed:
++        raise RuntimeError("Ollama stream ended before completion.")
++
+ 
+ def addEndMarkers(text: str) -> str:
+     text = re.sub(r'([.!?])\s+', r'\1<END> ', text.strip())
+--- a/virtualEnv/RAG_model/app/server.py
++++ b/virtualEnv/RAG_model/app/server.py
+@@ -18,6 +18,7 @@
+     OpenAI = None
+     OpenAIError = Exception
+ 
++from conversation_memory import ConversationMemory
+ from chatlog import append_log, read_log, read_summary, reset_log, write_summary
+ from llmClient import build_prompt_v2, query_ollama_stream
+ from persona_store import load_persona
+@@ -47,6 +48,7 @@
+ retriever = Retriever()
+ os.makedirs(INDEX_DIR, exist_ok=True)
+ os.makedirs(CHATLOG_DIR, exist_ok=True)
++_memory = ConversationMemory(CHATLOG_DIR)
+ 
+ 
+ def _load_env_file(path: str) -> None:
+@@ -111,6 +113,16 @@
+     return cleaned or "..."
+ 
+ 
++def _validated_reply_text(text):
++    raw = str(text or "").strip()
++    if not raw or raw in ("...", "…") or raw.upper().startswith(("[ERROR]", "[SERVER ERROR]")):
++        raise RuntimeError("The model did not return a valid NPC reply.")
++    cleaned = _safe_reply_text(raw)
++    if cleaned in ("...", "…"):
++        raise RuntimeError("The model returned an empty NPC reply.")
++    return cleaned
++
++
+ def _discover_installed_models() -> List[str]:
+     models: List[str] = []
+     if not os.path.isdir(OLLAMA_MANIFEST_DIR):
+@@ -147,7 +159,7 @@
+     if not os.getenv("OPENAI_API_KEY"):
+         raise RuntimeError("OPENAI_API_KEY is not configured.")
+ 
+-    return OpenAI()
++    return OpenAI(timeout=75.0, max_retries=0)
+ 
+ 
+ def _get_openai_error_detail(error: Exception) -> Dict[str, str]:
+@@ -327,90 +339,36 @@
+     return ACTIVE_MODEL
+ 
+ 
+-def _user_log_path(user_id: str) -> str:
+-    safe_user = (user_id or "anonymous").strip() or "anonymous"
+-    return os.path.join(CHATLOG_DIR, f"{safe_user}.jsonl")
+-
+-
+-def _summary_path(user_id: str, persona_key: str) -> str:
+-    safe_user = (user_id or "anonymous").strip() or "anonymous"
+-    safe_persona = (persona_key or "assistant").strip() or "assistant"
+-    return os.path.join(CHATLOG_DIR, f"{safe_user}__{safe_persona}.summary.json")
++def _user_log_path(user_id):
++    return _memory.log_path(user_id)
++
++
++def _summary_path(user_id, persona_key):
++    return _memory.summary_path(user_id, persona_key)
+ 
+ 
+ def _conversation_scope(persona_key: str, fallback: str = "assistant") -> str:
+     return (persona_key or "").strip() or fallback
+ 
+ 
+-def _append_scoped_log(user_id: str, persona_key: str, speaker: str, text: str) -> None:
+-    rec = {
+-        "ts": time.time(),
+-        "speaker": speaker,
+-        "text": text,
+-        "personaKey": _conversation_scope(persona_key),
+-    }
+-    with open(_user_log_path(user_id), "a", encoding="utf-8") as f:
+-        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+-
+-
+-def _read_scoped_log(user_id: str, persona_key: str, max_items: int = 200) -> List[Dict[str, Any]]:
+-    path = _user_log_path(user_id)
+-    if not os.path.exists(path):
+-        return []
+-
+-    scope = _conversation_scope(persona_key)
+-    lines: List[Dict[str, Any]] = []
+-    with open(path, "r", encoding="utf-8") as f:
+-        for line in f:
+-            try:
+-                rec = json.loads(line)
+-            except Exception:
+-                continue
+-
+-            if (rec.get("personaKey") or "").strip() != scope:
+-                continue
+-            lines.append(rec)
+-
+-    return lines[-max_items:]
+-
+-
+-def _write_scoped_summary(user_id: str, persona_key: str, summary: Dict[str, Any]) -> None:
+-    with open(_summary_path(user_id, persona_key), "w", encoding="utf-8") as f:
+-        json.dump(summary, f, ensure_ascii=False)
+-
+-
+-def _read_scoped_summary(user_id: str, persona_key: str) -> Dict[str, Any] | None:
+-    path = _summary_path(user_id, persona_key)
+-    if not os.path.exists(path):
+-        return None
+-    try:
+-        with open(path, "r", encoding="utf-8") as f:
+-            return json.load(f)
+-    except Exception:
+-        return None
+-
+-
+-def _reset_scoped_log(user_id: str, persona_key: str) -> None:
+-    path = _user_log_path(user_id)
+-    if os.path.exists(path):
+-        scope = _conversation_scope(persona_key)
+-        kept: List[Dict[str, Any]] = []
+-        with open(path, "r", encoding="utf-8") as f:
+-            for line in f:
+-                try:
+-                    rec = json.loads(line)
+-                except Exception:
+-                    continue
+-                if (rec.get("personaKey") or "").strip() != scope:
+-                    kept.append(rec)
+-
+-        with open(path, "w", encoding="utf-8") as f:
+-            for rec in kept:
+-                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+-
+-    summary_path = _summary_path(user_id, persona_key)
+-    if os.path.exists(summary_path):
+-        os.remove(summary_path)
++def _append_scoped_log(user_id, persona_key, speaker, text):
++    _memory.append(user_id, persona_key, speaker, text)
++
++
++def _read_scoped_log(user_id, persona_key, max_items=200):
++    return _memory.read(user_id, persona_key, max_items)
++
++
++def _write_scoped_summary(user_id, persona_key, summary, expected_revision=None):
++    return _memory.write_summary(user_id, persona_key, summary, expected_revision)
++
++
++def _read_scoped_summary(user_id, persona_key):
++    return _memory.read_summary(user_id, persona_key)
++
++
++def _reset_scoped_log(user_id, persona_key):
++    _memory.reset(user_id, persona_key)
+ 
+ 
+ def _default_interrogation_state() -> Dict[str, Any]:
+@@ -1321,7 +1279,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1332,7 +1290,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed after reply stream: {e}")
+@@ -1370,7 +1328,7 @@
+                         text=chunk,
+                     )
+ 
+-                reply_text = _safe_reply_text(streamed_text)
++                reply_text = _validated_reply_text(streamed_text)
+                 unlock_topic_ids = _extract_unlock_topics(interaction, reply_text)
+ 
+                 response_payload = {
+@@ -1551,7 +1509,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1562,7 +1520,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed after investigation stream: {e}")
+@@ -1600,7 +1558,7 @@
+                         text=chunk,
+                     )
+ 
+-                reply_text = _safe_reply_text(streamed_text)
++                reply_text = _validated_reply_text(streamed_text)
+                 unlock_topic_ids = _extract_unlock_topics(interaction, reply_text)
+ 
+                 response_payload = {
+@@ -1709,7 +1667,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1720,7 +1678,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed: {e}")
+@@ -1737,7 +1695,7 @@
+                 buffer.append(chunk)
+                 yield chunk + "\n"
+ 
+-            full_answer = "".join(buffer).strip()
++            full_answer = _validated_reply_text("".join(buffer))
+             speaker = persona_key if persona_key else "assistant"
+             try:
+                 _append_scoped_log(user_id, persona_key, speaker, full_answer)
+--- a/virtualEnv/RAG_model/app/server_for_experiment.py
++++ b/virtualEnv/RAG_model/app/server_for_experiment.py
+@@ -18,6 +18,7 @@
+     OpenAI = None
+     OpenAIError = Exception
+ 
++from conversation_memory import ConversationMemory
+ from chatlog import append_log, read_log, read_summary, reset_log, write_summary
+ from llmClient import build_prompt_v2, query_ollama_stream
+ from persona_store import load_persona
+@@ -65,6 +66,7 @@
+ retriever = ExperimentSafeRetriever()
+ os.makedirs(INDEX_DIR, exist_ok=True)
+ os.makedirs(CHATLOG_DIR, exist_ok=True)
++_memory = ConversationMemory(CHATLOG_DIR)
+ 
+ 
+ def _load_env_file(path: str) -> None:
+@@ -129,6 +131,16 @@
+     return cleaned or "..."
+ 
+ 
++def _validated_reply_text(text):
++    raw = str(text or "").strip()
++    if not raw or raw in ("...", "…") or raw.upper().startswith(("[ERROR]", "[SERVER ERROR]")):
++        raise RuntimeError("The model did not return a valid NPC reply.")
++    cleaned = _safe_reply_text(raw)
++    if cleaned in ("...", "…"):
++        raise RuntimeError("The model returned an empty NPC reply.")
++    return cleaned
++
++
+ def _discover_installed_models() -> List[str]:
+     models: List[str] = []
+     if not os.path.isdir(OLLAMA_MANIFEST_DIR):
+@@ -165,7 +177,7 @@
+     if not os.getenv("OPENAI_API_KEY"):
+         raise RuntimeError("OPENAI_API_KEY is not configured.")
+ 
+-    return OpenAI()
++    return OpenAI(timeout=75.0, max_retries=0)
+ 
+ 
+ def _get_openai_error_detail(error: Exception) -> Dict[str, str]:
+@@ -345,90 +357,36 @@
+     return ACTIVE_MODEL
+ 
+ 
+-def _user_log_path(user_id: str) -> str:
+-    safe_user = (user_id or "anonymous").strip() or "anonymous"
+-    return os.path.join(CHATLOG_DIR, f"{safe_user}.jsonl")
+-
+-
+-def _summary_path(user_id: str, persona_key: str) -> str:
+-    safe_user = (user_id or "anonymous").strip() or "anonymous"
+-    safe_persona = (persona_key or "assistant").strip() or "assistant"
+-    return os.path.join(CHATLOG_DIR, f"{safe_user}__{safe_persona}.summary.json")
++def _user_log_path(user_id):
++    return _memory.log_path(user_id)
++
++
++def _summary_path(user_id, persona_key):
++    return _memory.summary_path(user_id, persona_key)
+ 
+ 
+ def _conversation_scope(persona_key: str, fallback: str = "assistant") -> str:
+     return (persona_key or "").strip() or fallback
+ 
+ 
+-def _append_scoped_log(user_id: str, persona_key: str, speaker: str, text: str) -> None:
+-    rec = {
+-        "ts": time.time(),
+-        "speaker": speaker,
+-        "text": text,
+-        "personaKey": _conversation_scope(persona_key),
+-    }
+-    with open(_user_log_path(user_id), "a", encoding="utf-8") as f:
+-        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+-
+-
+-def _read_scoped_log(user_id: str, persona_key: str, max_items: int = 200) -> List[Dict[str, Any]]:
+-    path = _user_log_path(user_id)
+-    if not os.path.exists(path):
+-        return []
+-
+-    scope = _conversation_scope(persona_key)
+-    lines: List[Dict[str, Any]] = []
+-    with open(path, "r", encoding="utf-8") as f:
+-        for line in f:
+-            try:
+-                rec = json.loads(line)
+-            except Exception:
+-                continue
+-
+-            if (rec.get("personaKey") or "").strip() != scope:
+-                continue
+-            lines.append(rec)
+-
+-    return lines[-max_items:]
+-
+-
+-def _write_scoped_summary(user_id: str, persona_key: str, summary: Dict[str, Any]) -> None:
+-    with open(_summary_path(user_id, persona_key), "w", encoding="utf-8") as f:
+-        json.dump(summary, f, ensure_ascii=False)
+-
+-
+-def _read_scoped_summary(user_id: str, persona_key: str) -> Dict[str, Any] | None:
+-    path = _summary_path(user_id, persona_key)
+-    if not os.path.exists(path):
+-        return None
+-    try:
+-        with open(path, "r", encoding="utf-8") as f:
+-            return json.load(f)
+-    except Exception:
+-        return None
+-
+-
+-def _reset_scoped_log(user_id: str, persona_key: str) -> None:
+-    path = _user_log_path(user_id)
+-    if os.path.exists(path):
+-        scope = _conversation_scope(persona_key)
+-        kept: List[Dict[str, Any]] = []
+-        with open(path, "r", encoding="utf-8") as f:
+-            for line in f:
+-                try:
+-                    rec = json.loads(line)
+-                except Exception:
+-                    continue
+-                if (rec.get("personaKey") or "").strip() != scope:
+-                    kept.append(rec)
+-
+-        with open(path, "w", encoding="utf-8") as f:
+-            for rec in kept:
+-                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+-
+-    summary_path = _summary_path(user_id, persona_key)
+-    if os.path.exists(summary_path):
+-        os.remove(summary_path)
++def _append_scoped_log(user_id, persona_key, speaker, text):
++    _memory.append(user_id, persona_key, speaker, text)
++
++
++def _read_scoped_log(user_id, persona_key, max_items=200):
++    return _memory.read(user_id, persona_key, max_items)
++
++
++def _write_scoped_summary(user_id, persona_key, summary, expected_revision=None):
++    return _memory.write_summary(user_id, persona_key, summary, expected_revision)
++
++
++def _read_scoped_summary(user_id, persona_key):
++    return _memory.read_summary(user_id, persona_key)
++
++
++def _reset_scoped_log(user_id, persona_key):
++    _memory.reset(user_id, persona_key)
+ 
+ 
+ def _default_interrogation_state() -> Dict[str, Any]:
+@@ -1339,7 +1297,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1350,7 +1308,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed after reply stream: {e}")
+@@ -1388,7 +1346,7 @@
+                         text=chunk,
+                     )
+ 
+-                reply_text = _safe_reply_text(streamed_text)
++                reply_text = _validated_reply_text(streamed_text)
+                 unlock_topic_ids = _extract_unlock_topics(interaction, reply_text)
+ 
+                 response_payload = {
+@@ -1569,7 +1527,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1580,7 +1538,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed after investigation stream: {e}")
+@@ -1618,7 +1576,7 @@
+                         text=chunk,
+                     )
+ 
+-                reply_text = _safe_reply_text(streamed_text)
++                reply_text = _validated_reply_text(streamed_text)
+                 unlock_topic_ids = _extract_unlock_topics(interaction, reply_text)
+ 
+                 response_payload = {
+@@ -1727,7 +1685,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1738,7 +1696,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed: {e}")
+@@ -1755,7 +1713,7 @@
+                 buffer.append(chunk)
+                 yield chunk + "\n"
+ 
+-            full_answer = "".join(buffer).strip()
++            full_answer = _validated_reply_text("".join(buffer))
+             speaker = persona_key if persona_key else "assistant"
+             try:
+                 _append_scoped_log(user_id, persona_key, speaker, full_answer)
+--- a/virtualEnv/RAG_model/app/server_test.py
++++ b/virtualEnv/RAG_model/app/server_test.py
+@@ -18,6 +18,7 @@
+     OpenAI = None
+     OpenAIError = Exception
+ 
++from conversation_memory import ConversationMemory
+ from chatlog import append_log, read_log, read_summary, reset_log, write_summary
+ from llmClient import build_prompt_v2, query_ollama_stream
+ from persona_store import load_persona
+@@ -47,6 +48,7 @@
+ retriever = Retriever()
+ os.makedirs(INDEX_DIR, exist_ok=True)
+ os.makedirs(CHATLOG_DIR, exist_ok=True)
++_memory = ConversationMemory(CHATLOG_DIR)
+ 
+ 
+ def _load_env_file(path: str) -> None:
+@@ -111,6 +113,16 @@
+     return cleaned or "..."
+ 
+ 
++def _validated_reply_text(text):
++    raw = str(text or "").strip()
++    if not raw or raw in ("...", "…") or raw.upper().startswith(("[ERROR]", "[SERVER ERROR]")):
++        raise RuntimeError("The model did not return a valid NPC reply.")
++    cleaned = _safe_reply_text(raw)
++    if cleaned in ("...", "…"):
++        raise RuntimeError("The model returned an empty NPC reply.")
++    return cleaned
++
++
+ def _discover_installed_models() -> List[str]:
+     models: List[str] = []
+     if not os.path.isdir(OLLAMA_MANIFEST_DIR):
+@@ -147,7 +159,7 @@
+     if not os.getenv("OPENAI_API_KEY"):
+         raise RuntimeError("OPENAI_API_KEY is not configured.")
+ 
+-    return OpenAI()
++    return OpenAI(timeout=75.0, max_retries=0)
+ 
+ 
+ def _get_openai_error_detail(error: Exception) -> Dict[str, str]:
+@@ -327,90 +339,36 @@
+     return ACTIVE_MODEL
+ 
+ 
+-def _user_log_path(user_id: str) -> str:
+-    safe_user = (user_id or "anonymous").strip() or "anonymous"
+-    return os.path.join(CHATLOG_DIR, f"{safe_user}.jsonl")
+-
+-
+-def _summary_path(user_id: str, persona_key: str) -> str:
+-    safe_user = (user_id or "anonymous").strip() or "anonymous"
+-    safe_persona = (persona_key or "assistant").strip() or "assistant"
+-    return os.path.join(CHATLOG_DIR, f"{safe_user}__{safe_persona}.summary.json")
++def _user_log_path(user_id):
++    return _memory.log_path(user_id)
++
++
++def _summary_path(user_id, persona_key):
++    return _memory.summary_path(user_id, persona_key)
+ 
+ 
+ def _conversation_scope(persona_key: str, fallback: str = "assistant") -> str:
+     return (persona_key or "").strip() or fallback
+ 
+ 
+-def _append_scoped_log(user_id: str, persona_key: str, speaker: str, text: str) -> None:
+-    rec = {
+-        "ts": time.time(),
+-        "speaker": speaker,
+-        "text": text,
+-        "personaKey": _conversation_scope(persona_key),
+-    }
+-    with open(_user_log_path(user_id), "a", encoding="utf-8") as f:
+-        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+-
+-
+-def _read_scoped_log(user_id: str, persona_key: str, max_items: int = 200) -> List[Dict[str, Any]]:
+-    path = _user_log_path(user_id)
+-    if not os.path.exists(path):
+-        return []
+-
+-    scope = _conversation_scope(persona_key)
+-    lines: List[Dict[str, Any]] = []
+-    with open(path, "r", encoding="utf-8") as f:
+-        for line in f:
+-            try:
+-                rec = json.loads(line)
+-            except Exception:
+-                continue
+-
+-            if (rec.get("personaKey") or "").strip() != scope:
+-                continue
+-            lines.append(rec)
+-
+-    return lines[-max_items:]
+-
+-
+-def _write_scoped_summary(user_id: str, persona_key: str, summary: Dict[str, Any]) -> None:
+-    with open(_summary_path(user_id, persona_key), "w", encoding="utf-8") as f:
+-        json.dump(summary, f, ensure_ascii=False)
+-
+-
+-def _read_scoped_summary(user_id: str, persona_key: str) -> Dict[str, Any] | None:
+-    path = _summary_path(user_id, persona_key)
+-    if not os.path.exists(path):
+-        return None
+-    try:
+-        with open(path, "r", encoding="utf-8") as f:
+-            return json.load(f)
+-    except Exception:
+-        return None
+-
+-
+-def _reset_scoped_log(user_id: str, persona_key: str) -> None:
+-    path = _user_log_path(user_id)
+-    if os.path.exists(path):
+-        scope = _conversation_scope(persona_key)
+-        kept: List[Dict[str, Any]] = []
+-        with open(path, "r", encoding="utf-8") as f:
+-            for line in f:
+-                try:
+-                    rec = json.loads(line)
+-                except Exception:
+-                    continue
+-                if (rec.get("personaKey") or "").strip() != scope:
+-                    kept.append(rec)
+-
+-        with open(path, "w", encoding="utf-8") as f:
+-            for rec in kept:
+-                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+-
+-    summary_path = _summary_path(user_id, persona_key)
+-    if os.path.exists(summary_path):
+-        os.remove(summary_path)
++def _append_scoped_log(user_id, persona_key, speaker, text):
++    _memory.append(user_id, persona_key, speaker, text)
++
++
++def _read_scoped_log(user_id, persona_key, max_items=200):
++    return _memory.read(user_id, persona_key, max_items)
++
++
++def _write_scoped_summary(user_id, persona_key, summary, expected_revision=None):
++    return _memory.write_summary(user_id, persona_key, summary, expected_revision)
++
++
++def _read_scoped_summary(user_id, persona_key):
++    return _memory.read_summary(user_id, persona_key)
++
++
++def _reset_scoped_log(user_id, persona_key):
++    _memory.reset(user_id, persona_key)
+ 
+ 
+ def _default_interrogation_state() -> Dict[str, Any]:
+@@ -1461,7 +1419,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1472,7 +1430,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed after reply stream: {e}")
+@@ -1510,7 +1468,7 @@
+                         text=chunk,
+                     )
+ 
+-                reply_text = _safe_reply_text(streamed_text)
++                reply_text = _validated_reply_text(streamed_text)
+                 unlock_topic_ids = []
+ 
+                 response_payload = {
+@@ -1691,7 +1649,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1702,7 +1660,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed after investigation stream: {e}")
+@@ -1740,7 +1698,7 @@
+                         text=chunk,
+                     )
+ 
+-                reply_text = _safe_reply_text(streamed_text)
++                reply_text = _validated_reply_text(streamed_text)
+                 unlock_topic_ids = []
+ 
+                 response_payload = {
+@@ -1849,7 +1807,7 @@
+ 
+         def _update_summary_background():
+             try:
+-                hist = _read_scoped_log(user_id, persona_key, max_items=60)
++                revision, hist = _memory.snapshot(user_id, persona_key, max_items=60)
+                 history = [{"speaker": h.get("speaker"), "text": h.get("text")} for h in hist]
+ 
+                 summary = summarize_context_llm(
+@@ -1860,7 +1818,7 @@
+                     fallback_rule_based=True,
+                     rule_based_fn=summarize_context_rule_based,
+                 )
+-                _write_scoped_summary(user_id, persona_key, summary)
++                _write_scoped_summary(user_id, persona_key, summary, expected_revision=revision)
+                 print(f"[SUMMARY] updated for user={user_id}, persona={persona_key}")
+             except Exception as e:
+                 print(f"[WARN] summary update failed: {e}")
+@@ -1877,7 +1835,7 @@
+                 buffer.append(chunk)
+                 yield chunk + "\n"
+ 
+-            full_answer = "".join(buffer).strip()
++            full_answer = _validated_reply_text("".join(buffer))
+             speaker = persona_key if persona_key else "assistant"
+             try:
+                 _append_scoped_log(user_id, persona_key, speaker, full_answer)
+--- a/virtualEnv/RAG_model/app/summarizer_llm.py
++++ b/virtualEnv/RAG_model/app/summarizer_llm.py
+@@ -93,7 +93,12 @@
+         raise RuntimeError("query_ollama() not available; cannot perform LLM summary.")
+ 
+     prompt = f"{system}\n\n{user}\n\nJSON:"
+-    raw = query_ollama(prompt, model=model)
++    try:
++        raw = query_ollama(prompt, model=model)
++    except Exception:
++        if fallback_rule_based and callable(rule_based_fn):
++            return rule_based_fn(history, recent_turns, max_tokens)
++        raise
+ 
+     data = _safe_json_parse(raw)
+     if not data:

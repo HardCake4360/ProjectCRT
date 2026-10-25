@@ -62,7 +62,7 @@ public class NPC_script : Interactable
 
     override public void Interact()
     {
-        if (!canInteract) return;
+        if (!IsInteractionAllowed) return;
 
         if (investigationController == null)
         {

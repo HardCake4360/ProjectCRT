@@ -9,16 +9,17 @@ public class RAGHandler : MonoBehaviour
     [Header("Server Settings")]
     [SerializeField] private string serverBaseUrl = "http://localhost:5000";
     [SerializeField] private string userId = "test";
+    [SerializeField, Min(1)] private int requestTimeoutSeconds = 90;
 
     [Header("Persona")]
-    [SerializeField] private string personaKey = "";  // ºó °ªÀÌ¸é Æä¸£¼Ò³ª ¹Ì»ç¿ë
+    [SerializeField] private string personaKey = "";  // ë¹ˆ ê°’ì´ë©´ í˜ë¥´ì†Œë‚˜ ë¯¸ì‚¬ìš©
 
     [System.Serializable]
     public class AskRequest
     {
         public string question;
         public string user_id;
-        public string personaKey; // ºó ¹®ÀÚ¿­ÀÌ¸é ¼­¹ö¿¡¼­ ¹Ì»ç¿ëÀ¸·Î Ã³¸®
+        public string personaKey; // ë¹ˆ ë¬¸ìì—´ì´ë©´ ì„œë²„ì—ì„œ ë¯¸ì‚¬ìš©ìœ¼ë¡œ ì²˜ë¦¬
     }
 
     [System.Serializable]
@@ -32,6 +33,7 @@ public class RAGHandler : MonoBehaviour
     {
         System.Action<string> onChunk;
         private StringBuilder buffer = new StringBuilder();
+        private readonly Decoder decoder = Encoding.UTF8.GetDecoder();
 
         public StreamingHandler(System.Action<string> onChunkCallback) : base()
         {
@@ -40,12 +42,14 @@ public class RAGHandler : MonoBehaviour
 
         protected override bool ReceiveData(byte[] data, int dataLength)
         {
-            if (data == null || data.Length == 0) return false;
+            if (data == null || dataLength <= 0) return false;
 
-            string chunk = Encoding.UTF8.GetString(data, 0, dataLength);
+            char[] characters = new char[dataLength + 2];
+            int count = decoder.GetChars(data, 0, dataLength, characters, 0, false);
+            string chunk = new string(characters, 0, count);
             buffer.Append(chunk);
 
-            //ÁÙ¹Ù²Ş ±âÁØÀ¸·Î chunkÂÉ°³±â
+            //ì¤„ë°”ê¿ˆ ê¸°ì¤€ìœ¼ë¡œ chunkìª¼ê°œê¸°
             string[] lines = buffer.ToString().Split('\n');
 
             for (int i = 0; i < lines.Length - 1; i++)
@@ -54,13 +58,16 @@ public class RAGHandler : MonoBehaviour
             }
 
             buffer.Clear();
-            buffer.Append(lines[lines.Length - 1]);// ¸¶Áö¸· ÁÙÀº ´ú ¿Ï¼ºµÈ ½ºÆ®¸²ÀÌ¹Ç·Î º¸·ù
+            buffer.Append(lines[lines.Length - 1]);// ë§ˆì§€ë§‰ ì¤„ì€ ëœ ì™„ì„±ëœ ìŠ¤íŠ¸ë¦¼ì´ë¯€ë¡œ ë³´ë¥˜
 
             return true;
         }
 
         protected override void CompleteContent()
         {
+            char[] remaining = new char[2];
+            int count = decoder.GetChars(Array.Empty<byte>(), 0, 0, remaining, 0, true);
+            buffer.Append(remaining, 0, count);
             if(buffer.Length > 0)
             {
                 onChunk?.Invoke(buffer.ToString());
@@ -73,8 +80,8 @@ public class RAGHandler : MonoBehaviour
     private string AskStream => $"{serverBaseUrl}/ask-stream";
 
     /// <summary>
-    /// ½ºÆ®¸®¹Ö È£Ãâ (/ask-stream).
-    /// ¼­¹öÀÇ ask_stream(question, personaKey?) Æ÷¸Ë¿¡ ¸ÂÃç user_id¿Í personaKey Æ÷ÇÔ.
+    /// ìŠ¤íŠ¸ë¦¬ë° í˜¸ì¶œ (/ask-stream).
+    /// ì„œë²„ì˜ ask_stream(question, personaKey?) í¬ë§·ì— ë§ì¶° user_idì™€ personaKey í¬í•¨.
     /// </summary>
     public IEnumerator AskServerStream(string question, Action<string> onTextStream)
     {
@@ -86,17 +93,18 @@ public class RAGHandler : MonoBehaviour
         };
 
         string json = JsonUtility.ToJson(requestData);
-        Debug.Log("[AskServerStream] Àü¼Û JSON: " + json);
+        Debug.Log("[AskServerStream] ì „ì†¡ JSON: " + json);
 
         using (UnityWebRequest request = new UnityWebRequest(AskStream, "POST"))
         {
+            request.timeout = Mathf.Max(1, requestTimeoutSeconds);
             byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
 
-            // ½ºÆ®¸®¹Ö ¼ö½Å ÇÚµé·¯
+            // ìŠ¤íŠ¸ë¦¬ë° ìˆ˜ì‹  í•¸ë“¤ëŸ¬
             request.downloadHandler = new StreamingHandler(chunk =>
             {
-                // ½Ç½Ã°£ ¼ö½Å ÅØ½ºÆ® Äİ¹é
+                // ì‹¤ì‹œê°„ ìˆ˜ì‹  í…ìŠ¤íŠ¸ ì½œë°±
                 onTextStream?.Invoke(chunk);
             });
 
@@ -106,12 +114,13 @@ public class RAGHandler : MonoBehaviour
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("[AskServerStream] ½ºÆ®¸®¹Ö ¿À·ù: " + request.error);
+                onTextStream?.Invoke("\nì„œë²„ ì—°ê²°ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì§ˆë¬¸í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
+                Debug.LogWarning("[AskServerStream] ìŠ¤íŠ¸ë¦¬ë° ì˜¤ë¥˜: " + request.error);
             }
         }
     }
 
-    // ·±Å¸ÀÓ¿¡ Æä¸£¼Ò³ª ±³Ã¼ÇÏ°í ½ÍÀ» ¶§ È£Ãâ
+    // ëŸ°íƒ€ì„ì— í˜ë¥´ì†Œë‚˜ êµì²´í•˜ê³  ì‹¶ì„ ë•Œ í˜¸ì¶œ
     public void SetPersonaKey(string key)
     {
         personaKey = key ?? "";
@@ -121,7 +130,7 @@ public class RAGHandler : MonoBehaviour
         return personaKey;
     }
 
-    // ·±Å¸ÀÓ¿¡ ¼­¹ö/À¯Àú ¼³Á¤ º¯°æÀÌ ÇÊ¿äÇÒ ¶§
+    // ëŸ°íƒ€ì„ì— ì„œë²„/ìœ ì € ì„¤ì • ë³€ê²½ì´ í•„ìš”í•  ë•Œ
     public void Configure(string newServerBaseUrl = null, string newUserId = null, string newPersonaKey = null)
     {
         if (!string.IsNullOrEmpty(newServerBaseUrl)) serverBaseUrl = newServerBaseUrl;

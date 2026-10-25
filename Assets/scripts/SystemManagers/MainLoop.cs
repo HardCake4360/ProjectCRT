@@ -72,6 +72,11 @@ public class MainLoop : MonoBehaviour
 
     void Update()
     {
+        if (ProjectCRT.Cutscenes.CutsceneDirector.IsActive)
+        {
+            if (PC != null) { PC.HideHint(); PC.enabled = false; }
+            return;
+        }
         switch (MainLoopState)
         {
             case MainState.Main:

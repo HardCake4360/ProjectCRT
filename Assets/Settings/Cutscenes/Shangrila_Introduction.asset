@@ -1,0 +1,525 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5224edbeaf091fc47b76ca75534947bd, type: 3}
+  m_Name: Shangrila_Introduction
+  m_EditorClassIdentifier: 
+  sequenceId: shangrila-introduction
+  stageScene: 
+  unloadStageOnFinish: 1
+  allowSkip: 1
+  fadeDuration: 0.3
+  exitMode: 0
+  destinationScene: 
+  destinationSpawnId: 
+  preloadAudio: []
+  turns:
+  - id: establish
+    label: "01 \xB7 \uC0F9\uADF8\uB9AC\uC544 \uC804\uACBD"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 1
+      shotId: room_wide
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors: []
+    advance: 1
+    minimumDuration: 0.5
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: approach
+    label: "02 \xB7 \uC785\uAD6C\uC5D0\uC11C \uC2E4\uB0B4\uB85C"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 5
+      shotId: 
+      pathId: entrance_approach
+      duration: 1.8
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors: []
+    advance: 1
+    minimumDuration: 0
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: rebecca-greeting
+    label: "03 \xB7 \uB808\uBCA0\uCE74 \uC778\uC0AC"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: rebecca
+    nameMode: 0
+    alias: 
+    text: "\uC0F9\uADF8\uB9AC\uC544\uC5D0 \uC624\uC2E0 \uAC78 \uD658\uC601\uD574\uC694.
+      \uC624\uB298\uC740 \uC870\uAE08 \uC870\uC6A9\uD558\uB124\uC694."
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 2
+      shotId: rebecca_close
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: rebecca
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 136afa9e0bed98642ae653c5e4648f7b, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: camera
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: protagonist-thought
+    label: "04 \xB7 \uC8FC\uC778\uACF5 \uC18D\uB9C8\uC74C"
+    hasDialogue: 1
+    dialogueKind: 2
+    speakerId: 
+    nameMode: 1
+    alias: 
+    text: "\uC870\uC6A9\uD558\uB2E4\u2026 \uADF8 \uB9D0\uC774 \uBB18\uD558\uAC8C
+      \uB9C8\uC74C\uC5D0 \uAC78\uB9B0\uB2E4."
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 1
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors: []
+    advance: 0
+    minimumDuration: 0
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: jeremy-answer
+    label: "05 \xB7 \uC81C\uB808\uBBF8 \uB300\uB2F5"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: jeremy
+    nameMode: 0
+    alias: 
+    text: "\uC544\u2026! \uADF8\u2026 \uC5B4\uC11C \uC624\uC138\uC694. \uBB34\uC2A8
+      \uC77C\uB85C \uC624\uC168\uB098\uC694?"
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 1
+      shotId: jeremy_close
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors: []
+    advance: 0
+    minimumDuration: 0
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: rebecca-thinking
+    label: "06 \xB7 \uB808\uBCA0\uCE74 \uD3EC\uC988\uC640 \uC751\uC2DC"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: rebecca
+    nameMode: 0
+    alias: 
+    text: "\uCC9C\uCC9C\uD788 \uC774\uC57C\uAE30\uD574\uC694. \uAE30\uC5B5\uB098\uB294
+      \uAC83\uBD80\uD130 \uB9D0\uD574 \uB4DC\uB9B4\uAC8C\uC694."
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 3
+      shotId: rebecca_close
+      pathId: 
+      duration: 0.25
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: rebecca
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: ecf44474e521c92408d4170ed1e96112, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: camera
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: rebecca-zoom
+    label: "07 \xB7 \uB9D0\uD558\uB294 \uB3D9\uC548 \uC90C\uC778"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: rebecca
+    nameMode: 0
+    alias: 
+    text: "\uD558\uC9C0\uB9CC\u2026 \uADF8\uB0A0 \uBC24\uC758 \uC77C\uC740 \uC544\uC9C1\uB3C4
+      \uB610\uB837\uD558\uAC8C \uAE30\uC5B5\uB098\uC694."
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 4
+      shotId: rebecca_close
+      pathId: 
+      duration: 1.8
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 1
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: rebecca
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 5e9956cc134eeb64f8ef28db0dee6487, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 0
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0
+    autoDelay: 0.25
+    dialogueAfterCamera: 0
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: closing
+    label: "08 \xB7 \uC804\uACBD\uC73C\uB85C \uB9C8\uBB34\uB9AC"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 2
+      shotId: room_wide
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors: []
+    advance: 1
+    minimumDuration: 0.8
+    autoDelay: 0.2
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1

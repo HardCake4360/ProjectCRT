@@ -6,6 +6,17 @@ public class Interactable: MonoBehaviour
 {
     public string HintName;
     public bool canInteract = true;
+    public bool IsInteractionAllowed
+    {
+        get
+        {
+            if (!canInteract) return false;
+            foreach (var component in GetComponents<MonoBehaviour>())
+                if (component is IInteractionGate gate && !gate.AllowsInteraction) return false;
+            return true;
+        }
+    }
+    public bool IsCloseupEntering => closeupCameraBehaviour is ICloseupCameraTransition transition && transition.IsEntering;
 
     [Header("Closeup")]
     [SerializeField] private bool useCloseupCamera;
@@ -56,6 +67,11 @@ public class Interactable: MonoBehaviour
             return;
         }
 
+        if (closeupCameraBehaviour is ICloseupCameraTransition transition)
+        {
+            transition.BeginCloseup();
+            return;
+        }
         CacheMainCameraPose();
         CacheOriginalPriorityIfNeeded();
         closeupCameraBehaviour.gameObject.SetActive(true);
@@ -69,6 +85,11 @@ public class Interactable: MonoBehaviour
             return;
         }
 
+        if (closeupCameraBehaviour is ICloseupCameraTransition transition)
+        {
+            transition.EndCloseup();
+            return;
+        }
         RestoreCameraPriority();
         closeupCameraBehaviour.gameObject.SetActive(false);
         RestoreMainCameraPose();

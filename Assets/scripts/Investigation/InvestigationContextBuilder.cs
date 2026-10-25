@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class InvestigationContextBuilder : MonoBehaviour
 {
+    // The case save owns discovered IDs. Clear cached discoveries when rewinding that save.
+    public void ClearRuntimeDiscoveries()
+    {
+        discoveredEvidenceIds.Clear(); discoveredInformationIds.Clear(); unlockedTopicIds.Clear();
+    }
     [SerializeField] private string phase = "investigation";
     [SerializeField] private List<string> discoveredEvidenceIds = new();
     [SerializeField] private List<string> discoveredInformationIds = new();

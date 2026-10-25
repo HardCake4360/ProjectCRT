@@ -24,6 +24,38 @@ public class InvestigationInventoryManager : MonoBehaviour
     public string CaseId => caseId;
     public InvestigationItemDatabase Database => database;
 
+    // A case can own one atomic save while still using the existing inventory UI and NPC context.
+    public IDisposable BeginCaseSession(string id, InvestigationItemDatabase itemDatabase)
+    {
+        var previous = ToSaveData();
+        var previousDatabase = database;
+        bool previousLoad = loadOnAwake, previousSave = saveOnUnlock;
+        caseId = id; database = itemDatabase; loadOnAwake = saveOnUnlock = false;
+        ApplySaveData(new InvestigationInventorySaveData { caseId = id });
+        return new CaseSession(() =>
+        {
+            if (this == null) return;
+            caseId = previous.caseId; database = previousDatabase;
+            loadOnAwake = previousLoad; saveOnUnlock = previousSave;
+            ApplySaveData(previous);
+        });
+    }
+
+    public void ApplySaveData(InvestigationInventorySaveData data)
+    {
+        if (data == null || data.caseId != caseId) throw new ArgumentException("Inventory case id mismatch.");
+        topicIds.Clear(); evidenceIds.Clear(); informationIds.Clear();
+        AddRange(topicIds, data.topicIds); AddRange(evidenceIds, data.evidenceIds); AddRange(informationIds, data.informationIds);
+        InventoryChanged?.Invoke();
+    }
+
+    sealed class CaseSession : IDisposable
+    {
+        Action restore;
+        public CaseSession(Action action) { restore = action; }
+        public void Dispose() { var action = restore; restore = null; action?.Invoke(); }
+    }
+
     private string SavePath => Path.Combine(Application.persistentDataPath, $"investigation_inventory_{caseId}.json");
 
     private void Awake()

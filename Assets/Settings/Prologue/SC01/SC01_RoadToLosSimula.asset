@@ -1,0 +1,3269 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5224edbeaf091fc47b76ca75534947bd, type: 3}
+  m_Name: SC01_RoadToLosSimula
+  m_EditorClassIdentifier: 
+  sequenceId: sc01-road-to-los-simula
+  stageScene: 
+  unloadStageOnFinish: 1
+  allowSkip: 1
+  beginWithBlack: 1
+  fadeDuration: 1.2
+  exitMode: 1
+  destinationScene: Assets/Scenes/ProjectCRT_SC02_SanRoom.unity
+  destinationSpawnId: 
+  preloadAudio:
+  - {fileID: 8300000, guid: 8935092aa1261344aa70c69a324ba5c0, type: 3}
+  - {fileID: 8300000, guid: bc4a8d4bbfdb74c46b93b3a30cfe7080, type: 3}
+  - {fileID: 8300000, guid: ba88136401f3d034b9cee980c575c2ab, type: 3}
+  - {fileID: 8300000, guid: 369d2462643f8e14aa9f02ade5dcfcd2, type: 3}
+  - {fileID: 8300000, guid: d1099bb982bdcfe47a6b6ced52cb6857, type: 3}
+  - {fileID: 8300000, guid: 0f6cf4f454f1a10429011b96185b80c5, type: 3}
+  - {fileID: 8300000, guid: 8588c2f7e00e6354f8273c6b594fb286, type: 3}
+  - {fileID: 8300000, guid: 1211b25397d727341a4ce3d47793be89, type: 3}
+  - {fileID: 8300000, guid: d86be78cecb9d06459f938209f9cbda4, type: 3}
+  turns:
+  - id: sc01-establish
+    label: "CAM01 \xB7 \uBE44 \uC624\uB294 \uB3C4\uC2DC\uC640 \uD0DD\uC2DC"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 1
+      shotId: 01 City and elevated taxi
+      pathId: 
+      duration: 0.65
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: taxi_road
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: bb97a053c72c86446baf4171a6682ac9, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 99fbb74468bb6364b85766eab05fb160, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: window_right
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 1968721cba3a19544bddc166ba1b61ab, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: wipers
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: a5482925ce8f3f844a39545f540c5c34, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: scenery
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 86389920bc9c44143a5f15c3f1a1494a, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 5
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-cabin
+    label: "CAM02 \xB7 \uD0DD\uC2DC \uC2E4\uB0B4\uC640 \uC640\uC774\uD37C"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 1
+      shotId: 02 Behind driver - interior
+      pathId: 
+      duration: 0.65
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: scenery
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 02b53742ebc1e464b90c5cfaae13b38e, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 1.4
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d01
+    label: "\uAE30\uC0AC \xB7 \uADF8\uB098\uC800\uB098 \uC190\uB2D8, \uD754\uCE58
+      \uC54A\uAD70\uC694."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uADF8\uB098\uC800\uB098 \uC190\uB2D8, \uD754\uCE58 \uC54A\uAD70\uC694."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-pause
+    label: "\uAE30\uC0AC\uC758 \uB9D0 \uB4A4 \uC9E7\uC740 \uACF5\uBC31"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors: []
+    advance: 1
+    minimumDuration: 0.8
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d02
+    label: "\uAE30\uC0AC \xB7 \uC694\uC998\uC5D4 \uBCF4\uD1B5 \uC5EC\uAE30\uC11C
+      \uB098\uAC00\uB824\uB294 \uC190\uB2D8\uB4E4\uBFD0\uC774\uB77C\uC11C \uB9D0\uC774\uC8E0."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uC694\uC998\uC5D4 \uBCF4\uD1B5 \uC5EC\uAE30\uC11C \uB098\uAC00\uB824\uB294
+      \uC190\uB2D8\uB4E4\uBFD0\uC774\uB77C\uC11C \uB9D0\uC774\uC8E0."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d03
+    label: "\uC0B0 \xB7 \uC800\uC57C \uAC00\uACE0 \uC2F6\uC5B4\uC11C \uAC00\uB294
+      \uAC74 \uC544\uB2D9\uB2C8\uB2E4\uB9CC. \uC77C \uB54C\uBB38\uC5D0 \uC5B4\uCA54
+      \uC218 \uC5C6\uC8E0."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\uC800\uC57C \uAC00\uACE0 \uC2F6\uC5B4\uC11C \uAC00\uB294 \uAC74 \uC544\uB2D9\uB2C8\uB2E4\uB9CC.
+      \uC77C \uB54C\uBB38\uC5D0 \uC5B4\uCA54 \uC218 \uC5C6\uC8E0."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 1
+      shotId: 03 San rear-right profile
+      pathId: 
+      duration: 0.65
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: b6ac968b1b6ecc24eaf8f2af82bddd92, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: driver_face
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d04
+    label: "\uAE30\uC0AC \xB7 \uC77C\uC774\uC694? \uC774 \uB3D9\uB124\uC5D0?"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uC77C\uC774\uC694? \uC774 \uB3D9\uB124\uC5D0?"
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: aab526c119dac9d4e8e331dafb9ad992, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: mirror_rear
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d05
+    label: "\uAE30\uC0AC \xB7 \uBB34\uC2A8 \uC77C \uD558\uC2DC\uB294\uB370\uC694?"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uBB34\uC2A8 \uC77C \uD558\uC2DC\uB294\uB370\uC694?"
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: aab526c119dac9d4e8e331dafb9ad992, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: mirror_rear
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d06
+    label: "\uC0B0 \xB7 \uD615\uC0AC\uC785\uB2C8\uB2E4. \uC774\uBC88\uC5D0 LSPD\uB85C
+      \uC804\uCD9C \uC654\uC2B5\uB2C8\uB2E4."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\uD615\uC0AC\uC785\uB2C8\uB2E4. \uC774\uBC88\uC5D0 LSPD\uB85C \uC804\uCD9C
+      \uC654\uC2B5\uB2C8\uB2E4."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: b6ac968b1b6ecc24eaf8f2af82bddd92, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: driver_face
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d07
+    label: "\uAE30\uC0AC \xB7 \uACBD\uCC30\uC774\uC168\uAD70\uC694."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uACBD\uCC30\uC774\uC168\uAD70\uC694."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d08
+    label: "\uAE30\uC0AC \xB7 \uADF8\uB7FC \uC77C\uAC70\uB9AC\uB294 \uAC71\uC815
+      \uC5C6\uC73C\uC2DC\uACA0\uB124\uC694."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uADF8\uB7FC \uC77C\uAC70\uB9AC\uB294 \uAC71\uC815 \uC5C6\uC73C\uC2DC\uACA0\uB124\uC694."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d09
+    label: "\uC0B0 \xB7 \u2026\u2026\uADF8\uB807\uAC8C \uC2EC\uAC01\uD569\uB2C8\uAE4C?"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\u2026\u2026\uADF8\uB807\uAC8C \uC2EC\uAC01\uD569\uB2C8\uAE4C?"
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: b6ac968b1b6ecc24eaf8f2af82bddd92, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: driver_face
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d10
+    label: "\uAE30\uC0AC \xB7 \uD558\uD558. \uAD1C\uD55C \uC18C\uB9B4 \uD588\uAD70\uC694.
+      \uCC98\uC74C \uC624\uC2DC\uB294 \uBD84\uD55C\uD14C."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uD558\uD558. \uAD1C\uD55C \uC18C\uB9B4 \uD588\uAD70\uC694. \uCC98\uC74C
+      \uC624\uC2DC\uB294 \uBD84\uD55C\uD14C."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d11
+    label: "\uAE30\uC0AC \xB7 \uBB50, \uC5B4\uB514\uB098 \uC0AC\uB78C \uC0AC\uB294
+      \uACF3\uC740 \uB2E4 \uBE44\uC2B7\uD558\uC9C0 \uC54A\uACA0\uC2B5\uB2C8\uAE4C."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uBB50, \uC5B4\uB514\uB098 \uC0AC\uB78C \uC0AC\uB294 \uACF3\uC740 \uB2E4
+      \uBE44\uC2B7\uD558\uC9C0 \uC54A\uACA0\uC2B5\uB2C8\uAE4C."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d12
+    label: "\uC0B0 \xB7 \u2026\u2026\uADF8\uB807\uACA0\uC8E0."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\u2026\u2026\uADF8\uB807\uACA0\uC8E0."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 757359b9a1e1c124b8f815703bfa64f2, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: window_right
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-cd
+    label: "CAM04 \xB7 \uC2E0\uD638 \uB300\uAE30, CD \uC0BD\uC785"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 2
+      shotId: 04 Dashboard and CD
+      pathId: 
+      duration: 0.6
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 9077e66b63077694497afbfc250ea745, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: disc
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 3cc2e13efc2312d4ebfd1717eabbb3d6, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 99fbb74468bb6364b85766eab05fb160, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: window_right
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: cd_case
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 4a36d87d2afe7e54c98f81623fe0a5e2, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 0
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 4.8
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d13
+    label: "\uAE30\uC0AC \xB7 \uC74C\uC545 \uC880 \uD2C0\uC5B4\uB3C4 \uAD1C\uCC2E\uACA0\uC2B5\uB2C8\uAE4C?"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uC74C\uC545 \uC880 \uD2C0\uC5B4\uB3C4 \uAD1C\uCC2E\uACA0\uC2B5\uB2C8\uAE4C?"
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d14
+    label: "\uC0B0 \xB7 \uB124. \uAD1C\uCC2E\uC2B5\uB2C8\uB2E4."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\uB124. \uAD1C\uCC2E\uC2B5\uB2C8\uB2E4."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 757359b9a1e1c124b8f815703bfa64f2, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: driver_face
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-volume
+    label: "\uAE30\uC0AC\uC758 \uBCFC\uB968 \uC870\uC808"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 5dd347e6028d8214abb4ecc410c4933e, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 1.5
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d15
+    label: "\uAE30\uC0AC \xB7 \uC774 \uC2DC\uAC04\uC5D4 \uC774\uB7F0 \uAC8C \uC88B\uB354\uB77C\uACE0\uC694."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uC774 \uC2DC\uAC04\uC5D4 \uC774\uB7F0 \uAC8C \uC88B\uB354\uB77C\uACE0\uC694."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-listen
+    label: "CAM05 \xB7 \uC74C\uC545\uC744 \uB4E3\uACE0 \uCC3D\uBC16\uC744 \uBCF4\uB294
+      \uC0B0"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 1
+      shotId: 05 San looking outside
+      pathId: 
+      duration: 0.65
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 99fbb74468bb6364b85766eab05fb160, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: window_right
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 1968721cba3a19544bddc166ba1b61ab, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 2.2
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d16
+    label: "\uAE30\uC0AC \xB7 \uADF8\uB7F0\uB370 \uC190\uB2D8, \uC5EC\uAE30\uC5D4
+      \uC544\uB294 \uC0AC\uB78C\uC774\uB77C\uB3C4 \uC788\uC73C\uC2ED\uB2C8\uAE4C?"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uADF8\uB7F0\uB370 \uC190\uB2D8, \uC5EC\uAE30\uC5D4 \uC544\uB294 \uC0AC\uB78C\uC774\uB77C\uB3C4
+      \uC788\uC73C\uC2ED\uB2C8\uAE4C?"
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d17
+    label: "\uC0B0 \xB7 \uB124. \uC624\uB798\uB41C \uCE5C\uAD6C\uAC00 \uD55C \uBA85
+      \uC788\uC2B5\uB2C8\uB2E4."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\uB124. \uC624\uB798\uB41C \uCE5C\uAD6C\uAC00 \uD55C \uBA85 \uC788\uC2B5\uB2C8\uB2E4."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: b6ac968b1b6ecc24eaf8f2af82bddd92, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: driver_face
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d18
+    label: "\uAE30\uC0AC \xB7 \uADF8\uAC70 \uB2E4\uD589\uC774\uB124\uC694."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uADF8\uAC70 \uB2E4\uD589\uC774\uB124\uC694."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d19
+    label: "\uC0B0 \xB7 \uC65C\uC694?"
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\uC65C\uC694?"
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: b6ac968b1b6ecc24eaf8f2af82bddd92, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: driver_face
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d20
+    label: "\uAE30\uC0AC \xB7 \uC544\uB294 \uC0AC\uB78C \uD558\uB098 \uC5C6\uB294
+      \uB3D9\uB124\uC5D0\uC11C \uC0C8\uB85C \uC2DC\uC791\uD558\uB294 \uAC83\uB9CC\uD07C
+      \uC678\uB85C\uC6B4 \uC77C\uB3C4 \uC5C6\uC73C\uB2C8\uAE4C\uC694."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uC544\uB294 \uC0AC\uB78C \uD558\uB098 \uC5C6\uB294 \uB3D9\uB124\uC5D0\uC11C
+      \uC0C8\uB85C \uC2DC\uC791\uD558\uB294 \uAC83\uB9CC\uD07C \uC678\uB85C\uC6B4
+      \uC77C\uB3C4 \uC5C6\uC73C\uB2C8\uAE4C\uC694."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 227a11d937355834e8da7b6cabc8da00, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d21
+    label: "\uC0B0 \xB7 \u2026\u2026\uADF8\uB807\uAD70\uC694."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\u2026\u2026\uADF8\uB807\uAD70\uC694."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 757359b9a1e1c124b8f815703bfa64f2, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: window_right
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-city
+    label: "CAM06 \xB7 \uBA40\uC5B4\uC9C0\uB294 \uD0DD\uC2DC\uB97C \uB530\uB77C \uB3C4\uC2DC
+      \uC9C4\uC785"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 5
+      shotId: 
+      pathId: city_follow
+      duration: 6
+      joinDuration: 0
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: taxi_road
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: b8d0cadb8878fd841a069304b4ee2209, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: scenery
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 86389920bc9c44143a5f15c3f1a1494a, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 6
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-timepassage
+    label: "\uC2DC\uAC04 \uACBD\uACFC \xB7 \uC554\uC804"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors: []
+    advance: 1
+    minimumDuration: 1.2
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-arrival
+    label: "CAM07 \xB7 \uC8FC\uAC70 \uAC74\uBB3C \uC55E\uC5D0 \uC815\uCC28"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 1
+      shotId: 07 Residential arrival
+      pathId: 
+      duration: 0.65
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: taxi_arrival
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: e4b02b8b4bbcf924abd7258df55e20c1, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: f40a4efca2befcf43aab37d649fc64f4, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 23d7ec86519c8da49ab77b4c186ff4a7, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: scenery
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: c08af1c80fd92b443a993d170865363b, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 3
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d22
+    label: "\uAE30\uC0AC \xB7 \uB3C4\uCC29\uD588\uC2B5\uB2C8\uB2E4."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uB3C4\uCC29\uD588\uC2B5\uB2C8\uB2E4."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: fa4d53f627fa453479c52d131e118908, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d23
+    label: "\uC0B0 \xB7 \uAC10\uC0AC\uD569\uB2C8\uB2E4."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\uAC10\uC0AC\uD569\uB2C8\uB2E4."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 0008dacecaa37d14aa3282cfc3ea2f42, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-fare
+    label: "\uC0B0\uC774 \uC694\uAE08\uC744 \uC9C0\uBD88\uD55C\uB2E4"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 6366a368b1940b441a982aa05a10d2ab, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 1.5
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d24
+    label: "\uAE30\uC0AC \xB7 \uADF8\uB7FC \uB85C\uC2A4 \uC2DC\uBBAC\uB77C\uC5D0\uC11C\uB3C4
+      \uC798\uD574\uBCF4\uC138\uC694, \uD615\uC0AC\uB2D8."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: driver
+    nameMode: 0
+    alias: 
+    text: "\uADF8\uB7FC \uB85C\uC2A4 \uC2DC\uBBAC\uB77C\uC5D0\uC11C\uB3C4 \uC798\uD574\uBCF4\uC138\uC694,
+      \uD615\uC0AC\uB2D8."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: fa4d53f627fa453479c52d131e118908, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-d25
+    label: "\uC0B0 \xB7 \uB124. \uAC10\uC0AC\uD569\uB2C8\uB2E4."
+    hasDialogue: 1
+    dialogueKind: 0
+    speakerId: san
+    nameMode: 0
+    alias: 
+    text: "\uB124. \uAC10\uC0AC\uD569\uB2C8\uB2E4."
+    charsPerSecond: 24
+    punctuationPause: 0.2
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 0008dacecaa37d14aa3282cfc3ea2f42, type: 2}
+      loop: 1
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 0
+    minimumDuration: 0.5
+    autoDelay: 0.25
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-exit
+    label: "\uBB38\uC744 \uC5F4\uACE0 \uD0DD\uC2DC\uC5D0\uC11C \uB0B4\uB9B0\uB2E4"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: taxi_arrival
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: de2cdcf77160a764a90e003eeab0c0d3, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: cde10663b072e2d45bc8ca805947193b, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 4.2
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-lookcity
+    label: "CAM08 \xB7 \uD0DD\uC2DC \uCD9C\uBC1C, \uB3C4\uC2DC\uB97C \uB458\uB7EC\uBCF4\uB294
+      \uC0B0"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 2
+      shotId: 08 From taxi to entrance
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: taxi_arrival
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: ff0322ac64e2b3648bb4f541c6611812, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: driver
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 78eca085e29ffbb47acaafb5922613d7, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 88c27460bfc2f964aafd5417c9549fba, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 2.8
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-pickup
+    label: "\uC0B0\uC774 \uC9D0\uC744 \uB4E0\uB2E4"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 0
+      shotId: 
+      pathId: 
+      duration: 0.7
+      joinDuration: 0.35
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 1ee6863d72453494bb479bc74ce94a2f, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: bag
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: 0d11cd684ff7af7428b24ed5be3be852, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 2.8
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1
+  - id: sc01-entry
+    label: "\uC9D0\uC744 \uB4E4\uACE0 \uAC74\uBB3C \uC785\uAD6C\uB85C \uD5A5\uD55C\uB2E4"
+    hasDialogue: 0
+    dialogueKind: 0
+    speakerId: 
+    nameMode: 0
+    alias: 
+    text: 
+    charsPerSecond: 25
+    punctuationPause: 0.16
+    voiceMode: 0
+    camera:
+      mode: 5
+      shotId: 
+      pathId: entry_follow
+      duration: 7
+      joinDuration: 0.25
+      pathStart: 0
+      pathEnd: 1
+      constantPathSpeed: 1
+      lookAtId: 
+      useEndFieldOfView: 0
+      endFieldOfView: 28
+      easing:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    actors:
+    - actorId: san
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: f4081da419a7c454bbe7acc49f689305, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    - actorId: bag
+      timing: 0
+      delay: 0
+      characterIndex: 1
+      move: 0
+      positionId: 
+      positionOffset: {x: 0, y: 0, z: 0}
+      rotate: 0
+      eulerAngles: {x: 0, y: 0, z: 0}
+      poseId: 
+      clip: {fileID: 7400000, guid: e4c921cc3df36894d8427fcb2fb790e2, type: 2}
+      loop: 0
+      freezePose: 0
+      startTime: 0
+      speed: 1
+      expressionId: 
+      changeLookAt: 1
+      lookAtId: 
+      lookAtOffset: {x: 0, y: 0, z: 0}
+    advance: 1
+    minimumDuration: 7
+    autoDelay: 0
+    dialogueAfterCamera: 1
+    waitForCamera: 1
+    waitForActors: 0
+    timeline: {fileID: 0}
+    waitForTimeline: 1

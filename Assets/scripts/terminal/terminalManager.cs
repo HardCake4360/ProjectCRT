@@ -70,7 +70,7 @@ public class terminalManager : MonoBehaviour
 
         StartCoroutine(interpreter.Interpret(userInput, uiText, () =>
         {
-            HandleInterpretationCompleted(uiText);
+            if (this != null && isActiveAndEnabled) HandleInterpretationCompleted(uiText);
         }));
     }
 

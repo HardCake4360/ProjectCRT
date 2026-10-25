@@ -3,6 +3,7 @@ using TMPro;
 
 public class PlayerControler : MonoBehaviour
 {
+    [System.NonSerialized] public bool cameraTransitionInProgress;
     [Header("기본 물리설정")]
     CharacterController charCon;
     [SerializeField] GameObject cam;
@@ -36,6 +37,7 @@ public class PlayerControler : MonoBehaviour
 
     public void UpdatePlayer()
     {
+        if (cameraTransitionInProgress) { HideHint(); return; }
         //- - - - - - - - 이동 로직 - - - - - - - - 
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
@@ -58,25 +60,24 @@ public class PlayerControler : MonoBehaviour
 
         //- - - - - - - - 상호작용 - - - - - - - -
         //rayOrigin에서 전방으로 레이를 발사
-        if (Physics.Raycast(rayOrigin.position, rayOrigin.forward, out hitInfo, rayDistance))
+        if (TryGetInteractionHit(out hitInfo))
         {
             // 디버깅 용으로 레이를 시각화
             Debug.DrawRay(rayOrigin.position, rayOrigin.forward * rayDistance, Color.green);
             
             //Interactable 인터페이스 검색
-            Interactable interactableObject = hitInfo.collider.GetComponent<Interactable>();
-            if (interactableObject)
+            Interactable interactableObject = hitInfo.collider.GetComponentInParent<Interactable>();
+            if (hintText != null)
             {
-                hintText.enabled = true;
-                hintText.text = interactableObject.HintName;
+                hintText.enabled = interactableObject != null && interactableObject.IsInteractionAllowed;
+                if (hintText.enabled) hintText.text = interactableObject.HintName + " [E]";
             }
 
-            if (InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.interactionKeys))
+            if (InputManager.Instance != null && InputManager.Instance.IsAnyKeyPressedIn(InputManager.Instance.interactionKeys))
             {
-                if (interactableObject != null && interactableObject.canInteract)
+                if (interactableObject != null && interactableObject.IsInteractionAllowed)
                 {
-                    MainLoop.Instance.SetMainLoopState(MainState.Interact);
-                    interactableObject.Interact();
+                    TryInteractInView();
                     Debug.Log($"상호작용: {hitInfo.collider.gameObject.name}");
                 }
                 else
@@ -101,8 +102,53 @@ public class PlayerControler : MonoBehaviour
         return new Vector3(vel.x, -9.8f, vel.z) * speed;
     }
 
+    public float ViewPitch => xRotation;
+
+    public void RestoreWalkingPose(Vector3 position, float yaw, float pitch)
+    {
+        var controller = GetComponent<CharacterController>();
+        bool wasEnabled = controller != null && controller.enabled;
+        if (controller != null) controller.enabled = false;
+        transform.SetPositionAndRotation(position, Quaternion.Euler(0, yaw, 0));
+        xRotation = Mathf.Clamp(pitch, -cameraVerticalClamp, cameraVerticalClamp);
+        if (cam != null) cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        velocity = Vector3.zero;
+        if (controller != null) controller.enabled = wasEnabled;
+        Physics.SyncTransforms();
+        HideHint();
+    }
+
     public void HideHint()
     {
-        hintText.enabled = false;
+        if (hintText != null) hintText.enabled = false;
+    }
+
+    private bool TryGetInteractionHit(out RaycastHit closest)
+    {
+        closest = default;
+        if (rayOrigin == null) return false;
+        float distance = float.PositiveInfinity;
+        // A downward glance can cross the player's capsule. Keep the nearest world obstacle.
+        foreach (var candidate in Physics.RaycastAll(rayOrigin.position, rayOrigin.forward, rayDistance,
+                     Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide))
+        {
+            if (candidate.collider.transform.IsChildOf(transform) || candidate.distance >= distance) continue;
+            if (candidate.collider.isTrigger && candidate.collider.GetComponentInParent<Interactable>() == null) continue;
+            closest = candidate;
+            distance = candidate.distance;
+        }
+        return !float.IsPositiveInfinity(distance);
+    }
+
+    public bool TryInteractInView()
+    {
+        if (cameraTransitionInProgress || !enabled || rayOrigin == null || MainLoop.Instance == null || MainLoop.Instance.MainLoopState != MainState.Main)
+            return false;
+        if (!TryGetInteractionHit(out var hit)) return false;
+        var target = hit.collider.GetComponentInParent<Interactable>();
+        if (target == null || !target.IsInteractionAllowed) return false;
+        MainLoop.Instance.SetMainLoopState(MainState.Interact);
+        target.Interact();
+        return true;
     }
 }

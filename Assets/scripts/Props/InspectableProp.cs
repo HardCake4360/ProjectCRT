@@ -16,6 +16,7 @@ public class InspectableProp : Interactable
 
     public override void Interact()
     {
+        if (!IsInteractionAllowed) return;
         string resolvedId = ResolveInformationId();
         if (string.IsNullOrWhiteSpace(resolvedId))
         {
